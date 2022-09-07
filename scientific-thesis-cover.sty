@@ -1,0 +1,362 @@
+\NeedsTeXFormat{LaTeX2e}
+\newcommand{\USCCover@Pgkname}{scientific-thesis-cover}
+\ProvidesPackage{\USCCover@Pgkname}[2018/06/03 Cover and affirmation for scientific works.]
+\typeout{Package: `\USCCover@Pgkname' v4.0.2}
+% ------------------------------
+% required packages
+% ------------------------------
+% kvoptions for key value options support
+\RequirePackage{kvoptions}
+\RequirePackage{ifthen}
+\RequirePackage{eso-pic, graphics}
+
+
+% this package requires utf8 inputenc
+\def\USCCover@utf8warning{\PackageWarningNoLine{\USCCover@Pgkname}
+    {This package requires UTF-8 support.\MessageBreak
+        If at pdflatex, load `inputenc' or `inputenx' with the `utf8' option}%
+}
+
+\newif\ifinputencloaded
+
+\@ifpackageloaded{inputenx}
+{\def\USCCover@tempa{inputenx}\inputencloadedtrue}
+{\@ifpackageloaded{inputenc}{\def\USCCover@tempa{inputenc}\inputencloadedtrue}{\inputencloadedfalse}}
+\ifinputencloaded
+    \@ifpackagewith{\USCCover@tempa}{utf8}{}{\USCCover@utf8warning}
+    %We also drop utf8x, as we believe that this is obsolete - see http://tex.stackexchange.com/questions/13067/utf8x-vs-utf8-inputenc
+    \@ifpackagewith{\USCCover@tempa}{utf8x}{\USCCover@utf8warning}{}
+\else
+    \ifluatex
+        %no warning required
+    \else
+        \USCCover@utf8warning
+    \fi
+\fi
+
+% ------------------------------
+% options
+% ------------------------------
+\SetupKeyvalOptions{
+    family=MCS,
+    prefix=MCS@
+}
+
+% for possible option values see README.md
+\DeclareStringOption[title not set]{title} % Title of the work
+\DeclareStringOption[vorgelegt von]{authorprefix}
+\DeclareStringOption[author not set]{author}
+\DeclareStringOption[Geburtsort]{birth}
+\DeclareStringOption[bachelor]{type}
+\DeclareStringOption[Ort und Datum]{placeanddate}
+\DeclareStringOption[fac]{institute}
+\DeclareStringOption[]{number} % running number
+\DeclareStringOption[cs]{reason}
+\DeclareStringOption[examiner not set]{examiner}
+\DeclareStringOption[supervisor not set]{supervisor}
+\DeclareStringOption[startdate not set]{startdate}
+\DeclareStringOption[enddate not set]{enddate}
+\DeclareStringOption[standard]{covertype} % type of the coverpage: standard, ustuttdiss
+
+\DeclareStringOption[german]{language}
+\DeclareBoolOption[false]{setPageNumberToOne}
+\DeclareBoolOption[false]{setCoverPageNumberToMinusOne}
+
+% ------------------------------
+% process options
+% ------------------------------
+\ProcessKeyvalOptions*
+
+% ------------------------------
+% define language specific labels:
+% ------------------------------
+% - labels are defined separate for each language
+% - if language is not set, German is used
+% ------------------------------
+\def\labelsenglish{
+    \gdef\@labelExaminer{Berichterstatter}%
+    \gdef\@labelExaminerone{1.}%
+    \gdef\@labelExaminertwo{2.}%
+    \gdef\@labelPruefungsdatum{Tag der mündlichen Prüfung}%
+    \gdef\@labelSupvervisor{Supervisor}%
+    \gdef\@labelStartdate{Commenced}%
+    \gdef\@labelEnddate{Completed}%
+    \gdef\@labelUniversity{~\newline University of Stuttgart}%
+    \gdef\@labelDept{Faculty of Computer Science}%
+
+    %the labels are written in German, because these are the official terms given by the regulations ("Prüfungsordnung")
+    %For a detailed discussion see https://github.com/latextemplates/uni-stuttgart-computer-science-cover/pull/10
+    \gdef\@labelTypeStudy{Studienarbeit}%
+    \gdef\@labelTypeDiplom{Diplomarbeit}%
+    \gdef\@labelTypeBachelor{Bachelorarbeit}%
+    \gdef\@labelTypeDoctoral{Inaugural-Dissertation}%
+    \gdef\@labelTypeMaster{Masterarbeit}%
+    \gdef\@labelTypeProjectINF{Projekt-INF}%
+    \gdef\@labelTypeFachstudie{Fachstudie}%
+    \gdef\@labelTypeProzessanalyse{Prozessanalyse}%
+
+
+    \gdef\@labelAffirmation{Eidesstattliche Erklärung}%
+    \gdef\@AffirmationText{Ich versichere an Eides Statt, dass die
+    	Dissertation von mir selbständig und ohne unzulässige fremde Hilfe unter Beachtung der
+    	„Grundsätze zur Sicherung guter wissenschaftlich er Praxis an der Heinrich-Heine-Universität
+    	Düsseldorf“ erstellt worden ist.
+    }
+    \gdef\@labelSignature{\ Düsseldorf, 01.03.2024}
+}
+
+\def\labelsgerman{
+    \gdef\@labelExaminer{Prüfer/in}%
+    \gdef\@labelSupvervisor{Betreuer/in}%
+    \gdef\@labelStartdate{Beginn am}%
+    \gdef\@labelEnddate{Beendet am}%
+    \gdef\@labelUniversity{~\newline Universität Stuttgart}%
+    \gdef\@labelDept{Fakultät Informatik, Elektrotechnik und Informationstechnik}%
+
+    \gdef\@labelTypeStudy{Studienarbeit}%
+    \gdef\@labelTypeDiplom{Diplomarbeit}%
+    \gdef\@labelTypeBachelor{Bachelorarbeit}%
+    \gdef\@labelTypeDoctoral{Inaugural-Dissertation}%    
+    \gdef\@labelTypeMaster{Masterarbeit}%
+    \gdef\@labelTypeProjectINF{Projekt-INF}%
+    \gdef\@labelTypeFachstudie{Fachstudie}%
+    \gdef\@labelTypeProzessanalyse{Prozessanalyse}%
+
+
+    \gdef\@labelAffirmation{Eidesstattliche Erklärung}%
+    \gdef\@AffirmationText{%
+        Ich versichere an Eides Statt, dass die
+        Dissertation von mir selbständig und ohne unzulässige fremde Hilfe unter Beachtung der
+        „Grundsätze zur Sicherung guter wissenschaftlich er Praxis an der Heinrich-Heine-Universität
+        Düsseldorf“ erstellt worden ist.
+    }
+    \gdef\@labelSignature{\ Düsseldorf, 01.03.2024}
+}
+
+% set those labels according to the set language
+\newcommand{\USCCover@setLanguage}{
+    \def\0{english}
+    \ifx\MCS@language\0
+        \labelsenglish
+    \else
+        \labelsgerman
+    \fi
+}
+
+% set \@labelType if matched
+\newcommand{\USCCover@setType}{
+    \gdef\@labelType{\MCS@type}
+    \def\1{\MCS@type}
+    % dont remove last two braces / empty else clause
+    \def\0{diplom}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeDiplom}}{}
+    \def\0{study}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeStudy}}{}
+    \def\0{bachelor}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeBachelor}}{}
+    \def\0{master}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeMaster}}{}
+    \def\0{doctoral}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeDoctoral}}{}
+    \def\0{fachstudie}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeFachstudie}}{}
+    \def\0{projectinf}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeProjectINF}}{}
+    \def\0{prozessanalyse}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeProzessanalyse}}{}
+}
+
+% ------------------------------
+% Printing label
+% ------------------------------
+
+% general university address
+\gdef\@labelPrint{Gedruckt mit der Genehmigung der\\Mathematisch-Naturwissenschaftlichen Fakultät der\\ Heinrich-Heine-Universität Düsseldorf}
+
+\newcommand{\USCCover@setInstitute}{
+    % use specified text if institute does not match
+    \gdef\@labelInstitute{\MCS@institute}
+
+    \def\1{\MCS@institute}
+    % do not remove last two braces / empty else clause
+    \def\0{ipvs}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelipvs\\\@labelPrint}}{}
+    \def\0{iaas}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labeliaas\\\@labelPrint}}{}
+    \def\0{fmi}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelfmi\\\@labelPrint}}{}
+    \def\0{ims}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelims\\\@labelUniversity\\Pfaffenwaldring 5B\\D--70569 Stuttgart}}{}
+    \def\0{iste}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labeliste\\\@labelPrint}}{}
+    \def\0{iti}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labeliti\\\@labelUniversity\\Pfaffenwaldring 47\\D--70569 Stuttgart}}{}
+    \def\0{iris}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labeliris\\\@labelPrint}}{}
+    \def\0{vis}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelvis\\\@labelPrint}}{}
+    \def\0{visus}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelvisus\\\@labelUniversity\\Allmandring 19\\D--70569 Stuttgart}}{}
+    \def\0{sec}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelsec\\\@labelPrint}}{}
+    \def\0{fac}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelInstitute{\@labelDept\\\@labelPrint}}{}
+}
+
+
+% ------------------------------
+% evaluate options by calling those functions that set text accordingly
+% ------------------------------
+\USCCover@setLanguage
+\USCCover@setType
+\USCCover@setInstitute
+
+% ------------------------------
+% helping commands
+% ------------------------------
+% - \USCCover@umrandet
+% - \USCCover@TBlabel
+% - \USCCover@TBlist
+% ------------------------------
+\def\USCCover@umrandet{\global\let\@USCCover@umrandet=\fbox}
+\let\@USCCover@umrandet\relax
+
+\newcommand{\USCCover@TBlabel}[1]{\textbf{#1}\hfil}
+
+\newenvironment{USCCover@TBlist}{%
+    \list{}{\labelwidth 45mm \leftmargin 70mm % alt: 35/60 mm
+        \rightmargin 20mm \let\makelabel\USCCover@TBlabel}%
+}{\endlist}
+
+% ------------------------------
+% usable commands
+% ------------------------------
+% - \Titelblatt
+% - \Versicherung
+% (contain code from old diplomtitel.sty)
+% ------------------------------
+\newcommand{\Titelblatt}{%
+    \cleardoublepage
+    
+    % University logo
+    \ifthenelse{\boolean{MCS@setCoverPageNumberToMinusOne}}{\setcounter{page}{-1}}{}
+    \begingroup
+    \newcommand{\USCCover@isTwoColumn}{false}
+    \if@twocolumn \renewcommand{\USCCover@isTwoColumn}{true} \onecolumn \fi
+    \sffamily
+    \pagestyle{empty}%
+    \thispagestyle{empty}%
+    %\fontfamily{ppl}\selectfont
+    %
+    \@normalsize \@setsize\normalsize{13.6pt}\xipt\@xipt
+    %
+    \frenchspacing    % besser, da viele Abk. (<- da ist schon eine)
+    \parskip=0pt\parindent=0pt\null
+    %
+    % Damit alles richtig funktioniert, mu"s der Ursprung auf die
+    % tats"achliche linke obere Ecke des Blattes gelegt werden (ohne den
+    % bekannten 1in Offset also).
+    % Ausserdem werden die beiden Seitenr"ander auf 28mm + 4.5mm Falz
+    % gesetzt, die Seitenh"ohe auf DIN A4-H"ohe.
+    %
+    \hsize=154mm       %% DIN A4: 210mm - 2*28mm
+    \columnwidth=\hsize \linewidth=\hsize
+    %
+    \dimen0=0pt
+    \advance\dimen0-\oddsidemargin
+    \advance\dimen0 2.6mm %%
+    \advance\dimen0 4.5mm %%
+    \hbox to 0pt{\kern\dimen0\vbox to\topskip{%
+                \dimen0=-1in
+                \advance\dimen0-\topmargin
+                \advance\dimen0-\headheight
+                \advance\dimen0-\headsep
+                \vskip\dimen0\relax
+                %
+
+                \vskip 20mm\relax %%%
+                    \AddToShipoutPictureBG*{%
+                	\AtPageUpperLeft{%
+                		\put(\LenToUnit{1cm},\LenToUnit{-2.5cm}){%
+                			\includegraphics[scale=.237]{logos/HHU_Logo.pdf}
+                		}%
+                	}
+                }
+
+                \vbox to 50mm{
+                %        \begin{center}%
+                %            \@labelInstitute
+                %        \end{center}
+                        \vfill}%
+
+                \vskip -4mm\relax
+                %%%%% ==> 155mm (Titel: 165mm/Autor: 195mm) von oben
+                %%% Die Box kann max. 100mm breit und 60mmm hoch sein,
+                %%% au"serdem wird noch ein Rand von mind. 2.5mm gelassen
+                %%% Even if \centering is not recommended (see l2tabu or nag package), just replacing it with {\centering{...}} doesn't work as \centering doesn't center on the complete page
+                \centerline{\fboxsep=0pt
+                    \@USCCover@umrandet{\hbox to 100mm{\hfil
+                                \vbox to 60mm{\hsize=95mm\parindent=0pt
+                                        \begin{center}\@setsize\LARGE{20pt}\xviipt\@xviipt %%\LARGE
+                                        	\textbf{ \MCS@title}
+                                        \end{center}%
+                                    	\vskip 32.5mm plus 12.5mm minus 10mm
+                                        \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
+                                                \@labelType
+                                        \end{center}%
+                                        \vskip 22.5mm plus 12.5mm minus 10mm
+                                        \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
+                                        	\MCS@reason
+                                        \end{center}%
+										\vskip 10mm plus 10mm minus 7.5mm
+										\begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
+											\MCS@authorprefix
+										\end{center}%
+                                        \vskip 10mm plus 10mm minus 7.5mm
+                                        \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
+                                            \textbf{\MCS@author}\\
+                                            \MCS@birth
+                                        \end{center}%
+	                                    \vskip 32.5mm plus 12.5mm minus 10mm
+	                                    \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
+	                                    	\MCS@placeanddate
+	                                    \end{center}%
+                                        \vskip 17.5mm plus 35mm minus 12.5mm}\hfil}}}%
+                \vskip 50mm %%%%%
+                \vss}\hss}%
+                \pagebreak
+
+
+\vbox to 155mm{%
+	\begin{flushleft}
+        \@labelInstitute
+        \vskip 132.5mm plus 12.5mm minus 10mm
+		\@labelPrint
+		\vskip 32.5mm plus 12.5mm minus 10mm
+		\@labelExaminer:
+		\vskip 22.5mm plus 12.5mm minus 10mm
+		\@labelExaminerone
+		\vskip 22.5mm plus 12.5mm minus 10mm
+		\@labelExaminertwo
+		\vskip 22.5mm plus 12.5mm minus 10mm
+		\@labelPruefungsdatum:
+	\end{flushleft}
+	\vfill}%
+
+    %
+    \thispagestyle{empty}%
+    \cleardoublepage % if twoside add a blank page after cover
+    % set counter to start at 1 after the clear(double)page
+    \ifthenelse{\boolean{MCS@setPageNumberToOne}}{\setcounter{page}{1}}{}
+    \newcommand{\USCCover@true}{true}
+    \ifthenelse{\equal{\USCCover@isTwoColumn}{\USCCover@true}}{\twocolumn}{}
+    \endgroup
+}
+\newcommand{\Coverpage}{\Titelblatt}
+
+\newcommand{\Versicherung}{
+    \cleardoublepage
+    \providecommand{\USCCover@isTwoColumn}{}
+    \if@twocolumn \renewcommand{\USCCover@isTwoColumn}{true} \onecolumn
+        \else \renewcommand{\USCCover@isTwoColumn}{false} \fi
+    \null
+    \vskip 5cm\relax
+    \begin{center}
+        \begin{minipage}[t]{10cm}
+            \hbox{\textbf{\@labelAffirmation}}%
+            \vskip 1cm\relax
+            %\begin{flushleft}%
+            \@AffirmationText
+            %\end{flushleft}%
+            \vskip 4cm\relax
+            \hrulefill
+            \vskip .4\baselineskip
+            \hbox{\@labelSignature}
+        \end{minipage}
+    \end{center}
+    \clearpage
+    \providecommand{\USCCover@true}{true}
+    \ifthenelse{\equal{\USCCover@isTwoColumn}{\USCCover@true}}{\twocolumn}{}
+}
+\newcommand{\Affirmation}{\Versicherung}

@@ -4,27 +4,6 @@
 % EN: This file includes basic packages and sets options. The order of package
 %     loading is important
 
-% DE: In dieser Datei werden zuerst die benoetigten Pakete eingebunden und
-%     danach diverse Optionen gesetzt. Achtung Reihenfolge ist entscheidend!
-
-
-% EN: Styleguide:
-% - English comments are prefixed with "EN", German comments are prefixed with "DE"
-% - Prefixed headings define the language for the subsequent paragraphs
-% - It is tried to organize packages in blocks. Bocks are separated by two empty lines.
-
-% DE: Styleguide:
-%
-% Ein sehr kleiner Styleguide. Packages werden in Blöcken organisiert.
-% Zwischen zwei Blöcken sind 2 Leerzeilen!
-
-
-% EN: Enable copy and paste of text from the PDF
-%     Only required for pdflatex. It "just works" in the case of lualatex.
-%     mmap enables mathematical symbols, but does not work with the newtx font set
-%     See: https://tex.stackexchange.com/a/64457/9075
-%     Other solutions outlined at http://goemonx.blogspot.de/2012/01/pdflatex-ligaturen-und-copynpaste.html and http://tex.stackexchange.com/questions/4397/make-ligatures-in-linux-libertine-copyable-and-searchable
-%     Trouble shooting outlined at https://tex.stackexchange.com/a/100618/9075
 
 \ifluatex
 \else
@@ -656,8 +635,8 @@
   backend       = biber, %biber does not work with 64x versions alternative: bibtex8
   %minalphanames only works with biber backend
   sortcites     = true,
-  bibstyle      = alphabetic,
-  citestyle     = alphabetic,
+  bibstyle      = apa,
+  citestyle     = authoryear,
   giveninits    = true,
   useprefix     = false, %"von, van, etc." will be printed, too. See below.
   minnames      = 1,
