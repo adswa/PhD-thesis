@@ -103,6 +103,12 @@
     	Düsseldorf“ erstellt worden ist.
     }
     \gdef\@labelSignature{\ Düsseldorf, 01.03.2024}
+
+    \gdef\@labelAffirmationofuniqueness{Erklärung über bisherige Promotionsversuche}%
+    \gdef\@AffirmationofuniquenessText{Ich erkläre hiermit, dass die vorliegende
+	Dissertation keiner anderen Fakultät vorgelegt wurde, und es sich um meinen ersten Promotionsversuch handelt.
+    }
+
 }
 
 \def\labelsgerman{
@@ -131,6 +137,10 @@
         Düsseldorf“ erstellt worden ist.
     }
     \gdef\@labelSignature{\ Düsseldorf, 01.03.2024}
+        \gdef\@labelAffirmationofuniqueness{Eidesstattliche Erklärung über bisherige Promotionsversuche}%
+    \gdef\@AffirmationofuniquenessText{Ich versichere an Eides Statt, dass die
+	Dissertation an keiner anderen Fakultät vorgelegt wurde. Es handelt sich bei der vorliegenden Dissertations um meinen ersten Promotionsversuch.
+    }
 }
 
 % set those labels according to the set language
@@ -214,7 +224,7 @@
 % ------------------------------
 % - \Titelblatt
 % - \Versicherung
-% (contain code from old diplomtitel.sty)
+%
 % ------------------------------
 \newcommand{\Titelblatt}{%
     \cleardoublepage
@@ -349,7 +359,17 @@
             %\begin{flushleft}%
             \@AffirmationText
             %\end{flushleft}%
+            \vskip 2cm\relax
+            \hrulefill
+            \vskip .4\baselineskip
+            \hbox{\@labelSignature}
             \vskip 4cm\relax
+            \hbox{\textbf{\@labelAffirmationofuniqueness}}%
+            \vskip 1cm\relax
+            %\begin{flushleft}%
+            \@AffirmationofuniquenessText
+            %\end{flushleft}%
+            \vskip 2cm\relax
             \hrulefill
             \vskip .4\baselineskip
             \hbox{\@labelSignature}
