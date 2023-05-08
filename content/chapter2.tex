@@ -44,8 +44,57 @@ Following the definition of \citet{peng2006}, \textit{reproducibility} refers to
 \end{figure}
 
 
+\subsection{``Everything matters'' for computational reproducibility in neuroimaging}
+
+% maybe NARPS paper?`
+
+% link back to research data management
+
+\section{Towards re-usable research objects}
+
+Science is an incremental process that produces and builds up on more than just published journal articles \citep{mons2018data}.
+Code, data, results, or tools of previous finished or unfinished projects fuel new undertakings.
+For both the original authors of a research output and its subsequent users - which may also be its original authors -, reusability of a research output is arguably its most important feature because of economical or efficiency considerations, as reusable research will speed up progress and curb costs.
+Digital research outputs are the by- or end-products of scientific studies or analyses, from code, software, raw data or processed data, to analysis results or papers.
+Reusing digital research outputs refers to the further use or utilization of any such research outputs inside or outside its original research context, by the original author or different actors.
+The reusability of research objects has become a distinct characteristic of scientific practice as it allows for reproduction, verification, building up upon and extending existing work, evidence synthesis, and minimizing duplicate efforts in the advancement of science(Thanos, 2017).
+With this, it maximizes the impact of the funding and work that resulted in the research output.
+Therefore, it is considered the “ultimate goal” of the FAIR principles, a widely endorsed set of guidelines to make data Findable, Accessible, Interoperable, and Reusable \citep{wilkinson2016fair}, and an explicit and central expectation in a variety of funding sources such as the Economic and Social Research Council (ESRC, UK), the European Research Council (ERC, EU), or the National Institutes of Health (NIH, US).
+In the scope of the FAIR principles, reusability focuses on the ability of a human or a machine to decide if data are useful in a particular context based on richly curated metadata.
+In practice, creating fully reusable resources as defined by the FAIR principles is difficult and impractical if one operates within a system in which the necessary standards and procedures for creating these metadata aren’t yet introduced, incentivized, or required.
+If curation efforts require extensive training, they can turn into a bureaucratic data governance effort with little immediately obvious benefits for the curator, in particular if the curation efforts take place only after a research output has been generated \citep{zehl2016handling}.
+
+Here, we describe a pragmatic approach towards reusable research outputs that creates reusable resources more or less as a byproduct of practical research data management.
+
+The building blocks of research output extend to more than the files that constitute the actual research output, but also to all elements involved in its generation \citep{claerbout1992electronic}.
+Consider three types of research output: Raw data originates from acquisitions based on - potentially ongoing - experiments, raw data transformations, or data cleaning, processed data or results stem from computations with analysis code or software in specific versions on particular data, and software, expressed in raw (code) or derived (transformed into executable) form, is created or used in specific computational environments, with compilers, underlying libraries, and systems in distinct versions.
+Those building blocks are integral information to retrace the genesis, reproduce, or trust research outputs (Kennedy et al., 2019), but they are rarely ever static.
+Whatever created a given output evolves during usually incremental processes such as continuous quality control, acquisition, maintenance, or project revision.
+However, changes in these building blocks will influence the resulting research output \citep{kennedy2019everything} 2019),\citep{glatard2015reproducibility}.
+If it is not possible to precisely identify the foundational elements and everything involved in their creation, the reproducibility and reusability of research outputs and projects that use these objects is hence threatened \citep{kennedy2019everything}.
+The information “I generated X from data Y with software Z” is insufficient for reproducibility and trustworthiness if Y exists in multiple versions or subsets, if different releases of Z have relevant implementation differences, or if Z behaves differently depending on the environment it is used in.
+A prerequisite for identification is content tracking, such that changes in the evolution of digital files can be tagged and identified. If digital research objects are tracked, they can be accessed and used transparently in a uniquely identified version state.
+This exhaustive identity registration removes ambiguity that arises if the files in question are not completely static.
+Tracking can be applied with different levels of granularity, e.g., for each conceptually important step, or covering a complex transformation at once, but in both cases unambiguous identification of starting state, transformation, and end state is needed.
+One way to track digital files is version control. If used appropriately, version control tools associate a unique identifier and basic provenance with each revision, and thus enable the identification of precise version states of digital files or collections of files. With other useful features such as built-in collaboration and the ability to save and revert changes, it also facilitates common scientific workflows, and has been increasingly adopted for research data management (RDM) in science \citep{nord2019towards} \citep{strupler2017reproducibility} \citep{bryan2018excuse} \citep{corti2019managing}.
+While it is possible to exhaustively track all elements involved in a project with version control, industry use differs from RDM demands in science.
+In industry contexts, it is primarily employed in software engineering for small-sized text files (source code). Science often works with large amounts of potentially sizable or binary files.
+To exhaustively track all elements involved in a scientific project, large and binary files such as data and computational environments need to be versioned, too.
+The concept of software containers - portable, light-weight software environments - make it possible to encapsulate computational environments as in-principle trackable elements, and a range of tools provide the ability to track even terabyte-sized and binary files.
+Overall, version control is a well-established and reliable tool in industry and science. It can be employed at any point during a project, and yields a hands-on digital notebook of a project.
+By extending its use beyond small-sized files to any digital research outputs and everything involved in its generation, version control can not only constitute established and beneficial research data management, but also lay the foundation for reusability by exhaustively tracking relevant digital elements and making them identifiable in precise versions.
+
+From Donoho Buckheit 2015: Performance has everything to do with specifics: exactly what was done (which wavelets,
+which coders, which detectors, which corpus of data) with exactly what parameters. In
+this setting, publishing figures or results without the complete software environment could
+be compared to a mathematician publishing an announcement of a mathematical theorem
+without giving the proof. Waveleticians ought to publish their complete computational
+environments
+
 
 \pagebreak
 
 \section{FAIRly big: A framework for computationally reproducible processing of large-scale data}
+
+
 \pagebreak
