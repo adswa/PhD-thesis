@@ -111,10 +111,50 @@ If it is not possible to precisely identify the foundational elements and everyt
 
 \section{DataLad as a software solution for research data management challenges}
 
-Parts of this section were published as \citet{Halchenko2021}: ``DataLad: distributed system for joint management of code, data, and their relationship'' and are appropriately marked as such.
+The following section provides an overview of the features of the software tool DataLad and their use for research data management.
+The reader is invited to refer to our original publications \citep{Halchenko2021} \citep{wagner2020datalad} for a more detailed description.
 %This introduces DataLad as a software solution for research data management
 
+\subsection{An overview of features and their use for \gls{rdm}}
+
+Although many solutions to common challenges exist, putting \gls{rdm} into practice remains a complicated endeavor:
+In most neuroimaging studies, scientific insights are created from well-described raw data and its derivatives.
+Standards and repositories as mentioned in \cref{chap:k1-rdm-2} form a basis for managing, storing and sharing them, and being able to efficiently retrieve and update these research objects across a variety of available storage options is an important part of \gls{rdm} \citep{borghi2018data}.
+However, homogeneous data transport is complicated by disconnected and non-interoperable hosting solutions.
+Different storage services can require different protocols, means of authentication, or other idiosyncrasies (CITATION NEEDED). \\
+Over the course of a research project, often as part of the standard, multi-stepped processing workflow \citep{poline2011}, data also evolve and change:
+Continued acquisitions enlarge the raw dataset.
+Transformations to community standards such as \gls{BIDS} \citep{gorgolewski2016brain} change file formats, dataset organization, or enrich available metadata.
+Continuous quality control processes or accidental findings can bring errors to light and improve datasets with fixes (e.g., CITATION NEEDED).
+In the case that data or other research objects were subject to change over the course of a project, there is a need to identify which exact version has been used -- otherwise, the reproducibility of a result is threatened (CITATION NEEDED). \\
+Likewise, projects might draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, despite much greater data availability.
+If the original dataset, however, is only available as a bulk download, a project has heavier disk space demands on storage solutions than their eventual data requirements.
+Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of standard large-scale datasets can become infeasible \citep{horien2021hitchhiker} \citep{grisham2016proposed}. \\
+Finally, \textit{digital provenance}, the information bout how tools, data, and actors were involved in the generation of a digital research outcome is crucial to understand and reproduce a result, but rarely fully transparent and documented, let alone machine-readable or actionable.
+% NISO The ability to manage data and metadata and track the data-analysis process provides a basis for rigor and reproducibility.
+
+
+DataLad (\href{http://datalad.org}{datalad.org}) \citep{Halchenko2021} is a Python-based, MIT-licensed software tool for the joint management of code, data, and their relationship, developed with the aim to assist with common \gls{rdm} tasks in science.
+Its main features provide solutions to the difficulties outlined above:
+Building up on established open source version control tools, Git (CITATION) and git-annex (CITATION NEEDED), DataLad provides the ability to version control data of any size or type.
+Bridging a large variety of storage and Git repository hosting services with its interoperability layer, it streamlines procedures to consume, publish, and update digital data, and unifies authentication procedures for an end user.
+Due to a separation between file content and file identity metadata, DataLad allows
+- fine grained access control for data providers
+- downloads at single file granularity for data users
+- lightweight but actionable access to data
+
+With dedicated functionality to capture complete and actionable process provenance of data transformations and allow automatic re-computation, DataLad can record machine-actionable metadata how files came into existence.
+Based on Git's submodule mechanism, DataLad allows for modular structuring of ...
+ for  and to link them as precisely versioned, lightweight
+dependencies. DataLad helps to make science more reproducible and FAIR (Wilkinson et al.,
+2016). It can capture complete and actionable process provenance of data transformations to
+enable automatic re-computation.
+
+Fundamental to DataLad's functionality is the concept of the ``DataLad dataset'', DataLad's central data structure.
+On a technical level, it is a joint Git/git-annex repository.
+
 %% from datalad paper:
+
 
 Code, data and computing environments are core components of scientific projects. While
 the collaborative development and use of research software and code is streamlined with es-
@@ -136,6 +176,25 @@ features enables workflows that are particularly suited for reproducible science
 tionable process provenance capture for arbitrary command execution that affords automatic
 re-execution. To this end, it builds on and extends two established tools for version control
 and transport logistics, Git and git-annex.
+
+
+\subsection{Software adoption and relevance}
+
+DataLad does not employ tracking code.
+As such, the exact number of its users is not known.
+However, download statistics from the major Python package managers \texttt{pip} and \texttt{conda}, and popularity statistics from users of the Debian operating system can provide rough references.
+According to pypistats.org, the main DataLad Python package was downloaded from the Python Package Index 300 times per day on average in May 2023.
+The Python distribution Anaconda (anaconda.org) counts a total of 333932 downloads of the software throughout versions 0.9.3 (April 2018) and 0.18.3 (May 2023), averaging 180 downloads per day.
+The \texttt{popularity-contest} software is a Debian package that, if installed on a users system, reports anonymous statistics about most-used Debian packages.
+This data is aggregated into a popularity contest.
+According to it, in May 2023 between 0.04 and 0.05 percent of systems reporting statistics have an installation of the DataLad Debian package, or the equivalent python3-datalad Debian package.
+All of these sources contain biases that limit conclusion to the number of users, though.
+Installations via Python package managers are commonly performed by individual end users, whereas installations of Debian packages can correspond to system-wide installations on multi-user systems such as high performance computing infrastructure.
+Likewise, upgrades of existing installations to more recent versions are included in these data, as well as temporary installations of the software in automated continuous integration test suites.
+Nevertheless, download statistics confirm that it is an actively used tool with a user base that exceeds the circle of its developers by far.
+This is also confirmed by citations of the academic paper, totaling 51 1.5 years after its publication by \citet{Halchenko2021}, and active contributor community around the source repository on GitHub, currently amounting to 48 individuals with committed code contributions.
+
+
 
 \pagebreak
 
