@@ -14,10 +14,10 @@
 \chapter{Ensuring computational reproducibility across computational environments}
 \label{chap:k3}
 
-
-Partially fueled by funding mandates (CITATION needed) and research curricula founded within the Open Science Movement (CITATION NEEDED), practices of publishing reproducibly and reproducing published results are becoming more frequent.
+% from NISO: Beyond their potential to mitigate transparency and reproducibility issues, these practices provide important benefits for individual researchers by increasing exposure, reputation, chances of publication, number of citations, media attention, potential collaborations, and position and funding opportunities (Allen and Mehler, 2019; McKiernan et al., 2016; Nosek et al., 2022; Markowetz, 2015; Hunt, 2019).
+Partially fueled by external incentives \citep{mckiernan2016open}, research curricula founded within the Open Science Movement (CITATION NEEDED), and a growing ecosystem of openly available infrastructure and tools \citep{NISO2022119623}, practices of publishing reproducibly and reproducing published results are becoming more frequent.
 Grass-roots movements such as Reprohack (\href{https://www.reprohack.org/}{www.reprohack.org}) or the ``Ten Years Reproducibility Challenge'' (\href{https://rescience.github.io/ten-years/}{rescience.github.io/ten-years}) train researchers to check published studies for reproducibility.
-Widespread sharing of code and data allows researchers to verify, reuse, and improve upon past work of others (CITATION NEEDED).
+Widespread sharing of code and data allows researchers to verify, reuse, and improve upon past work \citep{borghi2018data}.
 Consequently, though, attempts to reproduce previous studies often happen in different computational environments than those that originally created the results in question.
 Ensuring computational reproducibility across computational environments is, however, a difficult technical challenge.
 This following chapter outlines first its challenges, particularly in the field of neuroimaging, then its opportunities, and lastly an implementation to ensure computational reproducibility across computational environments.
@@ -26,6 +26,7 @@ Parts of this chapter were published as \citet{wagner2022fairly}: ``FAIRly big: 
 
 \subsection{Terminology}
 
+% from NISO: psychology (Open Science Collaboration, 2015; Klein et al., 2018), social sciences (Camerer et al., 2016, 2018), neuroimaging (Munafò et al., 2017; Botvinik-Nezer et al., 2020; Li et al., 2021), preclinical cancer biology research (Errington et al., 2021; Errington et al., 2021), and more (Hutson, 2018; Nissen et al., 2016; Serra-Garcia and Gneezy, 2021).
 Over the past decade, so-called \textit{reproducibility crises} in numerous fields have increased the interest of the scientific community and funders in reproducibility (CITATION NEEDED) \citep{wagner202310}.
 However, proposals to increase reproducibility, transparency, and robustness of science were made independently in various disciplines long before the current trend, in some cases dating back several centuries (maybe Robert Boyle, chemistry CITATION NEEDED).
 Even the field of \textit{computational reproducibility} -- despite increased usage of the term in scientific literature only from 2015 onward (see \cref{fig:ngram}) -- originated already more than 30 years ago in the field of seismology \citep{claerbout1992electronic} \citep{buckheit1995wavelab}.
