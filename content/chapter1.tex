@@ -42,6 +42,48 @@ The largest funding institution for the sciences and humanities and research in 
 The DFG put forward several timely recommendations: Research software should be open source \citep{dfg}
 
 
+\subsection{Documentation deficits of scientific software and their consequences}
+
+Even if state-of-the art software tools that could improve scientific practice exist, their mere existence is insufficient to ensure uptake and use according to best practices.
+To improve scientific practice, software tools need to enable and empower their users through usability and documentation.
+This makes documentation a major factor in the success of scientific software, and an integral part of the software development process.
+% what is documentation, provide definitions/delineations
+Documentation is information about a software.
+It fulfills different roles, depending on its target audience, and the literature distinguishes several different types of documentation.
+\citet{Parnas2011} categorizes documentation either as a \textit{tutorial} or as a \textit{reference work}.
+Both kinds are needed for different audiences: Whereas experienced users and contributors need reference documents to guide further development, such as the elements of an \gls{api}, new users and contributors need a basic understanding of the software tool and its intended use cases.
+Commonly distinguished are also \textit{technical} and \textit{user} documentation: The former contains information for developers and users by describing features, maintenance information, or design choices.
+The latter targets end users of a software product with accessible explanations how to install a tool, use its features, or step-by-step instructions (CITATION NEEDED). % https://medium.com/@kesiparker/technical-documentation-vs-user-documentation-ff68e7de1985
+User documentation also matches the concept of \textit{task-based} documentation, which is broken down into the activities that users will go through as they work, starting with basic tasks and continuing with more advanced tasks that become possible as users continue to work. (CITATION NEEDED) %https://www.linux-magazine.com/Online/Blogs/Off-the-Beat-Bruce-Byfield-s-Blog/Why-projects-need-task-based-documentation
+
+% maybe Design/Architectural docs
+
+Scientific software often lacks comprehensive documentation \citep{segal2007some} \citep{pawlik2012documentation}.
+Commonly reported reasons for this are a lack of funding, incentives, and interest by software developers \citep{pawlik2012documentation}.
+
+% consequences
+
+Yet although it is commonly regarded as separate from the actual piece of software, software documentation is heavily tied to the quality of a software tool and the software development process.
+A lack of documentation hinders knowledge transfer both among users and developers, impedes maintenance, and creates a steep learning curve for new users and new developers alike \citep{theunissen}.
+\citet{Parnas2011} describes a vicious circle that sets in when the quality of software documentation is poor:
+``Reduced [documentation] quality leads to reduced [software] usage, [r]educed [software] usage leads to reductions in both resources and motivation, [r]educed resources and motivation degrade [software] quality further''
+% maybe workflows that break, workflow testing
+
+
+\section{Documentation in the DataLad project}
+
+Since the first release (0.0.1, March 2015), DataLad had technical documentation with a design overview and a reference documentation.
+Any amount of documentation is better than no documentation at all.
+However, documentation can still be insufficient if it does not meet the needs of the target audience.
+Solely technical or reference documentation, for example, can be suboptimal for novices: It may be incomplete, narrowly focused on individual commands, or assume existing knowledge readers lack (Segal, 2007; Pawlik et al., 2015), and can thereby discourage potential users or inhibit the adoption of valuable tools.\\
+Even though technical documentation is useful for developers, a central target audience for documentation of the DataLad ecosystem are scientists.
+While experts in their respective domains and methodologies, scientists may not have domain-agnostic technical skills.
+Task sets such as those required in \gls{rdm} require a broad set of technical skills, however, which is \citep{grisham2016proposed}.
+Research curricula seldom teach computing ecosystem literacy.
+In fact, even computer science curricula often miss critical topics about the computing ecosystem.
+At the \gls{MIT}, this lack famously resulted in the internationally popular, self-organized class ``The missing semester of CS education'' (\href{https://missing.csail.mit.edu/about/}{missing.csail.mit.edu}).
+In addition, the high usability of modern computers' and applications' front ends spares users the need to develop the same level of familiarity with their computers than previous generations of computer users had \citep{mehlenbacher2003documentation}. \\
+Research suggests, too, that scientists' needs for documentation go beyond reference manuals.
 In an analysis of user questions in support forums of scientific software packages, \citet{swarts2019open} found that the focus in 80\% of inquiries was on operations and tasks, such as a required sequence of operations to achieve a specific goal.
 In breaking down user questions by purpose, \citet{swarts2019open} further found that users were most interested in a description of operations or tasks, followed by insights about the reasons behind the action.
 And in separating documentation types into ``feature-based'' (closer related to the concept of reference documentation) or ``task-based'' (closer related to the concept of a tutorial),  \citet{swarts2019open} reports twice as many questions seeking explanations in software with feature-based compared to task-based documentation.
