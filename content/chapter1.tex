@@ -13,35 +13,35 @@
 \chapter{Improving scientific practice through software usability}
 \label{chap:k2}
 
-As outlined in the Introduction, software tools for \gls{rdm} exist.
-However, their mere existence is insufficient to ensure uptake and use according to best practices.
-To improve scientific practice, software tools need to empower their users through usability and documentation.
-This makes documentation a major factor in the success of scientific software, and an integral part of the software development process.
+
+
+
 This next chapter details how a documentation project for DataLad increased software quality, software popularity and enabled users to tackle complex \gls{rdm} use cases.
 It refers to our original publication \citet{wagner2020datalad}.
 
-\section{Documentation deficits of scientific software and their consequences}
 
-Software documentation is ...
+\section{Scientific software}
 
-Scientific software often lacks comprehensive documentation \citet{segal2007some}.
-Commonly reported reasons for this are a lack of funding, incentives, and interest by software developers (CITATION NEEDED).
-
-Although it is commonly regarded as separate from the actual piece of software, software documentation is heavily tied to the quality of a software tool.
-\citet{Parnas2011} describes a vicious circle that sets in when the quality of software documentation is poor:
-
-\begin{quote}
-\begin{enumerate}
-\item Reduced [documentation] quality leads to reduced [software] usage.
-\item Reduced [software] usage leads to reductions in both resources and motivation.
-\item Reduced resources and motivation degrade [software] quality further
-\end{enumerate}
-\end{quote}
+Scientific software, often also referred to as research software, is an integral part of research in science, engineering, and humanities.
+It can broadly be defined as software used for scientific purposes.
+As software requirements for scientific use cases can be specialized, the developers of research software often overlap with the community of scientists that uses the software, and over the past decade, the term ``Research Software Engineer'' has been established to describe researchers that dedicate parts of their scientific work to creating and maintaining software \citep{hettrickRSE}
 
 
-According to \citet{Parnas2011}, documentation can be categorized for use either as a \textit{tutorial} or as a \textit{reference work}.
-Both kinds are needed for different audiences: Whereas experienced users and contributors need reference documents to guide further development, new users and contributors need a basic understanding of the software tool and its intended use cases.
-Reference documentation can thus be suboptimal for novices: It may be incomplete, narrowly focused on individual commands, or assume existing knowledge novices lack (Segal, 2007; Pawlik et al., 2015), and can thereby discourage potential users or inhibit the adoption of valuable tools.
+
+The United Kingdom's Engineering and Physical Sciences Research Council describes software as a ``critical infrastructure that underpins cutting edge science and engineering research'' (CITATION) % https://www.ukri.org/what-we-offer/browse-our-areas-of-investment-and-support/research-infrastructure-theme/
+
+More recently, research software has been gaining academic credit it has long lacked.
+It is recognized as academic output in the San Francisco Declaration on Research Assessment (DORA; \href{https://sfdora.org/}{sfdora.org}), and the Agreement on Reforming Research Assessment (CoARA; \href{https://coara.eu}{coara.eu}), both of which have been signed by thousands of academic institutions worldwide. The \gls{grf}, the largest funding institution for the sciences and humanities and research in Germany, counts software a ``scientific result'' in their evaluation of academic CVs.
+Academic journals, such as the Journal of Open Source Software (\href{https://joss.theoj.org/}{joss.theoj.org/}), and article types, such as ``Nature Toolbox'' (\href{https://www.nature.com/nature/articles?type=toolbox}{www.nature.com/nature/articles?type=toolbox}), have been created to support the scholarly publication and reuse of research software.
+And calls for proposals to improve the quality, usability or longevity of research software have been put forward by major funders, for example in Germany \citep{dfgrs}, the United Kingdom \citep{ukri}, or the United States \citep{nih}.
+
+
+
+The largest funding institution for the sciences and humanities and research in Germany, the \gls{grf}, states that access to data and software are of comparable importance to science as access to publications \citep{dfg}
+
+The DFG put forward several timely recommendations: Research software should be open source \citep{dfg}
+
+
 In an analysis of user questions in support forums of scientific software packages, \citet{swarts2019open} found that the focus in 80\% of inquiries was on operations and tasks, such as a required sequence of operations to achieve a specific goal.
 In breaking down user questions by purpose, \citet{swarts2019open} further found that users were most interested in a description of operations or tasks, followed by insights about the reasons behind the action.
 And in separating documentation types into ``feature-based'' (closer related to the concept of reference documentation) or ``task-based'' (closer related to the concept of a tutorial),  \citet{swarts2019open} reports twice as many questions seeking explanations in software with feature-based compared to task-based documentation.
