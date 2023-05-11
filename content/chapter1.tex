@@ -98,37 +98,113 @@ This hints at a disconnect between knowing \textit{how} something should be done
 Overall, it highlights that users of scientific software show a clear need beyond the documentation of individual commands, but seek to understand general usage principles and master complex combinations of features to achieve specified goals.
 This type of empowerment is what the DataLad handbook project aimed to achieve.
 
+% Only rarely does a consumer tool involve a terminal instead of a \gls{gui}, and typical applications perform a complete suite of tasks such that users do not need to combine several tools to accomplish one goal (CITATION NEEDED).
+% However, powerful scientific tools are often command-line-based (e.g., EXAMPLES), and complex task sets such as those required in \gls{rdm} require a broad set of technical skills \citep{grisham2016proposed}.
+% DataLad, too, is primarily developed as a command line tool.
 
-Only rarely does a consumer tool involve a terminal instead of a \gls{gui}, and typical applications perform a complete suite of tasks such that users do not need to combine several tools to accomplish one goal (CITATION NEEDED).
-However, powerful scientific tools are often command-line-based (e.g., EXAMPLES), and complex task sets such as those required in \gls{rdm} require a broad set of technical skills \citep{grisham2016proposed}.
-DataLad, too, is primarily developed as a command line tool.
-
-\pagebreak
+%\pagebreak
 
 \subsection{The DataLad Handbook: A user-focused and workflow-based addition to standard software documentation}
 
-The initial idea to the DataLad Handbook arose at the 2019 Meeting of the \gls{ohbm}, during the Symposium ``From Open Science to Science: Shifting the status quo in data sharing, software, and publishing''.
+The initial idea to the DataLad Handbook (\href{http://handbook.datalad.org}{handbook.datalad.org}) arose at the 2019 Meeting of the \gls{ohbm}, during the Symposium ``From Open Science to Science: Shifting the status quo in data sharing, software, and publishing''.
 Gregory Kiar's presentation ``Technology and Platforms Enabling Reproducible and Open Publishing'' included a recommendation and warning about DataLad: While it would be a powerful tool capable of solving many challenges, users will face difficulties learning which features existed and how they could use them \citep{kiar}.
-Motivated by this expressed need of the scientific community for additional guidance, the DataLad Handbook project was set out with the following goals:
+Motivated by this expressed need of the scientific community for additional guidance, the DataLad Handbook project was initiated.
+
+\subsubsection{Design considerations}
+We identified three types of stakeholders with different needs: \textit{Researchers} need accessible educational content to understand and use the tool, \textit{planners}, such as PIs or funders, need high-level, non-technical information in order to make informed yet efficient decisions on whether the tool fulfills their needs, and \textit{trainers} need reliable, open teaching material.
+Drawing from personal user experiences with the software, usability research (CITATION NEEDED), and educational concepts (CITATION NEEDED), the Handbook project was set out with the following goals about its contents:
+
+\begin{itemize}
+	\item Applicability -> tutorial,  real-world \gls{rdm} applications -> domain-agnostic
+	\item Integrative concept of the entire software -> The contents covered by the Handbook need to increase in difficulty, and build up on previous content
+	\item Up-to-dateness: tested , up-to-date code snippets
+	\item Nevertheless, users should be able to mix-and-match/not have to read the entire documentation
+	\item The language should be accessible for technical novices
+	\item Trial and error: Common errors are explicitly demonstrated in the safe-space of a tutorial
+
+\end{itemize}
+
+Arising from this specification analysis, the following initial structure was designed to meet the above requirements and fulfill the needs of the three stakeholders \citep{wagner_adina_s_2020_7906718}\footnote{This structure was extended prior to the second release with an additional part ``Beyond Basics'', covering advanced features}:
+
+\begin{itemize}
+	\item Introduction: The first part of the book, covering high-level descriptions of the software and its features and detailed installation instructions for all operating systems.
+	\item Basics: The second part of the book, written in the form of a continuous, code-along tutorial, set in a domain-agnostic fictional storyline about an \gls{rdm} application
+	\item Usecases: The third part of the book, containing short, standalone start-to-end descriptions of real-world usecases, with concise step-by-step instructions, and references to further reading in the Basics.
+\end{itemize}
+
+In addition to design and content requirements, the following technical goals were set:
+
+\begin{itemize}
+	\item integration test suite
+	\item Optional advanced information: Toggleable or custom sections contain extra information. This keeps the visible information consise, but allows for exploration of advanced contents
+	\item web-based and printable/downloadable
+	\item versioning
+\end{itemize}
 
 
 
-A user-driven alternative to reference documentation by software developers, ``Documentation Crowdsourcing'', has been successfully employed by the NumPy project \citep{pawlik2014crowdsourcing}.
-Extending this concept beyond documentation, we have created the DataLad handbook (\href{http://handbook.datalad.org}{handbook.datalad.org}) as a free and open-source, user-driven and -focused narrative tutorial.
+\subsubsection{The technical backbone}
+
+The technical backbone of the Handbook was chosen with the intent to support declared goals, and to maximize configurability, autonomy, and reusability of the project.
+It builds up entirely from flexible and extendable open source infrastructure:
+On the highest level, it uses Sphinx as a documentation generator (\href{https://www.sphinx-doc.org/en/master/}{www.sphinx-doc.org}).
+Sphinx transforms documents written in reStructuredText, a lightweight markup language, to a variety of output formats, among them HTML, PDF, \LaTeX, or EPUB.
+Initially a by-product of the Python documentation, it has been adopted by the Open Source community at large;
+GitHub's dependency graph reports that it is used by almost 300.000 projects in TODO-May 2023\footnote{https://github.com/sphinx-doc/sphinx/network/dependents}. \\
+Sphinx supports an extension mechanism with which additional functionality can be integrated.
+Leveraging this mechanism, the Handbook project extended standard Sphinx features with custom admonitions and designs, for example toggle-able boxes for optional details.
+This is implemented as a Python package alongside the Handbook source code, making the Handbook project a reusable and installable Sphinx extension.
+A major functional enhancement is provided with a separate Python package, \texttt{autorunrecord}, an additional custom-made Sphinx extension that allows sequential execution of code in a specified environment, and embedding a record of the code and its output as code snippets into the documentation. \todo{make autorunrecord citable}
+Figure TODO provides an overview of the custom-developed features. \\
+\todo{create figure of custom admonitions}
+Free hosting for the project is provided by Read the Docs (\href{https://readthedocs.org/}{readthedocs.org}), a free software documentation hosting platform that integrates with Sphinx.
+Illustrations in the handbook are based on the undraw project by Katerina Limpitsouni (\href{https://undraw.co/}{undraw.co}). \\
+The ability of the documentation to sequentially execute code and record its outcomes has been used to utilize the Handbook as an integration test for the DataLad software in addition to a user guide.
+If new software developments in the DataLad core packages break documented workflows, a continuous integration test suite will fail, alerting developers to the fact that their changes break user workflows. \\
+The project is openly hosted on GitHub.
+To ensure reusability, such as the adaptation by \citet{brooks2021handbook}, the project is released under a CC-BY-SA license.
+Under its terms, all elements can be reused in original or derived form for all purposes under the condition that the original project is attributed and that derivative work is shared under an identical ("not more restrictive") license (CITATION NEEDED?).
 
 
+% figure of custom admonitions
 
-Usability adherence
 
-Timeline:
-The DataLad Handbook has been under continuous development for more than three years, averaging two releases per year.
-As of May 2023, a total of 53 contributors provided input in the form of content, bug fixes, or infrastructure improvements.
-During December 2022 and July 2023, the DataLad Handbook averaged 30000 total page views per 30 days.
+\subsubsection{Project and community management}
 
+Ensuring the longevity of software projects beyond the duration of individual researcher's contracts requires community building (CITATION NEEDED).
+A user-driven alternative to documentation by software developers, ``Documentation Crowdsourcing'', has been successfully employed by the NumPy project \citep{pawlik2014crowdsourcing}.
+% maybe mention pandas documentation sprint: https://python-sprints.github.io/pandas/
+The Handbook project extends this concept beyond reference documentation.
+To achieve this, it set up to encourage and welcome improvements by external contributors.
+Mirroring processes in larger crowd-sourced documentation projects such as the ``The Turing Way handbook for reproducible, ethical and collaborative research'' \citep{the_turing_way_community_2022_7625728}, credit is given for both code-based and non-code-based contributions.
+Contributors are recognized in the source repository, on the DataLad Website, and as co-authors in both the printed version of the Handbook and its Zenodo releases.
+As of TODO-May 2023, a total of TODO-54 contributors provided input in the form of content, bug fixes, or infrastructure improvements.
+
+
+\subsubsection{Impact and scope}
+
+Work on the DataLad Handbook began in June 2019, and the first release followed in January 2020.
+It has been under continuous development for more than four years, averaging two releases per year, and complements  the DataLad ecosystem with a comprehensive user guide.
+Releases of the DataLad core package are coordinated with matching releases of the Handbook project, and past release versions remain accessible online.
+Its PDF version spans more than 600 pages.
+An analysis of traffic during from December 2022 and TODO-July 2023 revealed that handbook.datalad.org averaged TODO-30000 total page views per 30 days.
+In the same time span, the technical documentation of DataLad at docs.datalad.org averaged TODO-8000 total page views per 30 days, roughly a fifth of the traffic of the user documentation.
+\todo{create a graph}
+
+%maybe citations?
+Confirming observations from the literature \citep{loggemDDD}, the conjunct development of user-documentation has positive effects on software quality.
+As the writing process involves manual software testing, we observed a higher discovery rate of software errors.
+The user-focused approach uncovers deficiencies of the technical documentation and \gls{api} elements with suboptimal user experience.
+The workflow-based nature of demonstrations highlights API inconsistencies.
+And the integration test that the handbook constitutes catches incompatibilities between the software and common usage practice.
+% maybe lower barrier of access for non-technical people to raise issues or feature requests
+These documentation features facilitate software development, and had a major impact on the conjoin 0.12.0 release of DataLad (Jan 2020), the first with a matching handbook release.
+The popularity data in \cref{fig:popcon} also confirms a marked increase in downloads from this date onward.
 
 \begin{figure}
-	\includegraphics[width=\textwidth]{popcon-datalad.png}
-	\caption[Debian package popularity counts for DataLad]{Popularity of the Debian packages DataLad and python3-datalad, expressed in percent of users that installed the package from the total amount of users submitting download statistics. Source: Debian Popcon, May 2024, CC-0}
+	\centering
+	\includegraphics[width=.8\textwidth]{popcon-datalad.png}
+	\caption[Debian package popularity counts for DataLad]{Popularity of the Debian packages DataLad and python3-datalad over time, expressed in percent of users that installed the package from the total amount of users submitting download statistics. January 2020 marks the first release of the Handbook as an accompanying user guide. Source: Debian Popcon, May 2024}
 	\label{fig:popcon}
 \end{figure}
 
