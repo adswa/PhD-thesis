@@ -50,7 +50,16 @@ Following the definition of \citet{peng2006}, \textit{reproducibility} refers to
 
 
 % link back to research data management
-The fact that different neuroimaging software tools can produce distinct results despite using the similar analysis methodology has long been known (cite Camille) and even exploited (cite Eklund).
+% interpipeline reliability
+The fact that different neuroimaging software tools can produce distinct results in the same data despite using similar conceptual methodology is well known \citep{bowring2019exploring}.
+This has been attributed to implementation differences (CITATION NEEDED), software errors \citep{eklund2016cluster}, or analytic configurations: \citet{li2021moving} found that the choice of output space or resolution can have a marked impact on variability between pipelines.
+Moreover, intra-pipeline reliability can decrease surprisingly with only minor variations. \citet{mueller2017commentary} reported that the choice of resampling resolution impacts alpha inflation, and \citet{li2021moving} found that the decision of whether or not to include global signal regression was a major source of intra-pipeline variation.
+
+
+% However, a growing number of studies suggest that differences in the implementation of these processing steps or how they are “glued together” can yield notably different outcomes. Studies systematically comparing specific preprocessing steps such as segmentation15, motion correction16, and registration17–19 have reported substantial variation in outputs generated across independently developed packages when applied to the same data. In the analysis of task fMRI data, end-to-end pipelines built using different software packages have been found to produce marked variation in the final results20–23. from https://www.biorxiv.org/content/10.1101/2021.12.01.470790v2.full
+
+% changes in statistical inference: the finer the resampling resolution, the more inflated the error rate:
+
 But also differences in the operating system, or in versions of a singular software tool or operating system can result in different outcomes of the same analysis \citep{gronenschild2012effects} \citep{glatard2015reproducibility}.
 
 
