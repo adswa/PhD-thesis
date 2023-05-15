@@ -48,39 +48,60 @@ Following the definition of \citet{peng2006}, \textit{reproducibility} refers to
 
 % maybe NARPS paper?`
 
-
-% link back to research data management
-% interpipeline reliability
-The fact that different neuroimaging software tools can produce distinct results in the same data despite using similar conceptual methodology is well known \citep{bowring2019exploring}.
-This has been attributed to implementation differences (CITATION NEEDED), software errors \citep{eklund2016cluster}, or analytic configurations: \citet{li2021moving} found that the choice of output space or resolution can have a marked impact on variability between pipelines.
-Moreover, intra-pipeline reliability can decrease surprisingly with only minor variations. \citet{mueller2017commentary} reported that the choice of resampling resolution impacts alpha inflation, and \citet{li2021moving} found that the decision of whether or not to include global signal regression was a major source of intra-pipeline variation.
-
+The building blocks of research output extend to more than the files that constitute the actual research output, but also to all elements involved in its generation \citep{claerbout1992electronic}.
+Consider different types of research output:
+Raw data originates from acquisitions based on - potentially ongoing - experiments, raw data transformations, or data cleaning.
+Processed data or results stem from computations with analysis code or software in specific versions on particular data.
+And software, expressed in raw (code) or derived (transformed into executable) form, is created or used in specific computational environments, with compilers, underlying libraries, and systems in distinct versions.
+Consequently, these building blocks play an integral part in the genesis of research outputs, and changes in these building blocks can translate to changes in the resulting research output.\\
+The fact that different neuroimaging software tools can produce distinct results from the same data despite using similar conceptual methodology is well known \citep{bowring2019exploring}.
+This has been attributed to implementation differences (CITATION NEEDED), software errors \citep{eklund2016cluster}, or analytic configurations.
+For example, in task-based fMRI, \citet{li2021moving} found that the choice of output space or resolution can have a marked impact on variability between conceptually similar processing pipelines.
+Moreover, surprising result variability can also occur when the same data is analyzed repeatedly with the same processing pipeline, but minor variations in parametrization. \citet{mueller2017commentary} reported that the choice of resampling resolution impacts alpha inflation, and \citet{li2021moving} identified the decision whether or not to include global signal regression as a major source of intra-pipeline variation.
+But also different operating systems, or differences in versions of a singular software tool or operating system can result in different outcomes of the same analysis \citep{gronenschild2012effects} \citep{glatard2015reproducibility}.
+Computational reproducibility across computing environments thus often remains elusive unless accounted for from the very start.
+Therefore, in addition to ``Everything matters'',  \citet{kennedy2019everything} cued the phrase ``Reproducible by Design (as opposed to reproducibility as an afterthought)'' for conducting research in a way that makes computational reproducibility possible.
+The next section highlights a number of strategies for this, and how reproducibility is tied to research data management.
 
 % However, a growing number of studies suggest that differences in the implementation of these processing steps or how they are “glued together” can yield notably different outcomes. Studies systematically comparing specific preprocessing steps such as segmentation15, motion correction16, and registration17–19 have reported substantial variation in outputs generated across independently developed packages when applied to the same data. In the analysis of task fMRI data, end-to-end pipelines built using different software packages have been found to produce marked variation in the final results20–23. from https://www.biorxiv.org/content/10.1101/2021.12.01.470790v2.full
-
-% changes in statistical inference: the finer the resampling resolution, the more inflated the error rate:
-
-But also differences in the operating system, or in versions of a singular software tool or operating system can result in different outcomes of the same analysis \citep{gronenschild2012effects} \citep{glatard2015reproducibility}.
 
 
 \section{Towards re-usable research objects}
 
-Science is an incremental process that produces and builds up on more than just published journal articles \citep{mons2018data}.
-Code, data, results, or tools of previous finished or unfinished projects fuel new undertakings.
-For both the original authors of a research output and its subsequent users - which may also be its original authors -, reusability of a research output is arguably its most important feature because of economical or efficiency considerations, as reusable research will speed up progress and curb costs.
-Digital research outputs are the by- or end-products of scientific studies or analyses, from code, software, raw data or processed data, to analysis results or papers.
-Reusing digital research outputs refers to the further use or utilization of any such research outputs inside or outside its original research context, by the original author or different actors.
-The reusability of research objects has become a distinct characteristic of scientific practice as it allows for reproduction, verification, building up upon and extending existing work, evidence synthesis, and minimizing duplicate efforts in the advancement of science(Thanos, 2017).
+
+The reusability of research objects has become a distinct characteristic of scientific practice as it allows for reproduction, verification, building up upon and extending existing work, evidence synthesis, and minimizing duplicate efforts in the advancement of science \citep{thanos2017research}.
 With this, it maximizes the impact of the funding and work that resulted in the research output.
-Therefore, it is considered the “ultimate goal” of the FAIR principles, a widely endorsed set of guidelines to make data Findable, Accessible, Interoperable, and Reusable \citep{wilkinson2016fair}, and an explicit and central expectation in a variety of funding sources such as the Economic and Social Research Council (ESRC, UK), the European Research Council (ERC, EU), or the National Institutes of Health (NIH, US).
-In the scope of the FAIR principles, reusability focuses on the ability of a human or a machine to decide if data are useful in a particular context based on richly curated metadata.
-In practice, creating fully reusable resources as defined by the FAIR principles is difficult and impractical if one operates within a system in which the necessary standards and procedures for creating these metadata aren’t yet introduced, incentivized, or required.
-If curation efforts require extensive training, they can turn into a bureaucratic data governance effort with little immediately obvious benefits for the curator, in particular if the curation efforts take place only after a research output has been generated \citep{zehl2016handling}.
+Therefore, it is considered the “ultimate goal” of the FAIR principles \citep{wilkinson2016fair}, and an explicit and central expectation in a variety of funding sources such as the Economic and Social Research Council (ESRC, UK), the European Research Council (ERC, EU), or the National Institutes of Health (NIH, US).
 
-Here, we describe a pragmatic approach towards reusable research outputs that creates reusable resources more or less as a byproduct of practical research data management.
+In the scope of the FAIR principles, reusability focuses on the ability of a human or a machine to decide if data are useful and usable in a particular context based on richly curated metadata.
+This reusability requires trust \citep{bechhofer2010research}. Re-users must be able to audit the steps performed in an experiment or analysis in order to be convinced of the validity of the results or derivatives.
+FAIR principle R1.2, ``(Meta)data are associated with detailed provenance'', refers to this.
+In practice, however, the necessary standards and procedures for creating these metadata are not universally introduced,  incentivized, or required.
+Where fully FAIR resources are still difficult or impractical to create, manual reproducibility typically provides this form of trust: for example when a new student checks if the previous findings that a their project builds up on still hold.
 
-The building blocks of research output extend to more than the files that constitute the actual research output, but also to all elements involved in its generation \citep{claerbout1992electronic}.
-Consider three types of research output: Raw data originates from acquisitions based on - potentially ongoing - experiments, raw data transformations, or data cleaning, processed data or results stem from computations with analysis code or software in specific versions on particular data, and software, expressed in raw (code) or derived (transformed into executable) form, is created or used in specific computational environments, with compilers, underlying libraries, and systems in distinct versions.
+
+
+% curation needs to be pragmatic
+Ideally, research data management creates reusable research outputs with little overhead, as an automatic byproduct of regular research activities.
+If metadata curation efforts take place only after a research output has been generated, or are done by other people than the original creators, FAIRification can turn into a bureaucratic data governance effort with little immediately obvious benefits for the curator \citep{zehl2016handling}.
+
+The term "reusable research object" was cued in a conceptual position paper by \citet{bechhofer2010research}, and defined as a ``container for a principled aggregation of resources, produced and consumed by common services and shareable within and across organisational boundaries. [...It] includes not only the data used, and methods employed to produce and analyse that data, but also the people involved in the investigation. An association with a dataset (or service, or result collection, or instrument) is now more than just a citation or reference to that dataset (or service or result collection). The association is rather a link to that dataset (or service or result collection) that can be explicitly followed or dereferenced providing access to the actual resource and thus enactment of the service, query or retrieval of data, and so on.''
+
+% Detail how datalad adheres to these requirements.
+In the following, I will argue why the \gls{rdm} features that DataLad provides fulfill these requirements, and how the DataLad dataset or its contents can be seen as a reusable research object.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.9\textwidth]{vamp.png}
+	\caption[]{}
+	\label{fig:ngram}
+\end{figure}
+
+In the spirit of this conceptual framework, the next section details a technical implementation and proof-of-concept analysis to create such reusable research objects as a byproduct of \gls{rdm} in analyses of any scale.
+
+
+
 Those building blocks are integral information to retrace the genesis, reproduce, or trust research outputs (Kennedy et al., 2019), but they are rarely ever static.
 Whatever created a given output evolves during usually incremental processes such as continuous quality control, acquisition, maintenance, or project revision.
 However, changes in these building blocks will influence the resulting research output \citep{kennedy2019everything} 2019),\citep{glatard2015reproducibility}.
@@ -104,6 +125,8 @@ be compared to a mathematician publishing an announcement of a mathematical theo
 without giving the proof. Waveleticians ought to publish their complete computational
 environments
 
+
+As highlighted in the Introduction, digital research outputs are the by- or end-products of scientific studies or analyses, from code, software, raw data or processed data, to analysis results or papers.
 
 \pagebreak
 
