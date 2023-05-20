@@ -338,6 +338,17 @@ tionable process provenance capture for arbitrary command execution that affords
 re-execution. To this end, it builds on and extends two established tools for version control
 and transport logistics, Git and git-annex.
 
+% 5.2.1. WHAT
+%Primary or preprocessed data form the basis of scientific analyses and insights. Flexible storage options and means for retrieval and updating of data are crucial for its further use. DataLad (Hanke et al., 2021) is a general purpose tool for managing and version controlling digital files in a decentralized manner, developed by a US-German collaboration in computational neuroscience. It can assist with storing and retrieving your own or other’s data in a transparent and streamlined fashion, and updating shared copies of data on demand. Based on the principle of maximizing interoperability with existing solutions, it aims to standardize data access and updates across hosting solutions.
+%5.2.2. WHY
+%DataLad can streamline access to data from a variety of sources in the form of a distributed network, registering web sources, including all major cloud storage providers, paths on local or remote computational infrastructure, or neuroscientific data registries (such as OpenNeuro, INDI, or CRCNS) as actionable metadata to files. At the same time, DataLad separates actual data retrieval of file content from a lean meta-data based representation of file names, allowing to represent datasets of arbitrary scale at a fraction of their total size on disk while documenting and preserving access to them.
+%In order to expose datasets for access, it can use standard repository hosting infrastructure (GitHub.com, GitLab.com, Bitbucket.com, Gin.g-node.org) as access points to install data, without actually publishing data contents to these services.
+%5.2.3. WHERE
+%DataLad can retrieve public data from major providers such as OpenNeuro (OpenNeuro.org), the Canadian Open Neuroscience Platform (conp.ca), the International Neuroimaging Data-sharing Initiative (INDI), the Healthy Brain Network Serial Scanning Initiative (HBN-SSI), Data sharing for Collaborative Research in Computational Neuroscience (CRCNS.org), the Human Connectome Project's open access dataset (Van Essen et al., 2013), and many more. Beyond public data, it can - given appropriate permissions or authentication - retrieve data from web-based storage providers, and local and remote paths. Information about DataLad can be found at datalad.org and in the DataLad Handbook (Wagner et al., 2021).
+%5.2.4. HOW (and when)
+%The demand for storage and retrieval exists throughout and beyond a scientific project, but changes frequently, depending on the type of data and the project stage. DataLad represents any data in a scalable, domain-agnostic overlay structure that can be exposed to standard services, but also moved across or distributed across sites or services, depending on current needs.
+
+
 
 \subsection{Software adoption and relevance}
 
