@@ -119,6 +119,92 @@ If it is not possible to precisely identify the foundational elements and everyt
 	\label{fig:prov1}
 \end{figure}
 
+\begin{figure}
+{\scriptsize
+  \begin{minipage}{.49\textwidth}
+	\begin{forest}
+		pic dir tree,
+		for tree={% kleiner Zeilenabstand
+		s sep=0.02cm}
+		[memento/
+		[memento\_001/
+%		[Move\_correc\_SSS\_alignedinitial\_nonfitiso/
+%		[1\_memento\_001\_ml83-1\_mc\_transforminitial.fif, file]
+%		[2\_memento\_001\_ml83-1\_mc\_transforminitial.fif, file]
+%		[3\_memento\_001\_ml83-2\_mc\_transforminitial.fif, file]
+%		[data\_fix1.mat, file]
+%		[data\_fix\_ft1.mat, file]
+%		[data\_fix\_new1.mat, file]
+%		[data\_fix\_reduced1.mat, file]
+%		[delay\_photodiode\_subject\_long\_default\_realign\_only\_ICA1.mat, file]
+%		[memento\_results\_ICA\_newall\_alignedinitial228.mat, file]
+%		[memento\_results\_ICA\_newall\_alignedinitial461.mat, file]
+%		[memento\_results\_ICA\_newall\_alignedinitial511.mat, file]
+%		[num\_trials\_old\_ICA.mat, file]
+%		[resultfile\_probs-1.mat, file]
+%		[trial\_out\_ind.mat, file]
+%		]
+		[Move\_correc\_SSS\_realigneddefault\_nonfittoiso/
+	    [1\_memento\_001\_ml83\_mc\_realigneddefault.fif, file]
+	    [2\_memento\_001\_ml83-1\_mc\_realigned\_default.fif, file]
+	    [3\_memento\_001\_ml83-1\_mc\_realigned\_default.fif, file]
+	    [memento\_results\_ICA228.mat, file]
+	    [memento\_results\_ICA455.mat, file]
+	    [memento\_results\_ICA461.mat, file]
+	    [memento\_results\_ICA511.mat, file]
+	    [memento\_results\_ICA\_newall228.mat, file]
+	    [memento\_results\_ICA\_newall455.mat, file]
+	    [memento\_results\_ICA\_newall461.mat, file]
+	    [memento\_results\_ICA\_newall511.mat, file]
+	    [mri\_aligned.mat, file]
+	    [num\_trials\_old\_ICA.mat, file]
+	    [outfile\_new\_all.mat, file]
+	    [resultfile\_new\_all.mat, file]
+	    [template\_grid.mat, file]
+	    [trial\_out\_ind.mat, file]
+		]
+		[Raw/
+		[1\_memento\_001\_ml83.fif, file]
+		[2\_memento\_001\_ml83-1.fif, file]
+		[memento\_001\_ml83-2.fif, file]
+		]
+		]
+		]
+	\end{forest}
+\end{minipage}
+\quad
+  \begin{minipage}{.49\textwidth}
+	\begin{forest}
+		pic dir tree,
+		for tree={% kleiner Zeilenabstand
+			s sep=0.02cm}
+		[memento/
+		[dataset\_description.json, file]
+		[participants.json, file]
+		[participants.tsv, file]
+		[README, file]
+		[sub-001/
+		[meg/
+		[sub-001\_acq-calibration\_meg.dat, file]
+		[sub-001\_acq-crosstalk\_meg.fif, file]
+		[sub-001\_coordsystem.json, file]
+		[sub-001\_task-memento\_channels.tsv, file]
+		[sub-001\_task-memento\_events.tsv, file]
+		[sub-001\_task-memento\_log.tsv, file]
+		[sub-001\_task-memento\_meg.json, file]
+		[sub-001\_task-memento\_split-01\_meg.fif, file]
+		[sub-001\_task-memento\_split-02\_meg.fif, file]
+		[sub-001\_task-memento\_split-03\_meg.fif, file]
+		]
+		[sub-001\_scans.tsv, file]
+		]
+		]
+	\end{forest}
+\end{minipage}
+}
+\caption[An example of BIDS]{A real-world example of a single subject's MEG acquisition. The left side shows the file tree of the data from a project directory with an idiosyncratic. It includes a mix of raw data, preprocessed data, and intermediate results, and the naming scheme is inconsistent. The right side shows the same subject's data, but structured according to \gls{BIDS}. The naming scheme is consistent, and apart from raw MEG data the directory includes metadata files from the experiment and acquisition machine that are required to understand the data.}
+\label{fig:BIDS}
+\end{figure}
 
 % link to chapter 3: Research data management is a prerequisite of reproducible research
 
