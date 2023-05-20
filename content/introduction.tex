@@ -262,7 +262,18 @@ In addition, \cref{chap:k2} will highlight pragmatic approaches to \gls{rdm} tha
 
 %This introduces DataLad as a software solution for research data management
 
-\subsection{An overview of features and their use for \gls{rdm}}
+DataLad (\href{http://datalad.org}{datalad.org}) is a Python-based, MIT-licensed software tool for the joint management of code, data, and their relationship.
+It builds up on git-annex, a versatile system for data logistics \citep{hessannex}, and Git, the industry standard for distributed version control.
+To address the technical challenges of data management, data sharing, and digital provenance collection, it adapts principles of open-source software development and distribution.
+Initially, DataLad development started with the idea to make data retrieval as easy as installing software with package managers on Unix-based operating systems\footnote{On a Debian system, a user can install thousands of software package with a single command such as \texttt{apt get install <package-name>}.}.
+Now, DataLad aims to make data management as easy as managing code \citep{Halchenko2021}.
+Its main features are:
+\begin{itemize}
+	\item Version control for data of any size or type
+	\item Streamlined procedures to consume, publish, and update data
+	\item Data linkage as precisely versioned, lightweight dependencies
+	\item Capturing actionable process provenance, and its automatic re-computation
+\end{itemize}
 
 Although many solutions to common challenges exist, putting \gls{rdm} into practice remains a complicated endeavor:
 In most neuroimaging studies, scientific insights are created from well-described raw data and its derivatives.
