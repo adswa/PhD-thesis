@@ -224,9 +224,27 @@ This requires compliance to variable terms of data usage agreements, and often i
 \label{fig:BIDS}
 \end{figure}
 
-% link to chapter 3: Research data management is a prerequisite of reproducible research
+Processing of neuroimaging data usually involves multi-stepped workflows from acquisition through analysis to archival, and those frequently require several different software tools at every step \citep{poline2011}\citep{NISO2022119623}.
+The amount of possible combinations of methods, parameters, and tools in neuroimaging analyses is thus large \citep{bowring2019exploring}.
+But variations in analytic choices affect numeric results and conclusions \citep{silberzahn2018}.
+In the field of task-based fMRI, \citet{botvinik2020variability} found highly variable conclusions when they instructed 70 independent research teams to analyze the same dataset with tools and methods of their choice to test the same hypotheses.
+A similar project, EEGManyPipelines, is currently ongoing in the field of EEG (\href{https://eegmanypipelines.org/}{eegmanypipelines.org}).
+One central aspect \gls{rdm} thus needs to provide in neuroimaging is precise information about how tools, data, and actors were involved in the generation of a file.
+This \textit{digital provenance}  (illustrated \cref{fig:prov1}) is not meant to decrease the analytical variability.
+Instead, it captures thorough, machine-actionable processing descriptions that are necessary to investigate differences between analysis outcomes, reproduce, or reuse them.
+Despite reporting guidelines for MRI \citep{nichols2017best}, MEG \citep{pernet2020issues}, and EEG \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis (see e.g., \citet{vsovskic2022better}).
 
-\pagebreak
+\todo{add more RDM peculiarities of neuroimaging here. Maybe deep dive into computational modelling}
+
+Careful \gls{rdm} is necessary to translate complex data efficiently into scientific insights.
+Given these specific complexities in neuroimaging, solutions to these challenges often arise from the community of researchers.
+The following section will highlight one of several software tools that aids with the complex task of research data management: DataLad \citep{Halchenko2021}.
+A subsequent chapter, \cref{chap:k2}, will later focus on how research data management is a prerequisite of reproducible research, specifically with regards to software environments and large sample sizes.
+In addition, \cref{chap:k2} will highlight pragmatic approaches to \gls{rdm} that can be embedded in standard research practice and contribute to the FAIRification of data, even in absence of established metadata formats.
+
+
+
+% link to chapter 3: Research data management is a prerequisite of reproducible research
 
 \section{DataLad as a software solution for research data management challenges}
 
