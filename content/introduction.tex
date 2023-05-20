@@ -76,20 +76,17 @@ The \gls{FAIR}ness of data can be improved on each of the four related but separ
 	\item \textbf{R}eusable: To be Reusable, meta(data) are richly described with a plurality of accurate and relevant attributes (R1); (meta)data are released with a clear and accessible data usage license (R1.1); (meta)data are associated with detailed provenance (R1.2); (meta)data meet domain-relevant community standards (R1.3)
 \end{itemize}
 
-% Internationally accepted standard
-The largest funding institution for the sciences and humanities and research in Germany, the \gls{grf}, states that access to data and software according the the FAIR principles are of comparable importance to science as access to publications \citep{dfg}
-
-The ``term machine-actionable'' is central to the \gls{FAIR} principles, and is used to describe a ``continuum of possible states wherein a digital object provides increasingly more detailed information to an autonomously-acting, computational data explorer'' \citep{wilkinson2016fair}.
-% add metadata
-
-
+A pivotal factor for the importance of the FAIR principles is the increasing digitization of research practice, and with it, a rapid growth in research data \citep{dfg}.
+Innovation relies on the ability to integrate new and existing data, and where the amount of data to discover, understand, and consolidate requires automation, research objects themselves need to become self-descriptive.
+For this, the term ``machine-actionable'' is central to the \gls{FAIR} principles.
+It is used to describe an ideal state in which a digital object provides detailed information (metadata) to an autonomously-acting, computational data explorer in two possible contexts: For one, as metadata about the object (``What is it?''), and second, as metadata about its content (``How do I process it?'') \citep{wilkinson2016fair}.
+\todo{Add how the FAIR principles have become an internationally accepted standard - NFDI?}
+\todo{add economic and scientific practice considerations for the FAIR principles}
 Importantly, the \gls{FAIR} principles do not suggest specific metadata standards, implementations, or technology choices.
-The following sections will outline \gls{rdm} requirements and solutions in the field of neuroimaging, and the end of this chapter is dedicated to  highlight one of several software tools that aids with the complex tool of research data management: DataLad.
+The following sections will outline \gls{rdm} requirements and solutions in the field of neuroimaging that work towards this goal.
 
-\subsection{Research data management in neuroimaging}
-\label{chap:k1-rdm-2}
+%  The outcomes from good data management and stewardship, therefore, are high quality digital publications that facilitate and simplify this ongoing process of discovery, evaluation, and reuse in downstream studies.
 
-The following section contains a subset of the work presented in our original publication \citet{NISO2022119623}.
 
 The field of neuroimaging is characterized by complex datasets, typically encompassing different modalities (such as imaging, electro-physiological, and behavioral measurements) and often several recording sessions.
 The processing of neuroimaging data usually entails multi-stepped workflows from acquisition through analysis to archival which often involve several software tools at every step \citep{poline2011}.
