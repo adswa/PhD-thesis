@@ -264,79 +264,85 @@ In addition, \cref{chap:k2} will highlight pragmatic approaches to \gls{rdm} tha
 
 DataLad (\href{http://datalad.org}{datalad.org}) is a Python-based, MIT-licensed software tool for the joint management of code, data, and their relationship.
 It builds up on git-annex, a versatile system for data logistics \citep{hessannex}, and Git, the industry standard for distributed version control.
-To address the technical challenges of data management, data sharing, and digital provenance collection, it adapts principles of open-source software development and distribution.
-Initially, DataLad development started with the idea to make data retrieval as easy as installing software with package managers on Unix-based operating systems\footnote{On a Debian system, a user can install thousands of software package with a single command such as \texttt{apt get install <package-name>}.}.
-Now, DataLad aims to make data management as easy as managing code \citep{Halchenko2021}.
-Its main features are:
+To address the technical challenges of data management, data sharing, and digital provenance collection, it adapts principles of open-source software development and distribution. \\
+%Initially, DataLad development started with the idea to make data retrieval as easy as installing software with package managers on Unix-based operating systems\footnote{On a Debian system, a user can install thousands of software package with a single command such as \texttt{apt get install <package-name>}.}.
+%Now, DataLad aims to make data management as easy as managing code \citep{Halchenko2021}.
+DataLad's aim is ``to make data management as easy as managing code'' \citep{Halchenko2021}.
+The latter benefits from a well-established ecosystem of tools, platforms, and processes.
+The distributed version control tool Git provides the ability to track changes in small-sized, text-based files, and is a de-facto standard in collaborative software development. In 2022, 93.78\% of respondents in Stackoverflow's annual developer survey (\url{https://survey.stackoverflow.co}) reported to use it.
+Numerous hosting platforms for Git repositories have been developed around it to serve as facilitators for collaboration, discovery, and reuse, such as GitHub (\url{https://github.com}), GitLab ({\url{https://gitlab.com}), or Gin (\url{https://gin.g-node.org}).
+Employing version control for code to foster reproducibility has been recommended widely in the scientific community (e.g., \citep{sandve2013ten}), and it is established practice to develop and share research software and code using Git and Git hosting platforms. \\
+But other components of scientific projects, such as data or computing environments, are not as transparently managed or accessible as code and software.
+Data consumption is complicated by disconnected  and non-interoperable hosting solutions:
+Different storage services use different protocols, means of authentication, or other idiosyncrasies that require custom workflows.
+Unlike code in software development, data tend not to be as precisely identified because data versioning is rarely or only coarsely practiced.
+Yet over the course of a research project, often as part of the standard, multi-stepped processing workflow, data evolve and change just like code does:
+Continued acquisitions enlarge the raw dataset; Transformations to -- likewise evolving -- community standards change file formats, dataset organization, or enrich available metadata; And continuous quality control processes or accidental findings can bring errors to light and improve datasets with fixes \citep{markiewicz2021openneuro}.
+In the case that data or other research objects were subject to change over the course of a project, there is a need to identify which exact version has been used -- otherwise, the reproducibility of a result is threatened \citep{hardwicke2018data}.
+Likewise, scientific computation is not reproducible enough, because data provenance is often incomplete and rarely automatically captured.
+Last but not least, in the absence of standardized data packages, there is no uniform way to declare actionable
+data dependencies and derivative relationships between inputs and outputs of a computation.
+Consequentially, data needs to be kept alongside to results to ensure reproducibility, even if it is hosted elsewhere already.
+Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of datasets can become infeasible \citep{horien2021hitchhiker} \citep{grisham2016proposed}.
+Likewise, projects might draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, despite much greater data availability.
+If the original dataset, however, is only available as a bulk download, a project has heavier disk space demands on storage solutions than their eventual data requirements.\\
+DataLad aims to solve these issues by providing streamlined, transparent management of code, data, computing environments, and their relationship.
+Its main features are
 \begin{itemize}
 	\item Version control for data of any size or type
-	\item Streamlined procedures to consume, publish, and update data
+	\item Streamlined procedures to consume, publish, and update  all elements of scientific projects, with interoperability adapters to established scientific and commercial tools and services
 	\item Data linkage as precisely versioned, lightweight dependencies
-	\item Capturing actionable process provenance, and its automatic re-computation
+	\item Actionable process provenance capture for arbitrary command execution that affords automatic re-execution.
 \end{itemize}
 
-Although many solutions to common challenges exist, putting \gls{rdm} into practice remains a complicated endeavor:
-In most neuroimaging studies, scientific insights are created from well-described raw data and its derivatives.
-Standards and repositories as mentioned in \cref{chap:k1-rdm-2} form a basis for managing, storing and sharing them, and being able to efficiently retrieve and update these research objects across a variety of available storage options is an important part of \gls{rdm} \citep{borghi2018data}.
-However, homogeneous data transport is complicated by disconnected and non-interoperable hosting solutions.
-Different storage services can require different protocols, means of authentication, or other idiosyncrasies (CITATION NEEDED). \\
-Over the course of a research project, often as part of the standard, multi-stepped processing workflow \citep{poline2011}, data also evolve and change:
-Continued acquisitions enlarge the raw dataset.
-Transformations to community standards such as \gls{BIDS} \citep{gorgolewski2016brain} change file formats, dataset organization, or enrich available metadata.
-Continuous quality control processes or accidental findings can bring errors to light and improve datasets with fixes (e.g., CITATION NEEDED).
-In the case that data or other research objects were subject to change over the course of a project, there is a need to identify which exact version has been used -- otherwise, the reproducibility of a result is threatened (CITATION NEEDED). \\
-Likewise, projects might draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, despite much greater data availability.
-If the original dataset, however, is only available as a bulk download, a project has heavier disk space demands on storage solutions than their eventual data requirements.
-Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of standard large-scale datasets can become infeasible \citep{horien2021hitchhiker} \citep{grisham2016proposed}. \\
-Finally, \textit{digital provenance}, the information bout how tools, data, and actors were involved in the generation of a digital research outcome is crucial to understand and reproduce a result, but rarely fully transparent and documented, let alone machine-readable or actionable.
-% NISO The ability to manage data and metadata and track the data-analysis process provides a basis for rigor and reproducibility.
-
-
-DataLad (\href{http://datalad.org}{datalad.org}) \citep{Halchenko2021} is a Python-based, MIT-licensed software tool for the joint management of code, data, and their relationship, developed with the aim to assist with common \gls{rdm} tasks in science.
-Its main features provide solutions to the difficulties outlined above:
-Building up on established open source version control tools, Git (CITATION) and git-annex (CITATION NEEDED), DataLad provides the ability to version control data of any size or type.
-Bridging a large variety of storage and Git repository hosting services with its interoperability layer, it streamlines procedures to consume, publish, and update digital data, and unifies authentication procedures for an end user.
-Due to a separation between file content and file identity metadata, DataLad allows
-- fine grained access control for data providers
-- downloads at single file granularity for data users
-- lightweight but actionable access to data
-
-With dedicated functionality to capture complete and actionable process provenance of data transformations and allow automatic re-computation, DataLad can record machine-actionable metadata how files came into existence.
-Based on Git's submodule mechanism, DataLad allows for modular structuring of ...
- for  and to link them as precisely versioned, lightweight
-dependencies. DataLad helps to make science more reproducible and FAIR (Wilkinson et al.,
-2016). It can capture complete and actionable process provenance of data transformations to
-enable automatic re-computation.
+\subsection{Technical features}
 
 Fundamental to DataLad's functionality is the concept of the ``DataLad dataset'', DataLad's central data structure.
-On a technical level, it is a joint Git/git-annex repository.
+On a technical level, it is a joint Git and git-annex repository with additional features for scientific use cases added on top by DataLad.\\
+Git excels at managing and collaborating on text files, and provides a powerful back bone to DataLad's features.
+Git repositories and their history can be easily distributed as linked \textit{clones} to suitable infrastructure.
+Locally, changes to files can be saved (\textit{committed}) and transferred (\textit{pushed}) to all clones of a repository, and remote revisions can be retrieved and integrated (\textit{pulled}).\\
+However, Git is not designed to handle large or binary files.
+Git-annex overcomes this limitation and adds support to track and transfer files of arbitrary size or type without placing their content into Git.
+Instead, it places file content into a managed repository \textit{annex} and only commits a lightweight reference that encodes the file's name and content identity via content hash into Git.
+This reference allows a decoupling of file content (handled by git-annex) and file name (tracked with Git), but retains the ability to transparently notice and track changes: If file content changes, the identity reference known to Git changes, too, and the version control system becomes aware of the modification.
+The same mechanism guarantees file integrity at all times, and can for example detect corruption during transfer.
+While Git keeps a reference of the content \textit{identity}, git-annex tracks content \textit{availability}, and manages data transport with an extensible set of protocols and set of hosting solutions to and from a local repository annex at a granularity of individual files. \\
+DataLad, finally, extends Git and git-annex with easy to use modularization, re-executable annotation of changes, and targeted interfaces and interoperability adapters.
+Modularization suits research workflows because they can produce projects with many files or heterogeneous nature, comprising different data sources or evolving data across different processing stages.
+A modular structure into homogeneous or smaller components enables efficient reuse.
+Extending Git’s submodule mechanism, DataLad allows to nest individual datasets via versioned linkage as lightweight dependencies, and provides seamless recursive operations across dataset boundaries.
+With this, DataLad provides a ``monorepo''-like user experience in datasets with arbitrarily deep nesting, and makes it trivial to operate on individual files deep in the hierarchy or entire trees of datasets.
+In DataLad datasets, DataLad supports executing any command and automatically capturing the command, the generated outputs or modification, and optionally all required input elements.
+This information is saved as re-executable provenance in a structured annotation to a Git commit message.
+In addition to providing reliable information about past command-line invocations, these machine-readable records make it possible to easily re-execute commands, for example to verify if a result is computationally reproducible or to apply an analog change to a different dataset state.
+Being able to efficiently retrieve and update research objects across a variety of available storage options is an important part of \gls{rdm} \citep{borghi2018data}.
+Git can already interact with other local or remote repositories via standard or custom network transport protocols, and git-annex readily provides access to a wide range of external data storage resources via a large set of protocols.
+On top of this, DataLad implements support for additional services that require custom protocols, such as the \gls{osf}) \citep{hanke2021dlosf}, and adds, for example, more fine-grained access (e.g. direct access to individual components contained in an archive hosted on cloud storage) or specialized services, such as XNAT (\url{www.xnat.org}) \citep{halchenko2021xnat}.
+With this approach, DataLad can help to overcome technological limitations of storage solutions, like file size or inode limits, or integrate seamlessly with technology that is already in use.
+
+
+
+\subsection{User experience}
+
+On the conceptual level, a DataLad dataset is an overlay structure for file management.
+On a file system, it appears like a regular directory, and any file users place into it can be version controlled.
+DataLad's commands aim to simplify standard workflows from Git, git-annex, or hosting services.
+For example, committing a file into Git requires a \texttt{git add <file>} followed by a \texttt{git commit}, and annexing a file requires a \texttt{git annex add <file>} followed by a \texttt{git commit}, but a \texttt{datalad save <file>} performs either action, with automatic decision making whether the file is annexed or committed to Git.
+Likewise, publishing a repository to hosting sites usually requires interactions in the hosting site's web interface, but DataLad provides a set of \texttt{create-sibling-<service>} commands that spare users the need to visit the hosting service.
+Like Git and git-annex, DataLad is primarily developed as a command line tool, but a \gls{gui} exists as well (see todo-figure).
+
+
+\todo{add GUI figure}
+
+
+\subsection{Development principles}
+
 
 %VAMP
  version control. If used appropriately, version control tools associate a unique identifier and basic provenance with each revision, and thus enable the identification of precise version states of digital files or collections of files. With other useful features such as built-in collaboration and the ability to save and revert changes, it also facilitates common scientific workflows, and has been increasingly adopted for research data management (RDM) in science \citep{nord2019towards} \citep{strupler2017reproducibility} \citep{bryan2018excuse} \citep{corti2019managing}.
 
-%% from datalad paper:
 
-
-Code, data and computing environments are core components of scientific projects. While
-the collaborative development and use of research software and code is streamlined with es-
-tablished procedures and infrastructures, such as software distributions, distributed version
-control systems, and social coding portals like GitHub, other components of scientific projects
-are not as transparently managed or accessible. Data consumption is complicated by discon-
-nected data portals that require a large variety of different data access and authentication
-methods. Compared with code in software development, data tend not to be as precisely
-identified because data versioning is rarely or only coarsely practiced. Scientific computation
-is not reproducible enough, because data provenance, the information of how a digital file
-came to be, is often incomplete and rarely automatically captured. Last but not least, in
-the absence of standardized data packages, there is no uniform way to declare actionable
-data dependencies and derivative relationships between inputs and outputs of a computa-
-tion. DataLad aims to solve these issues by providing streamlined, transparent management
-of code, data, computing environments, and their relationship. It provides targeted interfaces
-and interoperability adapters to established scientific and commercial tools and services to
-set up unobstructed, unified access to all elements of scientific projects. This unique set of
-features enables workflows that are particularly suited for reproducible science, such as ac-
-tionable process provenance capture for arbitrary command execution that affords automatic
-re-execution. To this end, it builds on and extends two established tools for version control
-and transport logistics, Git and git-annex.
 
 % 5.2.1. WHAT
 %Primary or preprocessed data form the basis of scientific analyses and insights. Flexible storage options and means for retrieval and updating of data are crucial for its further use. DataLad (Hanke et al., 2021) is a general purpose tool for managing and version controlling digital files in a decentralized manner, developed by a US-German collaboration in computational neuroscience. It can assist with storing and retrieving your own or other’s data in a transparent and streamlined fashion, and updating shared copies of data on demand. Based on the principle of maximizing interoperability with existing solutions, it aims to standardize data access and updates across hosting solutions.
