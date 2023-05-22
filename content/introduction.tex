@@ -124,10 +124,10 @@ An example of an \gls{meg} dataset, structured to \gls{BIDS} or organized idiosy
 The storage demands of neuroimaging data are not trivial, either.
 \gls{BIDS} regulates which file formats must be used for which data type, and focuses on open file formats for accessibility and compression to reduce disk space requirements.
 But neuroimaging data are nevertheless sizable \citep{van2014human}.
-And a growing awareness that robust findings require sufficiently long recordings \citep{li2021moving} as well as large and representative samples \citep{button2013power} \citep{turner2018small} leads to large-scale datasets such as the Human Connectome Project \citep{van2013wu}, the Adolescent Brain Cognitive Development Study (ABCD) \citep{casey2018adolescent}, or the UK Biobank (UKB) project \citep{matthews2015uk} that pose infrastructural challenges for storage, analysis, transfer and archival.
+And a growing awareness that robust findings require sufficiently long recordings \citep{li2021moving} as well as large and representative samples \citep{button2013power, turner2018small} leads to large-scale datasets such as the Human Connectome Project \citep{van2013wu}, the Adolescent Brain Cognitive Development Study (ABCD) \citep{casey2018adolescent}, or the UK Biobank (UKB) project \citep{matthews2015uk} that pose infrastructural challenges for storage, analysis, transfer and archival.
 Moreover, in human neuroimaging, data underlies strict data protection regulations such as the \gls{HIPAA} in the United States or the \gls{GDPR} in Europe.
 This requires compliance to variable terms of data usage agreements, and often involves idiosyncratic processes to retrieve data \citep{waitedata}.\\
-Processing of neuroimaging data usually involves multi-stepped workflows from acquisition through analysis to archival, and those frequently require several different software tools at every step \citep{poline2011}\citep{NISO2022119623}.
+Processing of neuroimaging data usually involves multi-stepped workflows from acquisition through analysis to archival, and those frequently require several different software tools at every step \citep{poline2011, NISO2022119623}.
 The amount of possible combinations of methods, parameters, and tools in neuroimaging analyses is thus large \citep{bowring2019exploring}.
 But variations in analytic choices affect numeric results and conclusions \citep{silberzahn2018}.
 In the field of task-based fMRI, \citet{botvinik2020variability} found highly variable conclusions when they instructed 70 independent research teams to analyze the same dataset with tools and methods of their choice to test the same hypotheses.
@@ -135,7 +135,7 @@ A similar project, EEGManyPipelines (\href{https://eegmanypipelines.org/}{eegman
 One central aspect \gls{rdm} thus needs to provide in neuroimaging is precise information about how tools, data, and actors were involved in the generation of a file.
 This \textit{digital provenance}  (illustrated in \cref{fig:prov1}) is not meant to decrease the analytical variability.
 Instead, it captures thorough, machine-actionable processing descriptions that are necessary to investigate differences between analysis outcomes, reproduce, or reuse them.
-Despite reporting guidelines for MRI \citep{nichols2017best}, MEG \citep{pernet2020issues}, and EEG \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis (see e.g., \citet{vsovskic2022better}).
+Despite reporting guidelines for MRI \citep{nichols2017best}, MEG \citep{pernet2020issues}, and EEG \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis  \citep[see, e.g.,][]{vsovskic2022better}.
 
 %BIDS
 \begin{figure}
@@ -272,7 +272,7 @@ DataLad's aim is ``to make data management as easy as managing code'' \citep{Hal
 The latter benefits from a well-established ecosystem of tools, platforms, and processes.
 The distributed version control tool Git provides the ability to track changes in small-sized, text-based files, and is a de-facto standard in collaborative software development. In 2022, 93.78\% of respondents in Stackoverflow's annual developer survey (\url{https://survey.stackoverflow.co}) reported to use it.
 Numerous hosting platforms for Git repositories have been developed around it to serve as facilitators for collaboration, discovery, and reuse, such as GitHub (\url{https://github.com}), GitLab ({\url{https://gitlab.com}), or Gin (\url{https://gin.g-node.org}).
-Employing version control for code to foster reproducibility has been recommended widely in the scientific community (e.g., \cite{sandve2013ten}), and it is established practice to develop and share research software and code using Git and Git hosting platforms (e.g., \citet{nord2019towards}, \citet{strupler2017reproducibility}, \citet{bryan2018excuse}, \citet{corti2019managing}). \\
+Employing version control for code to foster reproducibility has been recommended widely in the scientific community (e.g., \cite{sandve2013ten}), and it is established practice to develop and share research software and code using Git and Git hosting platforms \citep[e.g.,][]{nord2019towards, strupler2017reproducibility, bryan2018excuse, corti2019managing}. \\
 But other components of scientific projects, such as data or computing environments, are not as transparently managed or accessible as code and software.
 Digital research objects are usually stored in multiple different locations \citep{parsons2013research}.
 But their consumption is complicated by disconnected and non-interoperable hosting solutions:
@@ -285,7 +285,7 @@ Likewise, scientific computation is not reproducible enough, because data proven
 Last but not least, in the absence of standardized data packages, there is no uniform way to declare actionable
 data dependencies and derivative relationships between inputs and outputs of a computation.
 Consequentially, data needs to be kept alongside to results to ensure reproducibility, even if it is hosted elsewhere already.
-Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of datasets can become infeasible \citep{horien2021hitchhiker} \citep{grisham2016proposed}.
+Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of datasets can become infeasible \citep{horien2021hitchhiker, grisham2016proposed}.
 Likewise, projects might draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, despite much greater data availability.
 If the original dataset, however, is only available as a bulk download, a project has heavier disk space demands on storage solutions than their eventual data requirements.\\
 DataLad aims to solve these issues by providing streamlined, transparent management of code, data, computing environments, and their relationship.
@@ -320,7 +320,7 @@ This information is saved as re-executable provenance in a structured annotation
 In addition to providing reliable information about past command-line invocations, these machine-readable records make it possible to easily re-execute commands, for example to verify if a result is computationally reproducible or to apply an analog change to a different dataset state.
 Being able to efficiently retrieve and update research objects across a variety of available storage options is an important part of \gls{rdm} \citep{borghi2018data}.
 Git can already interact with other local or remote repositories via standard or custom network transport protocols, and git-annex readily provides access to a wide range of external data storage resources via a large set of protocols.
-On top of this, DataLad implements support for additional services that require custom protocols, such as the \gls{osf}) \citep{hanke2021dlosf}, and adds, for example, more fine-grained access (e.g. direct access to individual components contained in an archive hosted on cloud storage) or specialized services, such as XNAT (\url{www.xnat.org}) \citep{halchenko2021xnat}.
+On top of this, DataLad implements support for additional services that require custom protocols, such as the \gls{osf} \citep{hanke2021dlosf}, and adds, for example, more fine-grained access (e.g. direct access to individual components contained in an archive hosted on cloud storage) or specialized services, such as XNAT \citep[\url{www.xnat.org},][]{halchenko2021xnat}.
 With this approach, DataLad can help to overcome technological limitations of storage solutions, like file size or inode limits, or integrate seamlessly with technology that is already in use.
 
 
