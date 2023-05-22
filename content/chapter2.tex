@@ -63,21 +63,21 @@ Raw data originates from acquisitions based on - potentially ongoing - experimen
 Processed data or results stem from computations with analysis code or software in specific versions on particular data.
 And software, expressed in raw (code) or derived (transformed into executable) form, is created or used in specific computational environments, with compilers, underlying libraries, and systems in distinct versions.
 Consequently, these building blocks play an integral part in the genesis of research outputs, and changes in these building blocks or their composition can translate to changes in the resulting research output.\\
-
-The complexity in neuroimaging studies makes reproducibility non-trivial:
-The details of how code, software, or data have been used to generate a research output, such as analysis parameterization, the subset of data used as input, or sequence and invocation of employed software tools, are volatile.
+Because of their complexity, neuroimaging studies face obstacles for reproducibility.
+For one, the details of how code, software, or data have been used to generate a research output, such as analysis parameterization, the subset of data used as input, or sequence and invocation of employed software tools, are volatile.
+Shared code and data does not always suffice to reproduce a result:
 A study of data availability, reusability, and reproducibility demonstrated that well-described, ``in principle reusable'' data often does not suffice to reproduce the scientific findings of the corresponding publications due to  missing process provenance metadata \citep{hardwicke2018data}.
-
-
-The fact that different neuroimaging software tools can produce distinct results from the same data despite using similar conceptual methodology is well known \citep{bowring2019exploring}.
-This has been attributed to implementation differences (CITATION NEEDED), software errors \citep{eklund2016cluster}, or analytic configurations.
+Secondly, even if methods and their sequence are well-described, precise information about the employed software tools is crucial, too.
+The fact that different neuroimaging analysis software can produce distinct results from the same data despite using similar conceptual methodology is well known \citep{bowring2019exploring}.
+This has been attributed to implementation differences \citep{palumbo2019evaluation}, software errors \citep{eklund2016cluster}, or analytic configurations \citep{pauli2016exploring}.
 For example, in task-based fMRI, \citet{li2021moving} found that the choice of output space or resolution can have a marked impact on variability between conceptually similar processing pipelines.
-Surprising result variability can also occur when the same data is analyzed repeatedly with the same processing pipeline, but minor variations in parametrization. \citet{mueller2017commentary} reported that the choice of resampling resolution impacts alpha inflation, and \citet{li2021moving} identified the decision whether or not to include global signal regression as a major source of intra-pipeline variation.
-But also different operating systems, or differences in versions of a singular software tool or operating system can result in different outcomes of the same analysis \citep{gronenschild2012effects} \citep{glatard2015reproducibility}.
+Moreover, even with identical pipelines and data, surprising result variability can occur with minor variations in parametrization.
+\citet{mueller2017commentary} reported that the choice of resampling resolution impacts alpha inflation, and \citet{li2021moving} identified the decision whether or not to include global signal regression as a major source of intra-pipeline variation.
+Finally, even the same analysis, with identical parametrization, software tool, and data, can result in different outcomes if it is repeated across different operating systems, or with differences in versions of a singular software tool or operating system \citep{gronenschild2012effects} \citep{glatard2015reproducibility}.
 %more here
 Computational reproducibility across computing environments thus often remains elusive unless accounted for from the very start.
 Therefore, in addition to ``Everything matters'',  \citet{kennedy2019everything} cued the phrase ``Reproducible by Design (as opposed to reproducibility as an afterthought)'' for conducting research in a way that makes computational reproducibility possible.
-The next section highlights a number of strategies for this, and how reproducibility is tied to research data management.
+The next section highlights a number of strategies for this.
 
 % However, a growing number of studies suggest that differences in the implementation of these processing steps or how they are “glued together” can yield notably different outcomes. Studies systematically comparing specific preprocessing steps such as segmentation15, motion correction16, and registration17–19 have reported substantial variation in outputs generated across independently developed packages when applied to the same data. In the analysis of task fMRI data, end-to-end pipelines built using different software packages have been found to produce marked variation in the final results20–23. from https://www.biorxiv.org/content/10.1101/2021.12.01.470790v2.full
 
