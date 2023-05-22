@@ -153,10 +153,15 @@ GitHub's dependency graph reports that it is used by almost 300.000 projects in 
 Sphinx supports an extension mechanism with which additional functionality can be integrated.
 Leveraging this mechanism, the Handbook project extended standard Sphinx features with custom admonitions and designs, for example toggle-able boxes for optional details.
 This is implemented as a Python package alongside the Handbook source code, making the Handbook project a reusable and installable Sphinx extension.
-A major functional enhancement is provided with a separate Python package, \texttt{autorunrecord}, an additional custom-made Sphinx extension that allows sequential execution of code in a specified environment, and embedding a record of the code and its output as code snippets into the documentation. \todo{make autorunrecord citable}
+A major functional enhancement is provided with a separate Python package, \texttt{autorunrecord}, an additional custom-made Sphinx extension that allows sequential execution of code in a specified environment, and embedding a record of the code and its output as code snippets into the documentation (CITATION NEEDED)
 Instructors can further use it to automatically create scripts from selected code blocks which can then be demonstrated in a remote-controlled terminal in live-coding tutorials.
 \cref{fig:handbook-admonitions} provides an overview of the custom-developed features. \\
-
+Hosting for the project is provided by Read the Docs (\href{https://readthedocs.org/}{readthedocs.org}), a free software documentation hosting platform that integrates with Sphinx.
+Illustrations in the handbook are based on the undraw project by Katerina Limpitsouni (\href{https://undraw.co/}{undraw.co}). \\
+The ability of the documentation to sequentially execute code and record its outcomes has been used to utilize the Handbook as an integration test for the DataLad software in addition to a user guide.
+If new software developments in the DataLad core packages break documented workflows, a continuous integration test suite will fail, alerting developers to the fact that their changes break user workflows. \\
+To ensure reusability, such as the adaptation by \citet{brooks2021handbook}, the project is released under a CC-BY-SA 4.0 license.
+Under its terms, all elements can be reused in original or derived form for all purposes under the condition that the original project is attributed and that derivative work is shared under an identical ("not more restrictive") license (\href{https://creativecommons.org/licenses/by-sa/4.0/}{creativecommons.org/licenses/by-sa/4.0}).
 
 \begin{figure}
 	\hfill
