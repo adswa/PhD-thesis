@@ -171,6 +171,31 @@ However, the four properties outlined above are a big step into the right direct
 
 \section{FAIRly big: A framework for computationally reproducible processing of large-scale data}
 
+Large-scale datasets pose additional challenges for \gls{FAIR} research objects.
+Their storage and computational demands increasingly exceed common \gls{HPC} infrastructure, and computing procedures that are common in fields accustomed to smaller datasets (such as storing multiple copies of the data) become infeasible with these datasets \citep{horien2021hitchhiker}.
+As the complexity of reproducing and verifying large scale datasets growths, the trustworthiness of derivative data decreases.
+And as data processing results often multiply storage demands, keeping intermediate outcomes on disk is rendered increasingly prohibitive, further impeding the possibility to retrace and verify the origin and provenance of research outcomes fully and transparently.
+Yet for large scale datasets specifically, sharing data derivatives is the most -- or sometimes the only -- viable way to extend previous research \citep{craddock2013neuro}:
+Resource-heavy, costly computations with considerable environmental impact \citep{portegies2020ecological} have to be computed only once, and scholars without access to adequate computational resources for original analysis can reuse derivatives.
+
+
+Based on DataLad, containerization software, and job scheduling systems, we build a a portable, free and open source framework to reproducibly process large-scale datasets.
+It empowers reusers to automatically reproduce results based on machine-actionable records of computational provenance, in an infrastructure-agnostic fashion.
+The framework capitalizes on established technology, used in conjunction with workflows from software development and workload management.
+In a proof-of-concept analysis, we applied the framework to run a MATLAB-based, containerized, neuroimaging processing pipeline on data from the UKB project \citep[][comprising 76 TB in 43 million files under strict usage constraints]{matthews2015uk}.
+
+The proposed framework employs a range of software tools for data, code, and computation management to apply workflows from software engineering — in particular distributed development — to computational research. Specifically, it orchestrates arbitrary data processing via a lean network of interconnected, but self-sufficient workspaces while optimizing for portability, scalability, and automatic computational reproducibility.
+
+To achieve this, our framework combines a range of open source software tools — distributed version control systems, containerization software, job scheduling tools, and storage solutions with optional encryption and compression — into a sequential workflow. A complete, schematic overview is depicted in Figure 1 and basic DataLad concepts are summarized in Box 1. Three key features of this data management solution are central to the framework:
+
+Comprehensive data structure to track all elements of digital processing
+
+Computation in automatically bootstrapped ephemeral workspaces
+
+Process provenance capture in machine-actionable records
+
+
+
 % role of sample size for reproducible results: \citep{li2021moving}
 
 %  \citep{li2021moving} "highlight the reality that as the test-retest reliability approaches optimal levels for laboratory measurement, pipeline implementation differences will impose an inherent upper bound on the agreement of preprocessed data. These findings also underscore that 10 minutes of data, which has been common in the field until at least recent years, are insufficient for producing results that are reliable enough to reveal substantive pipeline-related variation."
@@ -178,21 +203,21 @@ However, the four properties outlined above are a big step into the right direct
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ukbworkflow_simplified.pdf}
-	\caption[]{}
+	\caption[Schematic overview of the processing framework]{Schematic overview of the processing framework. a) The user-facing representation of the results on a file system after completed processing: A lean DataLad dataset that tracks the computed results, links input data and pipeline, and contains actionable process provenance and location information, allowing on-demand file retrieval or recomputation. Depicted files are from the UK Biobank showcase. b) Process-flowchart: First, a DataLad dataset links required processing components (e.g., input data, processing pipeline, additional scripts). Next, compute jobs are executed, if possible in parallel. Afterwards, results and provenance are aggregated (merged). c) An ephemeral (short-lived) compute workspace: Each compute job creates a temporary, lean clone, which retrieves only relevant subsets of data, and captures the processing execution as provenance. After completion, results and provenance are pushed into permanent storage (see d), and the ephemeral workspace is purged. d) The internal dataset representation in a RIA store: The store receives results and can contain input data, optionally using compressed archives (for reduced disk space/inode consumption) or encryption during storage and transport. It is the only place where results take up permanent disk space. If inputs are available from other infrastructure (external, web-accessible servers, cloud infrastructure), jobs can obtain them from registered sources, removing the need for duplicate storage of input data.}
 	\label{fig:fairly_workflow}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ukb_datasets.pdf}
-	\caption[]{}
+	\caption[Overview of DataLad dataset linkage through processing and reuse]{Any DataLad dataset may comprise other DataLad datasets as subdatasets via lightweight but actionable and versioned links. This connects a dataset to the content and provenance of a different modular unit of data, such as the outcomes of a the preceding processing step. The genesis of an analysis output (Analysis A/B) based on intermediate processing outcomes (Tailored results A/B) can thus be traced back all the way to the original raw data. Access control and storage choices are independent across individual components in this network of linked data modules. Aggregated data and analysis results can be shared with larger audiences or publicly on a variety of platforms, while raw and derived data may underlie particular access restrictions, or require particular hosting solutions due to their size.}
 	\label{fig:fairly_datasets}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{coarsemetadata.pdf}
-	\caption[]{}
+	\caption[Process provenance of an individual job]{Process provenance of an individual job, its generation, and re-execution. a) Actionable process provenance is generated with a datalad containers-run command. This example contains a container name specification (cat), a container parametrization or command, a commit message, and an input and output data specification. The provenance is stored as a structured, JSON-formatted record linked to a Git commit. b) To re-execute a process, the datalad rerun command only needs to be parameterized with a revision identifier, such as a Git tag, a “commit shasum” (e035f896s45c9fa[...] in this example), or a revision range containing one or more commits with associated provenance records. c) The datalad containers-run call is at the center of each individual job. As the core execution command (see Listing 1, line 33-39), it performs data retrieval, container execution, and result capture, and generates the actionable provenance that a subsequent datalad rerun command (b) can re-execute. With complete provenance, a re-execution is supported on the original hardware, or on different infrastructure. d) The machine-readable, re-executable provenance record stored alongside computed results in the revision history. A legend (right) highlights the most important pieces of recorded provenance. While automatic re-execution requires the tool DataLad, sufficient information to repeat a computation using other means can also be inferred from the structured JSON records by other software or even humans. This information forms the basis for standardized provenance reporting, for example using the PROV data model 27.}
 	\label{fig:fairly_metadata}
 \end{figure}
 
@@ -200,3 +225,22 @@ However, the four properties outlined above are a big step into the right direct
 
 
 \pagebreak
+
+
+One way to track digital files is
+While it is possible to exhaustively track all elements involved in a project with version control, industry use differs from RDM demands in science.
+In industry contexts, it is primarily employed in software engineering for small-sized text files (source code). Science often works with large amounts of potentially sizable or binary files.
+To exhaustively track all elements involved in a scientific project, large and binary files such as data and computational environments need to be versioned, too.
+The concept of software containers - portable, light-weight software environments - make it possible to encapsulate computational environments as in-principle trackable elements, and a range of tools provide the ability to track even terabyte-sized and binary files.
+Overall, version control is a well-established and reliable tool in industry and science. It can be employed at any point during a project, and yields a hands-on digital notebook of a project.
+By extending its use beyond small-sized files to any digital research outputs and everything involved in its generation, version control can not only constitute established and beneficial research data management, but also lay the foundation for reusability by exhaustively tracking relevant digital elements and making them identifiable in precise versions.
+
+From Donoho Buckheit 2015: Performance has everything to do with specifics: exactly what was done (which wavelets,
+which coders, which detectors, which corpus of data) with exactly what parameters. In
+this setting, publishing figures or results without the complete software environment could
+be compared to a mathematician publishing an announcement of a mathematical theorem
+without giving the proof. Waveleticians ought to publish their complete computational
+environments
+
+
+As highlighted in the Introduction, digital research outputs are the by- or end-products of scientific studies or analyses, from code, software, raw data or processed data, to analysis results or papers.
