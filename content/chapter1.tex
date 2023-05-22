@@ -40,12 +40,7 @@ Academic journals, such as the Journal of Open Source Software (\href{https://jo
 With the acknowledgment of the importance of scientific software in research, there also is an awareness that its quality, reusability, and longevity needs to be ensured and improved.
 Calls for proposals to improve the quality, usability or longevity of research software have been put forward by major national funders, including Germany \citep{dfgrs}, the United Kingdom \citep{ukri}, and the United States \citep{nih}.
 As a digital research object, the \gls{FAIR} principles apply to it just as to other research outputs.
-The largest funding institution for the sciences and humanities and research in Germany, the \gls{grf}, states that access to data and software according the the FAIR principles are of comparable importance to science as access to publications \citep{dfg}
-
-
-One of the strategies for this is to make research software open source.
-% why does open source improve
-For example, Open Source is recommended by the \gls{grf} \citep{dfg}.
+The largest funding institution for the sciences and humanities and research in Germany, the \gls{grf}, states that access to data and software according to the FAIR principles are of comparable importance to science as access to publications \citep{dfg}
 
 One set of problems from which software quality can suffer are documentation deficiencies (CITATION NEEDED).
 The mere existence of software is insufficient to ensure its uptake and use according to best practices.
@@ -118,14 +113,12 @@ We identified three types of stakeholders with different needs: \textit{Research
 Drawing from personal user experiences with the software, usability research (CITATION NEEDED), and educational concepts (CITATION NEEDED), the Handbook project was set out with the following goals about its contents:
 
 \begin{itemize}
-	\item To ensure broad applicability for a broad audience, the handbook should showcase domain-agnostic real-world \gls{rdm} applications.
-	\item To equip readers with first-hand experiences, the handbook should enable a code-along style usage, with examples presented in code that users can copy, paste, and run on their own computer. To allow a read-only style usage, too, the handbook should also reveal what a given code execution's output would look like.
-	\item For an optimal code-along or read-only experience, the code output should match the current software behavior.
-	\item To be suitable for technical novices, the handbook's language should be accessible.
-	\item Gradually, by explaining technical jargon and relevant tools or concepts in passing, it should provide readers with a broad set of relevant \gls{rdm} skills rather than requiring prior knowledge.
-	\item To provide a low barrier of entry and the possibility to re-read or mix and match, Handbook contents should be chunked in short, topical units as best as possible.
-	\item To teach how different software features interact, the handbook contents should build up upon each other and link back to past course content.
-	\item Instead of showcasing successful code only, it should demonstrate common errors explicitly to empower users to troubleshoot problems in their own use cases independently.
+	\item \textbf{Applicability for a broad audience}: The Handbook should showcase domain-agnostic real-world \gls{rdm} applications.
+	\item \textbf{Practical experience}: The Handbook should enable a code-along style usage, with examples presented in code that users can copy, paste, and run on their own computer. To allow a read-only style usage, too, the handbook should also reveal what a given code execution's output would look like. For an optimal code-along or read-only experience, the code output should match the current software behavior.
+	\item \textbf{Suitable for technical novices}: The Handbook's language should be accessible. Gradually, by explaining technical jargon and relevant tools or concepts in passing, it should provide readers with a broad set of relevant \gls{rdm} skills rather than requiring prior knowledge.
+	\item \textbf{Low barrier of entry} The Handbook's contents should be chunked in short, topical units as best as possible to provide the possibility to re-read or mix and match.
+	\item \textbf{Integrative workflows}: The Handbook's contents should build up upon each other and link back to past course content to teach how different software features interact.
+	\item \textbf{Empowering independent users}: Instead of showcasing successful code only, it should demonstrate common errors explicitly to enable users to troubleshoot problems in their own use cases independently.
 
 \end{itemize}
 
@@ -140,7 +133,7 @@ Arising from this specification analysis, the following initial structure was de
 To further support the design and content requirements, the following technical goals were set:
 
 \begin{itemize}
-	\item The Handbook should get topical custom content boxes to make information relevant to specific user types easily discoverable, and toggle-able sections ("click to expand") for additional, optional information to keep visible text short while preserving the ability to explore advanced contents
+	\item To keep visible text short while preserving the ability to explore advanced contents, topical custom content boxes and toggle-able sections ("click to expand") should make information relevant to specific user types or optional details skip-able and easily discoverable (see \cref{fig:handbook-admonitions}).
 	\item To ensure functioning from a user's point of view, the workflows included in the Handbook as consecutive code blocks need to be tested as an automated integration test suite
 	\item The Handbook should be available in multiple formats, at least as a web-based rendering and as a portable download to be stored offline or printed
 	\item The Handbook should be developed alongside the software, and proper versioning should ensure that users of a past software version can find the corresponding version of the Handbook
