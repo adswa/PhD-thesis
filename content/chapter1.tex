@@ -196,16 +196,18 @@ Under its terms, all elements can be reused in original or derived form for all 
 	\label{fig:handbook-admonitions}
 \end{figure}
 
-Hosting for the project is provided by Read the Docs (\href{https://readthedocs.org/}{readthedocs.org}), a free software documentation hosting platform that integrates with Sphinx.
-Illustrations in the handbook are based on the undraw project by Katerina Limpitsouni (\href{https://undraw.co/}{undraw.co}). \\
-The ability of the documentation to sequentially execute code and record its outcomes has been used to utilize the Handbook as an integration test for the DataLad software in addition to a user guide.
-If new software developments in the DataLad core packages break documented workflows, a continuous integration test suite will fail, alerting developers to the fact that their changes break user workflows. \\
-To ensure reusability, such as the adaptation by \citet{brooks2021handbook}, the project is released under a CC-BY-SA 4.0 license.
-Under its terms, all elements can be reused in original or derived form for all purposes under the condition that the original project is attributed and that derivative work is shared under an identical ("not more restrictive") license (\href{https://creativecommons.org/licenses/by-sa/4.0/}{creativecommons.org/licenses/by-sa/4.0}).
-
 \subsubsection{Content}
 
-
+The introduction part of the Handbook has two different target audiences:
+For one, it provides \textit{researchers} with detailed installation instructions, a basic general command line tutorial, and an overview of the handbook.
+Beyond this, it gives a high-level overview of the software and its capabilities to \textit{planners}. \\
+The Basics part is organized into 9 chapters.
+Following a narrative about a fictional college course on \gls{rdm}, it teaches different aspects of DataLad functionality and general research data management to \textit{researchers} in each topical chapter.
+Broadly, those topics can be summarized as follows: 1) Local version control, 2) Capturing and re-executing process provenance, 3) Data integrity, 4) Collaboration and distributed version control, 5) Configuration, 6) Reproducible data analysis, 7) Computationally reproducible data analysis, 8) Data publication, and 9) Error management.
+The Beyond Basics part adds independent chapters on advanced DataLad features and workflows, big data projects, DataLad use on computational clusters, DataLad's internals, and selected DataLad extensions.
+The latter two parts are accompanied with code demonstrations, slides, executable notebooks, or video tutorials that \textit{trainers} can reuse freely.
+The last part, Usecases, targets \textit{planners} and \textit{researchers} with short step by step instructions.
+They show planners what is possible, and help researchers connect their knowledge into larger workflows.
 % outline the content, with a focus on how they improve scientific practice
 
 \subsubsection{Project and community management}
