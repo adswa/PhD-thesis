@@ -119,14 +119,112 @@ For one, the field is characterized by complex datasets.
 They typically encompass different modalities (such as imaging, electro-physiological, and behavioral measurements) and often entail several recording sessions.
 The \gls{BIDS} \citep{gorgolewski2016brain} is a community standard for organizing and describing neuroimaging data, and is widely considered as a successful solution for data standardization in such datasets.
 It defines common and modality specific schemes for file names and file organization, file formats, and metadata to accompany raw or derived data.
-\gls{BIDS} has widespread and growing support for different neuroimaging modalities, and is made a common prerequisite by neuroscientific data portals such as OpenNeuro \citep{markiewicz2021openneuro} or processing tools such as BIDSApps \citep{gorgolewski2017bids}.
-An example of an \gls{meg} dataset, structured to \gls{BIDS} or organized idiosyncratically, is shown in \cref{fig:BIDS}. \\
+An example of an \gls{meg} dataset, structured to \gls{BIDS} or organized idiosyncratically, is shown in \cref{fig:BIDS}.
+\gls{BIDS} has widespread and growing support for different neuroimaging modalities, and is made a common prerequisite by neuroscientific data portals such as OpenNeuro \citep{markiewicz2021openneuro} or processing tools such as BIDSApps \citep{gorgolewski2017bids}.\\
 The storage demands of neuroimaging data are not trivial, either.
 \gls{BIDS} regulates which file formats must be used for which data type, and focuses on open file formats for accessibility and compression to reduce disk space requirements.
 But neuroimaging data are nevertheless sizable \citep{van2014human}.
 And a growing awareness that robust findings require sufficiently long recordings \citep{li2021moving} as well as large and representative samples \citep{button2013power} \citep{turner2018small} leads to large-scale datasets such as the Human Connectome Project \citep{van2013wu}, the Adolescent Brain Cognitive Development Study (ABCD) \citep{casey2018adolescent}, or the UK Biobank (UKB) project \citep{matthews2015uk} that pose infrastructural challenges for storage, analysis, transfer and archival.
 Moreover, in human neuroimaging, data underlies strict data protection regulations such as the \gls{HIPAA} in the United States or the \gls{GDPR} in Europe.
-This requires compliance to variable terms of data usage agreements, and often involves idiosyncratic processes to retrieve data \citep{waitedata}.
+This requires compliance to variable terms of data usage agreements, and often involves idiosyncratic processes to retrieve data \citep{waitedata}.\\
+Processing of neuroimaging data usually involves multi-stepped workflows from acquisition through analysis to archival, and those frequently require several different software tools at every step \citep{poline2011}\citep{NISO2022119623}.
+The amount of possible combinations of methods, parameters, and tools in neuroimaging analyses is thus large \citep{bowring2019exploring}.
+But variations in analytic choices affect numeric results and conclusions \citep{silberzahn2018}.
+In the field of task-based fMRI, \citet{botvinik2020variability} found highly variable conclusions when they instructed 70 independent research teams to analyze the same dataset with tools and methods of their choice to test the same hypotheses.
+A similar project, EEGManyPipelines (\href{https://eegmanypipelines.org/}{eegmanypipelines.org}), is currently ongoing in the field of \gls{eeg}.
+One central aspect \gls{rdm} thus needs to provide in neuroimaging is precise information about how tools, data, and actors were involved in the generation of a file.
+This \textit{digital provenance}  (illustrated in \cref{fig:prov1}) is not meant to decrease the analytical variability.
+Instead, it captures thorough, machine-actionable processing descriptions that are necessary to investigate differences between analysis outcomes, reproduce, or reuse them.
+Despite reporting guidelines for MRI \citep{nichols2017best}, MEG \citep{pernet2020issues}, and EEG \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis (see e.g., \citet{vsovskic2022better}).
+
+%BIDS
+\begin{figure}
+	{\scriptsize
+		\begin{minipage}{.49\textwidth}
+			\begin{forest}
+				pic dir tree,
+				for tree={% kleiner Zeilenabstand
+					s sep=0.02cm}
+				[memento/
+				[memento\_001/
+				%		[Move\_correc\_SSS\_alignedinitial\_nonfitiso/
+				%		[1\_memento\_001\_ml83-1\_mc\_transforminitial.fif, file]
+				%		[2\_memento\_001\_ml83-1\_mc\_transforminitial.fif, file]
+				%		[3\_memento\_001\_ml83-2\_mc\_transforminitial.fif, file]
+				%		[data\_fix1.mat, file]
+				%		[data\_fix\_ft1.mat, file]
+				%		[data\_fix\_new1.mat, file]
+				%		[data\_fix\_reduced1.mat, file]
+				%		[delay\_photodiode\_subject\_long\_default\_realign\_only\_ICA1.mat, file]
+				%		[memento\_results\_ICA\_newall\_alignedinitial228.mat, file]
+				%		[memento\_results\_ICA\_newall\_alignedinitial461.mat, file]
+				%		[memento\_results\_ICA\_newall\_alignedinitial511.mat, file]
+				%		[num\_trials\_old\_ICA.mat, file]
+				%		[resultfile\_probs-1.mat, file]
+				%		[trial\_out\_ind.mat, file]
+				%		]
+				[Move\_correc\_SSS\_realigneddefault\_nonfittoiso/
+				[1\_memento\_001\_ml83\_mc\_realigneddefault.fif, file]
+				[2\_memento\_001\_ml83-1\_mc\_realigned\_default.fif, file]
+				[3\_memento\_001\_ml83-1\_mc\_realigned\_default.fif, file]
+				[memento\_results\_ICA228.mat, file]
+				[memento\_results\_ICA455.mat, file]
+				[memento\_results\_ICA461.mat, file]
+				[memento\_results\_ICA511.mat, file]
+				[memento\_results\_ICA\_newall228.mat, file]
+				[memento\_results\_ICA\_newall455.mat, file]
+				[memento\_results\_ICA\_newall461.mat, file]
+				[memento\_results\_ICA\_newall511.mat, file]
+				[mri\_aligned.mat, file]
+				[num\_trials\_old\_ICA.mat, file]
+				[outfile\_new\_all.mat, file]
+				[resultfile\_new\_all.mat, file]
+				[template\_grid.mat, file]
+				[trial\_out\_ind.mat, file]
+				]
+				[Raw/
+				[1\_memento\_001\_ml83.fif, file]
+				[2\_memento\_001\_ml83-1.fif, file]
+				[memento\_001\_ml83-2.fif, file]
+				]
+				]
+				]
+			\end{forest}
+		\end{minipage}
+		\quad
+		\begin{minipage}{.49\textwidth}
+			\begin{forest}
+				pic dir tree,
+				for tree={% kleiner Zeilenabstand
+					s sep=0.02cm}
+				[memento/
+				[dataset\_description.json, file]
+				[participants.json, file]
+				[participants.tsv, file]
+				[README, file]
+				[sub-001/
+				[meg/
+				[sub-001\_acq-calibration\_meg.dat, file]
+				[sub-001\_acq-crosstalk\_meg.fif, file]
+				[sub-001\_coordsystem.json, file]
+				[sub-001\_task-memento\_channels.tsv, file]
+				[sub-001\_task-memento\_events.tsv, file]
+				[sub-001\_task-memento\_log.tsv, file]
+				[sub-001\_task-memento\_meg.json, file]
+				[sub-001\_task-memento\_split-01\_meg.fif, file]
+				[sub-001\_task-memento\_split-02\_meg.fif, file]
+				[sub-001\_task-memento\_split-03\_meg.fif, file]
+				]
+				[sub-001\_scans.tsv, file]
+				]
+				]
+			\end{forest}
+		\end{minipage}
+	}
+	\caption[An example of BIDS]{A real-world example of a single subject's MEG acquisition. The left side shows the file tree of the data from a project directory with an idiosyncratic organization. It includes a mix of raw data, preprocessed data, and intermediate results, and the naming scheme is inconsistent. The right side shows the same subject's data, but structured according to \gls{BIDS}. The naming scheme is consistent, and apart from raw MEG data the directory includes metadata files from the experiment and acquisition machine that are required to understand the data without the original authors.}
+	\label{fig:BIDS}
+\end{figure}
+
 
 % provenance
 \begin{figure}
@@ -136,102 +234,6 @@ This requires compliance to variable terms of data usage agreements, and often i
 	\label{fig:prov1}
 \end{figure}
 
-\begin{figure}
-{\scriptsize
-  \begin{minipage}{.49\textwidth}
-	\begin{forest}
-		pic dir tree,
-		for tree={% kleiner Zeilenabstand
-		s sep=0.02cm}
-		[memento/
-		[memento\_001/
-%		[Move\_correc\_SSS\_alignedinitial\_nonfitiso/
-%		[1\_memento\_001\_ml83-1\_mc\_transforminitial.fif, file]
-%		[2\_memento\_001\_ml83-1\_mc\_transforminitial.fif, file]
-%		[3\_memento\_001\_ml83-2\_mc\_transforminitial.fif, file]
-%		[data\_fix1.mat, file]
-%		[data\_fix\_ft1.mat, file]
-%		[data\_fix\_new1.mat, file]
-%		[data\_fix\_reduced1.mat, file]
-%		[delay\_photodiode\_subject\_long\_default\_realign\_only\_ICA1.mat, file]
-%		[memento\_results\_ICA\_newall\_alignedinitial228.mat, file]
-%		[memento\_results\_ICA\_newall\_alignedinitial461.mat, file]
-%		[memento\_results\_ICA\_newall\_alignedinitial511.mat, file]
-%		[num\_trials\_old\_ICA.mat, file]
-%		[resultfile\_probs-1.mat, file]
-%		[trial\_out\_ind.mat, file]
-%		]
-		[Move\_correc\_SSS\_realigneddefault\_nonfittoiso/
-	    [1\_memento\_001\_ml83\_mc\_realigneddefault.fif, file]
-	    [2\_memento\_001\_ml83-1\_mc\_realigned\_default.fif, file]
-	    [3\_memento\_001\_ml83-1\_mc\_realigned\_default.fif, file]
-	    [memento\_results\_ICA228.mat, file]
-	    [memento\_results\_ICA455.mat, file]
-	    [memento\_results\_ICA461.mat, file]
-	    [memento\_results\_ICA511.mat, file]
-	    [memento\_results\_ICA\_newall228.mat, file]
-	    [memento\_results\_ICA\_newall455.mat, file]
-	    [memento\_results\_ICA\_newall461.mat, file]
-	    [memento\_results\_ICA\_newall511.mat, file]
-	    [mri\_aligned.mat, file]
-	    [num\_trials\_old\_ICA.mat, file]
-	    [outfile\_new\_all.mat, file]
-	    [resultfile\_new\_all.mat, file]
-	    [template\_grid.mat, file]
-	    [trial\_out\_ind.mat, file]
-		]
-		[Raw/
-		[1\_memento\_001\_ml83.fif, file]
-		[2\_memento\_001\_ml83-1.fif, file]
-		[memento\_001\_ml83-2.fif, file]
-		]
-		]
-		]
-	\end{forest}
-\end{minipage}
-\quad
-  \begin{minipage}{.49\textwidth}
-	\begin{forest}
-		pic dir tree,
-		for tree={% kleiner Zeilenabstand
-			s sep=0.02cm}
-		[memento/
-		[dataset\_description.json, file]
-		[participants.json, file]
-		[participants.tsv, file]
-		[README, file]
-		[sub-001/
-		[meg/
-		[sub-001\_acq-calibration\_meg.dat, file]
-		[sub-001\_acq-crosstalk\_meg.fif, file]
-		[sub-001\_coordsystem.json, file]
-		[sub-001\_task-memento\_channels.tsv, file]
-		[sub-001\_task-memento\_events.tsv, file]
-		[sub-001\_task-memento\_log.tsv, file]
-		[sub-001\_task-memento\_meg.json, file]
-		[sub-001\_task-memento\_split-01\_meg.fif, file]
-		[sub-001\_task-memento\_split-02\_meg.fif, file]
-		[sub-001\_task-memento\_split-03\_meg.fif, file]
-		]
-		[sub-001\_scans.tsv, file]
-		]
-		]
-	\end{forest}
-\end{minipage}
-}
-\caption[An example of BIDS]{A real-world example of a single subject's MEG acquisition. The left side shows the file tree of the data from a project directory with an idiosyncratic organization. It includes a mix of raw data, preprocessed data, and intermediate results, and the naming scheme is inconsistent. The right side shows the same subject's data, but structured according to \gls{BIDS}. The naming scheme is consistent, and apart from raw MEG data the directory includes metadata files from the experiment and acquisition machine that are required to understand the data without the original authors.}
-\label{fig:BIDS}
-\end{figure}
-
-Processing of neuroimaging data usually involves multi-stepped workflows from acquisition through analysis to archival, and those frequently require several different software tools at every step \citep{poline2011}\citep{NISO2022119623}.
-The amount of possible combinations of methods, parameters, and tools in neuroimaging analyses is thus large \citep{bowring2019exploring}.
-But variations in analytic choices affect numeric results and conclusions \citep{silberzahn2018}.
-In the field of task-based fMRI, \citet{botvinik2020variability} found highly variable conclusions when they instructed 70 independent research teams to analyze the same dataset with tools and methods of their choice to test the same hypotheses.
-A similar project, EEGManyPipelines, is currently ongoing in the field of EEG (\href{https://eegmanypipelines.org/}{eegmanypipelines.org}).
-One central aspect \gls{rdm} thus needs to provide in neuroimaging is precise information about how tools, data, and actors were involved in the generation of a file.
-This \textit{digital provenance}  (illustrated \cref{fig:prov1}) is not meant to decrease the analytical variability.
-Instead, it captures thorough, machine-actionable processing descriptions that are necessary to investigate differences between analysis outcomes, reproduce, or reuse them.
-Despite reporting guidelines for MRI \citep{nichols2017best}, MEG \citep{pernet2020issues}, and EEG \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis (see e.g., \citet{vsovskic2022better}).
 
 \todo{add more RDM peculiarities of neuroimaging here. Maybe deep dive into computational modelling}
 
