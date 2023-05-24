@@ -85,58 +85,62 @@ The next section highlights a number of strategies for this.
 
 The reusability of research objects has become a distinct characteristic of scientific practice as it allows for reproduction, verification, building up upon and extending existing work, evidence synthesis, and minimizing duplicate efforts in the advancement of science \citep{thanos2017research}.
 With this, it maximizes the impact of the funding and work that resulted in the research output.
-Therefore, it is considered the “ultimate goal” of the FAIR principles \citep{wilkinson2016fair}, and an explicit and central expectation in a variety of funding sources such as the Economic and Social Research Council (ESRC, UK), the European Research Council (ERC, EU), or the National Institutes of Health (NIH, US).
-In the scope of the FAIR principles, reusability focuses on the ability of a human or a machine to decide if data are useful and usable in a particular context based on richly curated metadata.
-This reusability requires trust \citep{bechhofer2010research}. Re-users must be able to audit the steps performed in an experiment or analysis in order to be convinced of the validity of the results or derivatives.
+Its central role in the \gls{FAIR} principles \citep{wilkinson2016fair} and a variety of funding sources such as the Economic and Social Research Council (ESRC, UK), the European Research Council (ERC, EU), or the National Institutes of Health (NIH, US) are a testament to this.
+In the scope of the FAIR principles, reusability focuses on the ability of a human or a machine to decide if data are useful and usable in a particular context.
+This reusability requires trust \citep{bechhofer2013linked}: Re-users must be able to audit the steps performed in an experiment or analysis in order to be convinced of the validity of the results or derivatives.
 FAIR principle R1.2, ``(Meta)data are associated with detailed provenance'' \citep{wilkinson2016fair}, refers to this.
-This principles also encodes the process provenance necessary for reproducibility.
+This principle also encodes the process provenance necessary for reproducibility.
 And indeed, reproducibility and trust are closely related:
-Where resources are not fully FAIR yet, manual reproducibility typically provides the trust that process provenance would otherwise provide.
-A new project, for example, typically starts with a check if the previous foundational findings still hold.\\
-Many scientific fields or projects argue that FAIRness requires coordinated use of ontologies for metadata and brought forward efforts for ontology development and consensus building \citep[e.g.,][]{wise2019implementation, abrams2022standards, papadiamantis2020metadata}, but not in all domains are the necessary metadata standards incentivized or ready to use.
-A few years before the publication of the FAIR principles, \citet{bechhofer2013linked} cued the term ``reusable research object'' in a conceptual position paper, and defined it as a ``container for a principled aggregation of resources, produced and consumed by common services and shareable within and across organisational boundaries. [...It] includes not only the data used, and methods employed to produce and analyse that data, but also the people involved in the investigation. An association with a dataset (or service, or result collection, or instrument) is now more than just a citation or reference to that dataset (or service or result collection). The association is rather a link to that dataset (or service or result collection) that can be explicitly followed or dereferenced providing access to the actual resource and thus enactment of the service, query or retrieval of data, and so on.''
+Where resources are not fully FAIR yet, manual reproducibility typically yields the trust that process provenance would otherwise provide.
+A new project, for example, commonly starts with a check if the previous foundational findings still hold.\\
+As the FAIR principles advocate for richly curated metadata, many scientific fields or projects argue in favor of coordinated use of ontologies for metadata and brought forward efforts for ontology development and consensus building \citep[e.g.,][]{wise2019implementation, abrams2022standards, papadiamantis2020metadata}.
+But not in all domains are the necessary metadata standards incentivized or ready to use.
+A few years before the publication of the FAIR principles, \citet{bechhofer2010research} cued the term ``reusable research object'' in a conceptual position paper.
+They describe it as a precursor of a FAIR research object, specifically as a ``container for a principled aggregation of resources, produced and consumed by common services and shareable within and across organisational boundaries [...that] includes not only the data used, and methods employed to produce and analyse that data, but also the people involved in the investigation. An association with a dataset (or service, or result collection, or instrument) is now more than just a citation or reference to that dataset (or service or result collection). The association is rather a link to that dataset (or service or result collection) that can be explicitly followed or dereferenced providing access to the actual resource and thus enactment of the service, query or retrieval of data, and so on.''  \citep{bechhofer2010research}
+This description matches characteristics that DataLad datasets or its contents can posses.
 % Detail how datalad adheres to these requirements.
-In the following, I will highlight four properties that DataLad dataset or its contents possess that make them a reusable research object \citep{wagnerohbm2021}: Versioned, actionable, modular, and portable.
+In the following, I will highlight four properties of research objects that can arise from pragmatic research data management -- versioned, actionable, modular, and portable -- and how these properties make them reusable  even if full FAIRness can not yet be achieved \citep{wagnerohbm2021}.
 % and argue why the \gls{rdm} features that DataLad provides assist with FAIRification.
 
-\subsubsection{Versioned}
+\subsubsection{Exhaustive versioning}
 
 The information ``I generated X from data Y with software Z'' is insufficient for reproducibility and trustworthiness if Y exists in multiple versions or subsets, if different releases of Z have relevant implementation differences, or if Z behaves differently depending on the environment it is used in.
 If digital research objects are exhaustively tracked, they can be accessed and used transparently in a uniquely identified version state.
 This exhaustive identity registration removes ambiguity that arises if the files in question are not completely static.
-Therefore, the first relevant feature that DataLad provides for reproducibility is version control for all relevant files -- from data to code to software environments.
-It lays the foundation for exhaustive tracking, and the DataLad dataset is a suitable overlay structure to include every relevant element for a scientific project.
+Therefore, the first relevant feature that DataLad provides for reproducibility and reusability is version control for all relevant files -- from data to code to software environments.
+In addition, this makes the DataLad dataset a suitable overlay structure to encompass every relevant element for a scientific project, laying the foundation to include all digital data, methods, and provenance as a reusable research object as \citet{bechhofer2010research} propose.
+% make point about **exhaustive** tracking stronger
 
-\subsubsection{Actionable}
+\subsubsection{Actionable metadata}
 
 Process provenance metadata how a file came to be is often incomplete and difficult to retrace \citep{hardwicke2018data}.
-It is tedious, often without an immediate benefit for curators, and rarely explicitly incentivized to retrospectively annotate research objects with process provenance \citep{edwards2011science, san2009long}.
-Rather, this information should be captured at the time of creation, with the tools and persons that are involved in the creation of research outputs anyway \citep{dallas2016digital}.
+As it is tedious, often without an immediate benefit for curators, and rarely explicitly incentivized to retrospectively annotate research objects with process provenance \citep{edwards2011science, san2009long}, this information should be captured at the time of creation, with the tools and persons that are involved in the creation of research outputs anyway \citep{dallas2016digital}.
 But while early curation can increase the comprehensiveness of metadata, additional measures should guarantee its validity, as even fully described research outputs fail to be reproducible or reusable if their description or provenance contains errors \citep[see, e.g.,][]{manninen2017reproducibility}.
-The most pragmatic approach to valid metadata is to base subsequent processing on them.
-In the simplest case, this can be a codified parametrization of an analysis in a configuration or analysis design file  \citep[see, e.g.,][]{jas2018reproducible}.
+The most pragmatic approach to validate metadata is to base subsequent processing on them.
+For a simple example, consider a codified parametrization of an analysis in a configuration or analysis design file  \citep[see, e.g.,][]{jas2018reproducible}:
 If an analysis based on it completes successfully, it constitutes valid provenance metadata, created by an expert or automatically at the earliest possible time at no additional cost, and adds immediate benefit for curators as it captures relevant provenance and detects erroneous or missing metadata in passing.
-This process is easiest if the tools used during the creation of a research output use the same metadata that gets eventually published alongside the final research output.
-Therefore, a second relevant feature is actionable metadata.
+Creation and validation is easiest if it is an automatic process within the research process, and if the tools used during the creation also use the same metadata that gets eventually published alongside the final research output.
+Therefore, the actionable metadata DataLad can acquire from command executions are the second relevant property for reusability.
 Even if this metadata does not follow established community standards as required by the \gls{FAIR} principles yet, it preserves knowledge that would otherwise be lost, without requiring additional training, impeding later additions, or putting additional burden on scientists - it is a byproduct of standard scientific practice.
+The fact that it can be re-executed automatically, and that resulting recomputations are automatically compared to previous versions by employed version control tools, provides an effortless form of validation.
 
 
-\subsubsection{Modular}
+\subsubsection{Modular structure}
 
 The reusability of scientific work can improve if it is accessible in modular units that constitute unambiguous multi-use components, such as raw data, processed data, or software.
 In the simplest case, modularization means placing conceptually distinct content into separate files, and grouping files in individual directories to reflect more global structures.
 Distinct units, such as the directories ``code/'' and ``inputs/'', increase transparency if each location is associated with distinguishable content, ease flexible recombination of such components into new projects, allow continuous evolution of an individual module without impact on other components of a project, and enable location-specific access control.
-Thus, a third feature is modularity.
 Though a single modular unit can not entail all relevant elements of a scientific study or data analysis, exhaustive tracking of all elements without sacrificing modularity can be achieved by linking multiple modular units in dependency relationships.
 A useful metaphor are package management systems such as conda (\url{https://docs.conda.io}) or APT (\url{https://wiki.debian.org/Apt}): A software package is a modular unit, installed with a package manager.
 However, packages usually depend on other software packages, which are listed as its ``dependencies''.
 During installation, package managers check if all of the linked dependencies exist on the system, and if not, install them in the required versions automatically.
+Thus, a third feature for reusability is modularity as provided with DataLad's subdataset mechanism.
 In scientific projects, modular units (data, software, code) are the dependencies of a given research output.
-When those units are tracked, dependency relationships can include precise versions.
-Beyond transparency and tidiness, modularization and linkage thus provide methods for reuse with which stand-alone units can be assembled into new projects, and research output contains the pieces it was derived from as linked dependencies \citep{bechhofer2010research}.
+When those units are tracked as datasets, dependency relationships in the form of subdatasets form actionable links with precise versions.
+This mirrors the linked dependencies that \citet{bechhofer2010research} proposed.
 
 
-\subsubsection{Portable}
+\subsubsection{Portability}
 
 The fourth property is portability.
 The more portable a digital research object is, the easier it is to reuse it.
