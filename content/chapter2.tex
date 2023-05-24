@@ -195,6 +195,158 @@ For this, it puts the aforementioned properties in practice, using DataLad datas
 	\label{fig:fairly_workflow}
 \end{figure}
 
+
+The framework combines distributed version control systems, containerization software, job scheduling tools, and storage solutions with optional encryption and compression into a sequential analysis workflow (\cref{fig:fairly_workflow}).
+Its setup is as follows:\\
+The start and end point of the workflow is a portable DataLad dataset that contains the exact identity and location of all data processing inputs and, eventually, the re-executable processing results (\cref{fig:fairly_workflow}a).
+In a first step, it is assembled from all relevant processing components, most commonly input data and software containers with computational environments or pipelines.
+The use of software containers, while not strictly required, is a practical method to provide portable computational environments and forgo a number of challenges that computational reproducibility otherwise poses.
+To harvest the advantages of modularity, processing components are placed in separate DataLad datasets and linked as subdatasets.
+To provide features that are necessary for processing personal large-scale data, such as encryption (to comply with data protection regulations), compression (to save disk space), and composition to archive files (to reduce the number of files),
+DataLad datasets involved in the workflow are placed into so-called RIA stores \citep{poldrackRIA}.
+This ``backend'' representation stores a dataset of any size in 25 files, with optional compression and encryption.
+\cref{fig:fairly_workflow}a illustrates a DataLad dataset's front-end structure when cloned in a user's workspace, and \cref{fig:fairly_workflow}d shows its RIA representation.\\
+Based on this self-contained structure, the framework needs to conduct user-defined processing in a way that captures and validates actionable metadata.
+While DataLad's \texttt{containers-run} functionality supports the capture, simultaneous validation requires additional tweaks.
+For this, the framework bootstraps an entire temporary analysis environment from scratch based on the information contained in the initial dataset (\cref{fig:fairly_workflow}c).
+In this ephemeral environment, processing is solely based on information already recorded in the dataset.
+As the computation is invoked with a provenance capturing \texttt{datalad containers-run} command, results and provenance are saved automatically if the analysis succeeds.
+And this success is evidence that existing information is valid and sufficient to make the dataset portable.\\
+The basis for these ephemeral workspaces is the ability to distribute DataLad datasets across local or remote infrastructure as lightweight, linked clones, and the process mirrors a software development routine, where changes are developed in a distributed network:
+An orchestration layer clones the DataLad dataset into a temporary location, uses its recorded history to infer relevant details about precessing components, and add results on top of it.
+Afterwards, results and their provenance can be pushed back before the ephemeral workspace is purged.
+To ensure that this orchestration can scale, it needs to support parallel executions, i.e., several analyses running in ephemeral workspaces at the same time.
+This is complicated in Git repositories as concurrent processes can interfere with one another.
+Two techniques, again adopted from distributed software development, make it possible.
+The first consists of duplicating the DataLad dataset that is used as an analysis starting point into two clones: One remains unaltered and acts as an input source from which the ephemeral clones are bootstrapped (\cref{fig:fairly_workflow}a).
+The other one acts as the target location for results.
+This separation prevents concurrent clone and push operations without duplicating file storage.
+The second technique involves the use of branches, independent segments of a DataLad dataset's history that allow for parallel developments based on a common starting point.
+Each individual ephemeral workspace saves its results and provenance on a unique branch.
+When several parallel ephemeral clones push their individual histories into a single location, they thus do not conflict with one another.
+This process mirrors feature development in software projects where a mainline branch contains agreed upon code.
+Changes are build on top of the mainline code, but in branches such that concurrent developments of several contributors do not conflict, and later, a so-called \texttt{merge} can integrate a branch into another one.
+The clone and push orchestration is implemented as a job script that wraps the execution of the analysis.
+\cref{lst:job} contains an example bash script:
+The clone source and push target locations are provided as parameters to the script (lines 5-6).
+Then, the dataset is cloned from the specified source (line 11), the dataset for results is registered (line 17), and a unique branch is created (line 21).
+Afterwards, analysis-specific code can run, and as a last step, its results and provenance are pushed into the destination dataset (lines 44, 49).\\
+Running such a script performs one computation in one ephemeral workspace.
+If one breaks the analysis into parts, for example one preprocessing pipeline per participant in a dataset, a job scheduling system can assist in deploying thousands of computations in parallel.
+For this, the framework supports to major job schedulers, HTCondor and SLURM, natively.
+
+
+Finally, once the results from all ephemeral workspaces are aggregated in branches in the target dataset, they are merged into the mainline branch using a Git octopus merge.
+With the exception of merging all results, the entire setup can be bootstrapped automatically with an openly shared shell script.
+
+
+
+
+
+\begin{Listing}
+	\centering
+	\lstset{
+		language=bash,
+		basicstyle=\ttfamily\footnotesize,
+		breakatwhitespace=true,
+		breaklines=true,
+		breakindent=-0pt,
+		postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow\space}},
+		captionpos=b,
+		commentstyle=\color{dataladblue!60!black},
+		firstnumber=1,
+		keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+		%keywordstyle=\color{blue!70!black},
+		numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+		numbersep=3pt,                   % how far the line-numbers are from the code
+		numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+		rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+		showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+		showstringspaces=false,          % underline spaces within strings only
+		showtabs=false,                  % show tabs within strings adding particular underscores
+		stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+		stringstyle=\color{dataladyellow!70!black},     % string literal style
+		tabsize=2,
+		xleftmargin=1em,
+	}
+	% our separation of input and output store still bothers me, this could have
+	% been avoided with a bit more thinking, but oh well, too late now
+	\begin{lstlisting}[multicols=2]
+		#!/bin/bash
+		# fail on any issue, show commands
+		set -e -u -x
+		# name arguments for readability
+		dssource="$1"
+		pushgitremote="$2"
+		subid="$3"
+
+		# obtain the analysis dataset, which
+		# also tracks the required inputs
+		datalad clone "${dssource}" ds
+		cd ds
+
+		# register location for result
+		# deposition, separate from the input
+		# source for performance reasons only
+		git remote add outputstore "$pushgitremote"
+
+		# all job results will be put into
+		# a job-specific, dedicated branch
+		git checkout -b "job-$JOBID"
+
+		# START OF APPLICATION-SPECIFIC CODE
+		# pull down input data manually,
+		# only needed for wildcard-based file
+		# selection in the next command
+		datalad get -n "inputs/ukb/${subid}"
+		# datalad containers-run executes
+		# the "cat" computational pipeline.
+		# specified inputs are auto-obtained,
+		# specified outputs are saved with
+		# provenance record
+		datalad containers-run \
+		-m "Compute subject ${subid}" \
+		-n cat \
+		--explicit \
+		--output "${subid}" \
+		--input "inputs/ukb/${subid}/*T1w.nii.gz"
+		"<container invokation arguments>"
+		# END OF APPLICATION-SPECIFIC CODE
+
+		# push result file content to the
+		# configured "storage-remote"
+		datalad push --to storage-remote
+
+		# push branch with provenance records
+		# needs a global lock to prevent
+		# write conflicts
+		flock "$DSLOCKFILE" git push outputstore
+
+		# log entry to mark non-error exit
+		echo SUCCESS
+	\end{lstlisting}
+
+	% max 250, is 190
+	\caption[Job orchestration for parallel processing]{Complete compute job implementation as a bash script.
+		A batch system invokes the job-script in a temporary working directory with three parameters:
+		a URL of a DataLad dataset tracking all code and input data,
+		a URL to deposit job-results at, and
+		an identifier to select a sample for processing.
+		%
+		Apart from performance-related optimizations, the job implementation conducts three main steps:
+		1)~\texttt{clone} a DataLad dataset with all information to bootstrap an ephemeral computing environment for each job;
+		2)~\texttt{containers-run} a containerized pipeline with a comprehensive specification of to-be-retrieved inputs and to-be-captured outputs;
+		3)~\texttt{push} captured outputs and process provenance records to a permanent storage location.
+		%
+		Preparation, computation, provenance record creation, and file content deposition on permanent storage are fully independent across jobs, and are executed in parallel.
+		Only the \texttt{git push} of the provenance record to a central repository must be protected against concurrent write-access for technical reasons.
+		Additional job parametrization (\texttt{DSLOCKFILE} and \texttt{JOBID} environment variables) are defined at job-submission using batch system specific means.
+		The job script can be adjusted to a different processing pipeline by replacing the container invocation (see \texttt{APPLICATION-SPECIFIC CODE} markers).}
+	\label{lst:job}
+\end{Listing}
+
+
+
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ukb_datasets.pdf}
