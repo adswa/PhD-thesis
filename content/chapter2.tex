@@ -173,34 +173,20 @@ However, the four properties outlined above are a big step into the right direct
 
 \section{FAIRly big: A framework for computationally reproducible processing of large-scale data}
 
+The following section is a short overview of our original publication \citet{wagner2022fairly}. The reader is invited to visit the published paper for further details.
+
 Large-scale datasets pose additional challenges for \gls{FAIR} research objects.
-Their storage and computational demands increasingly exceed common \gls{HPC} infrastructure, and computing procedures that are common in fields accustomed to smaller datasets (such as storing multiple copies of the data) become infeasible with these datasets \citep{horien2021hitchhiker}.
+Their storage and computational demands increasingly exceed common \gls{HPC} infrastructure, and computing procedures that are common in fields accustomed to smaller datasets such as storing multiple copies of the data become infeasible \citep{horien2021hitchhiker}.
 As the complexity of reproducing and verifying large scale datasets growths, the trustworthiness of derivative data decreases.
-And as data processing results often multiply storage demands, keeping intermediate outcomes on disk is rendered increasingly prohibitive, further impeding the possibility to retrace and verify the origin and provenance of research outcomes fully and transparently.
+And as data processing results often multiply storage demands, keeping intermediate outcomes on disk is rendered increasingly prohibitive, which further impedes the possibility to retrace the origin of research outcomes.
 Yet for large scale datasets specifically, sharing data derivatives is the most -- or sometimes the only -- viable way to extend previous research \citep{craddock2013neuro}:
-Resource-heavy, costly computations with considerable environmental impact \citep{portegies2020ecological} have to be computed only once, and scholars without access to adequate computational resources for original analysis can reuse derivatives.
+It opens up research opportunities to scholars without access to adequate computational resources, and minimizes duplicate analysis efforts for resource-heavy, costly computations with considerable environmental impact \citep{portegies2020ecological}.\\
+Based on DataLad, containerization software, and job scheduling systems, we build a portable, free and open source framework to reproducibly process large-scale datasets.
+It applies workflows from software engineering -- in particular distributed development -- to computational research, and empowers reusers to automatically reproduce results based on machine-actionable records of computational provenance without access to the original infrastructure.
+For this, it puts the aforementioned properties in practice, using DataLad datasets as a comprehensive data structure to track all elements of digital processing, perform portable computing in automatically bootstrapped ephemeral workspaces, and capture validated and re-executable process provenance records.
 
+\subsection{Framework overview}
 
-Based on DataLad, containerization software, and job scheduling systems, we build a a portable, free and open source framework to reproducibly process large-scale datasets.
-It empowers reusers to automatically reproduce results based on machine-actionable records of computational provenance, in an infrastructure-agnostic fashion.
-The framework capitalizes on established technology, used in conjunction with workflows from software development and workload management.
-In a proof-of-concept analysis, we applied the framework to run a MATLAB-based, containerized, neuroimaging processing pipeline on data from the UKB project \citep[][comprising 76 TB in 43 million files under strict usage constraints]{matthews2015uk}.
-
-The proposed framework employs a range of software tools for data, code, and computation management to apply workflows from software engineering — in particular distributed development — to computational research. Specifically, it orchestrates arbitrary data processing via a lean network of interconnected, but self-sufficient workspaces while optimizing for portability, scalability, and automatic computational reproducibility.
-
-To achieve this, our framework combines a range of open source software tools — distributed version control systems, containerization software, job scheduling tools, and storage solutions with optional encryption and compression — into a sequential workflow. A complete, schematic overview is depicted in Figure 1 and basic DataLad concepts are summarized in Box 1. Three key features of this data management solution are central to the framework:
-
-Comprehensive data structure to track all elements of digital processing
-
-Computation in automatically bootstrapped ephemeral workspaces
-
-Process provenance capture in machine-actionable records
-
-
-
-% role of sample size for reproducible results: \citep{li2021moving}
-
-%  \citep{li2021moving} "highlight the reality that as the test-retest reliability approaches optimal levels for laboratory measurement, pipeline implementation differences will impose an inherent upper bound on the agreement of preprocessed data. These findings also underscore that 10 minutes of data, which has been common in the field until at least recent years, are insufficient for producing results that are reliable enough to reveal substantive pipeline-related variation."
 
 \begin{figure}
 	\centering
