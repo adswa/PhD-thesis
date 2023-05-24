@@ -271,23 +271,21 @@ To address the technical challenges of data management, data sharing, and digita
 DataLad's aim is ``to make data management as easy as managing code'' \citep{Halchenko2021}.
 The latter benefits from a well-established ecosystem of tools, platforms, and processes.
 The distributed version control tool Git provides the ability to track changes in small-sized, text-based files, and is a de-facto standard in collaborative software development. In 2022, 93.78\% of respondents in Stackoverflow's annual developer survey (\url{https://survey.stackoverflow.co}) reported to use it.
-Numerous hosting platforms for Git repositories have been developed around it to serve as facilitators for collaboration, discovery, and reuse, such as GitHub (\url{https://github.com}), GitLab ({\url{https://gitlab.com}), or Gin (\url{https://gin.g-node.org}).
-Employing version control for code to foster reproducibility has been recommended widely in the scientific community (e.g., \cite{sandve2013ten}), and it is established practice to develop and share research software and code using Git and Git hosting platforms \citep[e.g.,][]{nord2019towards, strupler2017reproducibility, bryan2018excuse, corti2019managing}. \\
+Hosting platforms for Git repositories such as GitHub (\url{https://github.com}), GitLab ({\url{https://gitlab.com}), or Gin (\url{https://gin.g-node.org}) have been developed to serve as facilitators for collaboration, discovery, and reuse.
+In the scientific community it is widely recommended to employ version control for code to foster reproducibility \citep[e.g.,][]{sandve2013ten}, and it is established practice to develop and share research software and code using Git and Git hosting platforms \citep[e.g.,][]{nord2019towards, strupler2017reproducibility, bryan2018excuse, corti2019managing}.
 But other components of scientific projects, such as data or computing environments, are not as transparently managed or accessible as code and software.
-Digital research objects are usually stored in multiple different locations \citep{parsons2013research}.
-But their consumption is complicated by disconnected and non-interoperable hosting solutions:
+Digital research objects are usually stored in multiple different locations \citep{parsons2013research}, and their consumption is complicated by disconnected and non-interoperable hosting solutions:
 Different storage services use different protocols, means of authentication, or other idiosyncrasies that require custom workflows.
-Unlike code in software development, data tend not to be as precisely identified because data versioning is rarely or only coarsely practiced.
+Unlike code in software development, data tend not to be as precisely identifiable because data versioning is rarely or only coarsely practiced.
 Yet over the course of a research project, often as part of the standard, multi-stepped processing workflow, data evolve and change just like code does:
-Continued acquisitions enlarge the raw dataset; Transformations to -- likewise evolving -- community standards change file formats, dataset organization, or enrich available metadata; And continuous quality control processes or accidental findings can bring errors to light and improve datasets with fixes \citep{markiewicz2021openneuro}.
+Continued acquisitions enlarge the raw dataset; Transformations to -- likewise evolving -- community standards change file formats, dataset organization, or enrich available metadata; And continuous quality control processes or accidental findings can bring errors to light and improve datasets with fixes.
 In the case that data or other research objects were subject to change over the course of a project, there is a need to identify which exact version has been used -- otherwise, the reproducibility of a result is threatened \citep{hardwicke2018data}.
 Likewise, scientific computation is not reproducible enough, because data provenance is often incomplete and rarely automatically captured.
 Last but not least, in the absence of standardized data packages, there is no uniform way to declare actionable
 data dependencies and derivative relationships between inputs and outputs of a computation.
 Consequentially, data needs to be kept alongside to results to ensure reproducibility, even if it is hosted elsewhere already.
 Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of datasets can become infeasible \citep{horien2021hitchhiker, grisham2016proposed}.
-Likewise, projects might draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, despite much greater data availability.
-If the original dataset, however, is only available as a bulk download, a project has heavier disk space demands on storage solutions than their eventual data requirements.\\
+And although projects might only draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, a project has heavier disk space demands if the original dataset is only available as a bulk download.\\
 DataLad aims to solve these issues by providing streamlined, transparent management of code, data, computing environments, and their relationship.
 Its main features are
 \begin{itemize}
