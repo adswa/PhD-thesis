@@ -395,36 +395,36 @@ We then linked these two inputs as subdatasets to the processing dataset (``Resu
 First, a batch script with \gls{CAT}'s processing steps and parameterization, which bundled up all relevant analysis steps into single command.
 This script runs per image, and constitutes the smallest unit for recomputation.
 And second, a utility script to post-process all relevant outputs with a focus to reduce the number of files and artificial variations between recomputations.
-For this, it stripped results of timestamps and other non-deterministic log file content, and used the \texttt{tar} utility to bundle \gls{vbm} results into four reproducibly organized archives according to envisioned consumption scenarios (see \cref{fig:fairly_workflow}a).
+For this, it stripped results of timestamps and other non-deterministic log file content, and used the \texttt{tar} utility to bundle \gls{vbm} results into four reproducibly organized archives according to envisioned consumption scenarios (see the files in \cref{fig:fairly_workflow}a).
 These measures were taken to obtain a meaningful estimate of intra-pipeline variability across recomputations, and to keep the number of files in the resulting dataset in a manageable range.\\
 %After all required processing elements were either included or linked, we stored all DataLad datasets in a RIA store:
 %A single participant dataset with several hundreds of files is represented in 25 inodes and about 4 GB of disk space in a RIA store, and in total, the employed RIA store hosts 42,715 datasets comprising the full UKB data with less than 940k inodes.\\
 To test the frameworks portability and estimate result variability across computations, we set the analysis up to run on two systems, a \gls{HPC} cluster and a \gls{HTC} cluster.
-Each system imposed different resource constraints.
+The two systems used SLURM or HTCondor for job scheduling, respectively, and each system imposed different resource constraints.
 The \gls{HPC} system, a modular supercomputer with abundant disk space and compute power \citep{krause2018jureca}, imposed an inode quota, a limit on the total number of files, of 4.4 million – less than the total number of files of the raw dataset.
 The \gls{HTC} cluster, in contrast, was constrained on storage capacity, preventing the existence of more than one copy of the raw dataset, and limiting the size of derivatives that could be stored.
-The workflow was thus setup identically across the employed systems apart from the implementation of job submission, which accounted for platform specific idiosyncrasies such as these restrictions.
+The framework was thus setup identically across the employed systems apart from the implementation of job submission, which accounted for platform specific idiosyncrasies such as these restrictions.
 Irrespective of system, one compute job per participant was generated.
 This compute job serially processed all available anatomical images for a given participant.
 For each image, a dedicated provenance record was captured, yielding a total of 41,180 records.
-The platform-specific job submission scripts were implemented for SLURM and HTCondor, respectively.
-We adjusted the job load to the available disk space or inode resources when disk space or inode availability were insufficient for the full dataset by scheduling only as many jobs in parallel as there were resources to handle extracted inputs.
+The platform-specific job submission scripts adjusted the job load to the available disk space or inode resources when disk space or inode availability were insufficient for the full dataset by scheduling only as many jobs in parallel as there were resources to handle extracted inputs.
 
 \subsubsection{Workflow execution and consolidation}
 
 On the \gls{HPC} system we completed data processing for the one-hour-per-image pipeline within 10.5 hours, using 25 dedicated compute nodes, each executing 125 jobs in parallel on RAM disks with GNU Parallel \citep{tange2011gnu}.
 On the \gls{HTC} system in turn, computations were scheduled dynamically across several weeks.
 On both systems, recorded outputs and provenance records amounted to a total of 995.6 GB of computed derivatives in 163,212 files.
-After completion, result were consolidated by merging result branches, yielding a collection of different VBM-related measures for all images in the sample, represented in archives, and annotated with re-executable provenance records in a DataLad dataset.\\
-This DataLad dataset was subsampled into smaller ``special purpose'' datasets tuned for specific research questions, containing extracted and optionally aggregated subsets of the results for easier consumption and faster access.
-For this, the main result DataLad dataset became an input to a new tailored DataLad dataset via nesting (``Tailored results A/B'' in \cref{fig:fairly_workflow}), which extracted and transformed required files with provenance tracking by \texttt{datalad run}.
-If underlying large-scale computation is redone or extended, the subsampled datasets can be updated by re-applying this transformation via \texttt{datalad rerun}.
+After completion, results were consolidated by merging result branches, yielding a collection of different VBM-related measures for all images in the sample, represented in archives, and annotated with re-executable provenance records in a DataLad dataset.\\
+This DataLad dataset was then subsampled into smaller ``special purpose'' datasets tuned for specific research questions, containing extracted and optionally aggregated subsets of the results for easier consumption and faster access.
+For this, the main result DataLad dataset became an input to a new tailored DataLad dataset via nesting (``Tailored results A/B'' in \cref{fig:fairly_datasets}), which extracted and transformed required files with provenance tracking using \texttt{datalad run}.
+If underlying large-scale computation is redone or extended, the subsampled datasets can be updated by re-applying this transformation with a \texttt{datalad rerun}.
 And throughout the dataset hierarchy -- using the encoded, machine-actionable provenance information -- a single result can be traced to the precise files they were generated from in a transparent and reproducible manner.
 The direct computational output of the proof-of-concept framework execution is therefore not a final result, but an intermediate representation optimized for storage and handling.
 As more tailored views for concrete use cases can be flexibly and reproducibly created, we achieve a compromise between the desires of a data consumer and the demands of the storage infrastructure and operators for such large scale datasets.
 
 \subsubsection{Intra-pipeline variability}
 
+Pipeline replication can play in important role for reproducible research as a means of exploring analytic variation and assessing the robustness of findings \citep{li2021moving}, and our framework is particularly convenient for this application.
 In order to investigate intra-pipeline variability, the result consolidation described above was first performed separately on each computational infrastructure.
 Afterwards, the two complete sets of results were integrated in the same dataset, as two different branches, to estimate result variability.
 With the exception of execution time, the number of jobs, proportion of successful jobs, and size and structure of the results were identical between the two systems\footnote{The difference in computational performance can be seen in a visualization of provenance information at \url{youtube.com/watch?v=UsW6xN2f2jc}. This visualization was awarded second place in the category videos \& animations in the 2021 \gls{ohbm} Brain Art Competition.}.
@@ -459,11 +459,9 @@ They exhibit $\rho > 0.99999$ for computation and recomputation.
 
 \subsubsection{Infrastructure-agnostic reproducibility}
 
-%% rephrase!
-To confirm the practicality of computational reproducibility solely based on the captured computational provenance information, we performed automatic recomputation of individual results on a consumer-grade, personal laptop without job scheduling.
-%% rephrase!
+The potential for full computational reproducibility not only permits structured investigations of result variability, but also increases the trustworthiness of the research process per se.
+To confirm computational reproducibility for a consumer, we performed an automatic recomputation of individual results on a personal laptop with much lower storage and compute capacity than a cluster, and without job scheduling software.
 This type of spot-checking results resembles the scenario of an interested reader or reviewer of a scientific publication with access to (parts of) the data, but no access to adequate large-scale computing resources.
-%%rephrase
 The recomputation solely relied on the local availability of the Singularity container technology, but was otherwise fully automatic.
 Its success confirmed that platform idiosyncrasies were confined to the outer job scheduling layer only, and that the resulting research object was portable and across infrastructures.
 
