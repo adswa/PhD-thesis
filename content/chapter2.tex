@@ -374,7 +374,8 @@ To test its capabilities further, we conducted a proof-of-concept analysis on on
 \subsection{Proof-of-concept analysis}
 
 In a proof-of-concept analysis, we applied the framework to run a containerized pipeline for \gls{vbm} \citep{ashburner2000voxel} from the \gls{CAT} \citep{gaser} on data from the UKB project \citep[][comprising 76 TB in 43 million files under strict usage constraints]{matthews2015uk}.
-An overview of the analyis is shown in \cref{fig:fairly_datasets}, and the setup steps are publicly available as a bootstrap script\footnote{\url{https://github.com/psychoinformatics-de/fairly-big-processing-workflow/blob/main/bootstrap_ukb_cat.sh}}.
+In doing so, we assessed the framework's scalability and if it can be used across different infrastructures, investigated result variability between two recomputations of the pipeline, and, in order to demonstrate that the framework can capture and re-execute complete process provenance, we also recomputed individual results on a personal laptop.
+An overview of the analysis is shown in \cref{fig:fairly_datasets}, and the setup steps are publicly available as a bootstrap script\footnote{\url{https://github.com/psychoinformatics-de/fairly-big-processing-workflow/blob/main/bootstrap_ukb_cat.sh}}.
 
 \begin{figure}
 	\centering
