@@ -280,31 +280,22 @@ Afterwards, analysis-specific code can run with provenance tracking, and as a la
 		dssource="$1"
 		pushgitremote="$2"
 		subid="$3"
-
-		# obtain the analysis dataset, which
-		# also tracks the required inputs
+		# obtain the source dataset
 		datalad clone "${dssource}" ds
 		cd ds
-
-		# register location for result
-		# deposition, separate from the input
-		# source for performance reasons only
+		# register location for result deposition
 		git remote add outputstore "$pushgitremote"
-
-		# all job results will be put into
-		# a job-specific, dedicated branch
+		# create job-specific branch for results
 		git checkout -b "job-$JOBID"
-
 		# START OF APPLICATION-SPECIFIC CODE
 		# pull down input data manually,
 		# only needed for wildcard-based file
 		# selection in the next command
 		datalad get -n "inputs/ukb/${subid}"
 		# datalad containers-run executes
-		# the "cat" computational pipeline.
-		# specified inputs are auto-obtained,
-		# specified outputs are saved with
-		# provenance record
+		# the "CAT" pipeline. Specified
+		# inputs are auto-obtained, specified
+		# outputs are saved with provenance
 		datalad containers-run \
 		-m "Compute subject ${subid}" \
 		-n cat \
@@ -313,36 +304,31 @@ Afterwards, analysis-specific code can run with provenance tracking, and as a la
 		--input "inputs/ukb/${subid}/*T1w.nii.gz"
 		"<container invokation arguments>"
 		# END OF APPLICATION-SPECIFIC CODE
-
 		# push result file content to the
 		# configured "storage-remote"
 		datalad push --to storage-remote
-
 		# push branch with provenance records
 		# needs a global lock to prevent
 		# write conflicts
 		flock "$DSLOCKFILE" git push outputstore
-
 		# log entry to mark non-error exit
 		echo SUCCESS
 	\end{lstlisting}
 
 	% max 250, is 190
-	\caption[Job orchestration for parallel processing]{Complete compute job implementation as a bash script.
-		A batch system invokes the job-script in a temporary working directory with three parameters:
-		a URL of a DataLad dataset tracking all code and input data,
+	\caption[Job orchestration for parallel processing]{Processing orchestration in a bash script.
+		A batch system invokes it in a temporary working directory with three parameters:
+		a URL of a source DataLad dataset,
 		a URL to deposit job-results at, and
 		an identifier to select a sample for processing.
 		%
-		Apart from performance-related optimizations, the job implementation conducts three main steps:
+		The job implementation conducts three main steps:
 		1)~\texttt{clone} a DataLad dataset with all information to bootstrap an ephemeral computing environment for each job;
 		2)~\texttt{containers-run} a containerized pipeline with a comprehensive specification of to-be-retrieved inputs and to-be-captured outputs;
-		3)~\texttt{push} captured outputs and process provenance records to a permanent storage location.
+		3)~\texttt{push} captured outputs (concurrency-safe; line 34) and process provenance records (not concurrency-safe, protected by a file lock; line 38) to a permanent storage location.
 		%
-		Preparation, computation, provenance record creation, and file content deposition on permanent storage are fully independent across jobs, and are executed in parallel.
-		Only the \texttt{git push} of the provenance record to a central repository must be protected against concurrent write-access for technical reasons.
-		Additional job parametrization (\texttt{DSLOCKFILE} and \texttt{JOBID} environment variables) are defined at job-submission using batch system specific means.
-		The job script can be adjusted to a different processing pipeline by replacing the container invocation (see \texttt{APPLICATION-SPECIFIC CODE} markers).}
+		Jobs are independent and can run in parallel. Potential job configurations can be supplied using batch system specific means (e.g., \texttt{DSLOCKFILE} and \texttt{JOBID} environment variables).
+		Processing can be adjusted with the container invocation.}
 	\label{lst:job}
 \end{Listing}
 
