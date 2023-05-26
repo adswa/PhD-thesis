@@ -230,17 +230,27 @@ It has been under continuous development for more than four years, averaging two
 Releases of the DataLad core package are coordinated with matching releases of the Handbook project, and past release versions remain accessible online.
 
 \begin{figure}
-	\centering
-	\includegraphics[width=.8\textwidth]{popcon-datalad.png}
-	\caption[Debian package popularity counts for DataLad]{Popularity of the Debian packages DataLad and python3-datalad over time, expressed in percent of users that installed the package from the total amount of users submitting download statistics. January 2020 (vertical line) marks the first release of the Handbook as an accompanying user guide. Source: Debian Popularity Contest, May 2024.}
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{rtd.png}
+		\caption{Monthly documentation views}
+		\label{fig:rtd}
+	\end{subfigure}
+    \begin{subfigure}{.48\textwidth}
+	\includegraphics[width=\textwidth]{popcon.png}
+	\caption{Debian package popularity counts for DataLad}
 	\label{fig:popcon}
+	\end{subfigure}
+	\caption[Software and documentation popularity]{Software and documentation popularity measures. \ref{fig:rtd}: Documentation page views for the technical documentation (\url{docs.datalad.org}) and the user documentation (\url{handbook.datalad.org}), displayed as average views per 30 days, between December 2022 and May 2023. The DataLad Handbook consistently sees higher traffic.
+	\ref{fig:popcon}: Popularity of the Debian packages DataLad and python3-datalad over time, expressed in percent of Debian users that installed the package from the total amount of users submitting download statistics. Dashed lines indicate the fist commit and the first release of the Handbook, the latter marks a notable increase in software downloads. Source: Debian Popularity Contest, May 2024. }
+	\label{fig:popularity}
 \end{figure}
-
 
 The web and PDF versions are organized into 4 parts, with a total of 21 chapters across the parts Introduction, Basics, and Advanced, and 12 use cases.
 Its PDF version spans more than 600 pages.
-An analysis of traffic during from December 2022 and TODO-July 2023 revealed that handbook.datalad.org averaged TODO-30000 total page views per 30 days.
-In the same time span, the technical documentation of DataLad at docs.datalad.org averaged TODO-8000 total page views per 30 days, roughly a fifth of the traffic of the user documentation. \todo{create a graph}
+An analysis of traffic during from December 2022 and TODO-July 2023 revealed that handbook.datalad.org averaged TODO-2xxxx total page views per 30 days.
+In the same time span, the technical documentation of DataLad at docs.datalad.org averaged 7xxxx total page views per 30 days, roughly a third of the traffic of the user documentation (\cref{fig:rtd})
+
+
 %It has amassed a quarter of the total number of GitHub stars of the DataLad core source repository.
 
 %maybe citations? maybe analyze github stars
