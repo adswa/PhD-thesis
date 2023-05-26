@@ -333,6 +333,44 @@ Afterwards, analysis-specific code can run with provenance tracking, and as a la
 \end{Listing}
 
 
+One script execution equals one processing in one ephemeral workspace.
+By splitting the computation into parts, operations can be parallelized.
+A common example is one processing pipeline per participant, i.e., the parallelized execution of a processing pipeline on different, independent parts of input data.
+\cref{lst:job} exemplifies this: A specific participant identifier, provided as a parameter (line 7), determines the subset of input data a processing pipeline runs on (\cref{fig:fairly_workflow}c).
+Precisely how to split a specific computation is dependent on its nature, but as parallelization often corresponds to the granularity at which a recomputation will be possible in our framework, relevant considerations are, for example: ``What is the smallest unit for which a recomputation is desirable?'', or ``For which unit size is a recomputation still feasible on commodity hardware?'' \citep{wagner2022fairly}.
+Once a fitting granularity is determined, a job scheduling system can assist in deploying thousands of computations in parallel.
+To automate this process, the framework supports to major job schedulers, HTCondor \citep{thain2005distributed} and SLURM \citep{yoo2003slurm}, natively.
+Their configuration is highly infrastructure-specific, and must determine an optimum balance of resource demands, such as run time, memory and storage requirements, in order to achieve optimal throughput.
+Importantly, the final process provenance neither contains the orchestration of ephemeral workspaces, nor the scheduling layer.
+For a original computation, these layers can thus contain necessary platform-specific tuning without impacting the portability of the final research object.
+This means DataLad, a software container tool, and a basic UNIX shell environment are the only requirements for recomputing captured outputs, and recomputation on systems with different batch scheduling software is possible by providing alternative job specifications, without changes to the pipeline implementation.\\
+If the necessary processing elements exist in suitable formats (e.g., DataLad datasets with processing components, scripts stripped of platform idiosyncrasies, and so forth), the above setup can be created automatically with an openly shared bootstrapping script\footnote{\url{www.github.com/psychoinformatics-de/fairly-big-processing-workflow}.}.
+After setup, two things are left to do for a user:
+Start the processing, and, once the results from all ephemeral workspaces are aggregated in branches in the target dataset, consolidate them the mainline branch (\cref{fig:fairly_workflow}b, ``Result consolidation'').
+In the simplest case, all compute jobs produced non-intersecting outputs, i.e., no single file was written to by more than one compute job.
+In this case, all branches can be merged at once using a so-called octopus-merge.\\
+The outcome of this consolidation process is a self-contained DataLad dataset, with valid, machine-actionable provenance information for every single result file of the performed data processing.
+As such, it is a modular unit of data, suitable as input for further processing and analysis.
+And it is a practical example how the four properties -- exhaustively versioned, actionable, modular, and portable -- translate to trustworthy, reusable research outputs.
+Overall, our framework is a general-purpose solution that is compatible with any data that can be represented as files of any size, and any computation that can be performed via a command line call. It is built on a collection of portable, free and open-source tools that can be deployed without special privileges or administrative coordination on standard HTC/HPC infrastructure, or personal computing equipment.
+An open tutorial and result showcase is publicly available at \url{www.github.com/psychoinformatics-de/fairly-big-processing-workflow-tutorial}.
+To test its capabilities further, we conducted a proof-of-concept analysis on one of the largest neuroscientific datasets to date.
+
+%\lstset{
+	%	language=bash,
+	%	basicstyle=\ttfamily\footnotesize,
+	%	commentstyle=\color{dataladblue!60!black},
+	%	showstringspaces=false,          % underline spaces within strings only
+	%	stringstyle=\color{dataladyellow!70!black},     % string literal style
+	%}
+%\begin{lstlisting}
+%	# octopus-merge all "job" branches at once
+%	git merge -m "Merge results" $(git branch -al | grep 'job-')
+%\end{lstlisting}
+
+%To ensure reproducibility for an audience that does not have access to the original infrastructure, what-to-compute needs to be infrastructure-agnostic, without references to system-specifics such as absolute paths, or programs and services not tracked and provided by the DataLad dataset itself. Then, computation and recomputation of what-to-compute are possible on different systems, with any potential adjustments only relating to the job orchestration layer in how-to-compute.
+
+
 \subsection{Proof-of-concept analysis}
 
 In a proof-of-concept analysis, we applied the framework to run a containerized pipeline for \gls{vbm} \citep{ashburner2000voxel} from the \gls{CAT} \citep{gaser} on data from the UKB project \citep[][comprising 76 TB in 43 million files under strict usage constraints]{matthews2015uk}.
