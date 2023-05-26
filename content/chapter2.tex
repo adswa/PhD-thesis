@@ -206,41 +206,43 @@ DataLad datasets involved in the workflow are placed into so-called RIA stores \
 This ``backend'' representation facilitates programmatic data management and reduces storage demands by storing a dataset of any size in 25 files, with optional compression and encryption.
 \cref{fig:fairly_workflow}a illustrates a DataLad dataset's front-end structure when cloned in a user's workspace, and \cref{fig:fairly_workflow}d shows its RIA representation.\\
 Based on this self-contained structure, the framework needs to conduct user-defined processing in a way that captures and validates actionable metadata.
-While DataLad's \texttt{containers-run} functionality supports the capture, simultaneous validation requires additional tweaks.
-For this, the framework bootstraps an entire temporary analysis environment from scratch based on the information contained in the initial dataset (\cref{fig:fairly_workflow}c).
-In this ephemeral environment, processing is solely based on information already recorded in the dataset.
-As the computation is invoked with a provenance capturing \texttt{datalad containers-run} command, results and provenance are saved automatically if the analysis succeeds.
-And this success is evidence that existing information is valid and sufficient to make the dataset portable.\\
-The basis for these ephemeral workspaces is the ability to distribute DataLad datasets across local or remote infrastructure as lightweight, linked clones, and the process mirrors a software development routine, where changes are developed in a distributed network:
+While DataLad's \texttt{containers-run} functionality provides provenance capture, simultaneous validation requires additional tweaks.
+To achieve it, the framework bootstraps an entire temporary analysis environment from scratch based on the information contained in the initial dataset (\cref{fig:fairly_workflow}c).
+In this ephemeral environment, processing can only be based on information already recorded in the dataset or provided in the execution command, which is invoked with a provenance capturing \texttt{datalad run} or \texttt{datalad containers-run}.
+It specifies required inputs and expected outputs by their relative path in the DataLad dataset hierarchy.
+If the computations succeeds, two validity guarantees can be derived regarding the provenance of the computational outcomes: 1) All dataset modifications can be causally attributed to the initiated computation; 2) only declared inputs were required to produce the outcomes.
+This constitutes evidence that existing information is valid and sufficient to make the dataset portable.
+\cref{fig:fairly_metadata} illustrates this provenance, how it is captured, and how it can be used for recomputation.\\
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{coarsemetadata.pdf}
+	\caption[FAIRly big: Process provenance of an individual job]{Process provenance of an individual job, its generation, and re-execution. a) A \texttt{datalad containers-run} command with a container name specification (cat), a container parametrization or command, a commit message, and an input and output data specification generates actionable process provenance as a structured record linked to a Git commit. b) To re-execute it, \texttt{datalad rerun} needs to be parameterized with a revision identifier, such as a Git tag, a ``commit shasum'' (\texttt{e035f896s45c9f}), or a revision range containing one or more commits with associated provenance records. c) As the core execution command (see Listing 1, line 33-39) at the center of each individual job, it performs data retrieval, container execution, and result capture, and generates the actionable provenance. d) The provenance record stored alongside computed results in the revision history. A legend (right) highlights the most important pieces of recorded provenance. It is re-executable with DataLad only, but sufficient information to repeat a computation using other means can also be inferred from the structured JSON records by other software or even humans. License: CC-BY-SA, \citet{wagner2022fairly}}
+	\label{fig:fairly_metadata}
+\end{figure}
+
+
+The basis for ephemeral workspaces is the ability to distribute DataLad datasets across local or remote infrastructure as lightweight, linked clones, and the process mirrors a software development routine, where changes are developed in a distributed network:
 An orchestration layer clones the DataLad dataset into a temporary location, uses its recorded history to infer relevant details about precessing components, and add results on top of it.
 Afterwards, results and their provenance can be pushed back before the ephemeral workspace is purged.
 To ensure that this orchestration can scale, it needs to support parallel executions, i.e., several analyses running in ephemeral workspaces at the same time.
-This is complicated in Git repositories as concurrent processes can interfere with one another.
-Two techniques, again adopted from distributed software development, make it possible.
-The first consists of duplicating the DataLad dataset that is used as an analysis starting point into two clones: One remains unaltered and acts as an input source from which the ephemeral clones are bootstrapped (\cref{fig:fairly_workflow}a).
-The other one acts as the target location for results.
-This separation prevents concurrent clone and push operations without duplicating file storage.
+This is complicated in Git repositories as concurrent processes can interfere with one another and simultaneous commits can cause conflicts.
+The use of file locking, a mechanism to control concurrent access to files by enforcing the serialization of updates, can limit the number of processes that modify specific locations on the file system and prevent read operations while a modification takes place \citep{xoxa2015implementations}.
+Beyond that, two procedural techniques, again adopted from distributed software development, make the orchestration more efficient.
+The first consists of duplicating the DataLad dataset that is used as an analysis starting point into two clones: One remains unaltered and acts as an input source from which the ephemeral clones are bootstrapped.
+The other one acts as the target location for results (\cref{fig:fairly_workflow}d).
+This separation prevents concurrent clone and push operations.
+Moreover, as the clone location does not receive any results, the dataset is always at the leanest state, which ensures fast cloning.
 The second technique involves the use of branches, independent segments of a DataLad dataset's history that allow for parallel developments based on a common starting point.
 Each individual ephemeral workspace saves its results and provenance on a unique branch.
-When several parallel ephemeral clones push their individual histories into a single location, they thus do not conflict with one another.
+When several ephemeral clones push their individual histories into a single location, they thus do not conflict with one another.
 This process mirrors feature development in software projects where a mainline branch contains agreed upon code.
 Changes are build on top of the mainline code, but in branches such that concurrent developments of several contributors do not conflict, and later, a so-called \texttt{merge} can integrate a branch into another one.
-The clone and push orchestration is implemented as a job script that wraps the execution of the analysis.
+The clone and push orchestration is implemented as a job script that wraps the desired processing.
 \cref{lst:job} contains an example bash script:
-The clone source and push target locations are provided as parameters to the script (lines 5-6).
-Then, the dataset is cloned from the specified source (line 11), the dataset for results is registered (line 17), and a unique branch is created (line 21).
-Afterwards, analysis-specific code can run, and as a last step, its results and provenance are pushed into the destination dataset (lines 44, 49).\\
-Running such a script performs one computation in one ephemeral workspace.
-If one breaks the analysis into parts, for example one preprocessing pipeline per participant in a dataset, a job scheduling system can assist in deploying thousands of computations in parallel.
-For this, the framework supports to major job schedulers, HTCondor and SLURM, natively.
-
-
-Finally, once the results from all ephemeral workspaces are aggregated in branches in the target dataset, they are merged into the mainline branch using a Git octopus merge.
-With the exception of merging all results, the entire setup can be bootstrapped automatically with an openly shared shell script.
-
-
-
-
+To set up the ephemeral workspace and push target, it receives the source dataset for cloning and result dataset for pushing as parameters (lines 5-6), clones the source into a temporary location (line 9), registers the push target (line 12), and creates a unique branch (line 14).
+Afterwards, analysis-specific code can run with provenance tracking, and as a last step, its results and provenance are pushed into the destination dataset (lines 34, 38, \cref{fig:fairly_workflow}1b, blue arrow).\\
 
 \begin{Listing}
 	\centering
