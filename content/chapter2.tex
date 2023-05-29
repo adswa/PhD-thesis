@@ -468,33 +468,14 @@ Its success confirmed that platform idiosyncrasies were confined to the outer jo
 
 \subsection{Future steps}
 
-
-Building up on the framework, CITE-BABS has been created.
-
-
+(ADD SOME DISCUSSION?)]
+Building up on the framework, a number of large-scale processing efforts as well as processing software tools have been created (CITE-BABS).
 
 
 
-Through the use of ephemeral workspaces during provenance capture, the validity and completeness of provenance records is automatically tested: only declared inputs are retrieved, only declared outputs are saved and deposited on permanent storage.
-A resulting process provenance record is identified with one unique, hash-based identifier in the revision history, and can subsequently be used by authorized actors to automatically retrieve required components and re-execute the processing, irrespective of whether the original compute infrastructure is available 26.
-
-
-
-Taken together the described approach to reproducible, large-scale computation implements a three layer strategy. From bottom to top, these layers feature different trade-offs regarding portability/reproducibility vs. flexibility for performance adaptations to particular computational environments: The lowest layer is the (containers-)run command, comprising an environment specification and instructions to compute the desired outcomes from inputs in this environment. Using suitable technologies, such as computational containers, this layer offers a maximum of portability, but also a minimum of flexibility, as this exact environment must be provided in order to reproduce results. Consequently, the proposed framework captures process provenance at this layer (Figure 2). The middle layer describes how a self-contained, ephemeral workspace can be generated that is suitable for executing the specification of the previous layer (Listing 1). Here, general infrastructural choices can be made. For example, a limitation to a POSIX-compatible environment that is common for HPC/HTC systems, or the granularity with which provenance records are captured (and therefore the granularity at which reproducibility is supported). This layer plays a key role in ensuring that process provenance records are valid and complete. The topmost layer is concerned with maximizing performance on a particular infrastructure via tailored job orchestration, and composition. This layer is poorly portable as it references infrastructure-specific elements, such as job scheduling systems, absolute paths, user names or resource identifiers. While the implementation of all three layers should be provided within the DataLad dataset for a computational project, only the lowest layer is strictly required for reproducing results.
-
-
-Next, we assembled a single DataLad dataset to capture all processing inputs and outputs (“Results” in Figure 3). It initially tracked: 1) the UKB-BIDS DataLad dataset; 2) a DataLad dataset providing the containerized CAT pipeline; 3) the compute job implementation responsible for boot-strapping a temporary workspace, performing a parameterized execution of the pipeline, capturing its outputs, and depositing results in the RIA store (see Listing 1 for a simplified version); and 4) the job scheduling specifications for SLURM 31 (used on the HPC system) and HTCondor 24 (used on the HTC system). Despite the total size of all tracked components, the pre-execution state of this dataset was extremely lean, as only availability (a URL) and joint identity (single checksum) information on the linked datasets is stored, and all other information is contained in the linked datasets themselves. This also implies that the DataLad dataset tracking the computational outputs is not automatically encumbered with sensitive information, even though it precisely identifies the medical imaging input data.
-
-
-
+%From Donoho Buckheit 2015: Performance has everything to do with specifics: exactly what was done (which wavelets, which coders, which detectors, which corpus of data) with exactly what parameters. In this setting, publishing figures or results without the complete software environment could be compared to a mathematician publishing an announcement of a mathematical theorem without giving the proof. Waveleticians ought to publish their complete computational environments
 
 \pagebreak
 
 
-From Donoho Buckheit 2015: Performance has everything to do with specifics: exactly what was done (which wavelets,
-which coders, which detectors, which corpus of data) with exactly what parameters. In
-this setting, publishing figures or results without the complete software environment could
-be compared to a mathematician publishing an announcement of a mathematical theorem
-without giving the proof. Waveleticians ought to publish their complete computational
-environments
 
