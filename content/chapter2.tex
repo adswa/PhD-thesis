@@ -96,7 +96,7 @@ A new project, for example, commonly starts with a check if the previous foundat
 As the FAIR principles advocate for richly curated metadata, many scientific fields or projects argue in favor of coordinated use of ontologies for metadata and brought forward efforts for ontology development and consensus building \citep[e.g.,][]{wise2019implementation, abrams2022standards, papadiamantis2020metadata}.
 But not in all domains are the necessary metadata standards incentivized or ready to use.
 A few years before the publication of the FAIR principles, \citet{bechhofer2010research} cued the term ``reusable research object'' in a conceptual position paper.
-They describe it as what can now be seen as a precursor of a FAIR research object, specifically as a ``container for a principled aggregation of resources, produced and consumed by common services and shareable within and across organisational boundaries [...that] includes not only the data used, and methods employed to produce and analyse that data, but also the people involved in the investigation. An association with a dataset (or service, or result collection, or instrument) is now more than just a citation or reference to that dataset (or service or result collection). The association is rather a link to that dataset (or service or result collection) that can be explicitly followed or dereferenced providing access to the actual resource and thus enactment of the service, query or retrieval of data, and so on.'' \citep{bechhofer2010research}.
+They describe it as what can now be seen as a precursor of a FAIR research object, specifically as a ``container for a principled aggregation of resources, produced and consumed by common services and shareable \textit{within} and \textit{across} organisational boundaries [...that] includes not only the \textit{data} used, and \textit{methods} employed to produce and analyse that data, but also the \textit{people} involved in the investigation. An association with a dataset (or service, or result collection, or instrument) is now more than just a citation or reference to that dataset (or service or result collection). The association is rather a \textit{link} to that dataset (or service or result collection) that can be explicitly followed or dereferenced providing access to the actual resource and thus enactment of the service, query or retrieval of data, and so on.'' \citep{bechhofer2010research}.
 This description matches characteristics that DataLad datasets or its contents can posses.
 % Detail how datalad adheres to these requirements.
 In the following, I will highlight four properties of research objects that can arise from pragmatic research data management -- versioned, actionable, modular, and portable -- and how these properties make them reusable  even if full FAIRness can not yet be achieved \citep{wagnerohbm2021}.
@@ -104,24 +104,34 @@ In the following, I will highlight four properties of research objects that can 
 
 \subsubsection{Exhaustive versioning}
 
+\citet{bechhofer2010research} stress that a reusable research object is an ``all-encompassing'' resource, including every relevant digital artifact of the project.
+DataLad datasets lend themselves well to this.
+As they can track files of any size or type, they are a suitable overlay structure to include every relevant element for a scientific project, laying the foundation to include all digital data, methods, and provenance.
+But beyond this, their ability to version control adds an important additional feature to exhaustiveness.
 The information ``I generated X from data Y with software Z'' is insufficient for reproducibility and trustworthiness if Y exists in multiple versions or subsets, if different releases of Z have relevant implementation differences, or if Z behaves differently depending on the environment it is used in.
 If digital research objects are exhaustively tracked, they can be accessed and used transparently in a uniquely identified version state.
-This exhaustive identity registration removes ambiguity that arises if the files in question are not completely static.
-Therefore, the first relevant feature that DataLad provides for reproducibility and reusability is version control for all relevant files -- from data to code to software environments.
-In addition, this makes the DataLad dataset a suitable overlay structure to encompass every relevant element for a scientific project, laying the foundation to include all digital data, methods, and provenance as a reusable research object as \citet{bechhofer2010research} propose.
+This identity registration removes ambiguity that arises if the files in question are not completely static.
+Therefore, the first relevant feature that DataLad provides for reproducibility and reusability is exhaustive version control for all relevant files -- from data to code to software environments.
 % make point about **exhaustive** tracking stronger
 
 \subsubsection{Actionable metadata}
 
-Process provenance metadata how a file came to be is often incomplete and difficult to retrace \citep{hardwicke2018data}.
-As it is tedious, often without an immediate benefit for curators, and rarely explicitly incentivized to retrospectively annotate research objects with process provenance \citep{edwards2011science, san2009long}, this information should be captured at the time of creation, with the tools and persons that are involved in the creation of research outputs anyway \citep{dallas2016digital}.
+Outside of the quote cited above, \citet{bechhofer2010research} further denote the ability to repeat, reproduce, and validate a process as characteristics of reusable research objects:
+``There should be sufficient information in a Research Object for the original researcher or others to be able to repeat the study, perhaps years later.
+[...]
+[Reproducibility] can be seen as a special case of Repeatability where there is a complete set of information such that a final or intermediate result can be verified.
+In the process of repeating and especially in reproducing a study, we introduce the requirement for some form of comparability framework in order to ascertain whether we have indeed produced the same results.
+[...] provenance, and being able to audit experiments and investigations is key to the scientific method.
+Third parties must be able to audit the steps performed in an experiment in order to be convinced of the validity of results'' \citet{bechhofer2010research}.\\
+In common scientific practice, though, process provenance metadata how a file came to be is still often incomplete and difficult to retrace \citep{hardwicke2018data}.
+As it is tedious, often without an immediate benefit for curators, and rarely explicitly incentivized to retrospectively annotate research objects with process provenance \citep{edwards2011science, san2009long}, it should rather be captured at the time of creation, with the tools and persons that are involved in the creation of research outputs anyway \citep{dallas2016digital}.
 But while early curation can increase the \textit{comprehensiveness} of metadata, additional measures should guarantee its \textit{validity}, as even fully described research outputs fail to be reproducible or reusable if their description or provenance contains errors \citep[see, e.g.,][]{manninen2017reproducibility}.
 The most pragmatic approach to validate metadata is to base subsequent processing on them.
 For a simple example, consider a codified parametrization of an analysis in a configuration or analysis design file  \citep[see, e.g.,][]{jas2018reproducible}:
 If an analysis based on it completes successfully, it constitutes valid provenance metadata, created by an expert or automatically at the earliest possible time at no additional cost, and adds immediate benefit for curators as it captures relevant provenance and detects erroneous or missing metadata in passing.
 Creation and validation is easiest if it is an automatic process within the research process, and if the tools used during the creation also use the same metadata that gets eventually published alongside the final research output.
 Therefore, the actionable metadata DataLad can acquire from command executions are the second relevant property for reusability.
-Even if this metadata does not follow established community standards as required by the \gls{FAIR} principles yet, it preserves knowledge that would otherwise be lost, without requiring additional training, impeding later additions, or putting additional burden on scientists - it is a byproduct of standard scientific practice.
+Even if this metadata does not follow established community standards as required by the \gls{FAIR} principles yet, it preserves knowledge that would otherwise be lost, without requiring additional training, impeding later additions, or putting additional burden on scientists -- it is a byproduct of standard scientific practice.
 The fact that it can be re-executed automatically, and that resulting recomputations are automatically compared to previous versions by employed version control tools, provides an effortless form of validation.
 
 
@@ -131,30 +141,39 @@ The reusability of scientific work can improve if it is accessible in modular un
 In the simplest case, modularization means placing conceptually distinct content into separate files, and grouping files in individual directories to reflect more global structures.
 Distinct units, such as the directories ``code/'' and ``inputs/'', increase transparency if each location is associated with distinguishable content, ease flexible recombination of such components into new projects, allow continuous evolution of an individual module without impact on other components of a project, and enable location-specific access control.
 Though a single modular unit can not entail all relevant elements of a scientific study or data analysis, exhaustive tracking of all elements without sacrificing modularity can be achieved by linking multiple modular units in dependency relationships.
-A useful metaphor are package management systems such as conda (\url{https://docs.conda.io}) or APT (\url{https://wiki.debian.org/Apt}): A software package is a modular unit, installed with a package manager.
+As \citet{bechhofer2010research} write above, associations to other research objects should be more than ``just a citation or reference'', but an actionable link that provides access to whichever resource it refers to.
+A useful metaphor that match this description are package management systems such as conda (\url{https://docs.conda.io}) or APT (\url{https://wiki.debian.org/Apt}): A software package is a modular unit, installed with a package manager.
 However, packages usually depend on other software packages, which are listed as its ``dependencies''.
 During installation, package managers check if all of the linked dependencies exist on the system, and if not, install them in the required versions automatically.
-Thus, a third feature for reusability is modularity as provided with DataLad's subdataset mechanism.
-In scientific projects, modular units (data, software, code) are the dependencies of a given research output.
+For scientific projects, we can conceptualize its modular units (data, software, code) as the dependencies of a given research output.
 When those units are tracked as datasets, dependency relationships in the form of subdatasets form actionable links with precise versions.
-This mirrors the linked dependencies that \citet{bechhofer2010research} proposed.
+Thus, a third feature for reusability is modularity as provided with DataLad's subdataset mechanism.
+In a superdataset, a registered subdataset is known with a location and version identifier.
+On demand, it can be installed precisely as needed, from whichever location or service it is available from, similar to the process that \citet{bechhofer2010research} envisioned.
 
 
 \subsubsection{Portability}
 
-The fourth property is portability.
+\citet{bechhofer2010research} further highlight the ability to share reusable research objects within and across organizational bounderies.
+The fourth and final property DataLad datasets entail for reusability and that fits to this description is portability.
 The more portable a digital research object is, the easier it is to reuse it.
 A research object is fully portable if no adjustments are necessary for it to function the way it is intended to on different computational infrastructure -- ideally even when used by a naive re-user with a different area of expertise (i.e., without domain knowledge).
 The more adjustment or domain knowledge is necessary, the less portable a research output becomes.
-A factor contributing to portability self-containment such that research outputs can be used or reproduced on different computational infrastructure by other users.
-Completeness is crucial for this, and a research output should be accompanied by the necessary code, data, and computational environment to produce it.
-Self-containment also entails that a project can be moved across computers and remains functional without adjustment, for example by ensuring that no references to file system, operating system, or user specific idiosyncrasies are included.
-Only if a re-user does not need to modify project files, they can be certain that they did not inadvertently break or influence the output with it.
+As a simple example for what this would entail, consider custom scripts for an analysis.
+If they internally reference the file system outside of their DataLad dataset, or refer to locations with specific absolute paths,  they could not run on a different computer.
+A re-user would need to adjust the scripts, or their system, to match the expectations implicitly encoded into the script, which impedes reusability considerably.
+Only if a re-user does not need to modify project files, they can be certain that they did not inadvertently break or influence the output with it.\\
+Achieving the previous properties in a research output is work towards portability.
+A factor contributing to portability is self-containment such that research outputs can be used or reproduced on different computational infrastructure by other users without requiring additional elements outside of it.
+Exhaustive versioning and modularization pave the way to include all necessary code, data, and computational environments into a complete, self-contained structure that accompanies a research output.
+If a user ensures that a project can be moved across computers and remains functional without adjustment, for example by ensuring that no references to file system, operating system, or user specific idiosyncrasies are included, portability is improved further.
+And with actionable process provenance that can be re-executed, even verification and re-use even without domain knowledge becomes possible.
+
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.9\textwidth]{vamp.png}
-	\caption[DataLad datasets as reusable research objects]{Reusing research outputs implies trust, and trust should be earned through verification. Verification is enabled by provenance information. Provenance capture of research outcomes requires exhaustive tracking of all inputs, as well as process records that describe how inputs were combined and transformed to generate outputs (middle). When lightweight metadata are actionable, they can be used to reproduce research outputs in a different environment from precisely identified inputs by (re-)applying the recorded process (left). A data structure that affords this type of portable recomputation is a self-contained unit that can be reused as a modular input component for incremental research (right).
+	\caption[DataLad datasets as reusable research objects]{Reusing research outputs implies trust, and trust should be earned through verification. DataLad datasets possess features that assist with this aim. Verification is enabled by provenance information. Provenance capture of research outcomes requires \textbf{exhaustive versioning} of all inputs, as well as process records that describe how inputs were combined and transformed to generate outputs (middle). When lightweight metadata are \textbf{actionable}, they can be used to reproduce research outputs in a different environment from precisely identified inputs by (re-)applying the recorded process (left). A data structure that affords this type of \textbf{portable} recomputation is a self-contained unit that can be reused as a \textbf{modular} input component for incremental research (right).
 	}
 	\label{fig:vamp}
 \end{figure}
