@@ -485,10 +485,31 @@ The recomputation solely relied on the local availability of the Singularity con
 Its success confirmed that platform idiosyncrasies were confined to the outer job scheduling layer only, and that the resulting research object was portable and across infrastructures.
 
 
-\subsection{Future steps}
+\section{Interim discussion}
 
-(ADD SOME DISCUSSION?)]
-Building up on the framework, a number of large-scale processing efforts as well as processing software tools have been created (CITE-BABS).
+Our framework brings together a range of work that the previous chapters outlined already.
+The introduction and the first part of chapter \ref{chap:k3} laid out the elementary importance of \gls{rdm} for scientific conduct.
+They focused on two central aspects, specifically reusability and reproducibility, and showed how they connected to each other:
+Reproducibility is a basis for reusability, and both are the outcome of research data management that becomes increasingly more FAIR.
+At the center of our framework lies thoughtful research data and reproducibility management, not as an afterthought, but -- given the technical challenges computational reproducibility poses -- as a sturdy and necessary basis.
+In the spirit of reusable and FAIR digital research objects, it creates outcomes that lend themselves to reuse naturally.
+Especially in large-scale computations, current results will be the inputs of future projects, and their built-in reusability provides the necessary trust for this.\\
+The introduction also established DataLad as a software tool to deliver this research data management.
+Its development principles and features in the spirit of decentralized software development translate into utility for our framework.
+For one, it is able to connect a range of established services or and open source tools to ease adoption and maximize flexibility.
+And although the workflows and concepts our framework draws from are not based in the domain of reproducible data processing, they lend themselves well for this application, and what made distributed software development productive, fast, and reliable, now helps to do the same for data analysis.\\
+Fundamental to the success and usability of DataLad and its use in this framework is its documentation, as argued in chapter \ref{chap:k2}.
+On a high level, the framework constitutes yet another use case, only possible because the tools' features are combined into something greater than the sum of its parts.
+Many years of refining user-centered workflows and software usability formed the basis for this.
+The available documentation allows interested readers to learn beyond the publication, up to a point where they can extend it to their own use cases.
+A testament to this, and to the utility of the framework is its adoption into dedicated new tools already in an early stage of its development.
+\citet{heunis2023catalog} makes use of it for reproducible metadata aggregation, it plays a role in the CuBIDS packages for the reproducible curation of \gls{BIDS} datasets \citep{covitz2022curation}, and a dedicated software tool, BABS, has been created to improve the usability of the workflow even more (CITE BABS).\\
+While our work recognizes the FAIR principles, it makes a pragmatic compromise between the aspirational ideal state, and the continuously developing research and meta data landscape in computational sciences.
+In passing, as a byproduct of \gls{rdm}, its outcomes go a long way towards FAIR, and by applying the four properties of exhaustively versioned, actionable, modular and portable to research projects, become re-usable by default.
+The work outlined in this thesis so far thus culminated in the creation of a flexible and scalable framework to create reusable research objects.
+The next chapters of this thesis will focus on applying the work so far for projects rooted in the field of neuroimaging. \\
+\[TBC\]
+
 
 
 
