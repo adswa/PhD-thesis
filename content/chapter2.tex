@@ -115,7 +115,7 @@ In addition, this makes the DataLad dataset a suitable overlay structure to enco
 
 Process provenance metadata how a file came to be is often incomplete and difficult to retrace \citep{hardwicke2018data}.
 As it is tedious, often without an immediate benefit for curators, and rarely explicitly incentivized to retrospectively annotate research objects with process provenance \citep{edwards2011science, san2009long}, this information should be captured at the time of creation, with the tools and persons that are involved in the creation of research outputs anyway \citep{dallas2016digital}.
-But while early curation can increase the comprehensiveness of metadata, additional measures should guarantee its validity, as even fully described research outputs fail to be reproducible or reusable if their description or provenance contains errors \citep[see, e.g.,][]{manninen2017reproducibility}.
+But while early curation can increase the \textit{comprehensiveness} of metadata, additional measures should guarantee its \textit{validity}, as even fully described research outputs fail to be reproducible or reusable if their description or provenance contains errors \citep[see, e.g.,][]{manninen2017reproducibility}.
 The most pragmatic approach to validate metadata is to base subsequent processing on them.
 For a simple example, consider a codified parametrization of an analysis in a configuration or analysis design file  \citep[see, e.g.,][]{jas2018reproducible}:
 If an analysis based on it completes successfully, it constitutes valid provenance metadata, created by an expert or automatically at the earliest possible time at no additional cost, and adds immediate benefit for curators as it captures relevant provenance and detects erroneous or missing metadata in passing.
@@ -218,7 +218,7 @@ This constitutes evidence that existing information is valid and sufficient to m
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{coarsemetadata.pdf}
-	\caption[FAIRly big: Process provenance of an individual job]{Process provenance of an individual job, its generation, and re-execution. a) A \texttt{datalad containers-run} command with a container name specification (cat), a container parametrization or command, a commit message, and an input and output data specification generates actionable process provenance as a structured record linked to a Git commit. b) To re-execute it, \texttt{datalad rerun} needs to be parameterized with a revision identifier, such as a Git tag, a ``commit shasum'' (\texttt{e035f896s45c9f}), or a revision range containing one or more commits with associated provenance records. c) As the core execution command (see Listing 1, line 33-39) at the center of each individual job, it performs data retrieval, container execution, and result capture, and generates the actionable provenance. d) The provenance record stored alongside computed results in the revision history. A legend (right) highlights the most important pieces of recorded provenance. It is re-executable with DataLad only, but sufficient information to repeat a computation using other means can also be inferred from the structured JSON records by other software or even humans. License: CC-BY-SA, \citet{wagner2022fairly}}
+	\caption[FAIRly big: Process provenance of an individual job]{Process provenance of an individual job, its generation, and re-execution. a) A \texttt{datalad containers-run} command with a container name specification (cat), a container parametrization or command, a commit message, and an input and output data specification generates actionable process provenance as a structured record linked to a Git commit. b) To re-execute it, \texttt{datalad rerun} needs to be parameterized with a revision identifier, such as a Git tag, a ``commit shasum'' (\texttt{e035f896s45c9f}), or a revision range containing one or more commits with associated provenance records. c) As the core execution command (see Listing 1, line 24-30) at the center of each individual job, it performs data retrieval, container execution, and result capture, and generates the actionable provenance. d) The provenance record stored alongside computed results in the revision history. A legend (right) highlights the most important pieces of recorded provenance. It is re-executable with DataLad only, but sufficient information to repeat a computation using other means can also be inferred from the structured JSON records by other software or even humans. License: CC-BY-SA, \citet{wagner2022fairly}}
 	\label{fig:fairly_metadata}
 \end{figure}
 
@@ -386,7 +386,7 @@ An overview of the analysis is shown in \cref{fig:fairly_datasets}, and the setu
 
 \subsubsection{Workflow setup}
 
-First, using the DataLad extension \texttt{datalad-ukbiobank} \citep{hanke_michael_2022_7296550}, we retrieved MRI data into one DataLad dataset per participant and restructured it to BIDS \citep{gorgolewski2016brain}, yielding 42,715 datasets in total.
+First, using the DataLad extension \texttt{datalad-ukbiobank} \citep{hanke_michael_2022_7296550}, we retrieved \gls{MRI} data into one DataLad dataset per participant and restructured it to BIDS \citep{gorgolewski2016brain}, yielding 42,715 datasets in total.
 A single superdataset (``Data'' in \cref{fig:fairly_datasets}) tracks them using about 40 MB of space.
 It is installable within seconds to retrieve any registered file content in the DataLad dataset hierarchy on demand.\\
 To set up a processing pipeline, we built a Singularity container for the Computational Anatomy Toolbox \citep[CAT; version: CAT12.7-RC2, r1720]{gaser}, which is an extension to the Statistical Parametric Mapping software (SPM; version: SPM12, r7771; \url{www.fil.ion.ucl.ac.uk/spm/software})\footnote{A detailed description and full recipe of the container together with instructions on how to build and use it is publicly available at \url{github.com/m-wierzba/cat-container}.}.
@@ -405,14 +405,14 @@ The \gls{HPC} system, a modular supercomputer with abundant disk space and compu
 The \gls{HTC} cluster, in contrast, was constrained on storage capacity, preventing the existence of more than one copy of the raw dataset, and limiting the size of derivatives that could be stored.
 The framework was thus setup identically across the employed systems apart from the implementation of job submission, which accounted for platform specific idiosyncrasies such as these restrictions.
 Irrespective of system, one compute job per participant was generated.
-This compute job serially processed all available anatomical images for a given participant.
+This compute job serially processed all available anatomical images (0, 1, or 2) for a given participant.
 For each image, a dedicated provenance record was captured, yielding a total of 41,180 records.
 The platform-specific job submission scripts adjusted the job load to the available disk space or inode resources when disk space or inode availability were insufficient for the full dataset by scheduling only as many jobs in parallel as there were resources to handle extracted inputs.
 
 \subsubsection{Workflow execution and consolidation}
 
 On the \gls{HPC} system we completed data processing for the one-hour-per-image pipeline within 10.5 hours, using 25 dedicated compute nodes, each executing 125 jobs in parallel on RAM disks with GNU Parallel \citep{tange2011gnu}.
-On the \gls{HTC} system in turn, computations were scheduled dynamically across several weeks.
+On the \gls{HTC} system in turn, computations were scheduled dynamically across several weeks using HTCondor.
 On both systems, recorded outputs and provenance records amounted to a total of 995.6 GB of computed derivatives in 163,212 files.
 After completion, results were consolidated by merging result branches, yielding a collection of different VBM-related measures for all images in the sample, represented in archives, and annotated with re-executable provenance records in a DataLad dataset.\\
 This DataLad dataset was then subsampled into smaller ``special purpose'' datasets tuned for specific research questions, containing extracted and optionally aggregated subsets of the results for easier consumption and faster access.
