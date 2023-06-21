@@ -21,6 +21,66 @@ Look mom, some text!
 \pagebreak
 
 \section{The MEMENTO study}
+
+The memento study investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
+It was acquired at the Otto-von-Guericke University Magdeburg in 2016 by \citet{kaiser}.
+
+\subsection{Participants}
+
+$N = 22$ right-handed, healthy participants with normal or corrected-to-normal vision took part in the experiment.
+The mean age was 26 years, and 10 participants were male.
+Handedness was assessed with the Edinburgh Handedness Inventory.
+Participants gave their informed consent to participate in the study, and received a base monetary compensation in the order of 8€ per hour with a performance-dependent bonus.
+Ethics approval was obtained from the University Clinic Magdeburg.
+
+\subsection{Experimental design}
+
+The experiment consisted of 510 trials, grouped into 5 blocks with a variable break in between.
+Each trial required a decision between one of two stimulus options, presented as gabor patches on the left and right side of the screen (\cref{fig:memento_trial}).
+Importantly, stimulus options were presented in succession, with a delay period through which the decision-relevant properties of the first stimulus had to be retained in working memory.
+The number of stripes in the gabor patch encoded the reward magnitude (either 0.5, 1, 2, or 4 points), and the angle of stripes encoded reward probability (either 10\%, 20\%, 40\%, or 80\%): The more stripes, the higher the reward, and the larger the angle, the higher the probability.
+Participants learned these associations in a tutorial prior to the experiment.
+Each trial started with a fixation cross (1000-1900ms, jittered), followed by the first stimulus on the left side of the screen for 700ms, a 2000ms delay period through which the phrase ``or'' was presented in the center of the screen, the second stimulus option on the right side of the screen for 700ms, and a feedback screen.
+Once the second stimulus option was displayed, participants chose the left or right option via a button press with the right or left index finger, respectively.
+The feedback screen showed both options side by side with a frame around the chosen option, and revealed which option had been rewarded via color coding (red: unrewarded, green: rewarded).
+If a decision was not made within 5 seconds, the trial was aborted and participants saw a message to respond faster.
+A progress bar at the bottom of the screen tracked gains over time, resulting in a bonus payment whenever it hit a gold target line.
+Participants were instructed to maximize their gains and to respond as fast as possible.
+Stimulus presentation was controlled by Psychtoolbox (Cite) running on Matlab 2012b (The Mathworks Company, Natick, MA).
+% taken verbatim from Lucas paper https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-020-20875-w/MediaObjects/41467_2020_20875_MOESM1_ESM.pdf
+All stimuli were presented on a grey background with a contrast optimized for the MEG recording chamber on a screen in a distance of one meter from the sitting participants.
+Stimuli were displayed via a projector with a refresh rate of 75 Hz located outside the MEG recording chamber.
+
+\subsection{MEG acquisition}
+
+
+
+Memento study design here…
+Neuromag MEG device with 306 sensors, active internal shielding, and head position indicator coils
+
+fixation cross: shown between 1 and 1.9 seconds.
+TODO: the reward schedule outfile\_final.mat is yet missing, the outfile in the project is outdated and contains 560 trials
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.5\textwidth]{memento/memento_experiment.png}
+	\caption[Memento: Trial overview]{Schematic overview of a single trial in the experiment.}
+	\label{fig:memento_trial}
+\end{figure}
+
+\subsection{Preprocessing}
+
+In a first step, data were restructured to BIDS format (v1.4.0) using mne-bids \citep{Appelhoff2019}.
+Preprocessing consisted of the following sequential steps and is illustrated in Figure XX:
+Temporal signal space separation (tsss) with movement corrections (TODO: retrieve parameters from the log files),
+ZAPline filtering (CITE) to remove a ~60Hz spikes in the data, presumably from a presentation screen
+Filtering (TODO: retrieve parameters from the log files)
+Removal of heartbeat and eye blink artifacts with Independent component analysis (fastica)
+Epoching into XXs without baseline correction. Bad epochs were interpolated or rejected using autoreject (CITE)
+
+All preprocessing steps and the subsequent analysis were implemented using mne python (CITE) or custom Python functions. All preprocessing and analysis scripts are openly available on GitHub and as the python package \texttt{pymento\_meg} (CITE).
+
+
 \pagebreak
 
 \section{Temporal decoding}
