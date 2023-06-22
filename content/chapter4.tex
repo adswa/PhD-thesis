@@ -22,15 +22,23 @@ Look mom, some text!
 
 \section{The MEMENTO study}
 
-The memento study investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
-It was acquired at the Otto-von-Guericke University Magdeburg in 2016 by \citet{kaiser}.
+%Rationale from Luka
+In natural settings, value-based decisions under risk often have to be made without visual presence of competing alternatives.
+Therefore, the subjective value of alternative options has to be held in working memory in order to form a categorical choice.
+Numerous studies report neuronal signals representing value.
+However, the temporal dynamics of the decision process as well as the maintenance of different valued options in working memory are less thoroughly investigated questions.
+Therefore, the memento study investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
+It was acquired as part of the SFB 779 project B16N on offline value representations in sequential decision making at the Otto-von-Guericke University Magdeburg in 2016 by \citet{kaiser} and has not been previously published.
+The following study overview adheres to the COBIDAS MEEG reporting guidelines for reproducible MEEG research \citep{pernet2020issues}.
+The code used for preprocessing and analysis was bundled into a publicly available Python package \texttt{pymento\_meg} and is available from GitHub\footnote{\url{https://github.com/adswa/pymento_meg}} and \url{PyPi.org}.
+Underlying software packages are listed in Table TODO.
 
 \subsection{Participants}
 
-$N = 22$ right-handed, healthy participants with normal or corrected-to-normal vision took part in the experiment.
-The mean age was 26 years, and 10 participants were male.
-Handedness was assessed with the Edinburgh Handedness Inventory.
-Participants gave their informed consent to participate in the study, and received a base monetary compensation in the order of 8€ per hour with a performance-dependent bonus.
+$N = 22$ right-handed, healthy participants with normal or corrected-to-normal vision were recruited at the Center for Behavioral Brain Sciences and on the university campus Magdeburg.
+Their mean age was 26 years, and 10 participants were male.
+Handedness was assessed with the Edinburgh Handedness Inventory \citep{oldfield1971assessment}.
+Participants gave their informed consent to participate in the study, and received a base monetary compensation in the order of 8€ per hour with a performance-dependent bonus of up to 3€.
 Ethics approval was obtained from the University Clinic Magdeburg.
 
 \subsection{Experimental design}
@@ -47,19 +55,10 @@ If a decision was not made within 5 seconds, the trial was aborted and participa
 A progress bar at the bottom of the screen tracked gains over time, resulting in a bonus payment whenever it hit a gold target line.
 Participants were instructed to maximize their gains and to respond as fast as possible.
 Stimulus presentation was controlled by Psychtoolbox (Cite) running on Matlab 2012b (The Mathworks Company, Natick, MA).
-% taken verbatim from Lucas paper https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-020-20875-w/MediaObjects/41467_2020_20875_MOESM1_ESM.pdf
-All stimuli were presented on a grey background with a contrast optimized for the MEG recording chamber on a screen in a distance of one meter from the sitting participants.
-Stimuli were displayed via a projector with a refresh rate of 75 Hz located outside the MEG recording chamber.
-
-\subsection{MEG acquisition}
-
-
-
-Memento study design here…
-Neuromag MEG device with 306 sensors, active internal shielding, and head position indicator coils
-
-fixation cross: shown between 1 and 1.9 seconds.
-TODO: the reward schedule outfile\_final.mat is yet missing, the outfile in the project is outdated and contains 560 trials
+All stimuli were presented on a grey background with a contrast optimized for the MEG recording chamber.
+A photodiode, taped onto the stimulation screen, was used to determine visual stimulus onsets.
+TODO: Add delay
+In total, the experiment lasted approximately 60 minutes.
 
 \begin{figure}
 	\centering
@@ -68,9 +67,55 @@ TODO: the reward schedule outfile\_final.mat is yet missing, the outfile in the 
 	\label{fig:memento_trial}
 \end{figure}
 
+
+\subsection{MEG acquisition}
+
+Following a metal test, MEG data were acquired on an Elekta Neuromag TRIUX System with 306 sensors (204 planar gradiometers and 102 magnetometers).
+Participants were instructed to take a comfortable seating position and sit as still as possible.
+The experiment was presented on a screen in a distance of one meter from the sitting participants via a projector with a refresh rate of 75 Hz located outside the MEG recording chamber.
+Additional sensors captured confounding biological signals:
+Lateral and vertical eye movements and blinks were captured using electrooculography surface electrodes on the tori supra- and infraorbitalis and next to the external canthi.
+Heartbeat artifacts were recorded with an electrocardiogram.
+Head position indicator coils captured the participants head movements.
+Behavioral responses were registered using an MEG compatible keyboard.
+The neural data was recorded at a sampling rate of 1000Hz and active internal shielding (IAS).
+
+
 \subsection{Preprocessing}
 
-In a first step, data were restructured to BIDS format (v1.4.0) using mne-bids \citep{Appelhoff2019}.
+Prior to preprocessing, raw data were restructured to \gls{BIDS} format (v1.4.0) using mne-bids \citep{Appelhoff2019}.
+Simultaneously, behavioral log files were transformed from proprietary .mat into the TSV format.
+
+As the first step of preprocessing, the spatiotemporal extension of the \gls{SSS} method \citep{taulu2005presentation}, \textit{\gls{tSSS}} \citep{taulu2006spatiotemporal}, was applied, as is common for recordings on Neuromag MEG systems with active internal shielding.
+\gls{SSS} and \gls{tSSS} remove strong interference by external noise sources and sources within the body itself from the MEG signal.
+The methods can be applied on whole-scalp multichannel data when the precise sensor calibrations are known, and were initially developed as the proprietary MaxFilter\textsuperscript{TM} algorithm by Elekta Neuromag.
+To this end, Neuromag systems provide a cross-talk compensation and fine calibration file which reduces interference between their co-located magnetometer and paired gradiometer sensor units and encodes site-specific information about sensor orientation and calibration, respectively.
+\gls{SSS} decomposes \gls{meg} signals into elementary magnetic fields from sources within the sensor helmet (the \textit{internal} subspace) and into a set for fields arising from sources outside (the \textit{external} subspace) based on the Maxwell equations \citep{taulu2006spatiotemporal}.
+As the internal and external subspaces are provably linearly independent, brain signals are then reconstructed by retaining only sources inside the helmet, thus excluding external inferences.
+According to \citet{taulu2006spatiotemporal}, \gls{SSS} can separate brain signals from sources >0.5m away, suppressing external interference by a factor >100.
+The spatiotemporal extension \gls{tSSS} can further detect inferences from closer sources such as stimulators or pacemakers.
+These are estimated based on the fact that their strength typically exceeds that of sensor noise and thus, unlike brain signal, leaks into both the internal and external part of the \gls{SSS} reconstruction.
+After detecting components with a high temporal correlation between the external and internal parts, \gls{tSSS} removes close-by artifacts by projecting the components common to the internal and external subspace out of the internal subspace.
+In the absence of nearby artifacts, \gls{tSSS} reduces to \gls{SSS} \citep{taulu2009removal}.
+\gls{tSSS} was implemented using mne-python's open source implementation \texttt{maxwell\_filter()} with a chunk duration of 10 seconds and a correlation threshold of at least $0.98$.
+Prior to \gls{tSSS}, bad channels were detected and annotated automatically in order to prevent bad channel noise from spreading.
+To compensate for head movements, measurements from the head position indicator coils were used to estimate subject motion, and motion correction was then performed as part of the \gls{tSSS} procedure.
+After \gls{tSSS}, gradiometers and magnetometers contain highly similar information and have an altered inter-channel correlation structure because they were reconstructed from a common 80-dimensional subspace \citep{jas2018reproducible}.
+In all following analyses, these channels are thus treated as a single sensor type.
+Formerly bad channels have also been effectively repaired by the procedure.
+
+
+After \gls{tSSS}, some spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
+ZAPline filtering \citep{de2020zapline} was performed to remove them using meegkit \citep{barascud2022}.
+Figures TODO and TODO show power spectral density plots of the signal pre and post (effective window size: 2.048 s) \gls{tSSS}.
+
+Before splitting the continuous data into epochs,
+
+
+
+As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
+It was combined with
+
 Preprocessing consisted of the following sequential steps and is illustrated in Figure XX:
 Temporal signal space separation (tsss) with movement corrections (TODO: retrieve parameters from the log files),
 ZAPline filtering (CITE) to remove a ~60Hz spikes in the data, presumably from a presentation screen
