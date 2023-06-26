@@ -87,15 +87,15 @@ Prior to preprocessing, raw data were restructured to \gls{BIDS} format (v1.4.0)
 Simultaneously, behavioral log files were transformed from proprietary .mat into the TSV format.
 
 As the first step of preprocessing, the spatiotemporal extension of the \gls{SSS} method \citep{taulu2005presentation}, \textit{\gls{tSSS}} \citep{taulu2006spatiotemporal}, was applied, as is common for recordings on Neuromag MEG systems with active internal shielding.
-\gls{SSS} and \gls{tSSS} remove strong interference by external noise sources and sources within the body itself from the MEG signal.
+\gls{SSS} and \gls{tSSS} remove strong interference from external noise sources and sources within the body itself from the MEG signal.
 The methods can be applied on whole-scalp multichannel data when the precise sensor calibrations are known, and were initially developed as the proprietary MaxFilter\textsuperscript{TM} algorithm by Elekta Neuromag.
 To this end, Neuromag systems provide a cross-talk compensation and fine calibration file which reduces interference between their co-located magnetometer and paired gradiometer sensor units and encodes site-specific information about sensor orientation and calibration, respectively.
 \gls{SSS} decomposes \gls{meg} signals into elementary magnetic fields from sources within the sensor helmet (the \textit{internal} subspace) and into a set for fields arising from sources outside (the \textit{external} subspace) based on the Maxwell equations \citep{taulu2006spatiotemporal}.
 As the internal and external subspaces are provably linearly independent, brain signals are then reconstructed by retaining only sources inside the helmet, thus excluding external inferences.
 According to \citet{taulu2006spatiotemporal}, \gls{SSS} can separate brain signals from sources >0.5m away, suppressing external interference by a factor >100.
 The spatiotemporal extension \gls{tSSS} can further detect inferences from closer sources such as stimulators or pacemakers.
-These are estimated based on the fact that their strength typically exceeds that of sensor noise and thus, unlike brain signal, leaks into both the internal and external part of the \gls{SSS} reconstruction.
-After detecting components with a high temporal correlation between the external and internal parts, \gls{tSSS} removes close-by artifacts by projecting the components common to the internal and external subspace out of the internal subspace.
+These are estimated based on the fact that their strength typically exceeds that of sensor noise and they thus, unlike brain signal, leak into both the internal and external part of the \gls{SSS} reconstruction.
+After detecting components with a high temporal correlation between the external and internal subspaces, \gls{tSSS} removes close-by artifacts by projecting the components common to the internal and external subspace out of the internal subspace.
 In the absence of nearby artifacts, \gls{tSSS} reduces to \gls{SSS} \citep{taulu2009removal}.
 \gls{tSSS} was implemented using mne-python's open source implementation \texttt{maxwell\_filter()} with a chunk duration of 10 seconds and a correlation threshold of at least $0.98$.
 Prior to \gls{tSSS}, bad channels were detected and annotated automatically in order to prevent bad channel noise from spreading.
