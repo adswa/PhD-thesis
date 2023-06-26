@@ -107,8 +107,26 @@ Formerly bad channels have also been effectively repaired by the procedure.
 
 After \gls{tSSS}, some spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
 ZAPline filtering \citep{de2020zapline} was performed to remove them using meegkit \citep{barascud2022}.
-Figures TODO and TODO show power spectral density plots of the signal pre and post (effective window size: 2.048 s) \gls{tSSS}.
+Figures TODO and TODO show power spectral density plots of the signal pre and post (effective window size: 2.048 s) applying ZAPline filters.
 
+
+\begin{figure}
+	\begin{subfigure}{.49\textwidth}
+		\includegraphics[width=\textwidth]{memento/psd_pre_zapline.png}
+		\caption{Power spectral density before ZAPline filtering}
+		\label{fig:prezap}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+		\includegraphics[width=\textwidth]{memento/psd_post_zapline.png}
+		\caption{Power spectral density after ZAPline filtering}
+		\label{fig:postzap}
+	\end{subfigure}
+	\caption[Power spectral density before and after ZAPLine filtering]{Power spectral density of all MEG channels
+		from a single subject before (\ref{fig:prezap}) and after (\ref{fig:postzap}) ZAPLine filtering.
+		Two spikes at 50Hz (power-line frequency) and 60Hz (likely an artifact of the stimulus presentation) are markedly reduced afterwards.
+	}
+	\label{fig:zapline_psd}
+\end{figure}
 Before splitting the continuous data into epochs,
 
 
