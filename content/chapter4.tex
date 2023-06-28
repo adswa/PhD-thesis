@@ -107,8 +107,8 @@ Formerly bad channels have also been effectively repaired by the procedure.
 
 After \gls{tSSS}, some spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
 ZAPline filtering \citep{de2020zapline} was performed to remove them using meegkit \citep{barascud2022}.
-Figures TODO and TODO show power spectral density plots of the signal pre and post (effective window size: 2.048 s) applying ZAPline filters.
-
+Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots of the signal pre and post (effective window size: 2.048 s) applying ZAPline filters.
+Finally, data were low-pass filtered with a 100 ... TODO
 
 \begin{figure}
 	\begin{subfigure}{.49\textwidth}
@@ -127,12 +127,25 @@ Figures TODO and TODO show power spectral density plots of the signal pre and po
 	}
 	\label{fig:zapline_psd}
 \end{figure}
-Before splitting the continuous data into epochs,
-
 
 
 As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
+% The slow drifts are problematic because they reduce the independence of the assumed-to-be-independent sources (e.g., during a slow upward drift, the neural, heartbeat, blink, and other muscular sources will all tend to have higher values), making it harder for the algorithm to find an accurate solution. A high-pass filter with 1 Hz cutoff frequency is recommended. However, because filtering is a linear operation, the ICA solution found from the filtered signal can be applied to the unfiltered signal https://ieeexplore.ieee.org/document/7319296/
+As ICA is sensitive to low-frequency drifts, the data were first processed with a temporary one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
+In
+
+For most subjects,components corresponding to ECG activity were identified using cross-trial phase statistics \citep{dammers2008integration} with an automatically computed threshold of 0.16 for the Kuiper statistic, and EOG related components were found using Pearson correlation.
+For one subject, however, both EOG and ECG channel were flat, and components were manually selected.
+
+
+
+The ICA was then fit on data split into epochs of 3 seconds
+
 It was combined with
+
+
+Before splitting the continuous data into epochs,
+
 
 Preprocessing consisted of the following sequential steps and is illustrated in Figure XX:
 Temporal signal space separation (tsss) with movement corrections (TODO: retrieve parameters from the log files),
