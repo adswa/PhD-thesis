@@ -28,7 +28,7 @@ Therefore, the subjective value of alternative options has to be held in working
 Numerous studies report neuronal signals representing value.
 However, the temporal dynamics of the decision process as well as the maintenance of different valued options in working memory are less thoroughly investigated questions.
 Therefore, the memento study investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
-It was acquired as part of the SFB 779 project B16N on offline value representations in sequential decision making at the Otto-von-Guericke University Magdeburg in 2016 by \citet{kaiser} and has not been previously published.
+It was acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg in 2016 by \citet{kaiser}, and has not been previously published.
 The following study overview adheres to the COBIDAS MEEG reporting guidelines for reproducible MEEG research \citep{pernet2020issues}.
 The code used for preprocessing and analysis was bundled into a publicly available Python package \texttt{pymento\_meg} and is available from GitHub\footnote{\url{https://github.com/adswa/pymento_meg}} and \url{PyPi.org}.
 Underlying software packages are listed in Table TODO.
@@ -46,8 +46,8 @@ Ethics approval was obtained from the University Clinic Magdeburg.
 The experiment consisted of 510 trials, grouped into 5 blocks with a variable break in between.
 Each trial required a decision between one of two stimulus options, presented as gabor patches on the left and right side of the screen (\cref{fig:memento_trial}).
 Importantly, stimulus options were presented in succession, with a delay period through which the decision-relevant properties of the first stimulus had to be retained in working memory.
-The number of stripes in the gabor patch encoded the reward magnitude (either 0.5, 1, 2, or 4 points), and the angle of stripes encoded reward probability (either 10\%, 20\%, 40\%, or 80\%): The more stripes, the higher the reward, and the larger the angle, the higher the probability.
-Participants learned these associations in a tutorial prior to the experiment.
+The number of stripes in the gabor patch encoded the reward magnitude (either 0.5, 1, 2, or 4 points), and the angle of stripes encoded reward probability (either 10\%, 20\%, 40\%, or 80\%): The more stripes, the higher the reward, and the larger the angle, the higher the probability. \cref{fig:memento_stim} provides an overview.
+Participants learned these associations in a tutorial prior to the experiment (\cref{fig:memento_tutorial}).
 Each trial started with a fixation cross (1000-1900ms, jittered), followed by the first stimulus on the left side of the screen for 700ms, a 2000ms delay period through which the phrase ``or'' was presented in the center of the screen, the second stimulus option on the right side of the screen for 700ms, and a feedback screen.
 Once the second stimulus option was displayed, participants chose the left or right option via a button press with the right or left index finger, respectively.
 The feedback screen showed both options side by side with a frame around the chosen option, and revealed which option had been rewarded via color coding (red: unrewarded, green: rewarded).
@@ -62,15 +62,33 @@ In total, the experiment lasted approximately 60 minutes.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.5\textwidth]{memento/memento_experiment.png}
-	\caption[Memento: Trial overview]{Schematic overview of a single trial in the experiment.}
+	\includegraphics[width=0.5\textwidth]{memento/memento_stimuli.png}
+	\caption[Stimulus overview]{Stimulus overview: Gabor patches varied in the number of stripes and their angle, encoding magnitude and probability, respectively.}
+	\label{fig:memento_stim}
+\end{figure}
+
+\begin{figure}
+	\begin{subfigure}{.54\textwidth}
+	\includegraphics[width=\textwidth]{memento/memento_tutorial.png}
+	\caption{Schematic overview of the tutorial.}
+	\label{fig:memento_tutorial}
+	\end{subfigure}
+	\begin{subfigure}{.45\textwidth}
+	\includegraphics[width=\textwidth]{memento/memento_experiment.png}
+	\caption{Schematic overview of a single trial.}
 	\label{fig:memento_trial}
+\end{subfigure}
+	\caption[Memento: Tutorial and trial overview]{Schematic overview of the tutorial (\ref{fig:memento_tutorial}) and a single trial in the experiment (\ref{fig:memento_trial}).
+	The tutorial was split in an active and a passive part.
+	In the passive part, participants were presented with a stimulus and how its properties translated to reward magnitude and probability. All possible magnitude and probability combinations were presented twice, and participants controlled the pace. The active part then tested participants' knowledge by presenting with a stimulus without the annotation. Based on a text prompt, participants had to report its associated magnitude or probability via button press. They received feedback with a green colored stimulus for a correct response, or, for an incorrect response, a red colored stimulus together with a report of their response versus the true response.
+	}
+\label{fig:memento}
 \end{figure}
 
 
 \subsection{MEG acquisition}
 
-Following a metal test, MEG data were acquired on an Elekta Neuromag TRIUX System with 306 sensors (204 planar gradiometers and 102 magnetometers).
+Following a metal test, MEG data were acquired on an Elekta Neuromag TRIUX System with internal helium recycler and 306 sensors (204 planar gradiometers and 102 magnetometers) in a magnetically shielded room.
 Participants were instructed to take a comfortable seating position and sit as still as possible.
 The experiment was presented on a screen in a distance of one meter from the sitting participants via a projector with a refresh rate of 75 Hz located outside the MEG recording chamber.
 Additional sensors captured confounding biological signals:
@@ -103,12 +121,10 @@ To compensate for head movements, measurements from the head position indicator 
 After \gls{tSSS}, gradiometers and magnetometers contain highly similar information and have an altered inter-channel correlation structure because they were reconstructed from a common 80-dimensional subspace \citep{jas2018reproducible}.
 In all following analyses, these channels are thus treated as a single sensor type.
 Formerly bad channels have also been effectively repaired by the procedure.
-
-
 After \gls{tSSS}, some spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
-ZAPline filtering \citep{de2020zapline} was performed to remove them using meegkit \citep{barascud2022}.
+ZAPline filtering \citep{de2020zapline} was performed to remove them using \texttt{meegkit} \citep{barascud2022}.
 Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots of the signal pre and post (effective window size: 2.048 s) applying ZAPline filters.
-Finally, data were low-pass filtered with a 100 ... TODO
+
 
 \begin{figure}
 	\begin{subfigure}{.49\textwidth}
@@ -128,23 +144,18 @@ Finally, data were low-pass filtered with a 100 ... TODO
 	\label{fig:zapline_psd}
 \end{figure}
 
-
+Next, data were first low-pass filtered with a 100Hz lowpass filter to constrain it into a frequency range of interest (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, an upper passband edge of 100.00 Hz, an upper transition bandwidth of 25.00 Hz (-6 dB cutoff frequency: 112.50 Hz), and a filter length: 133 samples (0.133 s)).
 As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
 % The slow drifts are problematic because they reduce the independence of the assumed-to-be-independent sources (e.g., during a slow upward drift, the neural, heartbeat, blink, and other muscular sources will all tend to have higher values), making it harder for the algorithm to find an accurate solution. A high-pass filter with 1 Hz cutoff frequency is recommended. However, because filtering is a linear operation, the ICA solution found from the filtered signal can be applied to the unfiltered signal https://ieeexplore.ieee.org/document/7319296/
-As ICA is sensitive to low-frequency drifts, the data were first processed with a temporary one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
-In
-
-For most subjects,components corresponding to ECG activity were identified using cross-trial phase statistics \citep{dammers2008integration} with an automatically computed threshold of 0.16 for the Kuiper statistic, and EOG related components were found using Pearson correlation.
-For one subject, however, both EOG and ECG channel were flat, and components were manually selected.
-
-
-
-The ICA was then fit on data split into epochs of 3 seconds
-
-It was combined with
+As ICA is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
+As ICA can further be sensitive to bad segments in the recording, data were temporarily epoched into 5 second splits from the onset of the fixation cross.
+\texttt{autoreject} was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
+Afterwards, FastICA \citep{hyvarinen1999fast} was used to decompose the signal into 45 independent components.
+For most subjects, components corresponding to ECG activity were identified using cross-trial phase statistics \citep{dammers2008integration} with an automatically computed threshold of 0.16 for the Kuiper statistic, and EOG related components were found using Pearson correlation.
+For one subject, however, the ECG channel was flat, and components were manually selected.
+Afterwards, the ICA solution was applied to the continuous recording and detected ECG and EOG components were zeroed out.
 
 
-Before splitting the continuous data into epochs,
 
 
 Preprocessing consisted of the following sequential steps and is illustrated in Figure XX:
