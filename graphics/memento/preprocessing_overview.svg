@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="234.73486mm"
+   height="255.664mm"
+   viewBox="0 0 234.73486 255.664"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -24,62 +24,72 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.66622739"
-     inkscape:cx="342.97599"
-     inkscape:cy="630.41539"
+     inkscape:cx="852.56177"
+     inkscape:cy="621.40946"
      inkscape:window-width="2560"
      inkscape:window-height="1403"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <defs
      id="defs2">
     <rect
-       x="406.8"
-       y="9.6814539"
+       x="1856.8857"
+       y="318.19318"
+       width="674.45703"
+       height="260.39557"
+       id="rect9004" />
+    <rect
+       x="406.79999"
+       y="9.6814537"
        width="372.41449"
        height="162.11313"
        id="rect44487" />
     <marker
-       style="overflow:visible;"
+       style="overflow:visible"
        id="Arrow2Lend"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow2Lend"
        inkscape:isstock="true">
       <path
-         transform="scale(1.1) rotate(180) translate(1,0)"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
          id="path21503" />
     </marker>
     <marker
        style="overflow:visible"
        id="Arrow1Lstart"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Lstart"
        inkscape:isstock="true">
       <path
-         transform="scale(0.8) translate(12.5,0)"
-         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path21482" />
     </marker>
     <marker
-       style="overflow:visible;"
+       style="overflow:visible"
        id="Arrow1Lend"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Lend"
        inkscape:isstock="true">
       <path
-         transform="scale(0.8) rotate(180) translate(12.5,0)"
-         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path21485" />
     </marker>
     <marker
@@ -116,17 +126,24 @@
        width="372.41449"
        height="162.11313"
        id="rect44487-0" />
+    <rect
+       x="406.79999"
+       y="9.6814537"
+       width="496.20111"
+       height="187.62656"
+       id="rect44487-3" />
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-3.7539039,-2.5615513)">
     <g
        id="g93725">
       <rect
-         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.25105"
+         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.26982"
          id="rect868"
-         width="103.87859"
+         width="107.019"
          height="42.716785"
          x="3.7539089"
          y="2.5615513" />
@@ -138,67 +155,70 @@
          id="text2734"><tspan
            x="6.169488"
            y="15.450694"
-           id="tspan98118"><tspan
+           id="tspan83807"><tspan
    style="font-size:12.7px"
-   id="tspan98116">tSSS</tspan>
+   id="tspan83805">tSSS</tspan>
 </tspan><tspan
            x="6.169488"
            y="28.622007"
-           id="tspan98120">  min. correlation: 0.98
+           id="tspan83809">  min. correlation: 0.98
 </tspan><tspan
            x="6.169488"
            y="40.969232"
-           id="tspan98122">  chunk duration: 10s </tspan></text>
+           id="tspan83811">  chunk duration: 10s </tspan></text>
       <path
-         style="fill:none;stroke:#000000;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
-         d="m 7.4856885,19.508369 0.128748,40.876434"
+         style="fill:none;stroke:#000000;stroke-width:0.56396;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+         d="M 7.480953,19.508369 7.6193796,57.386612"
          id="path21480"
          sodipodi:nodetypes="cc" />
     </g>
     <g
-       id="g98036"
-       transform="translate(0,-24.870843)">
-      <rect
-         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.07388"
-         id="rect868-3-1-3"
-         width="103.87859"
-         height="31.474356"
-         x="3.7539062"
-         y="264.18292" />
-    </g>
-    <text
-       xml:space="preserve"
-       style="font-size:9.87778px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;inline-size:119.753;stroke-width:0.264583"
-       x="6.169488"
-       y="15.450694"
-       id="text2734-6-2-6"
-       transform="translate(0.78818223,235.77737)"><tspan
+       id="g924">
+      <g
+         id="g98036"
+         transform="matrix(1.0302315,0,0,1,-0.11348625,-59.266698)">
+        <rect
+           style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.07388"
+           id="rect868-3-1-3"
+           width="103.87859"
+           height="31.474356"
+           x="3.7539062"
+           y="264.18292" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:9.87778px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;white-space:pre;inline-size:119.753;stroke-width:0.264583"
          x="6.169488"
          y="15.450694"
-         id="tspan98126"><tspan
-           style="font-size:12.7px"
-           id="tspan98124">Bad segment 
+         id="text2734-6-2-6"
+         transform="translate(0.78818223,201.38132)"><tspan
+           x="6.169488"
+           y="15.450694"
+           id="tspan83815"><tspan
+             style="font-size:12.7px"
+             id="tspan83813">Bad segment 
 </tspan></tspan><tspan
-         x="6.169488"
-         y="31.325694"
-         id="tspan98130"><tspan
+           x="6.169488"
+           y="31.325694"
+           id="tspan83819"><tspan
    style="font-size:12.7px"
-   id="tspan98128">rejection/repair</tspan>
+   id="tspan83817">rejection/repair</tspan>
 </tspan><tspan
-         x="6.169488"
-         y="44.497009"
-         id="tspan98132">
+           x="6.169488"
+           y="44.497009"
+           id="tspan83821">
 </tspan><tspan
-         x="6.169488"
-         y="56.844234"
-         id="tspan98134">  </tspan></text>
+           x="6.169488"
+           y="56.844234"
+           id="tspan83823">  </tspan></text>
+    </g>
     <g
        id="g93743"
-       transform="translate(0,-21.695841)">
+       transform="translate(0,-39.158352)">
       <rect
-         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.25875"
+         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.27764"
          id="rect868-3-7"
-         width="103.87859"
+         width="107.019"
          height="43.243553"
          x="3.7539077"
          y="142.36916" />
@@ -211,34 +231,34 @@
          transform="translate(0.03136596,139.72565)"><tspan
            x="6.169488"
            y="15.450694"
-           id="tspan98138"><tspan
+           id="tspan83827"><tspan
    style="font-size:12.7px"
-   id="tspan98136">FastICA</tspan>
+   id="tspan83825">FastICA</tspan>
 </tspan><tspan
            x="6.169488"
            y="28.622007"
-           id="tspan98140">  45 components
+           id="tspan83829">  45 components
 </tspan><tspan
            x="6.169488"
            y="40.969232"
-           id="tspan98142">  ECG and EOG artifacts 
+           id="tspan83831">  ECG and EOG artifacts 
 </tspan><tspan
            x="6.169488"
            y="53.316459"
-           id="tspan98144">  </tspan></text>
+           id="tspan83833">  </tspan></text>
       <path
-         style="fill:none;stroke:#000000;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
-         d="m 8.1316226,158.76002 0.128748,40.87644"
+         style="fill:none;stroke:#000000;stroke-width:0.564217;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
+         d="m 8.1280544,158.76002 0.1360399,38.57795"
          id="path21480-7"
          sodipodi:nodetypes="cc" />
     </g>
     <g
        id="g93734"
-       transform="translate(0,-14.816656)">
+       transform="translate(0,-17.991658)">
       <rect
-         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.07388"
+         style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.08999"
          id="rect868-3"
-         width="103.87859"
+         width="107.01897"
          height="31.474356"
          x="3.7539039"
          y="77.028336" />
@@ -251,20 +271,20 @@
          transform="translate(0.78817959,74.022958)"><tspan
            x="6.169488"
            y="15.450694"
-           id="tspan98148"><tspan
+           id="tspan83837"><tspan
    style="font-size:12.7px"
-   id="tspan98146">Filter</tspan>
+   id="tspan83835">Filter</tspan>
 </tspan><tspan
            x="6.169488"
            y="28.622007"
-           id="tspan98150">  0.1-100 Hz
+           id="tspan83839">  100Hz lowpass FIR filter
 </tspan><tspan
            x="6.169488"
            y="40.969232"
-           id="tspan98152">  </tspan></text>
+           id="tspan83841">  </tspan></text>
       <path
-         style="fill:none;stroke:#000000;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-3)"
-         d="m 8.3522237,92.766412 0.128748,40.876408"
+         style="fill:none;stroke:#000000;stroke-width:0.558041;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-3)"
+         d="M 8.3207949,92.766394 8.5138847,119.35438"
          id="path21480-6"
          sodipodi:nodetypes="cc" />
     </g>
@@ -277,47 +297,74 @@
        y="0"><tspan
          x="406.80078"
          y="35.22834"
-         id="tspan98154">- Bad channel detection
+         id="tspan83843">- Bad channel detection
 </tspan><tspan
          x="406.80078"
          y="68.561714"
-         id="tspan98156">- Motion correction
+         id="tspan83845">- Motion correction
 </tspan><tspan
          x="406.80078"
          y="101.89509"
-         id="tspan98158">- Bad channel repair</tspan></text>
+         id="tspan83847">- Bad channel repair</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,6.4276115,127.51537)"
+       transform="matrix(0.26458333,0,0,0.26458333,6.4594591,53.590835)"
+       id="text44485-6"
+       style="font-size:26.6667px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:start;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect44487-3)"
+       x="-26.749298"
+       y="0"><tspan
+         x="406.80078"
+         y="35.22834"
+         id="tspan83849">- Hamming window (0.0194 passband ripple, 
+</tspan><tspan
+         x="406.80078"
+         y="68.561714"
+         id="tspan83851">  53 dB stopband attenuation
+</tspan><tspan
+         x="406.80078"
+         y="101.89509"
+         id="tspan83853">- upper transition bandwidth: 25 Hz (-6 dB 
+</tspan><tspan
+         x="406.80078"
+         y="135.22846"
+         id="tspan83855">  cutoff frequency: 112.50 Hz)
+</tspan><tspan
+         x="406.80078"
+         y="168.56184"
+         id="tspan83857">- filter length: 133 samples</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,6.4276115,110.05276)"
        id="text44485-9"
        style="font-size:26.6667px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:start;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect44487-0)"
        x="-26.749298"
        y="0"><tspan
          x="406.80078"
          y="35.22834"
-         id="tspan98160">- Temporary 1Hz highpass filter
+         id="tspan83859">- Temporary 1Hz highpass filter
 </tspan><tspan
          x="406.80078"
          y="68.561714"
-         id="tspan98162">- Temporary 5s epochs to estimate 
+         id="tspan83861">- Temporary 5s epochs to estimate 
 </tspan><tspan
          x="406.80078"
          y="101.89509"
-         id="tspan98164">  noise thresholds via autoreject;    
+         id="tspan83863">  noise thresholds via autoreject;    
 </tspan><tspan
          x="406.80078"
          y="135.22846"
-         id="tspan98166">  ICA fit on non-noisy segments 
+         id="tspan83865">  ICA fit on non-noisy segments 
 </tspan></text>
     <g
-       id="g93901">
+       id="g93901"
+       transform="translate(0,-19.579173)">
       <g
          id="g93751"
          transform="translate(0,-37.041683)">
         <rect
-           style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.07388"
+           style="fill:#b6b6b6;fill-opacity:1;fill-rule:evenodd;stroke-width:1.08999"
            id="rect868-3-1"
-           width="103.87859"
+           width="107.019"
            height="31.474356"
            x="3.7539077"
            y="216.83357" />
@@ -330,24 +377,28 @@
            transform="translate(0.25901697,213.82817)"><tspan
              x="6.169488"
              y="15.450694"
-             id="tspan98170"><tspan
+             id="tspan83869"><tspan
    style="font-size:12.7px"
-   id="tspan98168">Epoching</tspan>
+   id="tspan83867">Epoching</tspan>
 </tspan><tspan
              x="6.169488"
              y="28.622007"
-             id="tspan98172">  
+             id="tspan83871">  
 </tspan><tspan
              x="6.169488"
              y="40.969232"
-             id="tspan98174">  </tspan></text>
+             id="tspan83873">  </tspan></text>
       </g>
       <path
-         style="fill:none;stroke:#000000;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
-         d="m 8.1316226,217.49787 0.128748,40.87644"
+         style="fill:none;stroke:#000000;stroke-width:0.558041;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
+         d="M 8.1001951,195.80203 8.2932828,222.3902"
          id="path93890"
-         sodipodi:nodetypes="cc"
-         transform="translate(0,-21.695841)" />
+         sodipodi:nodetypes="cc" />
     </g>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text9002"
+       style="font-size:37.3333px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:center;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect9004)" />
   </g>
 </svg>
