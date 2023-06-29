@@ -144,7 +144,8 @@ Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots
 	\label{fig:zapline_psd}
 \end{figure}
 
-Next, data were first low-pass filtered with a 100Hz lowpass filter to constrain it into a frequency range of interest (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, an upper passband edge of 100.00 Hz, an upper transition bandwidth of 25.00 Hz (-6 dB cutoff frequency: 112.50 Hz), and a filter length: 133 samples (0.133 s)).
+Next, data were first low-pass filtered with a 100Hz lowpass FIR filter to constrain it into a frequency range of interest.
+The filter properties are reported in \cref{fig:preproc} and a visualization is in \cref{fig:filter}.
 As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
 % The slow drifts are problematic because they reduce the independence of the assumed-to-be-independent sources (e.g., during a slow upward drift, the neural, heartbeat, blink, and other muscular sources will all tend to have higher values), making it harder for the algorithm to find an accurate solution. A high-pass filter with 1 Hz cutoff frequency is recommended. However, because filtering is a linear operation, the ICA solution found from the filtered signal can be applied to the unfiltered signal https://ieeexplore.ieee.org/document/7319296/
 As ICA is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
@@ -155,6 +156,36 @@ For most subjects, components corresponding to ECG activity were identified usin
 For one subject, however, the ECG channel was flat, and components were manually selected.
 Afterwards, the ICA solution was applied to the continuous recording and detected ECG and EOG components were zeroed out.
 
+As a final step, the continous recording was chunked into Epochs, and autoreject was used to detect and repair or drop bad epochs.
+Figure \ref{fig:preproc} summarizes the preprocessing steps.
+
+
+\begin{figure}
+
+\begin{subfigure}{0.4\textwidth}
+	\includegraphics[width=\textwidth]{memento/preprocessing_overview.png}
+	\label{fig:preproc}
+	\caption[Preprocessing overview]{Preprocessing Overview}
+\end{subfigure}
+\begin{subfigure}{.59\textwidth}
+	\includegraphics[width=\textwidth]{memento/psd_pre_zapline.png}
+	\caption{Power spectral density before ZAPline filtering}
+	\label{fig:prezap}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+	\includegraphics[width=\textwidth]{memento/filter_properties_100hz.png}
+	\label{fig:filter}
+	\caption[Lowpass filter properties]{Lowpass filter properties}
+\end{subfigure}
+\begin{subfigure}{.59\textwidth}
+	\includegraphics[width=\textwidth]{memento/psd_post_zapline.png}
+	\caption{Power spectral density after ZAPline filtering}
+	\label{fig:postzap}
+\end{subfigure}
+	\label{fig:preproccessing}
+	\caption{some caption}
+
+\end{figure}
 
 
 
@@ -167,6 +198,99 @@ Epoching into XXs without baseline correction. Bad epochs were interpolated or r
 
 All preprocessing steps and the subsequent analysis were implemented using mne python (CITE) or custom Python functions. All preprocessing and analysis scripts are openly available on GitHub and as the python package \texttt{pymento\_meg} (CITE).
 
+
+\pagebreak
+
+
+\section{Simulation study}
+
+MEG signal consists of oscillations with an amplitude, a frequency, and a phase.
+Frequency, usually measured in hertz (Hz), is the number of times a specified event occurs within a specified time interval, while amplitude is the height, force or power of the wave, and power is the squared amplitude.
+Phase involves the relationship between two or more signals that share the same frequency and describes the relationship between the position of the amplitude crests and troughs of two waveforms, measured in distance, time, or degrees.
+If the peaks of two signals with the same frequency are in exact alignment at the same time, they are said to be in phase.
+Conversely, if the peaks of two signals with the same frequency are not in exact alignment at the same time, they are said to be out of phase.
+While shared response modelling, just like similar methods of hyper alignment [CITE], relies on the assumption that different participants display similar cognitive processes in response to the same tasks or stimuli [CITE], the exact timing or duration of such shared activity is subject to intra- and interindividual variation, and thus not necessarily phase-locked. [CITE]
+
+[Link this to decision making tasks and previous methodological developments, such as Hidden Markov Models]
+
+Spectral analysis consists of deconstructing a time domain signal of a given length into its constituent oscillatory components using Fourier analysis.
+The resulting power spectrum displays a spectral decomposition, with the frequency domain of the oscillations on the x axis, and the amplitude on the y axis.
+Thus, the signal is expressed as a function of frequency rather than time.
+Such a transformation from a time-resolved representation of data to a representation in the frequency domain can be used to find shared signals with different temporal signatures [CITE probably every introductory MEG book].
+Importantly, the transformations can be reversed using an inverse Fourier transform [CITE, add math].
+In the context of shared response modelling we can make use of this revertibility by fitting the model on spectral data and then transforming the resulting shared space back into a time resolved space.
+This not only allows the visualization of shared components as a timeseries but also easier interpretation of components in the context of the experimental paradigm.
+
+A basic simulation illustrates the method:
+
+Artificial signals, with parameters to change frequency, amplitude, length of the signal and length of the complete time series, can be generated.
+A basic example with 1000 samples of signal in a timeseries of 10000 samples is shown on the right.
+Its main frequency component is 10Hz, with an amplitude of 1 and zero samples of phase shift.
+To simulate a signal with phase shifts, we generate multiple artificial signals with a different offset.
+Two examples are shown below:
+
+\begin{figure}
+	\begin{subfigure}{.3\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_0.png}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_1.png}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_2.png}
+	\end{subfigure}
+	\label{fig:sim1}
+	\caption{some caption}
+\end{figure}
+
+We will use this signal as a ground truth signal to recover via SRM despite different phase shifts.
+To simulate that it has been recorded with an MEG device, we add it to a 306-dimensional time series of random noise from 306 artificial sensors.
+The signal is added to each sensors noise series with a sensor specific weight between 0 and 1, and a percentage specifying which percentage of sensors will contain some amount of signal.
+Using this data as the basis for shared response modelling, we can fit a probabilistic shared response model with k=10 features in hopes to identify the signal as a shared component.
+When this is done on time resolved data, the resulting shared space consists of components that differentially picked up signals from one or more participants, but represent it in a time series of repeated or overlapping signals that make an interpretation of individual components difficult (left).
+The sensor weights that the model estimates for each component also do not show a clear association with the true weights used in the generation of the artificial data (right).
+
+\begin{figure}
+	\begin{subfigure}{.49\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_3.png}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_4.png}
+	\end{subfigure}
+	\label{fig:sim1}
+	\caption{some caption}
+\end{figure}
+
+However, transforming the signal into spectral space removes timing information.
+While the components in spectral space are not easy to interpret or differentiate, the scatterplot reveal that certain components' weights show a clear association to the ground truth.
+
+
+\begin{figure}
+	\begin{subfigure}{.49\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_5.png}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_6.png}
+	\end{subfigure}
+	\label{fig:sim1}
+	\caption{some caption}
+\end{figure}
+
+This becomes appearant when the shared space is transformed back into a time-resolved representation via the inverse Fourier transform
+
+\begin{figure}
+	\begin{subfigure}{.3\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_7.png}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_8.png}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+		\includegraphics[width=\textwidth]{memento/simulation/sim_9.png}
+	\end{subfigure}
+	\label{fig:sim1}
+	\caption{some caption}
+\end{figure}
 
 \pagebreak
 
