@@ -261,6 +261,8 @@ The sensor weights that the model estimates for each component also do not show 
 	\caption{some caption}
 \end{figure}
 
+In other words, with phase shifts between individual simulations' signals, different components capture different participants' signals, but no general signal from the time-resolved and phase-shifted data. The relationship between model weights and ground truth weights appears mostly random.
+
 However, transforming the signal into spectral space removes timing information.
 While the components in spectral space are not easy to interpret or differentiate, the scatterplot reveal that certain components' weights show a clear association to the ground truth.
 
@@ -276,7 +278,7 @@ While the components in spectral space are not easy to interpret or differentiat
 	\caption{some caption}
 \end{figure}
 
-This becomes appearant when the shared space is transformed back into a time-resolved representation via the inverse Fourier transform
+This becomes appearant when the raw data is transformed into the shared space by using the subject-specific weight matrices of the SRM model, and this subject-specific data is then transformed back from a spectral representation into a time-resolved representation via the inverse Fourier transform. One or few components are consistently representating the original signal well across subjects, laying the basis for both identifying shared signal in phase-shifted data and interpreting the shared components resulting from it.
 
 \begin{figure}
 	\begin{subfigure}{.3\textwidth}
