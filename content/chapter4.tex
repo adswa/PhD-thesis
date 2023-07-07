@@ -198,7 +198,7 @@ All preprocessing steps and the subsequent analysis were implemented using mne p
 \pagebreak
 
 
-\section{Simulation study}
+\section{Shared response modeling in spectral space}
 
 MEG signal consists of oscillations with an amplitude, a frequency, and a phase.
 Frequency, usually measured in hertz (Hz), is the number of times a specified event occurs within a specified time interval, while amplitude is the height, force or power of the wave, and power is the squared amplitude.
@@ -206,91 +206,116 @@ Phase involves the relationship between two or more signals that share the same 
 If the peaks of two signals with the same frequency are in exact alignment at the same time, they are said to be in phase.
 Conversely, if the peaks of two signals with the same frequency are not in exact alignment at the same time, they are said to be out of phase.
 While shared response modeling, just like similar methods of hyper alignment [CITE], relies on the assumption that different participants display similar cognitive processes in response to the same tasks or stimuli [CITE], the exact timing or duration of such shared activity is subject to intra- and interindividual variation, and thus not necessarily phase-locked. [CITE]
-
 [Link this to decision making tasks and previous methodological developments, such as Hidden Markov Models]
 
 Spectral analysis consists of deconstructing a time domain signal of a given length into its constituent oscillatory components using Fourier analysis.
 The resulting power spectrum displays a spectral decomposition, with the frequency domain of the oscillations on the x axis, and the amplitude on the y axis.
 Thus, the signal is expressed as a function of frequency rather than time.
 Such a transformation from a time-resolved representation of data to a representation in the frequency domain can be used to find shared signals with different temporal signatures [CITE probably every introductory MEG book].
-Importantly, the transformations can be reversed using an inverse Fourier transform [CITE, add math].
-In the context of shared response modeling we can make use of this reversibility by fitting the model on spectral data and then transforming the resulting shared space back into a time resolved space.
-This not only allows the visualization of shared components as a time series but also easier interpretation of components in the context of the experimental paradigm.
+Importantly, the model bases of an \gls{SRM} assign weights to sensors regardless of whether they contribute to a shared signal in time-resolved or spectral space.
+Therefore, we can fit a shared response model on spectral data to find shared frequency components, but then use the model basis to transform time-resolved data (see Figure \ref{fig:spectral-srm}).
+This not only allows the visualization of shared components as a time series, but also easier interpretation of components in the context of the experimental paradigm.
 
-A basic simulation illustrates the method:
 
-Artificial signals, with parameters to change frequency, amplitude, length of the signal and length of the complete time series, can be generated.
-\cref{fig:sim_artificial_signal} shows artificial examples, with 1000 samples of signal embedded in a time series of 10000 samples.
-The main frequency component is 10Hz, with an amplitude of 1 and a varying amount of phase shift.
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.9\textwidth}
+		\includegraphics[width=\textwidth]{memento/spectral_srm/spectral_srm_basics_1.png}
+		\caption{Fitting the shared response model on spectral data}
+		\label{fig:spectral-srm1}
+	\end{subfigure}
+	\begin{subfigure}{0.9\textwidth}
+		\includegraphics[width=\textwidth]{memento/spectral_srm/spectral_srm_basics_2.png}
+		\caption{Transforming time resolved data into the shared space}
+		\label{fig:spectral-srm2}
+	\end{subfigure}
+	\caption[Spectral shared response modeling]{Spectral shared response modeling: A shared response model decomposes spectral neural data (\ref{fig:spectral-srm1}, green) into a shared spectral space (features by frequencies; orange) and subject-specific basis (sensors by features; yellow). Because the subject specific bases transform sensor data independent on whether it is time resolved or spectral, they can be used to transform time resolved data (\ref{fig:spectral-srm2}; green) into time courses of the shared response spaces features.}
+	\label{fig:spectral-srm}
+\end{figure}
+
+\subsection{Simulation study}
+
 
 \begin{figure}
 	\begin{subfigure}{1.0\textwidth}
-		\includegraphics[width=.3\textwidth]{memento/simulation/sim_0.png}
-		\includegraphics[width=.3\textwidth]{memento/simulation/sim_1.png}
-		\includegraphics[width=.3\textwidth]{memento/simulation/sim_2.png}
-		\label{fig:individualsignals}
-		\caption{Three individual signals}
+		\includegraphics[width=.5\textwidth]{memento/simulation/sim_0.png}
+		\includegraphics[width=.46\textwidth]{memento/simulation/sim_10.png}
 	\end{subfigure}
-	\hfill
-	\begin{subfigure}{0.4\textwidth}
-		\includegraphics[width=\textwidth]{memento/simulation/sim_10.png}
-		\label{fig:allsignals}
-		\caption{signal in a subset of 306 sensors with Gaussian noise}
-	\end{subfigure}
+	\caption{An artificial signal with 100000 samples and a 1000 sample spanning 10Hz main frequency component, pure (left) or partially embedded into 306 sensors with Gaussian noise (right). Roughly 20 percent of sensors contain the main signal in varying amounts, mirroring how brain signals are only present in certain sensors, and only in different strengths.}
 	\label{fig:sim_artificial_signal}
-	\caption{Artificial signals with the same main frequency component, but different temporal offsets individually and combined.}
 \end{figure}
 
-We will use this signal as a ground truth signal to recover via SRM despite different phase shifts.
-To simulate that it has been recorded with an MEG device, we add it to a 306-dimensional time series of random noise from 306 artificial sensors.
-The signal is added to each sensors noise series with a sensor specific weight between 0 and 1, and a percentage specifying which percentage of sensors will contain some amount of signal.
-Using this data as the basis for shared response modelling, we can fit a probabilistic shared response model with k=10 features in hopes to identify the signal as a shared component.
-When this is done on time resolved data, the resulting shared space consists of components that differentially picked up signals from one or more participants, but represent it in a time series of repeated or overlapping signals that make an interpretation of individual components difficult (left).
-The sensor weights that the model estimates for each component also do not show a clear association with the true weights used in the generation of the artificial data (right).
+The following basic simulation illustrates the method:
+In order to simulate \gls{meg} data from several subjects with a common frequency component that occurs at different points in time, we generate one ``ground truth'' signal with the same frequency and wave form, and embed it partially into 306 artificial sensors with Gaussian noise (Figure \ref{fig:sim_artificial_signal}).
+To mirror how brain signals are only present in certain sensors and not with the same strength everywhere, only a fixed amount of sensors receives the signal.
+For each sensor with a signal, a random weight between is drawn that determines the strength with which the signal is scaled.
+This is repeated for N artificial subjects, but with a different random phase offset in the signal for each.
+If the \gls{SRM} is successful, the shared response should reflect the ground truth signal despite phase offsets, and the subject-specific model bases should reflect the magnitudes of the weights for each sensor.\\
+Using this data as the basis for shared response modeling, we now fit a probabilistic \gls{SRM} with $k=10$ features to recover the 10Hz signal as a shared component - either on time resolved data (Figure \ref{fig:sim-timeresolved}), or after transforming the data into its frequency spectrum (Figure \ref{fig:sim-spectral}).\\
+When fit on time resolved data with phase shifts, the resulting shared space consists of components that differentially picked up signals from one or more participants, but represent it in a time series of repeated or overlapping signals.
+This makes an interpretation of individual components difficult (Figure \ref{fig:sim-timeresolved-shared}).
+The sensor weights that the model estimates for each component also do not show a clear association with the true weights used in the generation of the artificial data (Figure \ref{fig:sim-timeresolved-weights}).
+In other words, with phase shifts between individual simulations' signals, different components of the shared space capture several participants' signals, but no \textit{general} ground truth signal.
 
 \begin{figure}
 	\begin{subfigure}{.49\textwidth}
 		\includegraphics[width=\textwidth]{memento/simulation/sim_3.png}
+		\caption{Shared space from time-resolved data}
+		\label{fig:sim-timeresolved-shared}
 	\end{subfigure}
 	\begin{subfigure}{0.49\textwidth}
 		\includegraphics[width=\textwidth]{memento/simulation/sim_4.png}
+		\caption{Recovered versus true weights}
+		\label{fig:sim-timeresolved-weights}
 	\end{subfigure}
-	\label{fig:sim1}
-	\caption{some caption}
+	\caption{Outcome of fitting an \gls{SRM} on time resolved data with phase shifts: The components in shared space fail to capture a single ground truth, but show several subject's signals as consecutive or overlapping activity. The relationship between model weights and ground truth weights appears mostly random.}
+	\label{fig:sim-timeresolved}
 \end{figure}
 
-In other words, with phase shifts between individual simulations' signals, different components capture different participants' signals, but no general signal from the time-resolved and phase-shifted data. The relationship between model weights and ground truth weights appears mostly random.
 
-However, transforming the signal into spectral space removes timing information.
-While the components in spectral space are not easy to interpret or differentiate, the scatterplot reveal that certain components' weights show a clear association to the ground truth.
+However, transforming the signal into its frequency components, the spectral space, removes timing information, and with it, the phase offsets.
+While the components in spectral space are not easy to interpret or differentiate (see Figure \ref{fig:sim-spectral-shared}), the scatterplot reveals that certain components' weights show a clear association to the weights used for model generation \ref{fig:sim-spectral-weights}.\\
+This becomes apparent when shared components are visualized as time series by using the subject-specific weight matrices of the \gls{SRM} and individual subject's time-resolved data.
+One or few components are consistently representing the original signal well across subjects, laying the basis for both identifying shared signal in phase-shifted data and interpreting the shared components resulting from it.
 
 
 \begin{figure}
-	\begin{subfigure}{.49\textwidth}
+	\begin{subfigure}{.44\textwidth}
 		\includegraphics[width=\textwidth]{memento/simulation/sim_5.png}
+			\caption{Shared space from spectral data}
+		\label{fig:sim-spectral-shared}
 	\end{subfigure}
 	\begin{subfigure}{0.49\textwidth}
 		\includegraphics[width=\textwidth]{memento/simulation/sim_6.png}
+			\caption{Recovered versus true weights}
+		\label{fig:sim-spectral-weights}
 	\end{subfigure}
-	\label{fig:sim1}
-	\caption{some caption}
+	\hfill
+	\begin{subfigure}{1.\textwidth}
+		\includegraphics[width=.45\textwidth]{memento/simulation/sim_7.png}
+		\includegraphics[width=.45\textwidth]{memento/simulation/sim_8.png}
+		\caption{Shared components from \ref{fig:sim-spectral-shared}, visualized by transforming time resolved data of two different subjects}
+		\label{fig:sim-spectral-transformed}
+	\end{subfigure}
+	\caption{Outcome of fitting an \gls{SRM} on spectrally transformed data: The components in shared space are spectral and difficult to interpret. But the relationship between model weights and ground truth weights clearly captures an association for some of the $k=10$ components. When time-resolved data from two different subjects is transformed using the subject specific bases from the \gls{SRM}, the individual subject's offset re-emerges.}
+    \label{fig:sim-spectral}
 \end{figure}
 
-This becomes appearant when the raw data is transformed into the shared space by using the subject-specific weight matrices of the SRM model, and this subject-specific data is then transformed back from a spectral representation into a time-resolved representation via the inverse Fourier transform. One or few components are consistently representating the original signal well across subjects, laying the basis for both identifying shared signal in phase-shifted data and interpreting the shared components resulting from it.
 
-\begin{figure}
-	\begin{subfigure}{.3\textwidth}
-		\includegraphics[width=\textwidth]{memento/simulation/sim_7.png}
-	\end{subfigure}
-	\begin{subfigure}{0.3\textwidth}
-		\includegraphics[width=\textwidth]{memento/simulation/sim_8.png}
-	\end{subfigure}
-	\begin{subfigure}{.3\textwidth}
-		\includegraphics[width=\textwidth]{memento/simulation/sim_9.png}
-	\end{subfigure}
-	\label{fig:sim1}
-	\caption{some caption}
-\end{figure}
+\subsection{Shared response modeling in spectral space on real data}
+
+After the simulation study demonstrated principal feasibility of the method, I subsequently applied it to the neural recordings from the memento study.
+The underlying aim was to investigate how decision-relevant properties are represented in working memory throughout the delay phase.
+This was done with several exploratory analysis that followed the same general principle:
+In a first step, data was split into a training and a test set.
+For this, epochs were shuffled and randomly drawn to not introduce experiment fatigue as a confound.
+A probabilistic shared response model was then fit on the spectrally transformed training data, yielding a shared spectral space (features by frequencies) and subject-specific basis (sensors by features) (\ref{fig:spectral-srm1}).
+Importantly, the model had never seen the test data.
+Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components the shared response model found.
+
+
+
+
 
 \pagebreak
 
