@@ -80,7 +80,7 @@ In total, the experiment lasted approximately 60 minutes.
 \end{subfigure}
 	\caption[Memento: Tutorial and trial overview]{Schematic overview of the tutorial (\ref{fig:memento_tutorial}) and a single trial in the experiment (\ref{fig:memento_trial}).
 	The tutorial was split in an active and a passive part.
-	In the passive part, participants were presented with a stimulus and how its properties translated to reward magnitude and probability. All possible magnitude and probability combinations were presented twice, and participants controlled the pace. The active part then tested participants' knowledge by presenting with a stimulus without the annotation. Based on a text prompt, participants had to report its associated magnitude or probability via button press. They received feedback with a green colored stimulus for a correct response, or, for an incorrect response, a red colored stimulus together with a report of their response versus the true response.
+	In the passive part, participants were presented with a stimulus and how its properties translated to reward magnitude and probability. All possible magnitude and probability combinations were presented twice, and participants controlled the pace. The active part then tested participants' knowledge by presenting a stimulus without the annotation. Based on a text prompt, participants had to report its associated magnitude or probability via button press. They received feedback with a green colored stimulus for a correct response, or, for an incorrect response, a red colored stimulus together with a report of their response versus the true response.
 	}
 \label{fig:memento}
 \end{figure}
@@ -90,7 +90,7 @@ In total, the experiment lasted approximately 60 minutes.
 
 Following a metal test, MEG data were acquired on an Elekta Neuromag TRIUX System with internal helium recycler and 306 sensors (204 planar gradiometers and 102 magnetometers) in a magnetically shielded room.
 Participants were instructed to take a comfortable seating position and sit as still as possible.
-The experiment was presented on a screen in a distance of one meter from the sitting participants via a projector with a refresh rate of 75 Hz located outside the MEG recording chamber.
+The experiment was presented on a screen in a distance of one meter from the sitting participants via a projector with a refresh rate of 60 Hz located outside the MEG recording chamber.
 Additional sensors captured confounding biological signals:
 Lateral and vertical eye movements and blinks were captured using electrooculography surface electrodes on the tori supra- and infraorbitalis and next to the external canthi.
 Heartbeat artifacts were recorded with an electrocardiogram.
@@ -156,8 +156,9 @@ For most subjects, components corresponding to ECG activity were identified usin
 For one subject, however, the ECG channel was flat, and components were manually selected.
 Afterwards, the ICA solution was applied to the continuous recording and detected ECG and EOG components were zeroed out.
 
-As a final step, the continous recording was chunked into Epochs, and autoreject was used to detect and repair or drop bad epochs.
+As a final step, the continous recording was chunked into Epochs of varying length depending on analysis, and \texttt{autoreject} was used to detect and repair or drop bad epochs.
 Figure \ref{fig:preproc} summarizes the preprocessing steps.
+Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a single subject.
 
 
 
