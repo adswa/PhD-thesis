@@ -241,6 +241,61 @@ All preprocessing steps and the subsequent analysis were implemented using mne p
 
 \pagebreak
 
+\section{Shared response modeling}
+
+% This needs a general introduction into shared response modeling
+The underlying assumption of functional alignment methods is that brain activity can be modeled in an n-dimensional space, where n is the number of measurements (e.g., voxels in \gls{fMRI}, sensors in \gls{meg}, or electrodes in \gls{eeg} acquisitions).
+When subjects experience the same events, their brain activity may differ anatomically, but should correspond to similar cognitive processes.
+To functionally align the brain activity of multiple participants, we align the vector representations of their brain signals.
+Afterwards, we need to assign meaning to the axes of the shared space.
+
+During \gls{tSSS}, the neural signal is decomposed from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
+This confirms that the signal of interest can be expressed in fewer than 306 dimensions.
+We therefore sought to find out whether we can find meaningful low-dimensional structure in the high-dimensional dataset via \gls{SRM} \citep{NIPS2015_b3967a0e}.
+
+In \gls{SRM}, the objective is to model each subject $i$'s response to temporally synchronized stimuli as a subject-specific base $W_i$ and a shared component over all subject's responses $S$.
+In an \gls{meg} acquisition, each subject $i$ has a data matrix of dimensions sensors $\times$ time-points.
+
+
+\begin{equation}
+	\begin{aligned}
+    X_i \in \mathbb{R}^{s \times d}
+	\end{aligned}
+	\label{eq:sss}
+\end{equation}
+
+\gls{SRM} estimates a $k$-dimensional shared space $S$, and orthogonal-column basis vectors of the shared response in subject-space  $\{W_i\}^m_{i=1}$  $\{W_i\}^m_{i=1}$
+
+
+\begin{equation}
+	\begin{aligned}
+	    min_{w_i, s}\sum_i{\|X_i - W_iS \|}^2_F \\
+	s.t. W^T_iW_i = I_k
+	\end{aligned}
+	\label{eq:sss}
+\end{equation}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{memento/srm/srm_basics_1.png}
+	\caption[SRM overview]{In \gls{SRM} on \gls{meg} data, sensor-by-time matrices are decomposed into a orthogonal subject specific basis matrix (sensor-by-features), a common shared feature matrix (features-by-time), and a subject-specific error}
+	\label{fig:srm-basics}
+\end{figure}
+
+Given subjects experience the same sequence on stimulus events, \gls{SRM} identifies common activity patterns across subjects, and provides a method to transform the original activity into a shared latent component space.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{memento/srm/srm_basics_3.png}
+	\caption[SRM overview]{SRM overview: Sensor-by-time matrices are decomposed into a orthogonal subject specific basis matrix (sensor-by-features), a common shared feature matrix (features-by-time), and a subject-specific error}
+	\label{fig:srm-basics-multi}
+\end{figure}
+
+% to do: probabilistic shared response modeling
+
+
 
 \section{Shared response modeling in spectral space}
 
