@@ -229,13 +229,6 @@ Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a si
 	\label{fig:cleanepoch}
 \end{figure}
 
-Preprocessing consisted of the following sequential steps and is illustrated in Figure XX:
-Temporal signal space separation (tsss) with movement corrections (TODO: retrieve parameters from the log files),
-ZAPline filtering (CITE) to remove a ~60Hz spikes in the data, presumably from a presentation screen
-Filtering (TODO: retrieve parameters from the log files)
-Removal of heartbeat and eye blink artifacts with Independent component analysis (fastica)
-Epoching into XXs without baseline correction. Bad epochs were interpolated or rejected using autoreject (CITE)
-
 All preprocessing steps and the subsequent analysis were implemented using mne python (CITE) or custom Python functions. All preprocessing and analysis scripts are openly available on GitHub and as the python package \texttt{pymento\_meg} (CITE).
 
 
