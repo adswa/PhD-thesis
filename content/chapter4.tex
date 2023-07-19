@@ -300,6 +300,9 @@ Where the original data in sensor space is a $306$ sensors $\times$ number of sa
 	\label{fig:srm-basics-multi}
 \end{figure}
 
+\gls{SRM} has only few assumptions: %list assumptions here
+One important assumption is, though, that participants experience the same sequence of stimulus events.
+To meet this assumption, epochs from the experiment were brought into a standardized order (CITE CHEN PRESENTATION)
 % to do: probabilistic shared response modeling
 
 \subsubsection{Sanity checks}
@@ -307,9 +310,16 @@ Where the original data in sensor space is a $306$ sensors $\times$ number of sa
 While \gls{SRM} is successfully and widely used with fMRI data (cite Elizabeth), in particular for naturalistic acquisitions with free-viewing tasks and movie stimuli (cite Sam), the method is only rarely used in \gls{meg}.
 Thus the methods' utilities was first tested with a number of analyses intended to serve as sanity checks.
 
-The first sanity check was whether basic stimulus properties are retained in the lower-dimensional data.
-For this, we used the different probability and magnitude values encoded as visual properties in the stimulus.
-In total, we included nine different unique combinations of probability and magnitude
+
+
+
+I first sanity checked whether basic stimulus properties are retained in the lower-dimensional shared response space of the model.
+For this, I leveraged the nine different probability and magnitude combinations that were used for the left stimulus option (letters A-I in Figure \ref{fig:memento_stim}).
+An underlying assumption for this is that neural signals differ across stimulus types.
+
+Regardless of whether MEG data in sensor space
+
+
 % trial ordering
 
 We normalized epoch data by z-scoring each epoch within sensors.
