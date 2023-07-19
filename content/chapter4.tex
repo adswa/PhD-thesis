@@ -9,19 +9,32 @@
 	\dictum[Albert Einstein]{If we knew what it was we were doing, it would not be called research, would it?}
 }
 
-\chapter{Reproducible state space modeling}
+\chapter{Reproducibility in exploratory data analyses}
 \label{k5}
 
-Look mom, some text!
+The previous chapters focused on the technical challenges of reproducibility management, especially when applications need to scale to large samples.
+However, a different common difficulty is to ensure reproducibility and maintain good research data management routines when the to be undertaken analyses are not entirely mapped out from the start, and a research project is exploratory in nature.
+Even if an analysis project does not yield a published article as its final outcome, intermediate research outcomes are a valuable stepping stone for further research or researchers.
+This upcoming chapter describes a data analysis project studying working memory in sequential decision making.
+
+\section{Theoretical background}
+
+%Rationale from Luka
+In natural settings, value-based decisions under risk often have to be made without visual presence of competing alternatives.
+Do I commit to buying the red bicycle in the store I'm currently in, or should I return to the previous bike shop and pick the blue one?
+Do I want to rent the flat I viewed last Sunday, or the apartment I saw on Tuesday?
+In such situations, the subjective value of alternative options has to be encoded, held in working memory through a maintenance (or ``delay'') period, and retrieved in order to form a categorical choice.
+
+Numerous studies investigate the neural activity that persist throughout the delay period, and how it might represent relevant properties to subjective value.
+\citet{roux2014working} proposed that gamma band oscillations of groups of neurons are generically involved in the maintenance of working memory.
+
+However, \citet{pavlov2022oscillatory} highlighted the lack of agreement in the field in a systematic review recently.
+However, the temporal dynamics of the decision process as well as the maintenance of different valued options in working memory are less thoroughly investigated questions.
 
 
 \section{The MEMENTO study}
 
-%Rationale from Luka
-In natural settings, value-based decisions under risk often have to be made without visual presence of competing alternatives.
-Therefore, the subjective value of alternative options has to be held in working memory in order to form a categorical choice.
-Numerous studies report neuronal signals representing value.
-However, the temporal dynamics of the decision process as well as the maintenance of different valued options in working memory are less thoroughly investigated questions.
+
 Therefore, the memento study investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
 It was acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg in 2016 by \citet{kaiser}, and has not been previously published.
 The following study overview adheres to the COBIDAS MEEG reporting guidelines for reproducible MEEG research \citep{pernet2020issues}.
@@ -276,7 +289,8 @@ In an \gls{meg} acquisition, each subject $i$ has a data matrix of dimensions se
 	\label{fig:srm-basics}
 \end{figure}
 
-Given subjects experience the same sequence on stimulus events, \gls{SRM} identifies common activity patterns across subjects, and provides a method to transform the original activity into a shared latent component space.
+Given participants experience the same sequence of stimulus events, \gls{SRM} identifies common activity patterns across subjects, and provides a method to transform the original activity into a lower dimensional shared latent component space.
+Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix.
 
 
 \begin{figure}
@@ -470,3 +484,8 @@ An \texttt{estimator} is an object that manages the estimation and decoding of a
 \section{Results}
 \pagebreak
 
+\section{Discussion}
+For the past decades, scientific publishing has favored significant over nonsignificant findings \citep{dwan2008systematic}, a condition termed \textit{publication bias} or \textit{file drawer problem} \citep{rosenthal1979file}.
+
+Low statistical power reduces not only the likelihood to find a true effect, but also the likelihood that statistically significant results reflect a true effect \citep{button2013power}.
+And as increased noise in small samples inflates the effect size of significant results \citep{loken2017measurement}, published low-powered studies likely overestimate the
