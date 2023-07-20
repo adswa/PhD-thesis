@@ -23,13 +23,59 @@ This upcoming chapter describes a data analysis project studying working memory 
 In natural settings, value-based decisions under risk often have to be made without visual presence of competing alternatives.
 Do I commit to buying the red bicycle in the store I'm currently in, or should I return to the previous bike shop and pick the blue one?
 Do I want to rent the flat I viewed last Sunday, or the apartment I saw on Tuesday?
-In such situations, the subjective value of alternative options has to be encoded, held in working memory through a maintenance (or ``delay'') period, and retrieved in order to form a categorical choice.
-
+In such situations, the subjective value of alternative options has to be encoded, held in working memory through a maintenance (or ``delay'') period, and retrieved in order to form a categorical choice.\\
 Numerous studies investigate the neural activity that persist throughout the delay period, and how it might represent relevant properties to subjective value.
-\citet{roux2014working} proposed that gamma band oscillations of groups of neurons are generically involved in the maintenance of working memory.
+The temporal dynamics of the decision process as well as the maintenance of different valued options in working memory are less thoroughly investigated questions, however.
+Early neuroimaging studies suggested persistent neural activity (``spiking'') in specific brain areas during delay periods as a mechanism of working memory maintenance: Many reports of sustained above baseline activity that starts during a sample presentation and lasts through the memory delay tasks in prefrontal regions exist for human \citep{courtney1997transient} and non-human primates \citep{funahashi1989mnemonic, miller1996neural}.
+Others have pointed out, however, that persistent spiking in prefrontal areas could reflect a variety of other different processes, including decision making \citep{curtis2010beyond}, and that the high metabolic costs of action potentials is too energetically expensive to hold information in a spiking form \citep{attwell2001energy}.
+With the emergence of multivariate methods such as decoding analyses, representations of task-relevant stimulus information were found in activity temporarily and spatially distributed across neurons, termed dynamic population coding \citep{sreenivasan2014revisiting}.
+One proposed mechanism of coordination for the temporal and spatial population codes are brain oscillations, rhythmic pattens of neural activity.
+\citet{roux2014working} for example concluded that gamma and alpha band oscillations of groups of neurons are generically involved in the maintenance of sensory-spatial working memory items.
+Other popular theories included short-term neural plasticity changes as the underlying mechanism of working memory maintenance \citep{mongillo2008synaptic}.
+This theory states that items are held in working memory via increased residual calcium levels at the presynaptic terminals of neurons, which causes a short-term synaptic facilitation.
+With this facilitation, the memory can be transiently held for about 1 s without enhanced spiking activity.
 
-However, \citet{pavlov2022oscillatory} highlighted the lack of agreement in the field in a systematic review recently.
-However, the temporal dynamics of the decision process as well as the maintenance of different valued options in working memory are less thoroughly investigated questions.
+\citet{stokes2013dynamic, stokes2015activity} propose the dynamic coding framework, in which working memory is mediated by rapid transitions in ``activity silent'' neural states (short-term synaptic plasticity, STSP).
+Those temporal neural states mediate flexible context-dependent processing but do not emerge as activity and rather as ``hidden states'' (response sensitivities of neural networks, established via short-term and long-term synaptic plasticity and temporal functional connectivity changes) that influence the response to stimuli.
+Building up on the dynamic coding framework, \citet{wolff2017dynamic} use a perturbation approach to measure mnemonic hidden states in EEG by ''pinging the brain`` during a visual working memory task: Via a visual impulse ping unrelated to the task, a classifier was able recover hidden state representations for unattended content.
+
+% https://sci-hub.se/https://doi.org/10.1016/j.tics.2013.12.001
+% That is, information encoded in a given state – or set of activation levels acrossthe population – at time t may be encoded in an entirely different state at time t + 1. Thus, a representation can be sustained via a dynamic trajectory through state space (where the space is defined by the activity of the neurons in the population) [72] (Figure 2B). Surprisingly, this is not antithetical to the notion of a stable representation; theoretical work suggests that in the case where redundant coding of information is present, time-varying population activation can encode a stable representation [73].
+% Although the precise neuronal mechanisms underlying dynamic population coding remain undefined, recent computational work suggests that information can be main- tained through rapid short-term changes in synaptic plasticity [75,76]. Thus, activity-dependent changes in neural networks trace dynamic trajectories through state space that reliably and efficiently encode task-related variables [72,76].
+
+Past work has found that working memory is high-dimensional, encoding task-relevant variables within a single population of neurons.
+% in https://sci-hub.se/https://doi.org/10.1016/j.tics.2013.12.001
+%An increasing number of studies find that, rather than utilizing distinct populations to encode each task variable, activity in the lPFC encodes multiple task variables within a single population of neuron Machens and colleagues demonstrated that individual lPFC neurons responded to combinations of two task variables (maintained stimulus identity and elapsed time), but that information about each task variable could be independently extracted from the population cod
+% This finding suggests that lPFC representations can be high dimensional, because they simultaneously encode multiple pieces of information that can be interpreted by neural populations in hierarchically lower regions according to their functional relevance.
+% Recent work by Rigotti and colleagues further characterized high-dimensional representations of multiple task variables in the lPFC They demonstrated that activity in a population of lPFC neurons simultaneously encoded information about all task variables (task, object 1, and object 2) during the delay period of a complex object-sequence WM task
+
+Low statistical power reduces not only the likelihood to find a true effect, but also the likelihood that statistically significant results reflect a true effect \citep{button2013power}.
+And as increased noise in small samples inflates the effect size of significant results \citep{loken2017measurement}, published low-powered studies likely overestimate the effects that they report.
+In a systematic review by \citet{pavlov2022oscillatory}, the average number of participants in experimental studies of verbal or visual working memory was $N_{verbal}=19.3$ and $N_{visual}=23.3$, respectively.
+
+However, \citet{pavlov2022oscillatory} highlighted the lack of agreement in the field in a systematic review recently, and pointed to various confounding factors in past studies. They outlined, for example, that gamma band oscillations found in \gls{eeg} studies are more likely to be muscle components.
+This uncertainty makes it difficult to hypothesize.
+
+\section{Magnetoencephalograpy (MEG)}
+
+
+\gls{meg} is a neuroimaging method to record neural activity from magnetic flux, the total magnetic field passing though a given area, measured on the surface of the head.
+The electric currents that give rise to these magnetic fields stem from inhibitory or excitatory postsynaptic potentials in parallel pyramidal cells in the cortex, mostly those cells in the walls of the cortical sulci.
+As the potential differences between soma and axons of neurons form magnetic dipoles, and these cells are perpendicular to the cortical sheet of the gray matter and thus similarly oriented, measurable magnetic fields emerge at the sculp when aggregated across a neuronal population.
+The resulting cortical magnetic fields are on the order of $10$-$10^{3}$ femtotesla (fT).
+Compared to the environmental noise, this is a very weak magnetic field, and while active and passive shielding around the MEG measuring room are used for noise cancellation, flux transformers (input coils), placed as closely to the head as possible, amplify the magnetic field.
+Liquid helium in the dewar around the sensors cools the MEG down to -269°C and makes the flux transformer superconductive.
+In this state, there can’t be any net current in the flux transformer, and produce a more dense and stronger magnetic field that can be measured with Superconducting Quantum Interference Devices (SQUIDs) which are sensitive detectors of magnetic flux.
+Three main types of flux transformers exist: magnetometer, axial gradiometer, and planar gradiometer, each with a different sensitivity profile.
+An MEG device can contain different types of flux transformers and the total number of flux transformers is the amount of channels of the MEG system.
+The MEG analysis consists of interpreting the resulting topographies given the employed flux transformer.
+Typically, MEG devices contain around 150-300 sensors arranged in a helmet-shaped array that cover the whole human scalp at a frequency of 1000-5000Hz.
+This results in a typical temporal sampling rate of about ~1000Hz, and a typical spatial sampling rate of about ~300 sensors.
+Thus, the temporal resolution of \gls{meg} is better than its spatial resolution.
+This lower spatial resolution is aggravated further by the fact that the measured signal at the sculp is aggregated from multiple sources within the brain.
+In other words, fields produced by several currents are sums of fields generated by each single current, a problem known as \textit{signal superposition}.
+
+
 
 
 \section{The MEMENTO study}
@@ -497,5 +543,3 @@ An \texttt{estimator} is an object that manages the estimation and decoding of a
 \section{Discussion}
 For the past decades, scientific publishing has favored significant over nonsignificant findings \citep{dwan2008systematic}, a condition termed \textit{publication bias} or \textit{file drawer problem} \citep{rosenthal1979file}.
 
-Low statistical power reduces not only the likelihood to find a true effect, but also the likelihood that statistically significant results reflect a true effect \citep{button2013power}.
-And as increased noise in small samples inflates the effect size of significant results \citep{loken2017measurement}, published low-powered studies likely overestimate the
