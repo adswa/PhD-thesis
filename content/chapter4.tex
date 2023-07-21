@@ -178,7 +178,7 @@ The neural data was recorded at a sampling rate of 1000Hz and active internal sh
 \subsection{Preprocessing}
 
 Prior to preprocessing, raw data were restructured to \gls{BIDS} format (v1.4.0) using mne-bids \citep{Appelhoff2019}.
-Simultaneously, behavioral log files were transformed from proprietary .mat into the TSV format.
+Simultaneously, behavioral log files were transformed from proprietary .mat into the TSV format (see Figure \ref{fig:BIDS}).
 
 As the first step of preprocessing, the spatiotemporal extension of the \gls{SSS} method \citep{taulu2005presentation}, \textit{\gls{tSSS}} \citep{taulu2006spatiotemporal}, was applied, as is common for recordings on Neuromag MEG systems with active internal shielding.
 \gls{SSS} and \gls{tSSS} remove strong interference from external noise sources and sources within the body itself from the MEG signal.
