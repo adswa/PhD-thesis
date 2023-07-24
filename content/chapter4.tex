@@ -19,35 +19,39 @@ This upcoming chapter describes a data analysis project studying working memory 
 
 \section{Theoretical background}
 
-%Rationale from Luka
+
 In natural settings, value-based decisions under risk often have to be made without visual presence of competing alternatives.
 Do I commit to buying the red bicycle in the store I'm currently in, or should I return to the previous bike shop and pick the blue one?
 Do I want to rent the flat I viewed last Sunday, or the apartment I saw on Tuesday?
 In such situations, the subjective value of alternative options has to be encoded, held in working memory through a maintenance (or ``delay'') period, and retrieved in order to form a categorical choice.\\
 To understand the neural processes underlying behavior in these situations, numerous studies investigate the neural activity that persist throughout the delay period, and how it might represent relevant properties to subjective value.
 The temporal dynamics of the decision process as well as the maintenance of different valued options in working memory were a focus of research in the last decades.
-Early neuroimaging and electrophysiology studies suggested persistent neural activity (``spiking'') in specific brain areas during delay periods as a mechanism of working memory maintenance:
-Sustained, above-baseline activity that starts during a sample presentation and lasts through the memory delay in prefrontal regions were found in human \citep[e.g.,][]{courtney1997transient} and non-human primates \citep[e.g.,][]{funahashi1989mnemonic, miller1996neural}.
+Early neuroimaging and electrophysiology studies suggested persistent neural activity (``spiking'') in specific brain areas during delay periods as a mechanism of working memory maintenance \citep{goldman1995cellular}.
+Sustained, above-baseline activity that starts during a sample presentation, lasts through the memory delay, and returns to base line activity after a response were found in prefrontal regions in human \citep[e.g.,][]{courtney1997transient} and non-human primates \citep[e.g.,][]{fuster1971neuron, funahashi1989mnemonic, miller1996neural}.
 And single-cell recordings from the prefrontal cortex in monkeys unveiled that individual neurons display activity that is selective to specific task-relevant aspects, such as task rules, spatial location, or stimulus features \citep{white1999rule, wallis2001single}, suggesting the existence of neurons that uphold working memory content with a fixed selectivity for certain properties.
-Others have pointed out, however, that persistent spiking in prefrontal areas could reflect a variety of other different processes, including decision making \citep{curtis2010beyond}, that the high metabolic costs of action potentials is too energetically expensive to hold information in a spiking form \citep{attwell2001energy}, and that distractor tasks are able to remove the persistent activity without an impact on later retrieval, questioning its role in working memory maintenance (CITATION NEEDED).
+Others have pointed out, however, that persistent spiking in prefrontal areas could reflect a variety of other different processes, including decision making \citep{curtis2010beyond}, that the high metabolic costs of action potentials is too energetically expensive to hold information in a spiking form \citep{attwell2001energy}, and that distractor tasks are able to remove the persistent activity without an impact on later retrieval, questioning its role in working memory maintenance \citep{larocque2013decoding}.
 The idea of neural selectivity to specific task-aspects was refined in the adaptive coding framework \citep{duncan2001adaptive}:
 Instead of a persistent, fixed selectivity, it postulates that neural responses are temporarily tuned to the particular task, explaining, for example, how a recording of spiking activity in the same group of neurons relates to object information in one task but a location distinction in the next task.
 In this adaptive coding framework, distributed representations that selectively favor information relevant to the current task emerge on the level of neural populations.
 In the same vein, the rise of multivariate methods such as decoding analyses (a methodological introduction is given in chapter TODO) uncovered representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons, a process termed dynamic population coding \citep{sreenivasan2014revisiting}.
+However, studies decoding working memory content found decodable patterns to be non-stationary.
+\citet{meyers2008dynamic} decoded object categories from electrophysiological data, and yielded worse decoding the more temporally distal training and testing times slices were apart.
+\citet{king2014characterizing} formalized this with the temporal generalization method.
+In this method, different classifiers are trained on different times in training data, and tested on all available times in the test data, thus revealing whether the neural code is stable or dynamically evolving.
 %The decoding approach, generally speaking, works by identifying patterns that correspond to the experimental task or stimulus in population signals with machine-learning classifiers.
 One proposed mechanism for the coordination of these temporal and spatial population codes are brain oscillations, rhythmic pattens of neural activity.
 \citet{roux2014working} for example concluded that gamma and alpha band oscillations of groups of neurons are generically involved in the maintenance of sensory-spatial working memory items.
-However, a recent systematic review by \citet{pavlov2022oscillatory} highlighted a prominent lack of agreement across experimental studies reporting observations of brain oscillations in working memory tasks.
-% TODO: this "reporting observations of brain oscillations is yet a bit weird
+However, a recent systematic review by \citet{pavlov2022oscillatory} highlighted a prominent lack of agreement across experimental studies that reported observations of brain oscillations in working memory tasks as results.
 Other popular theories include short-term neural plasticity changes as the underlying mechanism of working memory maintenance \citep{mongillo2008synaptic}.
-This framework proposes working memory maintenance via increased residual calcium levels at the presynaptic terminals of neurons, which causes a short-term synaptic facilitation.
+This framework proposes working memory maintenance via increased residual calcium levels at the presynaptic terminals of neurons, which causes a short-term synaptic facilitation, akin to synaptic weights that link neurons coding for working memory item.
 With this facilitation, the memory can be transiently held for about 1 s without enhanced spiking activity.
 Building up on this theory,  \citet{stokes2013dynamic, stokes2015activity} propose the dynamic coding framework, in which working memory is mediated by rapid transitions in such ``activity silent'' neural states.
 They mediate flexible context-dependent processing but do not emerge as activity and rather as ``hidden states'', appearing as altered response sensitivities of neural networks, established via short-term and long-term synaptic plasticity and temporal functional connectivity changes that influence the response to stimuli.
-Building up on the dynamic coding framework, in turn, \citet{wolff2017dynamic} used a perturbation approach to measure hidden states of working memory in EEG by ''pinging the brain`` during a visual working memory task:
-When a classifier was unable to decode working memory content during the delay period for an unattended item, a visual impulse unrelated to the task (a so called ``ping'') enabled it to recover these hidden state representations for unattended content again.
+Further support for this theory comes from findings that a task-irrelevant read-out or ``ping'' signal is able to reactivate the neural assembly \citep{trubutschek2017theory, wolff2017dynamic}.
 
 
+Hidden Markov models (HMMs) became a common method to model ensemble activity as a sequence of \textit{neural states} \citep{rainer2000neural}.
+These distinct neural states were often hypothezised to reflect steps in mental processing \citep[e.g.,][]{seidemann1996simultaneously}.
 
 A relevant term that arose in the literature is that of mental states and how they map to brain states, presumed distinct modes of activity corresponding to a cognitive process \citep{haynes2015information}.
 One methodological approach to find these states are Hidden markov models (HMMs) which segment neural data into discrete functional states and allow the study of their temporal progression.
