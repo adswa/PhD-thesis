@@ -413,7 +413,9 @@ To meet this assumption, epochs from the experiment were brought into a standard
 
 \subsubsection{Sanity checks}
 
-While \gls{SRM} is successfully and widely used with fMRI data (cite Elizabeth), in particular for naturalistic acquisitions with free-viewing tasks and movie stimuli (cite Sam), the method is only rarely used in \gls{meg}.
+While \gls{SRM} is successfully and widely used with fMRI data (cite Elizabeth), in particular for naturalistic acquisitions with free-viewing tasks and movie stimuli (cite Sam), the method is only rarely used in \gls{meg} or trial-based experimental designs.
+\citet{kalyani2023reduced} used shared response modeling to decode somatosensory finger maps, and changes in their representation with age.
+\citet{xie2021minimal} employed the method to functionally align intracranial EEG recordings.
 Thus the methods' utilities was first tested with a number of analyses intended to serve as sanity checks.
 
 
@@ -550,7 +552,16 @@ Using the subject-specific bases, the time-resolved test data was then transform
 
 
 
+%Optimizing decoding parameters - Sliding windows:
+In the spatiotemporal slider, the data entering the decoders were pooled over multiple time points, so as to exploit not only information that is encoded in spatial activation patterns, but also information that is encoded in their temporal structure, similar to \citep{muhle2021hierarchy}.
+% TODO: illustrations of the sliders
 
+
+% visualizing compontents
+\citet{murray2017stable} projected neural trajectories into a mnemonic subspace spanned by individual components from PCA.
+
+%decoding with dimensionality reduction
+\citet{murray2017stable} decoded stimulus representations from lower-dimensional subspaces.
 
 \pagebreak
 
