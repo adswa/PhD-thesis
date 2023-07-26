@@ -344,12 +344,56 @@ Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a si
 	\label{fig:cleanepoch}
 \end{figure}
 
-All preprocessing steps and the subsequent analysis were implemented using mne python (CITE) or custom Python functions. All preprocessing and analysis scripts are openly available on GitHub and as the python package \texttt{pymento\_meg} (CITE).
+\subsection{Behavioral analysis}
+
+One measure to evaluate performance in the experiment is the gain that participants achieved at the end of the last trial.
+It is the sum of rewards accumulated over all trials, and should be higher the better participants judged stimulus values.
+On average, participants gained 349.5 points in the experiment (min=300.5, max=393; top boxplot in Figure \ref{fig:gains}).
+To assess whether this exceeds chance level performance, I conducted a simulation of 10.000 experiments with random choice behavior (bottom boxplot in Figure \ref{fig:gains}), confirming that all participants performed significantly better than chance at the 95\% confidence level (dotted line in Figure \ref{fig:gains}).
+The average reaction time pooled across participants was 0.93s.
+Contrary to the expectation that no-brainer trials would pose easier decisions, the difference in average reaction times for no-brainer trials compared to standard trials was negligent (0.91s for no-brainer compared to 0.94s for standard trials; Figure \ref{fig:reactiontimes}).
+An inspection of average reaction times per subject revealed a small subset slow participants with average reaction times exceeding 1.3s (Figures \ref{fig:avgreactions}, \ref{fig:avgreactionsnobrain}).
+The stimulus properties relevant for the eventual behavioral choice in each trial were stripe frequency (reward magnitude), stripe orientation (reward probability), and their combination (expected value).
+I assessed their relative influence on choice via a cross-validated logistic regression analysis.
+The Spearman rank correlation between experiment performance (total gain) and model accuracy was $r=0.53$ (p=0.012)
 
 
-\pagebreak
+\begin{figure}
+	\includegraphics[width=1.\textwidth]{memento/behavior/average_gains.png}
+	\caption[Simulated versus actual experiment gains]{Participants gains in the experiment (top boxplot). The bottom boxplots is a simulation of the experiment (N=10000) with random choice behavior. Even the outlier at the bottom end of the actual results exceeds the results of more than 95\% of simulated experiments (dotted line)}
+	\label{fig:gains}
+\end{figure}
 
-\section{Shared response modeling}
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/average_reaction_times.png}
+		\caption{Average reaction times}
+		\label{fig:avgreactions}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.4\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/average_no_brain_reaction_times.png}
+		\caption{Average reaction times in no-brainer trials}
+		\label{fig:avgreactionsnobrain}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.45\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip, width=\textwidth]{memento/behavior/memento_aggregate_reaction_times_nobrainer.png}
+		\caption{Distribution of reaction times}
+		\label{fig:reactiontimes}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.45\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/behavior/average_property_importance.png}
+		\caption{Parameter influence on choice}
+		\label{fig:logregbehavior}
+	\end{subfigure}
+
+		\caption[Behavioral results]{\ref{fig:gains} Points gained in the experiment across subjects. \ref{fig:avgreactions} Average reaction times over trials for all subjects. \ref{fig:reactiontimes} Reaction times across trials and subjects for standard trials (orange) and trials with unambigous. \ref{fig:logregbehavior} Relative influence of stimulus properties on choice (left option)}
+		\label{fig:behav}
+	\end{figure}
+
+
+
+\subsection{Shared response modeling}
 
 % This needs a general introduction into shared response modeling
 The underlying assumption of functional alignment methods is that brain activity can be modeled in an n-dimensional space, where n is the number of measurements (e.g., voxels in \gls{fMRI}, sensors in \gls{meg}, or electrodes in \gls{eeg} acquisitions).
