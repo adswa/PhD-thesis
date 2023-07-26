@@ -93,40 +93,15 @@ project the axes of a task space into subspaces of the native neural space.
 %The decoding approach, generally speaking, works by identifying patterns that correspond to the experimental task or stimulus in population signals with machine-learning classifiers.
 
 
-
-
-A relevant term that arose in the literature is that of mental states and how they map to brain states, presumed distinct modes of activity corresponding to a cognitive process \citep{haynes2015information}.
-One methodological approach to find these states are Hidden markov models (HMMs) which segment neural data into discrete functional states and allow the study of their temporal progression.
-
-
-
-
-% in https://sci-hub.se/https://doi.org/10.1016/j.tics.2013.12.001
-%An increasing number of studies find that, rather than utilizing distinct populations to encode each task variable, activity in the lPFC encodes multiple task variables within a single population of neuron Machens and colleagues demonstrated that individual lPFC neurons responded to combinations of two task variables (maintained stimulus identity and elapsed time), but that information about each task variable could be independently extracted from the population cod
-% This finding suggests that lPFC representations can be high dimensional, because they simultaneously encode multiple pieces of information that can be interpreted by neural populations in hierarchically lower regions according to their functional relevance.
-% Recent work by Rigotti and colleagues further characterized high-dimensional representations of multiple task variables in the lPFC They demonstrated that activity in a population of lPFC neurons simultaneously encoded information about all task variables (task, object 1, and object 2) during the delay period of a complex object-sequence WM task
-
-Hunt et al. (2013) differentiated between frames of reference that spanned neural ``spaces''.
-The authors ask, for example, whether decision making is resolved in the former “Space of alternative goods” ( representations of abstract goods orbitofrontal and ventromedial prefrontal cortex hold) or in the latter “space of alternative actions” ( representations of specific actions in motor and premotor cortex), and whether decision processes occur serially or in parallel. They found value-comparison-related 13-30Hz oscillations in vmPFC (goods space) in one trial type, and premotor and primary motor cortices (action space) in another trial type.
-
-The literature has also debated which regions are involved in working memory and decision making.
-Much focus has been laid on the prefrontal areas due to its involvement in all kinds of executive control, but also occipital and other primary sensory areas were shown to represent working memory items.
-
-Low statistical power reduces not only the likelihood to find a true effect, but also the likelihood that statistically significant results reflect a true effect \citep{button2013power}.
-And as increased noise in small samples inflates the effect size of significant results \citep{loken2017measurement}, published low-powered studies likely overestimate the effects that they report.
-In a systematic review by \citet{pavlov2022oscillatory}, the average number of participants in experimental studies of verbal or visual working memory was $N_{verbal}=19.3$ and $N_{visual}=23.3$, respectively.
-
-However, \citet{pavlov2022oscillatory} highlighted the lack of agreement in the field in a systematic review recently, and pointed to various confounding factors in past studies. They outlined, for example, that gamma band oscillations found in \gls{eeg} studies are more likely to be muscle components.
-This uncertainty makes it difficult to hypothesize.
-
 \section{Magnetoencephalograpy (MEG)}
 
-The plurality of analyses in the upcoming sections warrants a more detailed overview of the basic properties of the underlying data.
+The plurality of analyses in the upcoming sections warrants a more detailed overview of the basic properties of the underlying data, stemming from magnetoencephalography acquisitions.
 \gls{meg} is a neuroimaging method to record neural activity from magnetic flux, the total magnetic field passing though a given area, measured on the surface of the head.
 The electric currents that give rise to these magnetic fields stem from inhibitory or excitatory postsynaptic potentials in parallel pyramidal cells in the cortex, mostly those cells in the walls of the cortical sulci.
 As the potential differences between soma and axons of neurons form magnetic dipoles, and these cells are perpendicular to the cortical sheet of the gray matter and thus similarly oriented, measurable magnetic fields emerge at the sculp when aggregated across a neuronal population.
 The resulting cortical magnetic fields are on the order of $10$-$10^{3}$ femtotesla (fT).
-Compared to the environmental noise, this is a very weak magnetic field, and while active and passive shielding around the MEG measuring room are used for noise cancellation, flux transformers (input coils), placed as closely to the head as possible, amplify the magnetic field.
+Compared to the environmental noise, this is a very weak magnetic field.
+Therefore, active and passive shielding around the MEG measuring room are used for noise cancellation, and flux transformers (input coils), placed as closely to the head as possible, amplify the magnetic field.
 Liquid helium in the dewar around the sensors cools the MEG down to -269°C and makes the flux transformer superconductive.
 In this state, there can’t be any net current in the flux transformer, and produce a more dense and stronger magnetic field that can be measured with Superconducting Quantum Interference Devices (SQUIDs) which are sensitive detectors of magnetic flux.
 Three main types of flux transformers exist: magnetometer, axial gradiometer, and planar gradiometer, each with a different sensitivity profile.
@@ -135,8 +110,8 @@ The MEG analysis consists of interpreting the resulting topographies given the e
 Typically, MEG devices contain around 150-300 sensors arranged in a helmet-shaped array that cover the whole human scalp at a frequency of 1000-5000Hz.
 This results in a typical temporal sampling rate of about ~1000Hz, and a typical spatial sampling rate of about ~300 sensors.
 Thus, the temporal resolution of \gls{meg} is better than its spatial resolution.
-This lower spatial resolution is aggravated further by the fact that the measured signal at the sculp is aggregated from multiple sources within the brain.
-In other words, fields produced by several currents are sums of fields generated by each single current, a problem known as \textit{signal superposition}.
+This lower spatial resolution is aggravated further by the fact that the measured signal at the sculp is a mix of multiple magnetic fields, stemming from different sources within the brain.
+However, the temporal resolution of \gls{meg} makes it highly suitable to study cognitive processes such as working memory (CITATION NEEDED).
 
 
 
