@@ -95,7 +95,7 @@ project the axes of a task space into subspaces of the native neural space.
 
 \section{Magnetoencephalograpy (MEG)}
 
-The plurality of analyses in the upcoming sections warrants a more detailed overview of the basic properties of the underlying data, stemming from magnetoencephalography acquisitions.
+The plurality of analyses in the upcoming sections warrants a more detailed overview of the basic properties, strengths, and weaknesses of the underlying data, stemming from magnetoencephalography acquisitions.
 \gls{meg} is a neuroimaging method to record neural activity from magnetic flux, the total magnetic field passing though a given area, measured on the surface of the head.
 The electric currents that give rise to these magnetic fields stem from inhibitory or excitatory postsynaptic potentials in parallel pyramidal cells in the cortex, mostly those cells in the walls of the cortical sulci.
 As the potential differences between soma and axons of neurons form magnetic dipoles, and these cells are perpendicular to the cortical sheet of the gray matter and thus similarly oriented, measurable magnetic fields emerge at the sculp when aggregated across a neuronal population.
@@ -140,17 +140,18 @@ Each trial required a decision between one of two stimulus options, presented as
 Importantly, stimulus options were presented in succession, with a delay period through which the decision-relevant properties of the first stimulus had to be retained in working memory.
 The number of stripes in the gabor patch encoded the reward magnitude (either 0.5, 1, 2, or 4 points), and the angle of stripes encoded reward probability (either 10\%, 20\%, 40\%, or 80\%): The more stripes, the higher the reward, and the larger the angle, the higher the probability.
 Participants learned these associations in a tutorial prior to the experiment (\cref{fig:memento_tutorial}), and \cref{fig:memento_stim} provides an overview of stimuli.
-Stimulus combinations were selected to fulfill the following requirements:
+Stimulus combinations and sequences were selected to fulfill the following requirements:
 \begin{enumerate}
 	\item To prevent subjects from forming a decision already in the delay period \citep{curtis2010beyond}, the left stimulus never contained the best or worst combination of properties (see Figure \ref{fig:memento_stim})
-	\item In the first option, all magnitude and probability options are equally often shown
+	\item In the first option, all magnitude and probability options are shown equally often
 	\item No more than three repetitions of the same probability and magnitude combination occur in the left stimulus
 	\item First and second stimulus are never identical
 	\item The expected values of the left and right stimulus were balanced over the course of the experiment such that left and right options yielded the same reward on average
 \end{enumerate}
 Based on these requirements, a fixed reward schedule was generated, and all subjects underwent the same sequence of stimulus combinations.
-In approximately half of the trials both magnitude and probability were either equal or greater in one of the two options compared to the other, requiring no integration of stimulus properties to assess which options' value is higher.
-In roughly 10\% of trials, called ``no-brainer'' in all following analyses, both magnitude and probability were strictly greater in one of the two options, posing the easiest decision form.
+In approximately half of the trials one of the two stimulus options was clearly favorable, and both its properties (magnitude and probability) were either equal to or greater than that of the other option.
+These trials consequently required no integration of stimulus properties to assess which option's value is higher.
+In a subset of those trials, called ``no-brainer'' in all following analyses (roughly 10\% of all trials), both magnitude and probability were strictly greater in one of the two options, posing the easiest decision form.
 In standard trials, however, stimulus properties were differentially advantageous for the two options.\\
 Each trial started with a fixation cross (1000-1900ms, jittered), followed by the first stimulus on the left side of the screen for 700ms, a 2000ms delay period through which the phrase ``or'' was presented in the center of the screen, the second stimulus option on the right side of the screen for 700ms, and a feedback screen.
 Once the second stimulus option was displayed, participants chose the left or right option via a button press with the right or left index finger, respectively.
@@ -398,7 +399,7 @@ The Spearman rank correlation between experiment performance (total gain) and mo
 		\label{fig:logregbehavior}
 	\end{subfigure}
 
-		\caption[Behavioral results]{\ref{fig:gains} Points gained in the experiment across subjects. \ref{fig:avgreactions} Average reaction times over trials for all subjects. \ref{fig:reactiontimes} Reaction times across trials and subjects for standard trials (orange) and trials with unambigous. \ref{fig:logregbehavior} Relative influence of stimulus properties on choice (left option)}
+		\caption[Behavioral results]{\ref{fig:gains}\ref{fig:avgreactions} Average reaction times over trials for all subjects. \ref{fig:reactiontimes} Reaction times across trials and subjects for standard trials (orange) and trials with unambigous. \ref{fig:logregbehavior} Relative influence of stimulus properties on choice (left option)}
 		\label{fig:behav}
 	\end{figure}
 
@@ -434,7 +435,7 @@ The Spearman rank correlation between experiment performance (total gain) and mo
 		\caption{Primarily probability-based decision}
 		\label{fig:strategy-prob-first}
 	\end{subfigure}
-	\caption[Experiment gains compared to different behavioral strategies]{Experiment gains compared to different behavioral strategies. Participants actual gains in the experiment are always plotted in the top boxplot. The bottom boxplot is a simulation of the experiment (N=10000) with different behavioral strategies. The red dotted line denotes the 95. percentile in the simulation data to allow for statistical comparisons at the 95\% confidence level. a) Simulated random choice behavior. Even the outlier at the bottom end of the actual results exceeds the results of more than 95\% of simulated experiments, indicating that participants performed better than chance. b) Decisions purely based on magnitude. c) Decisions purely based on probability. c) Decisions purely based on expected value. d) \& e) Deterministic decisions based on sequentially evaluation first magnitude and then probability, or vice versa. Because no random element is involved, the average gain is identical over experiment repetitions.}
+	\caption[Experiment gains compared to different behavioral strategies]{Experiment gains compared to different behavioral strategies. Participants' actual gains in the experiment are always plotted in the top boxplot. The bottom boxplot is a simulation of the experiment (N=10000) with different behavioral strategies. The red dotted line denotes the 95. percentile in the simulation data to allow for statistical comparisons at the 95\% confidence level. a) Simulated random choice behavior. Even the outlier at the bottom end of the actual results exceeds the results of more than 95\% of simulated experiments, indicating that participants performed better than chance. b) Decisions purely based on magnitude. c) Decisions purely based on probability. c) Decisions purely based on expected value. d) \& e) Deterministic decisions based on sequentially evaluating first magnitude and then probability, or vice versa. Because no random element is involved, the average gain is identical over experiment repetitions.}
 \end{figure}
 
 
