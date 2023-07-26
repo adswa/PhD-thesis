@@ -347,23 +347,33 @@ Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a si
 
 \subsection{Behavioral analysis}
 
+As a first step, I conducted several analyses on behavioral data to check if participants' behavior matched the task demands and to inform further processing.
+For the former, I conducted analyses regarding participants' performance.
 One measure to evaluate performance in the experiment is the gain that participants achieved at the end of the last trial.
 It is the sum of rewards accumulated over all trials, and should be higher the better participants judged stimulus values.
 On average, participants gained 349.5 points in the experiment (min=300.5, max=393; top boxplot in Figure \ref{fig:gains}).
 To assess whether this exceeds chance level performance, I conducted a simulation of 10.000 experiments with random choice behavior (bottom boxplot in Figure \ref{fig:gains}), confirming that all participants performed significantly better than chance at the 95\% confidence level (dotted line in Figure \ref{fig:gains}).
+A different measure of performance is reaction time.
 The average reaction time pooled across participants was 0.93s.
 Contrary to the expectation that no-brainer trials would pose easier decisions, the difference in average reaction times for no-brainer trials compared to standard trials was negligent (0.91s for no-brainer compared to 0.94s for standard trials; Figure \ref{fig:reactiontimes}).
-An inspection of average reaction times per subject revealed a small subset slow participants with average reaction times exceeding 1.3s (Figures \ref{fig:avgreactions}, \ref{fig:avgreactionsnobrain}).
+An inspection of average reaction times per subject revealed a small subset of slow participants with average reaction times exceeding 1.3s (Figures \ref{fig:avgreactions}, \ref{fig:avgreactionsnobrain}).\\
+To inform further processing, I investigated which stimulus properties influenced participants' behavior.
 The stimulus properties relevant for the eventual behavioral choice in each trial were stripe frequency (reward magnitude), stripe orientation (reward probability), and their combination (expected value).
-I assessed their relative influence on choice via a cross-validated logistic regression analysis.
+I assessed their relative influence on choice by two means: First, by simulating different strategies by which participants could use these properties, and comparing them against the actual gains.
+I created five different strategies: Pure probability- or magnitude-based strategies (choice fell on which ever stimulus had a higher value, and reduced to random choice where values were equal), primarily probability- or magnitude-based strategies (choice fell on which ever stimulus had a higher value, and in cases where values were equal, it fell on which ever stimulus had a higher value on the other property), and a expected-value-based strategy (choice fell on the stimulus with the higher expected value, and reduced to random choice where expected values were equal).
+These simulations revealed that strategies based solely on either magnitude or probability yield outcomes that are predominantly worse than participants' actual gains, bearing a single outlier.
+The strategy following expected value was the best, yielding predominantly higher gains than participants' actual gains, bearing -- again -- one outlier whose performance exceeded even that of 95\% of simulated experiments with the expected value strategy.
+The two sequential strategies yielded a single, deterministic outcome that was close to the group average.
+The second mean to assess which stimulus properties influenced choice was a k-fold cross-validated logistic regression analysis.
+
 The Spearman rank correlation between experiment performance (total gain) and model accuracy was $r=0.53$ (p=0.012)
 
 
-\begin{figure}
-	\includegraphics[width=1.\textwidth]{memento/behavior/average_gains.png}
-	\caption[Simulated versus actual experiment gains]{Participants gains in the experiment (top boxplot). The bottom boxplots is a simulation of the experiment (N=10000) with random choice behavior. Even the outlier at the bottom end of the actual results exceeds the results of more than 95\% of simulated experiments (dotted line)}
-	\label{fig:gains}
-\end{figure}
+%\begin{figure}
+%	\includegraphics[width=1.\textwidth]{memento/behavior/average_gains.png}
+%	\caption[Simulated versus actual experiment gains]{Participants gains in the experiment (top boxplot). The bottom boxplots is a simulation of the experiment (N=10000) with random choice behavior. Even the outlier at the bottom end of the actual results exceeds the results of more than 95\% of simulated experiments (dotted line)}
+%	\label{fig:gains}
+%\end{figure}
 
 \begin{figure}
 	\centering
