@@ -33,30 +33,32 @@ The idea of neural selectivity to specific task-aspects was refined in the adapt
 Instead of a persistent, fixed selectivity, it postulates that neural responses are temporarily tuned to the particular task, explaining, for example, how a recording of spiking activity in the same group of neurons relates to object information in one task but a location distinction in the next task.
 In this adaptive coding framework, distributed representations that selectively favor information relevant to the current task emerge on the level of neural populations.
 Similarly, \citet{rigotti2013importance} proposed the concept of mixed selectivity, in which information is distributed across neurons, even when it is not observable in individual cells, through non-linear and high-dimensional representations.
-In the same vein, the rise of multivariate methods such as decoding analyses (a methodological introduction is given in chapter TODO) uncovered representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons, a process termed dynamic population coding \citep{sreenivasan2014revisiting}.\\
+In the same vein, the rise of multivariate methods such as decoding analyses (a methodological introduction is given in \ref{decoding}) uncovered representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons, a process termed dynamic population coding \citep{sreenivasan2014revisiting}.\\
 One proposed mechanism for the coordination of these temporal and spatial population codes are brain oscillations, rhythmic pattens of neural activity.
 \citet{roux2014working} for example concluded that gamma and alpha band oscillations of groups of neurons are generically involved in the maintenance of sensory-spatial working memory items.
-However, a recent systematic review by \citet{pavlov2022oscillatory} highlighted a prominent lack of agreement across experimental studies that reported observations of brain oscillations in working memory tasks as results.
+However, a recent systematic review by \citet{pavlov2022oscillatory} highlighted a prominent lack of agreement across results in experimental studies that reported observations of brain oscillations in working memory tasks.
 Other popular theories include short-term neural plasticity changes as the underlying mechanism of working memory maintenance \citep{mongillo2008synaptic}.
 This framework proposes working memory maintenance via increased residual calcium levels at the presynaptic terminals of neurons, which causes a short-term synaptic facilitation, akin to synaptic weights that link neurons coding for a working memory item.
 With this facilitation, the memory can be transiently held for about 1s without enhanced spiking activity.
 Building up on this theory,  \citet{stokes2013dynamic, stokes2015activity} propose the dynamic coding framework, in which working memory is mediated by rapid transitions in such ``activity silent'' neural states.
-They mediate flexible context-dependent processing but do not emerge as activity and rather as ``hidden states'', appearing as altered response sensitivities of neural networks, established via short-term and long-term synaptic plasticity and temporal functional connectivity changes that influence the response to stimuli.
+While these states mediate flexible, context-dependent processing they do not emerge as activity and rather as ``hidden states'', appearing as altered response sensitivities of neural networks, established via short-term and long-term synaptic plasticity and temporal functional connectivity changes that influence the response to stimuli.
 Further support for this theory comes from findings that a task-irrelevant read-out or ``ping'' signal is able to reactivate the neural assembly \citep{trubutschek2017theory, wolff2017dynamic}.\\
-However, studies decoding working memory content found decodable patterns to be non-stationary.
-\citet{meyers2008dynamic} decoded object categories from electrophysiological data, and yielded worse decoding the more temporally distal training and testing times slices were apart.
+Furthermore, studies decoding working memory content found decodable patterns to be non-stationary.
+\citet{meyers2008dynamic} decoded object categories from electrophysiological data, and yielded worse decoding the more temporally distant training and testing times slices were apart.
 \citet{king2014characterizing} formalized this with the temporal generalization method.
 In this method, several classifiers are trained on different time slices of training data each, and tested on all available times in the test data, thus revealing whether the neural code is stable or dynamically evolving.
-A prominent theory in line with non-stable representations is that cognitive processes evolve through different so-called \textit{brain states} as dynamic neural trajectories \citep{buonomano2009state}.
+[ADD ANOThER STUDY HERE]
+A prominent theory in line with non-stable representations is that cognitive processes evolve through different so-called \textit{brain states} [DEFINE] as dynamic neural trajectories \citep{buonomano2009state}.
 These trajectories emerge by reconceptualizing neural responses as vectors in an N-dimensional space that evolves over time (see Figure \ref{fig:trajectories}):
 The axis of the high-dimensional space correspond to measurements, such as raw or transformed data from M/EEG sensors or \gls{fMRI} voxels.
 The neural trajectories emerge by tracing the activity on these axes over multiple time points.
-To bridge the gap to theories of activity silent states, these neural responses are not solely determined by external stimuli, but also internal state changes of the network, such as the strength of synaptic connections, excitatory or inhibitory influences from other networks \citep{buonomano2009state}.
+To bridge the gap to theories of activity silent states, these neural responses are not solely determined by external stimuli, but also internal state changes of the network, such as the strength of synaptic connections, or excitatory or inhibitory influences from other networks \citep{buonomano2009state}.
 Distinct neural states were often hypothesized to reflect steps in mental processing \citep[e.g.,][]{seidemann1996simultaneously}.
 \citet{muhle2021hierarchy}, for example, proposed a hierarchy of functional states in working memory, with items relevant for a pending decision in the most active state, and items relevant only for later use in latent states.
 But multiple studies also extract external stimulus information from the trajectories of transient states, such as odors \citep{mazor2005transient}, visual stimulus features [CITE] or XYZ [CITE CITE].
 The study of these neural states and their transition has emerged as its own field, employing multivariate methods such as decoding across neural populations, hidden Markov models (HMMs) to model ensemble activity as a sequence of constantly shifting neural states \citep{rainer2000neural}, or functional alignment \citep{haxby2011common} to find common representations across idiosyncratic neural responses.
-In parallel, dimensionality-reduction became common in analyzing neural population data \citep{cunningham2014dimensionality}.
+In parallel, dimensionality-reduction gained popularity in analyzing neural population data \citep{cunningham2014dimensionality}.
+The underlying assumption to this approach is that the measured neural activity is too complex compared with the few relevant task or stimulus aspects that require encoding, and that the neural signal of interest must be embedded in a subspace of the high-dimensional neural space [CITE].
 \citet{santhanam2009factor} employed a decoding approach based on factor-analysis to reduce noise in high-dimensional neural recordings to improve the performance of neural prostheses, which otherwise suffered from the neural variability introduced by changes in attentional state or wakefulness.
 The term ``effective dimensionality'' of population activity emerged in the literature to identify shared components of collective dynamics that reflect task variables \citep{jazayeri2021interpreting}.
 \citet{murray2017stable} used \gls{pca} on electrophysiology recordings acquired from primate prefrontal cortex during a working memory task, and found a lower-dimensional subspace in the high-dimensional state space in which stimulus representations were stable across the cue and delay epochs.
@@ -65,19 +67,21 @@ The term ``effective dimensionality'' of population activity emerged in the lite
 In this hypothesis, behavior is controlled by neural modes, patterns of neural population covariance.
 The high-dimensional neural space is confined into a lower dimensional ``manifold'' spanned by these neural modes.
 Dimensionality reduction methods would allow to identify the foundational neural modes that confine population activity, and allow the study of neural population dynamics.
-They further showed that the low dimensional spaces remained stable over multiple years by aligning the manifolds from separate measurements \citep{gallego2020long}.
-Thus, methodologies shift from traditional evoked potentials to computationally intensive processing, often rooted in multivariate or machine learning approaches.
-
-
-Drawing insights from this partial overview of the literature, the field has progressed from studying spiking activity in single cells to an implicit consensus that the neural representation of working memory during maintenance is high-dimensional, time-varying, and spatiotemporal distributed.
+They further showed that the low dimensional spaces remained stable over multiple years by aligning the manifolds from separate measurements \citep{gallego2020long}.\\
+Drawing insights from this partial overview of the literature, methods to study working memory have shifted from traditional evoked potentials to computationally intensive processing.
+The field has progressed from studying spiking activity in single cells to an implicit consensus that the neural representation of working memory during maintenance is high-dimensional or embedded in a high-dimensional space, time-varying, and spatiotemporal distributed.
 But despite the wealth of theories and methodological approaches, the field has not yet converged on a full understanding of working memory.
 Recent reviews have begun to point out where findings and standard views fall short to yet explain the mechanisms underpinning working memory \citep{nobre2022opening}, or highlight the inconsistencies in results across studies \citep{pavlov2022oscillatory}.
-In a recent reflective piece, \citet{nobre2022opening} called for sustained open-mindedness and creativity in researching working memory.
-The following analyses were conducted in this exploratory spirit.
-
-
-
+While studies traditionally focused on the involvement of prefrontal areas due to its involvement in executive control (CITE ME), many other brain areas have been shown to represent working memory items, too (EXAMPLES, CITE ME).
 %Decoding approaches can find multiple different working memory items simultaneously in the same neural population \citep{rigotti2013importance}, and in various brain regions \citep{curtis2010beyond}.
+In light of variable and even conflicting findings, \citet{nobre2022opening} called for sustained open-mindedness and creativity in researching working memory in a recent reflective piece,.
+In this exploratory spirit, I conducted the simulations and analyses that will be described in this chapter.
+They connect to the works of \citet{murray2017stable}, \citet{machens2010functional}, \citet{rigotti2013importance} and others who employed dimensionality reduction methods perform statistical decomposition in a high dimensional ``native neural space'' to
+project the axes of a task space into subspaces of the native neural space.
+
+
+
+
 
 
 \begin{figure}
