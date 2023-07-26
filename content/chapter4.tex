@@ -403,6 +403,41 @@ The Spearman rank correlation between experiment performance (total gain) and mo
 	\end{figure}
 
 
+\begin{figure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/average_gains.png}
+		\caption{Random choice}
+		\label{fig:gains}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/gain-simulation-magnitude.png}
+		\caption{Purely magnitude-based decision}
+		\label{fig:strategy-prob}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/gain-simulation-probability.png}
+		\caption{Purely probability-based decision}
+		\label{fig:strategy-mag}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/gain-simulation-ev.png}
+		\caption{Purely expected-value-based decision}
+		\label{fig:strategy-ev}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/gain-simulation-magnitude-first.png}
+		\caption{Primarily magnitude-based decision}
+		\label{fig:strategy-mag-first}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{memento/behavior/gain-simulation-probability-first.png}
+		\caption{Primarily probability-based decision}
+		\label{fig:strategy-prob-first}
+	\end{subfigure}
+	\caption[Experiment gains compared to different behavioral strategies]{Experiment gains compared to different behavioral strategies. Participants actual gains in the experiment are always plotted in the top boxplot. The bottom boxplot is a simulation of the experiment (N=10000) with different behavioral strategies. The red dotted line denotes the 95. percentile in the simulation data to allow for statistical comparisons at the 95\% confidence level. a) Simulated random choice behavior. Even the outlier at the bottom end of the actual results exceeds the results of more than 95\% of simulated experiments, indicating that participants performed better than chance. b) Decisions purely based on magnitude. c) Decisions purely based on probability. c) Decisions purely based on expected value. d) \& e) Deterministic decisions based on sequentially evaluation first magnitude and then probability, or vice versa. Because no random element is involved, the average gain is identical over experiment repetitions.}
+\end{figure}
+
+
 
 \subsection{Shared response modeling}
 
