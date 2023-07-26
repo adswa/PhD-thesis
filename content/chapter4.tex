@@ -139,8 +139,18 @@ The experiment consisted of 510 trials, grouped into 5 blocks with a variable br
 Each trial required a decision between one of two stimulus options, presented as gabor patches on the left and right side of the screen (\cref{fig:memento_trial}).
 Importantly, stimulus options were presented in succession, with a delay period through which the decision-relevant properties of the first stimulus had to be retained in working memory.
 The number of stripes in the gabor patch encoded the reward magnitude (either 0.5, 1, 2, or 4 points), and the angle of stripes encoded reward probability (either 10\%, 20\%, 40\%, or 80\%): The more stripes, the higher the reward, and the larger the angle, the higher the probability.
-\cref{fig:memento_stim} provides an overview.
-Participants learned these associations in a tutorial prior to the experiment (\cref{fig:memento_tutorial}).
+Participants learned these associations in a tutorial prior to the experiment (\cref{fig:memento_tutorial}), and \cref{fig:memento_stim} provides an overview of stimuli.
+Stimulus combinations were selected to fulfill the following requirements:
+\begin{enumerate}
+	\item To prevent subjects from forming a decision already in the delay period \citep{curtis2010beyond}, the left stimulus never contained the best or worst combination of properties (see Figure \ref{fig:memento_stim})
+	\item In the first option, all magnitude and probability options are equally often shown
+	\item No more than three repetitions of the same probability and magnitude combination occur in the left stimulus
+	\item First and second stimulus are never identical
+	\item The expected values of the left and right stimulus were balanced over the course of the experiment such that left and right options yielded the same reward on average
+\end{enumerate}
+In approximately half of the trials both magnitude and probability were either equal or greater in one of the two options compared to the other, requiring no integration of stimulus properties to assess which options' value is higher.
+In roughly 10\% of trials, called ``no-brainer'' in all following analyses, both magnitude and probability were strictly greater in one of the two options, posing the easiest decision form.
+In standard trials, however, stimulus properties were differentially advantageous for the two options.\\
 Each trial started with a fixation cross (1000-1900ms, jittered), followed by the first stimulus on the left side of the screen for 700ms, a 2000ms delay period through which the phrase ``or'' was presented in the center of the screen, the second stimulus option on the right side of the screen for 700ms, and a feedback screen.
 Once the second stimulus option was displayed, participants chose the left or right option via a button press with the right or left index finger, respectively.
 The feedback screen showed both options side by side with a frame around the chosen option, and revealed which option had been rewarded via color coding (red: unrewarded, green: rewarded).
@@ -150,7 +160,7 @@ Participants were instructed to maximize their gains and to respond as fast as p
 Stimulus presentation was controlled by Psychtoolbox \citep{kleiner2007s} running on Matlab 2012b (The Mathworks Company, Natick, MA).
 All stimuli were presented on a grey background with a contrast optimized for the MEG recording chamber.
 A photodiode, taped onto the stimulation screen, was used to determine visual stimulus onsets.
-TODO: Add delay
+\todo{Add delay}
 In total, the experiment lasted approximately 60 minutes.
 
 \begin{figure}
