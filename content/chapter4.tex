@@ -312,6 +312,13 @@ Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots
 \textbf{Filtering} Next, data were first low-pass filtered with a 100Hz lowpass FIR filter to constrain it into a frequency range of interest.
 The filter properties are reported in \ref{fig:preproc} and a visualization is in \ref{fig:filter}.
 
+\begin{figure}
+	\includegraphics[width=0.4\textwidth]{memento/filter_properties_100hz.png}
+	\caption[Lowpass filter properties]{Lowpass filter properties}
+	\label{fig:filter}
+\end{figure}
+
+
 \textbf{Independent component analysis} As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
 % The slow drifts are problematic because they reduce the independence of the assumed-to-be-independent sources (e.g., during a slow upward drift, the neural, heartbeat, blink, and other muscular sources will all tend to have higher values), making it harder for the algorithm to find an accurate solution. A high-pass filter with 1 Hz cutoff frequency is recommended. However, because filtering is a linear operation, the ICA solution found from the filtered signal can be applied to the unfiltered signal https://ieeexplore.ieee.org/document/7319296/
 As ICA is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
@@ -322,29 +329,7 @@ For most subjects, components corresponding to ECG activity were identified usin
 For one subject, however, the ECG channel was flat, and components were manually selected.
 Afterwards, the ICA solution was applied to the continuous recording and detected ECG and EOG components were zeroed out.
 
-\textbf{Bad segment rejection and repair} As a final step, the continous recording was chunked into Epochs of varying length depending on analysis, and \texttt{autoreject} was used to detect and repair or drop bad epochs.
-Figure \ref{fig:preproc} summarizes the preprocessing steps.
-Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a single subject.
-
-
-
 \begin{figure}
-	\centering
-	\begin{subfigure}{0.4\textwidth}
-		\includegraphics[width=\textwidth]{memento/preprocessing_overview.png}
-		\caption[Preprocessing overview]{Preprocessing Overview}
-		\label{fig:preproc}
-	\end{subfigure}
-	\begin{subfigure}{0.4\textwidth}
-		\includegraphics[width=\textwidth]{memento/filter_properties_100hz.png}
-		\caption[Lowpass filter properties]{Lowpass filter properties}
-		\label{fig:filter}
-	\end{subfigure}
-	\caption[Preprocessing]{Preprocessing thingies}
-\end{figure}
-
-\begin{figure}
-	\centering
 	\includegraphics[width=0.5\textwidth]{memento/average_epoch_cleaned.png}
 	\caption[Average neural signal over the trial course]{Neural recordings from a single exemplary subject.
 		Shown is the average of cleaned epochs with a length of 5 seconds from left stimulus onset, corresponding to a trial from first visual stimulation until
