@@ -799,6 +799,54 @@ Using the subject-specific bases, the time-resolved test data was then transform
 \subsection{Decoding}
 \label{decoding-analysis}
 
+Finally, I performed a last attempt to find stimulus features in the signal during the delay with a temporal decoding analysis.
+This analysis involves fitting a multivariate predictive model on each time instant within a trial, and evaluating the model performance at the same instant on new epochs.
+It is similar to a searchlight analysis (CITE KRIEGESKORTE).
+Other than implementing a standard temporal decoding pipeline, I also implemented custom pipelines that employed internal dimensionality reduction.
+
+The pipeline allowed to set the following parameters to improve decodability:
+\begin{itemize}
+	\item Bootstrapping:
+	\item Trial averaging:
+	\item Sliding window
+	\item Dimensionality k (for PCA, SRM, and spectral SRM)
+	\item Number of timeseries used in training (for SRM and spectral SRM)
+\end{itemize}
+
+Prior to decoding neural signals during the delay phase, I used data from the motor response of the trial to optimize decoding parameters of the analysis.
+I based the evaluation on two measures, visualized in Figure \ref{fig:opti-eval}
+
+\begin{figure}
+	\includegraphics[width=.6\textwidth]{memento/decoding/decoding_eval.png}
+	\caption[Decoding evaluation]{Two measures served for model evaluation: The area under the curve of the }
+	\label{fig:opti-eval}
+\end{figure}
+
+
+
+Due to the high temporal resolution of \gls{meg}, fitting models on data with 1000Hz would be computationally intensive, but also noisy.
+Thus, it is common to apply sliding windows to the data.
+I implemented two separate sliding windows: A temporal sliding window, integrating signal in the time dimension.
+And a spatiotemporal sliding window, integrating information over both space and time.
+
+\begin{figure}
+	\begin{subfigure}{0.6\textwidth}
+		\includegraphics[width=\textwidth]{memento/decoding/sliding_window.png}
+		\caption{Temporal sliding window}
+		\label{fig:temporal-slider}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\includegraphics[width=\textwidth]{memento/decoding/spatiotemporal_sliding_window.png}
+		\caption{Spatiotemporal sliding window}
+		\label{fig:spatiotemporal-slider}
+	\end{subfigure}
+	\caption[Schematic of different sliding window types]{Schematic of different sliding window types. \ref{fig:temporal-slider} depicts a temporal sliding window, integrating the signal across samples via averaging. \ref{fig:spatiotemporal-slider} depicts a spatial sliding window. All samples in the sliding window are concatenated such that the one resulting sample per sliding window includes the spatiotemporal configuration of all sensors in the window}
+	\label{fig:sliding-windows}
+\end{figure}
+
+Scikit-learn expects two-dimensional data.
+Epoched \gls{meg} data, however, is at least three-dimensional: Trials $\times$ channels $\times$ trial-length.
+To solve this issue, \textit{mne-python} uses so-called \textit{vectorizers} that transposes three-dimensional data into the desired two-dimensional format.
 
 %Optimizing decoding parameters - Sliding windows:
 In the spatiotemporal slider, the data entering the decoders were pooled over multiple time points, so as to exploit not only information that is encoded in spatial activation patterns, but also information that is encoded in their temporal structure, similar to \citep{muhle2021hierarchy}.
