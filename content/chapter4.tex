@@ -343,6 +343,35 @@ Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a si
 
 
 
+\subsection{Analysis prerequisites}
+\label{decoding}
+
+Many of the upcoming analyses are rooted in machine-learning methodology.
+This section introduces relevant concepts, and summarizes common elements across analysis to avoid repetition.
+I set up the machine-learning based analyses either purely in the standard library \textit{scikit-learn} (\ref{behavioral-analysis}, behavioral analysis), using functionality from \textit{mne-python} that builds up on scikit-learn for MEEG applications (\ref{temporal-generalization-analysis}, temporal generalization analysis), or by implementing scikit-learn compatible custom estimators and scorers myself (\ref{decoding-analysis}, decoding analyses).\\
+Even if upcoming analyses extend scikit-learn's capabilities, the framework's terminology remains central to describe the analysis setup in depth:
+All analyses I conducted are classification problems, belonging to the family of supervised learning.
+In these analyses, the goal is to predict a discrete target $y$ from a data matrix $X$ with $n$ observations, for example, if a participant performs a left or right response (target) based on the stimulus properties (features) in each trial.
+Where the analysis is a decoding analysis, a model predicts a target, such as stimulus identity, based on considering the relationships between multiple \gls{meg} channels.
+In scikit-learn's terms, an \textit{estimator} is what performs this prediction of a target variable $y$ based on input data $X$.
+A \textit{scorer} is a method that evaluates an estimators predictions on a given dataset.
+A \textit{transformer} is an object that alters the input data, for example by cleaning, reducing, or expanding it, or by generating features from it.
+Fundamental to evaluating machine-learning applications are train-test data splits.
+These partition the available data into a set used to train the estimator, and a set yet unknown to the estimator, used to test how well its predictions generalize to unseen data.
+The latter gets evaluated with a scorer.
+I set this up within a k-fold cross-validation framework, which repeats model fitting and predictions with test and train splits over $k$ different partitions of data such that each partition $k$ is used as a test set once.
+The final model evaluation is based on an average of the prediction performance in each fold, reducing the variance of the model performance estimate.
+In classification problems with an unequal amount of target classes I used a stratified k-fold cross-validation paradigm, which creates splits such that the relative distribution of class labels in its split matches that in the full dataset approximately.\\
+If testing data leaks into the training data, performance estimates get overly optimistic as the model is partially trained on the data it will be evaluated on.
+To avoid this common pitfall, all machine-learning analyses were set up as a so-called \textit{pipelines}, sequences of transformers or estimators that chain processing steps while internally ensuring that test and train data are kept strictly separate.
+Additionally, pipelines ensure consistent preprocessing by applying transformers to training and test data.
+A transformer common to all pipelines was a \texttt{StandardScaler()}, transforming data to have zero mean and unit variance.
+The final estimator common to all pipelines was a logistic regression classifier with L2 regularization and a \texttt{liblinear} solver.
+The L2 regularizer of this estimator assumes that all features are centered around zero or have variance in the same order \citep{scikit-learn-scaler}.
+Even in \gls{meg} data in which different sensor types typically have different scales, this prerequisite holds due to the combination of \gls{SSS} and scaling.
+Internally, the \texttt{liblinear} solver uses a coordinate descent (CD) algorithm, which extends binary classifications problems to a multinomial case by decomposing the optimization problem into several one-vs-rest problems \citep{scikit-learn-liblinear}.\\
+
+
 
 \subsection{Behavioral analysis}
 
