@@ -798,50 +798,6 @@ In the spatiotemporal slider, the data entering the decoders were pooled over mu
 
 \pagebreak
 
-\section{Temporal decoding}
-\label{decoding}
-
-From Grootswagers et al. (2017): MVPA for MEG/EEG
-The term “multivariate pattern analysis” (or MVPA) en-
-compasses a diverse set of methods for analyzing neuro-
-imaging data. The common element that unites these
-approaches is that they take into account the relation-
-ships between multiple variables (e.g., voxels in fMRI or
-channels in MEG/EEG), instead of treating them as inde-
-pendent and measuring relative activation strengths. The
-term “decoding” refers to the prediction of a model from
-the data (“encoding” approaches do the reverse, predict-
-ing the data from the model, reviewed in Naselaris, Kay,
-Nishimoto, \& Gallant, 2011; see also, e.g., Ding \& Simon,
-2012, for an example of encoding models for MEG). The
-most common application of decoding in cognitive neu-
-roscience is the use of machine learning classifiers (e.g.,
-correlation classifiers (Haxby et al., 2001) or discriminant
-classifiers (Carlson et al., 2003; Cox \& Savoy, 2003) to
-identify patterns in neuroimaging data, which correspond
-to the experimental task or stimulus. The most popular
-applications of MVPA are decoding (for recent reviews on
-fMRI decoding, see e.g., Haynes, 2015; Pereira et al., 2009)
-and, more recently, representational similarity analysis
-(RSA: Kriegeskorte \& Kievit, 2013).
-
-\subsection{machine learning concepts in scikit-learn}
-
-\texttt{y} is the \textit{target}, also called \texttt{outputs}, \texttt{responses}, \texttt{label} or \texttt{ground truth}.¸ Its the \texttt{dependent variable} in supervised learning, passed to an \texttt{estimator}'s fit method as y.
-\texttt{X} is the observed data. Its number of rows are the number of \texttt{samples}.
-\texttt{features} are the individual elements of a vector representing a sample. In a data matrix, features are represented as columns. Elsewhere features are also known as attributes, predictors, regressors, or independent variables.
-\texttt{samples} typically denote a single feature vector. Elsewhere, a sample is called an instance, data point, or observation. \texttt{n\_samples} indicates the number of samples in a dataset, being the number of rows in a data array \texttt{X}
-
-
-A \texttt{classifier} is a predictor with a finite set of discrete possible output values, and must implement "fit", "predict", and "score" methods, and could implement "decision\_function", "predict\_proba" and "predict\_log\_proba" methods.
-An \texttt{estimator} is an object that manages the estimation and decoding of a model. An estimators fit method takes samples X, target y, and sample properties (e.g., weights). Once fitted, the "predict\_proba" method can return probability estimates for each class from some input data X. A \texttt{score} is a method that evaluates predictions on a given dataset, returning a single
-
-\texttt{evaluation metrics} accept a ground truth and a prediction (e.g., output of predict, predict\_proba, etc)
-
-\texttt{Transformers} (or \texttt{transforms}) can clean, reduce, expand, or generate feature representation.
- is
-\texttt{Pipelines} sequentially chain transforms with a final estimator, and reduce the possibilities of forgetting transformations that could lead to inconsistent preprocessing applications between training and testing data and of leaking test data into training data. The purpose of a pipeline is to assemble several steps that can be cross-validated together whiule
-
 \section{Results}
 \pagebreak
 
