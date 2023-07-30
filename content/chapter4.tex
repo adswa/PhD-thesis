@@ -694,21 +694,34 @@ Next, we calculated the correlation distance between the shared response during 
 
 \section{Shared response modeling in spectral space}
 
+As previously introduced, shared response modeling relies on the assumption that different participants display similar cognitive processes in response to the same tasks or stimuli \citep{NIPS2015_b3967a0e}.
+In previous analysis, I generated artificial correspondence of first options by reordering the trial sequence.
+But this reordering only concerned the visual stimulation.
+The distribution of reaction times in the task (\ref{behavioral-analysis}), however, revealed different processing speeds, evident in intra- and inter-individual variation in response time.
+Given previous findings ... Similar variation in cognitive processing could exist during working memory maintenance during the delay.
+Thus, the activation of interest could be invisible for the shared response model if it occurs at too different time points.
+To use the shared response model despite idiosyncratic processing, I transformed the input data into a space without timing information.
+For this, I drew inspiration from spectral analysis.\\
+Spectral analysis consists of deconstructing a time domain signal of a given length into its constituent oscillatory components using Fourier analysis.
 MEG signal consists of oscillations with an amplitude, a frequency, and a phase.
 Frequency, usually measured in hertz (Hz), is the number of times a specified event occurs within a specified time interval, while amplitude is the height, force or power of the wave, and power is the squared amplitude.
 Phase involves the relationship between two or more signals that share the same frequency and describes the relationship between the position of the amplitude crests and troughs of two waveforms, measured in distance, time, or degrees.
-If the peaks of two signals with the same frequency are in exact alignment at the same time, they are said to be in phase.
-Conversely, if the peaks of two signals with the same frequency are not in exact alignment at the same time, they are said to be out of phase.
-While shared response modeling, just like similar methods of hyper alignment [CITE], relies on the assumption that different participants display similar cognitive processes in response to the same tasks or stimuli [CITE], the exact timing or duration of such shared activity is subject to intra- and interindividual variation, and thus not necessarily phase-locked. [CITE]
-[Link this to decision making tasks and previous methodological developments, such as Hidden Markov Models]
-
-Spectral analysis consists of deconstructing a time domain signal of a given length into its constituent oscillatory components using Fourier analysis.
-The resulting power spectrum displays a spectral decomposition, with the frequency domain of the oscillations on the x axis, and the amplitude on the y axis.
+If the peaks of two signals with the same frequency are in exact alignment at the same time, they are said to be in phase and out of phase otherwise.
+If the exact timing or duration of shared activity in question is subject to intra- and inter-individual variation, it is not necessarily phase-locked.
+However, a spectral decomposition of this signal results in power spectrum, with the frequency domain of the oscillations on the x axis, and the amplitude on the y axis.
 Thus, the signal is expressed as a function of frequency rather than time.
 Such a transformation from a time-resolved representation of data to a representation in the frequency domain can be used to find shared signals with different temporal signatures [CITE probably every introductory MEG book].
 Importantly, the model bases of an \gls{SRM} assign weights to sensors regardless of whether they contribute to a shared signal in time-resolved or spectral space.
 Therefore, we can fit a shared response model on spectral data to find shared frequency components, but then use the model basis to transform time-resolved data (see Figure \ref{fig:spectral-srm}).
 This not only allows the visualization of shared components as a time series, but also easier interpretation of components in the context of the experimental paradigm.
+
+Advantage of spectral transformation: No need to decide for a frequency band(?) given the unclear evidence across studies.
+
+
+
+the exact timing or duration of such shared activity is subject to intra- and inter-individual variation.
+, and thus not necessarily phase-locked. [CITE]
+[Link this to decision making tasks and previous methodological developments, such as Hidden Markov Models]
 
 
 \begin{figure}
