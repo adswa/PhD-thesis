@@ -503,7 +503,7 @@ And one set of epochs locked to the first stimulus presentation, extending 3.4 s
 The first set of epochs was used to train multiple logistic regression estimators on \gls{meg} data in sensor space ($X=306 \times n\_samples$ features per trial) to classify the target $y$, left or right choice in each trial.
 The second set of epochs was used as test data, to see when and how well a neural decision signal emerges over the trial course.
 While the estimators where always trained on the entire training data, I manipulated the set of features in the test set to investigate if specific trial characteristics contributed differentially to a stronger representation.
-For each analysis, I ran a permutation test with $N=10000$ repetitions with shuffled targets to identify clusters of significant decoding accuracy.
+For each analysis, I ran a permutation test with $N=10.000$ repetitions with shuffled targets to identify clusters of significant decoding accuracy.
 To evaluate findings on the group level, I averaged all subjects' temporal generalization results, and bootstrapped a sample of each participants' permutation maps to estimate cluster reaching statistical significance following the approach proposed by \citet{stelzer2013statistical}.
 Overall, I investigated the following manipulations:
 First, I assessed choice decodability for trials with high versus medium versus low values in magnitude or probability in the first stimulus (Figure \ref{fig:temporal-generalization-actual}).
@@ -561,7 +561,7 @@ The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-general
 		\caption{Low probability trials (10\% chance)}
 		\label{fig:generalization-prob-low-actual}
 	\end{subfigure}
-	\caption[Temporal generalization: Eventual choice]{Temporal generalization results of decoding eventual choice (right option), overlaid with a permutation mask. The y-axes depict training time points, with 0 (horizontal line) being the motor response, negative values denoting trial samples prior to the motor response, and positive values denoting trial samples after the motor response. The x-axis depicts test data, covering the onset of the first stimulus until the offset of the second stimulus. Vertical lines illustrate trial structure. Only those parts of the plot that are not masked yielded accuracies that were higher than 95\% of accuracies obtained in $N=10000$ permutations with shuffled training labels.}
+	\caption[Temporal generalization: Eventual choice]{Temporal generalization results of decoding eventual choice (right option), overlaid with a permutation mask. The y-axes depict training time points, with 0 (horizontal line) being the motor response, negative values denoting trial samples prior to the motor response, and positive values denoting trial samples after the motor response. The x-axis depicts test data, covering the onset of the first stimulus until the offset of the second stimulus. Vertical lines illustrate trial structure. Only those parts of the plot that are not masked yielded accuracies that were higher than 95\% of accuracies obtained in $N=10.000$ permutations with shuffled training labels.}
 	\label{fig:temporal-generalization-actual}
 \end{figure}
 
