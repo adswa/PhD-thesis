@@ -353,9 +353,9 @@ This section introduces relevant concepts, and summarizes common elements across
 I set up the machine-learning based analyses either purely in the standard library \textit{scikit-learn} (\ref{behavioral-analysis}, behavioral analysis), using functionality from \textit{mne-python} that builds up on scikit-learn for MEEG applications (\ref{temporal-generalization-analysis}, temporal generalization analysis), or by implementing scikit-learn compatible custom estimators and scorers myself (\ref{decoding-analysis}, decoding analyses).\\
 Even if upcoming analyses extend scikit-learn's capabilities, the framework's terminology remains central to describe the analysis setup in depth:
 All analyses I conducted are classification problems, belonging to the family of supervised learning.
-In these analyses, the goal is to predict a discrete target $y$ from a data matrix $X$ with $n$ observations, for example, if a participant performs a left or right response (target) based on the stimulus properties (features) in each trial.
-In scikit-learn's terms, an \textit{estimator} is what performs this prediction of a target variable $y$ based on input data $X$.
-A \textit{scorer} is a method that evaluates an estimators predictions on a given dataset.
+In these analyses, the goal is to predict a discrete target variable $y$ from an input data matrix $X$ with $n$ observations, for example, if a participant performs a left or right response (target) based on the stimulus properties (features) in each trial.
+In scikit-learn's terms, an \textit{estimator} is what performs this prediction.
+A \textit{scorer} is a method that evaluates an estimator's predictions on a given dataset, such as computing the accuracy from predicted and actual target labels.
 A \textit{transformer} is an object that alters the input data, for example by cleaning, reducing, or expanding it, or by generating features from it.
 Fundamental to evaluating machine-learning applications are train-test data splits.
 These partition the available data into a set used to train the estimator, and a set yet unknown to the estimator, used to test how well its predictions generalize to unseen data.
