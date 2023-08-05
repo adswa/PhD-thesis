@@ -604,62 +604,35 @@ The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-general
 
 \subsection{Shared response modeling}
 
-As outlined in \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
-The signal of interest can thus clearly be expressed in fewer than 306 dimensions.
-In the following analyses, I therefore sought to find out whether I can find meaningful low-dimensional structure in the high-dimensional dataset.
-The method I investigated was \gls{SRM} \citep{NIPS2015_b3967a0e}.
-\gls{SRM} is a functional alignment method that [ADD MATH HERE].
+It is difficult to disentangle whether distinct neural activation patterns across individuals are due to idiosyncratic cognitive processing, or if different participants have differently encoded but shared functional states.
+In \gls{fMRI}, functional alignment methods have become popular to discover shared representations in a high-dimensional functional space \citep{haxby2020hyperalignment}.
+But as outlined in \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
+The signal of interest in \gls{meg} data can thus clearly be expressed in fewer than 306 dimensions.
+\gls{SRM} \citep{NIPS2015_b3967a0e} is a method that combines functional alignment and dimensionality reduction.
+In the following analyses, I therefore sought to find out whether I can find meaningful low-dimensional structure in the high-dimensional dataset by means of functional alignment via \gls{SRM}.\\
+\gls{SRM} models each subject $i$'s response to temporally synchronized stimuli $X_i \in \mathbb{R}^{s \times t}$ as an orthogonal subject-specific base $W_i \in \mathbb{R}^{s\times k}$ and a $k$-dimensional shared response $S \in \mathbb{R}^{k \times t}$ such that
+
+
+\begin{equation}
+	\begin{aligned}
+		min_{w_i, s}\sum_i{\|X_i - W_iS \|}^2_F \\
+		s.t. W^T_iW_i = I_k
+	\end{aligned}
+	\label{eq:srm}
+\end{equation}
+
+where $t$ is the number of time points, $s$ is the number of sensors, $k$ is a hyper-parameter denoting dimensionality, and $\|\cdot\|_F$ denotes the Frobenius norm.
+The orthonormal constraint $W^T_iW_i = I_k$ yields the computational advantages of robustness and preserving temporal geometry \citep{NIPS2015_b3967a0e}.
 Unlike, for example, \gls{pca}, the reduced dimensionality does not only emerge from the data of a single brain, but taking the activation patterns of several participants into account.
-It is a latent factor model, and rather than searching for direct correspondences across subjects an initial dimensionality reduction is used to identify latent factors that are shared across subjects and support the observed measurements.
-This functional alignment ...
-The underlying assumption of functional alignment methods is that brain activity can be modeled in an n-dimensional space, where n is the number of measurements (e.g., voxels in \gls{fMRI}, sensors in \gls{meg}, or electrodes in \gls{eeg} acquisitions).
-When subjects experience the same events, their brain activity may differ anatomically, but should correspond to similar cognitive processes.
-\citep{janati2020multi} employed functional alignment to perform source reconstruction.
-%The deterministic SRM model assumes Gaussian noise with the same variance for all subjects and orthonormal spatial components.
-\gls{SRM} is successfully and widely used with fMRI data \citep{bazeille2021empirical}, in particular for naturalistic acquisitions with free-viewing tasks and movie stimuli (cite Sam), the method is only rarely used in \gls{meg} or trial-based experimental designs.
-\citet{kalyani2023reduced} used shared response modeling to decode somatosensory finger maps, and changes in their representation with age.
-\citet{xie2021minimal} employed the method to functionally align intracranial EEG recordings.
-Thus the methods' utilities was first tested with a number of analyses intended to serve as sanity checks.
-
-
-% This needs a general introduction into shared response modeling
-
-To functionally align the brain activity of multiple participants, we align the vector representations of their brain signals.
-Afterwards, we need to assign meaning to the axes of the shared space.
-
-
-In \gls{SRM}, the objective is to model each subject $i$'s response to temporally synchronized stimuli as a subject-specific base $W_i$ and a shared component over all subject's responses $S$.
-In an \gls{meg} acquisition, each subject $i$ has a data matrix of dimensions sensors $\times$ time-points.
-
-
-\begin{equation}
-	\begin{aligned}
-    X_i \in \mathbb{R}^{s \times d}
-	\end{aligned}
-	\label{eq:sss}
-\end{equation}
-
-\gls{SRM} estimates a $k$-dimensional shared space $S$, and orthogonal-column basis vectors of the shared response in subject-space  $\{W_i\}^m_{i=1}$  $\{W_i\}^m_{i=1}$
-
-
-\begin{equation}
-	\begin{aligned}
-	    min_{w_i, s}\sum_i{\|X_i - W_iS \|}^2_F \\
-	s.t. W^T_iW_i = I_k
-	\end{aligned}
-	\label{eq:sss}
-\end{equation}
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\textwidth]{memento/srm/srm_basics_1.png}
-	\caption[SRM overview]{In \gls{SRM} on \gls{meg} data, sensor-by-time matrices are decomposed into a orthogonal subject specific basis matrix (sensor-by-features), a common shared feature matrix (features-by-time), and a subject-specific error}
-	\label{fig:srm-basics}
-\end{figure}
-
+It is a latent factor model, and rather than searching for direct correspondences across subjects, an initial dimensionality reduction is used to identify latent factors that are shared across subjects and support the observed measurements.
+One latent feature $k$ is a functional topography, and the \gls{SRM} models the neural signal as a linear combination of subject-specific functional topographies (see Figure \ref{fig:srm-basics-multi}).
+A central underlying assumption of functional alignment methods is thus that when subjects experience the same events, their brain activity patterns may differ anatomically, but they should correspond to similar cognitive processes.
+However, an explicit requirement is therefore temporal synchronicity of stimulation across participants.
+For this reason, most applications of functional alignment use feature-rich, naturalistic stimulation such as movies \citep{haxby2020hyperalignment,bazeille2021empirical}.
+Nevertheless, the cleaned epochs from the experiment can be brought into a standardized order to meet this assumption \citep{chentutorial}.
 Given participants experience the same sequence of stimulus events, \gls{SRM} identifies common activity patterns across subjects, and provides a method to transform the original activity into a lower dimensional shared latent component space.
-Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix.
+Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix, and the subject specific weights that map between the shared space and each subject's idiosyncratic sensor space is an orthogonal matrix of dimensionality $306$ sensors $\times$ $k$ features.
+After the \gls{SRM} is fit, several procedures become possible, such as mapping one participant's data to a different participant's functional topography, denoising neural data by transforming the shared response via the subject-specific basis back to the individual participant's original topography, or inferring idiosyncratic signal components in individual participants' data by subtracting the shared response \citep{NIPS2015_b3967a0e}, and the upcoming analyses showcase yet other use cases for the \gls{SRM}.\\
 
 
 \begin{figure}
@@ -669,10 +642,23 @@ Where the original data in sensor space is a $306$ sensors $\times$ number of sa
 	\label{fig:srm-basics-multi}
 \end{figure}
 
-\gls{SRM} has only few assumptions: %list assumptions here
-One important assumption is, though, that participants experience the same sequence of stimulus events.
-To meet this assumption, epochs from the experiment were brought into a standardized order (CITE CHEN PRESENTATION)
-% to do: probabilistic shared response modeling
+
+%In a recent comparison of functional alignment methods, \gls{SRM} yielded the highest decoding accuracy gains on naturalistic \gls{fMRI} data \citep{bazeille2021empirical}.
+%\citep{janati2020multi} employed functional alignment to perform source reconstruction.
+%\gls{SRM} is successfully and widely used with fMRI data \citep{bazeille2021empirical}, in particular for naturalistic acquisitions with free-viewing tasks and movie stimuli (cite Sam).
+%More rarely, the method is used in experimental paradigms the method is only rarely used in \gls{meg} or trial-based experimental designs.
+%\citet{kalyani2023reduced} used shared response modeling to decode somatosensory finger maps, and changes in their representation with age.
+%\citet{xie2021minimal} employed the method to functionally align intracranial EEG recordings.
+%Thus the methods' utilities was first tested with a number of analyses intended to serve as sanity checks.
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.9\textwidth]{memento/srm/srm_basics_1.png}
+%	\caption[SRM overview]{\gls{meg} data can be represented as a matrix. In \gls{SRM} on \gls{meg} data, sensor-by-time matrices are decomposed into a orthogonal subject specific basis matrix (sensor-by-features), a common shared feature matrix (features-by-time), and a subject-specific error}
+%	\label{fig:srm-basics}
+%\end{figure}
+
+
 
 \subsubsection{Sanity checks}
 
