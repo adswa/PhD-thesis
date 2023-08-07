@@ -556,7 +556,10 @@ For this, I used the beta coefficients of the behavioral analysis to estimate th
 where $LMag$, and $LProb$ are the min-max scaled magnitude and probability values of the left stimulus option per trial, $LEV$ is the expected value calculated from demeaned magnitude and probability, similarly min-max scaled, and all $\beta$ values are beta coefficients obtained from the logistic regression analysis on behavioral data.
 With this formula, the opposite ends of the value range of $C$ denote a tendency for the left and right stimulus option, respectively.
 I extracted the lowest and highest quartile of trials as test data, assigning estimated choices as target labels.
-The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-generalization-actual}, revealing no clusters in the first stimulus presentation or delay period.
+The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-generalization-actual}, revealing no clusters in the first stimulus presentation or delay period.\\
+These temporal generalization results partially match findings in the literature.
+[...]
+
 
 \begin{figure}
 	\begin{subfigure}[c]{0.5\textwidth}
@@ -633,8 +636,11 @@ The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-general
 \pagebreak
 
 \subsection{Shared response modeling}
-
-It is difficult to disentangle whether distinct neural activation patterns across individuals are due to idiosyncratic cognitive processing, or if different participants have differently encoded but shared functional states.
+%improve
+The previous temporal generalization analysis employed a continuous decoding approach to find neural patterns and their evolution over time in the signal.
+On the group level, however, ... \\
+In typical \gls{meg} analyses, group analyses are conducted by ... .
+However, it is difficult to disentangle whether distinct neural activation patterns across individuals are due to idiosyncratic cognitive processing, or if different participants have differently encoded but shared functional states.
 In \gls{fMRI}, functional alignment methods have become popular to discover shared representations in a high-dimensional functional space \citep{haxby2020hyperalignment}.
 But as outlined in \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
 The signal of interest in \gls{meg} data can thus clearly be expressed in fewer than 306 dimensions.
@@ -688,25 +694,27 @@ After the \gls{SRM} is fit, several procedures become possible, such as mapping 
 %	\label{fig:srm-basics}
 %\end{figure}
 
+Initially: SRM on a per subject level, with each epoch treated as its own subject (loosen the definition of a subject). The result, individual trial weights, were used to transform trial data from sensor space to shared space, and thus cleaned from idiosyncratic elements.
+I visualized the individual features, and calculated the correlation distance between timepoints in the shared space.
 
 
 \subsubsection{Sanity checks}
 
-
-
-
-I first sanity checked whether basic stimulus properties are retained in the lower-dimensional shared response space of the model.
-For this, I leveraged the nine different probability and magnitude combinations that were used for the left stimulus option (letters A-I in Figure \ref{fig:memento_stim}).
-An underlying assumption for this is that neural signals differ across stimulus types.
-
-Regardless of whether MEG data in sensor space
-
-
-% trial ordering
-
+As \gls{SRM} has rarely been employed in \gls{meg} data in the published literature, I first investigated whether basic stimulus properties are retained in the lower-dimensional shared response space of the model.
+This can serve as a sanity check if information of interest is retained.
+For this, I used the nine different probability and magnitude combinations that were used for the left stimulus option (letters A-I in Figure \ref{fig:memento_stim}) as stimulus identities of interest to inform trial ordering and detect condition differences.
+I used two different approaches to visualize the shared space for this:
+One based on correlation distances of features in the shared space, to detect dissimilarities across features.
+And one based on using the shared space to either visualize its features over a stereotypical trial course or transform unseen test data into shared space.
+The
+Prior to training the shared response model, I preprocessed the neural data as follows:
+(Train-test split, Reordering, averaging, SRM fitting)
+I trained probabilistic shared response model on a training set of neural data, ordered by
 We normalized epoch data by z-scoring each epoch within sensors.
 For this, a shared response model was trained on a subset of data.
 Next, we calculated the correlation distance between the shared response during one type of trial to al other trial types, for both the left and the right stimulus option.
+The largest correlation distances, however, did not emerge between different stimulus identities, but between stimuli presented on the left versus the right side of the screen (Figure TODO).
+An underlying assumption for this is that neural signals differ across stimulus types.
 
 
 \section{Shared response modeling in spectral space}
