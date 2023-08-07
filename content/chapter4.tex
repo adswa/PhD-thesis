@@ -316,7 +316,7 @@ Similarly, formerly bad channels have also been effectively repaired by the proc
 After \gls{tSSS}, gradiometers and magnetometers contain highly similar information and have an altered inter-channel correlation structure because they were reconstructed from a common 80-dimensional subspace \citep{garces2017choice}.
 
 
-\textbf{ZAPLine filtering} After \gls{tSSS}, some spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
+\textbf{ZAPLine filtering} After \gls{tSSS}, visual inspection revealed that minor spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
 ZAPline filtering \citep{de2020zapline} was performed to remove them using \texttt{meegkit} \citep{barascud2022}.
 Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots of the signal before and after applying ZAPline filters.
 
@@ -334,7 +334,7 @@ Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots
 	\end{subfigure}
 	\caption[Power spectral density before and after ZAPLine filtering]{Power spectral density of all MEG channels
 		from a single subject before (\ref{fig:prezap}) and after (\ref{fig:postzap}) ZAPLine filtering.
-		Two spikes at 50Hz (power-line frequency) and 60Hz (likely an artifact of the stimulus presentation) are markedly reduced afterwards. \todo{include filter properties}
+		Two spikes at 50Hz (power-line frequency) and 60Hz (likely an artifact of the stimulus presentation) are markedly reduced afterwards.
 	}
 	\label{fig:zapline_psd}
 \end{figure}
@@ -343,6 +343,7 @@ Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots
 The filter properties are reported in \ref{fig:preproc} and a visualization is in \ref{fig:filter}.
 
 \begin{figure}
+	\centering
 	\includegraphics[width=0.4\textwidth]{memento/filter_properties_100hz.png}
 	\caption[Lowpass filter properties]{Lowpass filter properties}
 	\label{fig:filter}
@@ -351,7 +352,7 @@ The filter properties are reported in \ref{fig:preproc} and a visualization is i
 
 \textbf{Independent component analysis} As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
 % The slow drifts are problematic because they reduce the independence of the assumed-to-be-independent sources (e.g., during a slow upward drift, the neural, heartbeat, blink, and other muscular sources will all tend to have higher values), making it harder for the algorithm to find an accurate solution. A high-pass filter with 1 Hz cutoff frequency is recommended. However, because filtering is a linear operation, the ICA solution found from the filtered signal can be applied to the unfiltered signal https://ieeexplore.ieee.org/document/7319296/
-As \gls{ica} is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
+As \gls{ica} is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary 1Hz highpass filter. %one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
 ICA can further be sensitive to bad segments in the recording.
 Therefore, data were temporarily epoched into 5 second splits from the onset of the fixation cross.
 \texttt{autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis \citep{jas2017autoreject}, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
@@ -368,7 +369,7 @@ Afterwards, the \gls{ica} solution was applied to the continuous recording and d
 	\label{fig:cleanepoch}
 \end{figure}
 
-\textbf{Bad segment rejection and repair} As a final step, the continous recording was chunked into Epochs of varying length depending on analysis, and \texttt{autoreject} was used to detect and repair or drop bad epochs.
+\textbf{Bad segment rejection and repair} As a final step, the continous recording was chunked into epochs of varying length depending on analysis, and \texttt{autoreject} was used to detect and repair or drop bad epochs.
 Figure \ref{fig:preproc} summarizes the preprocessing steps.
 Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a single subject.
 
