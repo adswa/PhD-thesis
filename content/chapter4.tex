@@ -227,12 +227,15 @@ The neural data was recorded at a sampling rate of 1000Hz and active internal sh
 \section{Data preparation and analysis}
 
 The code used for preprocessing and analysis was bundled into a publicly available Python package \texttt{pymento\_meg} and is available from GitHub\footnote{\url{https://github.com/adswa/pymento_meg}} and \url{PyPi.org}.
-Underlying software packages are listed in Table TODO.
+Underlying software packages are listed in Table TODO and were bundled into a publicly available Singularity image (TODO).
 Prior to preprocessing, raw data were restructured to \gls{BIDS} format (v1.4.0) using mne-bids \citep{Appelhoff2019}.
 Simultaneously, behavioral log files were transformed from proprietary .mat into the TSV format (see Figure \ref{fig:BIDS}).
 
 \subsection{Preprocessing}
 \label{preprocessing}
+
+An overview of preprocessing steps is shown in Figure \ref{fig:preproc}.
+The following paragraphs outline individual steps in detail.
 
 \begin{figure}
 	\centering
