@@ -271,6 +271,20 @@ Underlying software packages are listed in Table \ref{tab:software} and were bun
 \end{table}
 \end{center}
 
+\subsection{Data preparation}
+
+Prior to preprocessing, raw data were restructured to \gls{BIDS} format (v1.4.0).
+Several properties of the project made this challenging.
+As the acquisition was done in a different institution several years back by \citet{kaiser} and the data had moved locations, crucial metadata was missing from the project files, either because it was lost or not recorded in the first place.
+Some information, such as metadata files from the acquisition machine, was acquired post-hoc by emailing the facility in Magdeburg.
+Other information, such as some participants' ages or raw data from the handedness acquisitions could not be found.
+Furthermore, as \gls{meg} data was acquired on an Elekta Neuromag machine, previous ``raw'' data former analyses were based on was preprocessed in-scanner with Neuromag's propietary MaxFilter\textsuperscript{TM} for motion correction and denoising.
+Data that is preprocessed with such a proprietary tool is not an ideal data analysis basis as it can not be easily recomputed without access to the original acquisition machine, which would make a fundamental processing step nontransparent.
+However, as only preprocessed files were used previously, it went unnoticed that one of the pristine raw \gls{meg} data files was not copied over from the acquisition machine to the project archive.
+With the help of the original authors and a contact at the acquisition facility in Magdeburg it was possible to restore this file from internal archives.
+Finally, as the experiment was Matlab-based, behavioral log files were written to proprietary .mat files.
+During the transformation to \gls{BIDS}, these log files were transformed into the open TSV format (see Figure \ref{fig:BIDS}).
+
 \subsection{Preprocessing}
 \label{preprocessing}
 
