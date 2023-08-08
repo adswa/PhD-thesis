@@ -9,19 +9,20 @@
 	\dictum[Albert Einstein]{If we knew what it was we were doing, it would not be called research, would it?}
 }
 
-\chapter{Reproducibility in exploratory data analyses}
+\chapter{Reproducible brain state analyses}
 \label{k5}
 
-The previous chapters focused on the technical challenges of reproducibility management, especially when applications need to scale to large samples.
+The previous chapter focused on the technical challenges of reproducibility management, especially when applications need to scale to large samples, but it also highlighted readily available, pragmatic strategies to ensure portability and reusability.
 A different challenge arises when the to be undertaken analyses are not entirely mapped out from the start, and a research project is exploratory in nature.
-This upcoming chapter describes a data analysis project studying working memory in sequential decision making with unconventional methodology.
-While the majority of exploratory analyses I conducted in this project yielded null-results and were thus abandoned at an intermediate state, their setup followed the framework outlined in chapter \ref{chap:k3}, and corresponding project directories leave a transparent digital provenance trace.
+This upcoming chapter describes the central data analysis project in this thesis, studying working memory in sequential decision making.
+While the majority of exploratory analyses I conducted in this project yielded null-results and were thus abandoned at an intermediate state, their setup used best practices and tools from \ref{chap:k1-rdm-2}, and followed the strategies and the framework outlined in chapter \ref{chap:k3}.
+Corresponding project directories leave a transparent digital provenance trace, and analyses are portable across infrastructures.
 Even if an analysis project does not yield a published article as its final outcome, intermediate research outcomes are a valuable stepping stone for further research or researchers.
 
 \section{Project outline}
 
 An exploratory neuroscientific project faces several challenges.
-As outlined in \ref{chap:k1}, analyses are often multistepped.
+As outlined in Chapter \ref{chap:k1}, analyses are often multistepped.
 But repeating a large number of processing step in all of many different analyses is computationally inefficient.
 Furthermore, a large number of analyses makes it difficult to retain an intuitive structure.
 When several different analyses are conducted in the same directory, researchers unfamiliar with the project struggle to associate inputs, code, software, and results.
