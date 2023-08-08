@@ -12,26 +12,48 @@
 \chapter{Introduction}
 \label{chap:k1}
 
-Outline: The main goal is to make a contribution to the topic of brain states.
-To this end, we used a pre-existing dataset.
-This posed a challenge in several aspects.
-The dataset has been processed extensively already, but the acquisition and processing had been done by people who left the lab.
-Existing analyses were mostly left in an interim state, in an idiosyncratic organization, and as a single bulk of scripts and results.
-Details about the acquisition and participants had to be inferred after the fact, from interviewing involved people, an acquisition site at a different institution, or the vast amount of documents left behind.
-
-A different challenge was the processing setup.
+In natural settings, value-based decisions under risk often have to be made without visual presence of competing alternatives.
+Do I commit to buying the red bicycle in the store I'm currently in, or should I return to the previous bike shop and pick the blue one?
+Do I want to rent the flat I viewed last Sunday, or the apartment I saw on Tuesday?
+In such situations, relevant properties of alternative options such as their subjective value have to be encoded, held in working memory through a maintenance (or ``delay'') period, and retrieved in order to form a categorical choice.\\
+To understand the neural processes underlying behavior in these situations, the neural activity in the delay period and how it might represent or maintain relevant properties were a focus of research in the last decades.
+Although several popular theories emerged over time and were either refuted or refined, and the field has progressed from studying spiking activity in single cells to computationally elaborate models of spatially and temporally distributed activity, a comprehensive understanding is yet lacking \citep{sreenivasan2019and}.
+The main goal in the conception of this research project has been to make a contribution to the study of brain state dynamics in working memory, a recently emerging theory that reconceptualizes neural activity as a trajectory through a high-dimensional neural space.
+To this end, I was given access to a pre-existing \gls{meg} dataset from human participants that played an experiment with a delayed decision making task, acquired by \citet{kaiser}, the MEMENTO study.
+This research endeavor posed several challenges.
+One lay in acquiring the relevant information to work productively and confidently with this dataset.
+Data was captured at the Clinic for Neurology at the Otto-von-Guericke University Magdeburg, an institution to which I did not have access or first-hand knowledge about.
+The original lead investigators of the project had switched their focus to other projects by the time I started working with it, and both had long left their research positions by the time I finished.
+Obtaining their first-hand knowledge was thus impeded not merely by fading memory over time, but also as their progression to other projects and out of academia naturally limited contact.
+While the dataset had been processed extensively already, the data was in an idiosyncratic organization, many existing analyses were in an interim state, and the project, excluding raw and processed data, was a collection totaling 20.761 files.
+Thus, a prerequisite of my analyses was to prepare the dataset such that it became usable for me, and ideally also to future other researchers that were not involved in its acquisition or processing.
+A different challenge lay in the processing setup.
 The data was acquired and partially analyzed on infrastructure of the University of Magdeburg.
-Storage and further analyses were done on the computational cluster of the HHU.
-My own analyses were done in the research center Jülich.
-However, an explicit aim of all processing was portability, such that research outcomes yielded on FZJ infrastructure were readily usable on HHU servers.
-
-These challenges are not uncommon in scientific endeavours.
-Over several decades already, data shared across institutions or even openly has been a corner stone of neuroscientific progress, and this trend is increasing (CITE).
-It is further common to reuse finished or intermediate outcomes of previous projects in new analyses.
-However, this makes research data management a fundamental prerequisite.
-This thesis summarizes my conjunct work on research data management solutions and their applications in an analyses project on \gls{meg} data.
-
-%Look mom, some text!
+After a change of affiliations, storage and further analyses were moved to the computational cluster of the \gls{HHU}.
+My own analyses, finally, were done on computational infrastructure at the Institute of Neuroscience and Medicine at the \gls{FZJ}.
+Typically, changes of computational infrastructure are detrimental to the utility of the processing and analysis scripts.
+Thus, an explicit aim of all processing was portability, such that research outcomes yielded on \gls{FZJ} infrastructure were readily usable on servers at the \gls{HHU} or elsewhere.
+Finally, the to-be-conducted analyses were highly exploratory.
+Although the dataset had not been published before, a large amount of analyses had already been conducted.
+But with the exception of a poster presentation on preliminary decoding results \citep{kaiserposter}, all analyses yielded null results and remained unpublished.
+Thus, in an attempt to search for remaining insights in the data with novel methodology, I set out to conduct analysis rooted in functional alignment and dimensionality reduction that have yet rarely been used on \gls{meg} data.
+Maintaining routines for reproducibility and reusability, however, is not trivial when the analyses are not mapped out entirely and the necessary software for the analyses is in flux.
+Keeping all analyses transparent, self-descriptive to others, and reproducible became a guiding principle.\\
+Although the challenges I outlined above shaped the course of the project and gave way to productive projects to solve them, they are by no means uncommon in scientific endeavors.
+Science is an incremental process that produces and builds up on more than just published journal articles \citep{mons2018data}.
+Code, data, results, or tools of previous finished or unfinished projects fuel new undertakings.
+As the life time of scientific projects regularly exceeds the lifetime of a research position contract (CITE) though, the people who start and finish a project are not necessarily the same.
+Science is also increasingly collaborative and spatially distributed (CITE).
+Benefiting from differential expertise of several collaborators requires mutual understanding of a project and its components.
+But the relevant research data management skills are not commonly part of research training curricula \citep{grisham2016proposed}, and publication practices that favor static PDFs of articles instead of the building blocks of the underlying science fail to incentivize the curation of well documented project directories (CITE).
+Nevertheless, over several decades already, data shared across institutions or even openly has been a corner stone of neuroscientific progress, and this trend is increasing (CITE).
+A common task is thus to keep projects in such a state that they can be understood without the expertise of their original authors.
+This makes technical and organizational elements of scientific practice, such as \gls{rdm} and research software engineering, a fundamental prerequisite.
+Going sequentially through the different challenges and solutions to conducting reproducible brain state analyses, this thesis summarizes my conjunct work on research data management solutions, research software engineering practices, and their application in scientific projects.\\
+To lay the foundations for this, the remainder of the introduction establishes a number of prerequisites.
+The first section \ref{chap:k1-brain} outlines a brief overview of the literature in the field of working memory maintenance, and deduces the choice of analyses methods for dimensionality reduction for the study of brain states in Chapter \ref{chap:k3}.
+Afterwards, section \ref{chap:k1-rdm} introduces the topic of research data management, and highlights central concepts and tools that will be a focus in the upcoming chapters \ref{chap:k2} and \ref{chap:k3}.
+As I will lay out in this section and in upcoming chapters, \gls{rdm} is a foundational element within good scientific practice, and an important prerequisite for computational neuroscience.
 
 \section{Brain state spaces}
 %This is an introduction into brain states and functional alignment
