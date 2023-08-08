@@ -18,6 +18,23 @@ This upcoming chapter describes a data analysis project studying working memory 
 While the majority of exploratory analyses I conducted in this project yielded null-results and were thus abandoned at an intermediate state, their setup followed the framework outlined in chapter \ref{chap:k3}, and corresponding project directories leave a transparent digital provenance trace.
 Even if an analysis project does not yield a published article as its final outcome, intermediate research outcomes are a valuable stepping stone for further research or researchers.
 
+\section{Project outline}
+
+An exploratory neuroscientific project faces several challenges.
+As outlined in \ref{chap:k1}, analyses are often multistepped.
+But repeating a large number of processing step in all of many different analyses is computationally inefficient.
+Furthermore, a large number of analyses makes it difficult to retain an intuitive structure.
+When several different analyses are conducted in the same directory, researchers unfamiliar with the project struggle to associate inputs, code, software, and results.
+But when different analyses are broken into distinct projects, the disk space demands of the underlying neural data usually multiply.
+The distributed nature of the project across several institutions also demanded uncompromising portability.
+Common exploratory approaches such as interactive computing or notebooks typically do not fulfill this requirement due to their short-lived and environment-dependent nature.
+To overcome these challenges, research data management principles from the previous chapter were applied.
+All analyses were setup as portable DataLad datasets.
+The project evolution was captured in a linked hierarchy of datasets, starting with a BIDS-standardized raw dataset, continuing with a preprocessed derivative dataset, and spreading into multiple analyses applications based on a common starting point.
+
+TODO: Figure on dataset setup
+
+
 \section{Theoretical background}
 
 
@@ -317,7 +334,7 @@ After \gls{tSSS}, gradiometers and magnetometers contain highly similar informat
 
 
 \textbf{ZAPLine filtering} After \gls{tSSS}, visual inspection revealed that minor spectral artifacts remained in the data, among them power line noise at 50Hz and a spectral peak at 60Hz, likely originating from the presentation screen's refresh rate.
-ZAPline filtering \citep{de2020zapline} was performed to remove them using \texttt{meegkit} \citep{barascud2022}.
+ZAPline filtering \citep{de2020zapline} was performed to remove them.
 Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots of the signal before and after applying ZAPline filters.
 
 
@@ -355,7 +372,7 @@ The filter properties are reported in \ref{fig:preproc} and a visualization is i
 As \gls{ica} is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary 1Hz highpass filter. %one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
 ICA can further be sensitive to bad segments in the recording.
 Therefore, data were temporarily epoched into 5 second splits from the onset of the fixation cross.
-\texttt{autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis \citep{jas2017autoreject}, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
+\texttt{autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
 Afterwards, FastICA \citep{hyvarinen1999fast} was used to decompose the signal of all epochs below these rejection thresholds into 45 independent components.
 For most subjects, components corresponding to ECG activity were identified using cross-trial phase statistics \citep{dammers2008integration} with an automatically computed threshold of 0.16 for the Kuiper statistic, and \gls{eog} related components were found using Pearson correlation.
 For one subject, however, the ECG channel was flat, and components were manually selected.
@@ -661,14 +678,15 @@ where $t$ is the number of time points, $s$ is the number of sensors, $k$ is a h
 The orthonormal constraint $W^T_iW_i = I_k$ yields the computational advantages of robustness and preserving temporal geometry \citep{NIPS2015_b3967a0e}.
 Unlike, for example, \gls{pca}, the reduced dimensionality does not only emerge from the data of a single brain, but taking the activation patterns of several participants into account.
 It is a latent factor model, and rather than searching for direct correspondences across subjects, an initial dimensionality reduction is used to identify latent factors that are shared across subjects and support the observed measurements.
-One latent feature $k$ is a functional topography, and the \gls{SRM} models the neural signal as a linear combination of subject-specific functional topographies (see Figure \ref{fig:srm-basics-multi}).
-A central underlying assumption of functional alignment methods is thus that when subjects experience the same events, their brain activity patterns may differ anatomically, but they should correspond to similar cognitive processes.
+One latent feature $k$ is a functional topography, and the \gls{SRM} models the neural signal as a linear combination of subject-specific functional topographies (see Figure \ref{fig:srm-basics-multi}).\\
+A central underlying assumption of functional alignment methods can be summarized as follows: When subjects experience the same events, their brain activity patterns may differ anatomically, but they should correspond to similar cognitive processes.
 However, an explicit requirement is therefore temporal synchronicity of stimulation across participants.
 For this reason, most applications of functional alignment use feature-rich, naturalistic stimulation such as movies \citep{haxby2020hyperalignment,bazeille2021empirical}.
 Nevertheless, the cleaned epochs from the experiment can be brought into a standardized order to meet this assumption \citep{chentutorial}.
 Given participants experience the same sequence of stimulus events, \gls{SRM} identifies common activity patterns across subjects, and provides a method to transform the original activity into a lower dimensional shared latent component space.
 Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix, and the subject specific weights that map between the shared space and each subject's idiosyncratic sensor space is an orthogonal matrix of dimensionality $306$ sensors $\times$ $k$ features.
-After the \gls{SRM} is fit, several procedures become possible, such as mapping one participant's data to a different participant's functional topography, denoising neural data by transforming the shared response via the subject-specific basis back to the individual participant's original topography, or inferring idiosyncratic signal components in individual participants' data by subtracting the shared response \citep{NIPS2015_b3967a0e}, and the upcoming analyses showcase yet other use cases for the \gls{SRM}.\\
+After the \gls{SRM} is fit, several procedures become possible, such as mapping one participant's data to a different participant's functional topography, denoising neural data by transforming the shared response via the subject-specific basis back to the individual participant's original topography, or inferring idiosyncratic signal components in individual participants' data by subtracting the shared response \citep{NIPS2015_b3967a0e}.
+The upcoming analyses showcase some of these and yet other use cases for the \gls{SRM}.\\
 
 
 \begin{figure}
@@ -908,10 +926,16 @@ In the spatiotemporal slider, the data entering the decoders were pooled over mu
 
 \pagebreak
 
-\section{Results}
-\pagebreak
+
 
 \section{Discussion}
+
+%RDM discussion
+
+The work I put into the preparation of the dataset has made my own data analyses possible, and further analyses by future researchers feasible.
+The idiosyncratic structure of the raw dataset has posed a significant challenge to identify relevant files, distinguish processing states, understand the dataset as a whole, and base processing on it.
+The conversion to the \gls{BIDS} standard for \gls{meg} was an indispensable prerequisite to working with this data.
+
 
 %Why has shit not worked.
 % One option: The signal of interest is not dominant enough.
