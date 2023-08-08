@@ -225,7 +225,7 @@ They typically encompass different modalities (such as imaging, electro-physiolo
 The \gls{BIDS} \citep{gorgolewski2016brain} is a community-endorsed standard for organizing and describing neuroimaging data, and is widely considered as a successful solution for data standardization in such datasets.
 It defines common and modality specific schemes for file names and file organization, file formats, and metadata to accompany raw  or derived data, i.e., both original acquisitions as well as the outputs of common processing pipelines.
 \gls{BIDS} has widespread and growing support for different neuroimaging modalities, and is made a common prerequisite by neuroscientific data portals such as OpenNeuro \citep{markiewicz2021openneuro} or processing tools such as BIDSApps \citep{gorgolewski2017bids} or fMRIprep \citep{esteban2019fmriprep}.
-An example of an \gls{meg} dataset, structured to \gls{BIDS} or organized idiosyncratically, is shown in \cref{fig:BIDS}. \\
+An example of the MEMENTO \gls{meg} dataset, structured to \gls{BIDS} or organized idiosyncratically, is shown in \cref{fig:BIDS}. \\
 The storage demands of neuroimaging data are not trivial, either.
 \gls{BIDS} regulates which file formats must be used for which data type, and focuses on open file formats for accessibility and compression to reduce disk space requirements.
 But neuroimaging data are nevertheless sizable \citep{van2014human}.
@@ -462,7 +462,7 @@ Provenance capture can be achieved by wrapping command executions in either a \t
 When working in hierarchies of datasets, any command's \texttt{--recursive} parameter applies it to downstream datasets.
 Despite the fact that DataLad provides its own set of commands, compatibility with all Git and git-annex functionality is retained, and users are free to chose their workflows.
 Like Git and git-annex, DataLad is primarily developed as a command line tool, but a \gls{gui} exists as well (see \cref{fig:gooey}).\\
-With DataLad's streamlined data transport routines, users cab utilize web sources, including major cloud storage providers, paths on local or remote computational infrastructure, or neuroscientific data registries such as OpenNeuro \citep{markiewicz2021openneuro} for file storage or collaboration.
+With DataLad's streamlined data transport routines, users can utilize web sources, including major cloud storage providers, paths on local or remote computational infrastructure, or neuroscientific data registries such as OpenNeuro \citep{markiewicz2021openneuro} for file storage or collaboration.
 At the same time, the separation of file content and file name makes a lean, meta-data based representation independent from actual data retrieval.
 Thus, datasets of arbitrary scale can be cloned, exposing file names and revision history of all contained files, and provide actionable access to its content at a fraction of their total size.
 And in order to expose datasets for easier access, users can publish DataLad datasets to common repository hosting infrastructure as access points to install data, without actually publishing data contents to these services.
@@ -492,8 +492,8 @@ All of these sources contain biases that limit conclusion to the number of users
 Installations via Python package managers are commonly performed by individual end users, whereas installations of Debian packages can correspond to system-wide installations on multi-user systems such as high performance computing infrastructure.
 Likewise, upgrades of existing installations to more recent versions are included in these data, as well as temporary installations of the software in automated continuous integration test suites.
 Nevertheless, download statistics attest that it is an actively used tool with a user base that exceeds the circle of its developers by far.
-The citation count of the academic paper, totaling 53 in May 2023, 1.5 years after its publication by \citet{Halchenko2021}, and active contributor community around the source repository on GitHub, currently amounting to 48 individuals with committed code contributions, confirms that.
+The citation count of the academic paper, totaling 66 in August 2023, two years after its publication by \citet{Halchenko2021}, and active contributor community around the source repository on GitHub, currently amounting to 48 individuals with committed code contributions, confirms that.
 DataLad's current popularity, however, has not been established from the beginning of its development.
 The next chapter will highlight how scientific software like DataLad can be improved and gain popularity, and, vice versa improve scientific practice.
-
+\todo{relate this to memento project}
 
