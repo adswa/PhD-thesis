@@ -410,7 +410,7 @@ The filter properties are reported in \ref{fig:preproc} and a visualization is i
 As \gls{ica} is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary 1Hz highpass filter. %one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
 ICA can further be sensitive to bad segments in the recording.
 Therefore, data were temporarily epoched into 5 second splits from the onset of the fixation cross.
-\texttt{autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
+\texttt{autoreject} \citet{jas2017autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
 Afterwards, FastICA \citep{hyvarinen1999fast} was used to decompose the signal of all epochs below these rejection thresholds into 45 independent components.
 For most subjects, components corresponding to ECG activity were identified using cross-trial phase statistics \citep{dammers2008integration} with an automatically computed threshold of 0.16 for the Kuiper statistic, and \gls{eog} related components were found using Pearson correlation.
 For one subject, however, the ECG channel was flat, and components were manually selected.
