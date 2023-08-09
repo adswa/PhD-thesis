@@ -441,10 +441,13 @@ In these analyses, the goal is to predict a discrete target variable $y$ from an
 In scikit-learn's terms, an \textit{estimator} is what performs this prediction.
 A \textit{scorer} is a method that evaluates an estimator's predictions on a given dataset, such as computing the accuracy from predicted and actual target labels.
 A \textit{transformer} is an object that alters the input data, for example by cleaning, reducing, or expanding it, or by generating features from it.
-Fundamental to evaluating machine-learning applications are train-test data splits.
+In supervised learning, data an estimator is trained on are labeled with the actual value of target variable $y$, but this data can not be reused to test the trained estimators' performance.
+Fundamental to evaluating machine-learning applications are thus train-test data splits.
 These partition the available data into a set used to train the estimator, and a set yet unknown to the estimator, used to test how well its predictions generalize to unseen data.
-The latter gets evaluated with a scorer.
+The accuracy of such a model is expected mismatch between predictions and actual labels in the test set, and is evaluated with a scorer.
 I set this up within a k-fold cross-validation framework, which repeats model fitting and predictions with test and train splits over $k$ different partitions of data such that each partition $k$ is used as a test set once.
+$k$ was usually set to a value between 5 and 10 depending on the analysis.
+Compared to other common forms of cross-validation in neuroimaging such as leave-one-out cross-validation, this balances the trade-off between the need for sufficient training data to reach a good fit, and the need for sufficient testing data to decrease the variance of estimated accuracy for stable estimates \citep{VAROQUAUX2017166}.
 The final model evaluation is based on an average of the prediction performance in each fold, reducing the variance of the model performance estimate.
 In classification problems with an unequal amount of target classes I used a stratified k-fold cross-validation paradigm, which creates splits such that the relative distribution of class labels in its split matches that in the full dataset approximately.\\
 If testing data leaks into the training data, performance estimates get overly optimistic as the model is partially trained on the data it will be evaluated on.
