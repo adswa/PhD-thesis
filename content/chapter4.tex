@@ -930,72 +930,115 @@ A probabilistic shared response model was then fit on the spectrally transformed
 Importantly, the model had never seen the test data.
 Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components the shared response model found.
 
+\pagebreak
 \subsection{Decoding}
 \label{decoding-analysis}
 
 Finally, I performed a last attempt to find stimulus features in the signal during the delay with a temporal decoding analysis.
-This analysis involves fitting a multivariate predictive model on each time instant within a trial, and evaluating the model performance at the same instant on new epochs.
-It is similar to a searchlight analysis (CITE KRIEGESKORTE).
-Other than implementing a standard temporal decoding pipeline, I also implemented custom pipelines that employed internal dimensionality reduction.
+This method involves fitting a multivariate predictive model on each time instant within a trial, and evaluating the model performance at the same instant on new epochs \citep{king2018encoding}.
+A temporal decoding analysis for the stimulus properties probability, magnitude, and expected value of the first stimulus option has already been performed by \citet{kaiserposter} in source space.
+In line with their temporal generalization results, stimulus properties had above-chance decoding accuracies during the stimulus presentation and a few hundred milliseconds into the delay period.
+In addition, above chance decoding succeeded in the time span of the second stimulus presentation, indicating an interesting reinstatement effect just prior to the motor response.
+To investigate if dimensionality reduction methods including \gls{SRM} improved the decodability of stimulus properties in the delay period, I implemented a flexible temporal decoding pipeline that was able to employ different forms of dimensionality reduction internally.
+With this approach, I followed the works of \citet{murray2017stable}, who was able to decode stable stimulus representations in a lower-dimensional subspace, in their case by dimensionality reduction via \gls{pca}.\\
+I prepared the analysis as several independent decoding pipelines, and compared their performance subsequently.
+Similar to the temporal generalization analysis, computations were first performed on the subject-level, and then aggregated into group-level visualizations.
+To compare an SRM- or spectral-SRM-based dimensionality reduction approach with alternative methods that are more commonly used in \gls{meg} analysis, I also included \gls{pca}, which has been shown to improve decoding results \citep[see e.g.,][]{grootswagers2017decoding}.
+A number of methods commonly employed to improve decoding accuracy such as sliding windows and trial averaging (CITE, see also Table \ref{tab:gridsearch}) were included as internal, configurable steps in the pipeline.\\
+The inclusion of dimensionality reduction methods into the temporal decoding analysis posed technical implementation challenges because varying requirements for the shape of features $X$ within the pipeline made pre-existing functionality in \texttt{mne-python} and \texttt{scikit-learn} incompatible.
+While \texttt{mne-python}'s \texttt{Sliding Estimator} for temporal decoding handles the three-dimensional shape of MEG data (trials $\times$ channels $\times$ trial-length) well, it can't incorporate internal transformations via \gls{SRM} as this method requires two-dimensional features (sensor $\times$ samples).
+Additionally, it limits the available scoring methods to those that have a one-dimensional shape, which prevents scoring with confusion matrices.
+However, confusion matrices are highly useful in decoding analysis as they allow to visualize prediction errors across labels and uncover which targets drive successful decoding - while other metrics, including accuracies, can be computed from it.
+Scikit-learn, on the other hand, expects two-dimensional data, and its pipelines are not natively able to work with multi trial \gls{meg} epochs.
+Some steps in the pipeline further required conjoint transformations of features and targets, such as trial averaging transformations, which is not supported by \texttt{scikit-learn} transformers and pipelines.
+I solved these issues with a range of custom implementations.
+I used an \texttt{imbalanced-learn} pipeline \citep{JMLR:v18:16-365}, which enabled me to write a custom function sampler to transform features $X$ and targets $y$ jointly within a \texttt{scikit-learn}-compatible pipeline.
+I reimplemented \texttt{mne-python}'s \texttt{SlidingEstimator} for temporal decoding, and implemented custom scorers that were able to return confusion matrices for all targets of interest to work with it.
+In order to include dimensionality reduction methods, I implemented three custom transformers, one for \gls{pca}, one for \gls{SRM}, and one for spectral \gls{SRM}.
+The \gls{SRM}-based transformers followed the procedures to fit and apply a (spectral) \gls{SRM} from the previous analysis.
+The \gls{pca} transformer was based on an existing \gls{pca} transformer in \texttt{scikit-learn}, but adjusted to work with three-dimensional multi-trial \gls{meg} data.\\
+Utilizing the fact that only the delay phase was relevant for this analysis, I used data from later parts of the trial to optimize parameters of the pipeline with a grid search.
+Based on strategies published in the literature, a number of configurable parameters were included (see the overview in table \ref{tab:gridsearch}).\\
+Some of these parameters bear further explanation, in particular the bootstrapping extension to trial averaging, and the different forms of sliding windows.
+I implemented two separate sliding windows: One was a temporal sliding window, integrating signal in the time dimension by averaging the signal within a sensor over multiple time points.
+An alternative sliding window was spatiotemporal.
+It integrates information over both space and time in a pattern inspired by MVPA, by extending the signal vector at one time point with the signals of the following time points.
+Thus, the data entering the decoders for this sliding window were pooled over multiple time points, so as to exploit not only information that is encoded in spatial activation patterns, but also information that is encoded in their temporal structure, similar to \citet{muhle2021hierarchy}.
+Both types sliding windows were used with a window size of 10 samples, and are illustrated in Figures \ref{fig:temporal-slider} and \ref{fig:spatiotemporal-slider}.\\
+The bootstrapping extension to trial averaging was implemented to offset the reduction in available trials in the model when several trials are averaged.
+This was implemented as follows:
+During trial averaging, all available trials were pooled according to their target label.
+Out of this pool, $N$ trials were drawn with replacement and averaged.
+This process was repeated as often as the bootstrapping parameter specified.
+The values that were evaluated in the grid search were 500 averaged trials (an amount exceeding the available number of trials without averaging), ``minimum'' (an amount determined by the smallest number of trials with the same label), and ``maximum'' (an amount determined by the largest number of trials with the same label).
+As trial averaging from a random draw of trials effectively created new artificial trials, this method practically increased the amount of available data in the pipeline.\\
+To keep the computational complexity and processing time of the grid search manageable, a limited set of values for each parameter was included.
+An overview of them is given in Table \ref{tab:gridsearch}.
+The regularization parameter $C$ for the logistic regression classifier was left at its default value as it does not have a strong influence in L2-regularized models \citep{VAROQUAUX2017166}.
+A grid search was then ran for each dimensionality reduction method separately.
+The underlying data for this was neural activity from the motor response of the trial.
+I based the evaluation on two measures accuracy measures (peak accuracy and average accuracy), visualized in Figure \ref{fig:opti-eval}
+The parameter optimizations yielded similar results for the parameters common to decoding pipelines with and without dimensionality reduction.
+Trial averaging improved average and peak accuracies, and this trend was increased with larger bootstrapping samples ($ACC_{peak} = .66$ vs $.67$ vs $.67$ and $ACC_{avg} = .53$ vs $.54$ vs $.54$ for no trial averaging, averaging 5 trials, and averaging 10 trials).
+The decoding accuracy was higher when sliding windows were used, and the temporal sliding window performed slightly better on both measures ($ACC_{peak} = .68$ vs $.67$ vs $.66$ and $ACC_{avg} = .55$ vs $.53$ vs $.52$ for the temporal, spatiotemporal, and no sliding window respectively).
+For all pipelines with dimensionality reduction, larger values of $k$ yielded better performance ($ACC_{peak} = .65$ vs $.66$ vs $.67$ vs $.68$ vs $.70$ and $ACC_{avg} = .52$ vs $.53$ vs $.54$ vs. $.55$ vs. $.56$ for the values of 2, 5, 10, 25, and 80 respectively).
+For \gls{SRM}-based dimensionality reduction methods, increasing the amount of data with which the \gls{SRM} model was trained did not change performance measures.
+Figure \ref{fig:decoding-opti-results} shows an exemplary visualization of the grid search analysis for one dimensionality reduction method.
 
-The pipeline allowed to set the following parameters to improve decodability:
-\begin{itemize}
-	\item Bootstrapping:
-	\item Trial averaging:
-	\item Sliding window
-	\item Dimensionality k (for PCA, SRM, and spectral SRM)
-	\item Number of timeseries used in training (for SRM and spectral SRM)
-\end{itemize}
 
-Prior to decoding neural signals during the delay phase, I used data from the motor response of the trial to optimize decoding parameters of the analysis.
-I based the evaluation on two measures, visualized in Figure \ref{fig:opti-eval}
+\begin{center}
+	\begin{table}
+		\begin{tabular}{ l p{.5\textwidth} p{.3\textwidth} }
+			\hline
+			\textbf{Parameter}	& \textbf{Justification} & \textbf{Values} 	 \\ \hline
+			Sliding window 		& Sliding windows integrate neural signals over time or space, and are commonly used to improve the signal to noise ratio as well (e.g. CITE). This parameter control which form of sliding window was used. & temporal sliding window, spatiotemporal sliding window \\
+			Trial averaging 	& To improve the signal to noise ratio, it is common to average trials of the same trial type (e.g. CITE). & None, 5, 10 \\
+			Bootstrapping 		& If several trials are averaged to reduce the signal to noise ratio, this parameter offsets the loss of trials and controls how many averaged trials are drawn in total & minimum, maximum, 500 \\
+			$k$ (SRM, PCA)		& This parameter determines the dimensionality of the subspace. & 2, 5, 10, 25, 80 	 \\
+			N training series (SRM) & This parameter determines the amount of training data with which a shared response model will be build. 	& 10, 20, 50
+		\end{tabular}
+		\caption[Overview of pipeline parameters]{Overview of configurable pipeline parameters and their values in a grid search}
+		\label{tab:gridsearch}
+	\end{table}
+\end{center}
 
 \begin{figure}
-	\includegraphics[width=.6\textwidth]{memento/decoding/decoding_eval.png}
-	\caption[Decoding evaluation]{Two measures served for model evaluation: The average accuracy 500ms prior to the motor response, and the peak accuracy in this time frame.}
-	\label{fig:opti-eval}
-\end{figure}
-
-%\begin{figure}
-%	\includegraphics[width=.6\textwidth]{}
-%	\caption[]{}
-%	\label{}
-%\end{figure}
-
-Due to the high temporal resolution of \gls{meg}, fitting models on data with 1000Hz would be computationally intensive, but also noisy.
-Thus, it is common to apply sliding windows to the data.
-I implemented two separate sliding windows: A temporal sliding window, integrating signal in the time dimension.
-And a spatiotemporal sliding window, integrating information over both space and time.
-
-\begin{figure}
-	\begin{subfigure}{0.6\textwidth}
+	\centering
+	\begin{subfigure}{.65\textwidth}
 		\includegraphics[width=\textwidth]{memento/decoding/sliding_window.png}
 		\caption{Temporal sliding window}
 		\label{fig:temporal-slider}
 	\end{subfigure}
-	\begin{subfigure}{0.4\textwidth}
+	\newline
+	\begin{subfigure}{0.39\textwidth}
 		\includegraphics[width=\textwidth]{memento/decoding/spatiotemporal_sliding_window.png}
 		\caption{Spatiotemporal sliding window}
 		\label{fig:spatiotemporal-slider}
 	\end{subfigure}
+	\begin{subfigure}{0.59\textwidth}
+	\includegraphics[width=\textwidth]{memento/decoding/parameter_optimization_spectralsrm_sub-all.png}
+	\caption{Exemplary optimization results from spectral SRM pipeline}
+	\label{fig:decoding-opti-results}
+\end{subfigure}
 	\caption[Schematic of different sliding window types]{Schematic of different sliding window types. \ref{fig:temporal-slider} depicts a temporal sliding window, integrating the signal across samples via averaging. \ref{fig:spatiotemporal-slider} depicts a spatial sliding window. All samples in the sliding window are concatenated such that the one resulting sample per sliding window includes the spatiotemporal configuration of all sensors in the window}
 	\label{fig:sliding-windows}
 \end{figure}
 
-Scikit-learn expects two-dimensional data.
-Epoched \gls{meg} data, however, is at least three-dimensional: Trials $\times$ channels $\times$ trial-length.
-To solve this issue, \textit{mne-python} uses so-called \textit{vectorizers} that transposes three-dimensional data into the desired two-dimensional format.
+\begin{figure}
+	\centering
+	\includegraphics[trim={2cm 6cm 0 2cm},clip,width=.6\textwidth]{memento/decoding/decoding_eval.png}
+	\caption[Decoding evaluation]{Two measures served for model evaluation in a decision-centered subset of data that was not used otherwise in this analysis: The average accuracy 500ms prior to the motor response, and the peak accuracy in this time frame.}
+	\label{fig:opti-eval}
+\end{figure}
 
-%Optimizing decoding parameters - Sliding windows:
-In the spatiotemporal slider, the data entering the decoders were pooled over multiple time points, so as to exploit not only information that is encoded in spatial activation patterns, but also information that is encoded in their temporal structure, similar to \citep{muhle2021hierarchy}.
-% TODO: illustrations of the sliders
 
 
-% visualizing compontents
-\citet{murray2017stable} projected neural trajectories into a mnemonic subspace spanned by individual components from PCA.
 
-%decoding with dimensionality reduction
-\citet{murray2017stable} decoded stimulus representations from lower-dimensional subspaces.
+
+downsampling
+
+
+
 
 \pagebreak
 
