@@ -584,25 +584,45 @@ They further provide evidence that a majority of participants acted according to
 \label{temporal-generalization-analysis}
 
 Extending the behavioral logistic regression classification, I performed several within-subject temporal generalization analyses to study the nature and progression of decision representation.
+\citet{king2014characterizing} formalized this method as follows:
+[DESCRIBE ANALYSIS METHOD HERE].
+Off-diagonal spreading of decoding accuracies indicates increasingly stable coding, whereas sole decodability in the diagonal of the matrix is a sign for evolving neural codes that do not generalize well to other time points.\\
+A temporal generalization analysis was already performed by \citet{kaiserposter}.
+In their work, a classifier was trained to decode the magnitude, probability, or expected value of the first stimulus option at certain time points throughout the entire trial, and tested on all other time points.
+With this, they assessed the signal stability of the neural codes for these stimulus properties.
+Their results showed stable above-chance decoding accuracy of stimulus properties mostly during the stimulus presentation.
+In the delay period, stable coding decreased sharply, and even time-point-to-time-point decodability, the diagonal of the matrix, vanished, most severely for magnitude and expected value.
+It was thus mostly during the visual presentation of the stimulus and shortly afterwards that value properties -- or their associated visual features -- had stable or dynamic neural codes that classifiers could pick up.\\
+Extending these analyses, I investigated whether the neural representation during the delay period could correspond to a decision signal rather than to concrete property values.
+This falls in line with work by \citet{hunt2013trial} who investigated whether the necessary comparison of options in decision making tasks occurs in the ``space of abstract goods'' or the ``space of alternative actions''.
+Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment in the MEMENTO study.
+To investigate this, utilized the temporal generalization method's flexibility in the choice of training and testing time points.
+In the training phase, I let classifiers learn a decision signal from time points in the trial centered around the actual motor response.
+In the testing phase, I then used these classifiers to find a decision signal earlier in the trial.
+If those signals could be found during the delay period, they would provide evidence that a preparatory decision state plays a part in working memory maintenance.
 For this, I split the \gls{meg} data into separate epochs:
 One set of epochs centered around the motor response with a length of 1000ms.
 And one set of epochs locked to the first stimulus presentation, extending 3.4 seconds into the trial, until the end of the second stimulus presentation.
 The first set of epochs was used to train multiple logistic regression estimators on \gls{meg} data in sensor space ($X=306 \times n\_samples$ features per trial) to classify the target $y$, left or right choice in each trial.
 The second set of epochs was used as test data, to see when and how well a neural decision signal emerges over the trial course.
-While the estimators where always trained on the entire training data, I manipulated the set of features in the test set to investigate if specific trial characteristics contributed differentially to a stronger representation.
+While the estimators where always trained on the entire training data, I manipulated the set of features in the test set to investigate the emergence of a decision representation based on specific trial characteristics, given that distinct stimulus properties and values likely contribute differentially to a stronger representation.
 For each analysis, I ran a permutation test with $N=10.000$ repetitions with shuffled targets to identify clusters of significant decoding accuracy.
-To evaluate findings on the group level, I averaged all subjects' temporal generalization results, and bootstrapped a sample of each participants' permutation maps to estimate cluster reaching statistical significance following the approach proposed by \citet{stelzer2013statistical}.
+To evaluate findings on the group level, I averaged all subjects' temporal generalization results, and bootstrapped a sample of each participants' permutation maps to estimate cluster reaching statistical significance following the approach proposed by \citet{stelzer2013statistical}.\\
 Overall, I investigated the following manipulations:
-First, I assessed choice decodability for trials with high versus medium versus low values in magnitude or probability in the first stimulus (Figure \ref{fig:temporal-generalization-actual}).
-The underlying hypothesis for this analysis was if participants focus primarily on one of these properties, a high (or low) value in the first option might evoke a neural representation of a left (or right) choice already earlier in the trial, and allow an investigation if this neural code remains stable across the delay.
-While these analyses revealed better decodability of eventual choice for high and low values compared to less informative medium values (only visible in raw accuracies), statistically significant clusters only emerged at the end of the trial where training time points and testing time points began to overlap.\\
-Next, I adjusted the target definition in the test data.
-Instead of decoding the actual choice at the end of the trial, I decoded a hypothetical target corresponding to strategies from Figures \ref{fig:strategy-mag} and \ref{fig:strategy-prob}:
-If the first stimulus' magnitude (or probability, respectively) was high, I assumed the choice would be left, and vice versa.
-While this analysis would not decode the actual ``choice'', it would decode a hypothesized preparation [????].
-The results of this analyses reveal a stronger decodable cluster, in which neural code prior to the motor response generalize to trial parts during the first stimulus presentation and into the delay phase (Figure \ref{fig:temporal-generalization-hypothetical}). \\
-Finally, I repeated this analysis taking into account the relative influence of stimulus property of each individual participant.
-For this, I used the beta coefficients of the behavioral analysis to estimate the subjective choice $C$ according to the formula
+First, I decoded the decision representation for trials with high versus medium versus low values in magnitude or probability in the first stimulus (Figure \ref{fig:temporal-generalization-actual}).
+The underlying hypothesis for this analysis was if participants focus primarily on one of these properties as the behavioral analysis indicated, a high (or low) value in the first option might evoke a neural representation of a left (or right) choice already earlier in the trial, and allow an investigation if this neural code remains stable across the delay.
+While these analyses revealed better decodability of eventual choice for high and low values compared to less informative medium values (only visible in raw accuracies, masked in Figure \ref{fig:temporal-generalization-actual}), statistically significant clusters only emerged at the end of the trial where training time points and testing time points began to overlap.
+A statistically significant representation of the eventual choice was thus not found in the delay.
+However, this could have been a consequence of the requirements for stimulus combinations:
+Stimulus properties for the first option were explicitly constrained to never contain the best or worst combination of properties to prevent a decision forming already in the delay period \citep{curtis2010beyond}.
+A promising amount of probability or magnitude in the first option would regularly be beaten by a better combination in the second option and vice versa, influencing the eventual decision that became the target variable, and compromising a previously formed preparatory decision signal.\\
+To circumvent this restriction, I adjusted the target definition in the test data.
+Instead of decoding the actual choice at the end of the trial, I decoded a hypothetical target corresponding to strategies from Figures \ref{fig:strategy-mag}, \ref{fig:strategy-prob}, \ref{fig:strategy-mag-first}, and \ref{fig:strategy-prob-first}:
+If the first stimulus' magnitude (or probability, respectively) was high, I assumed the prepared choice would be left, and vice versa.
+While this analysis would not decode the actual ``choice'', it would decode a preparation signal expected given the presumed decision strategy and available information already at the start of the trial.
+The results of this analysis reveal a stronger decodable cluster, in which neural codes prior to the motor response generalize to trial parts during the first stimulus presentation and into the delay phase for both magnitude and probability (Figure \ref{fig:temporal-generalization-hypothetical}). \\
+Finally, I repeated this analysis taking into account the relative influence of both stimulus properties for each individual participant.
+For this, I used the beta coefficients of the behavioral analysis to estimate the subjective choice $C$ after the first stimulus presentation according to the formula
 
 \begin{equation}
 	\begin{aligned}
@@ -612,10 +632,9 @@ For this, I used the beta coefficients of the behavioral analysis to estimate th
 
 where $LMag$, and $LProb$ are the min-max scaled magnitude and probability values of the left stimulus option per trial, $LEV$ is the expected value calculated from demeaned magnitude and probability, similarly min-max scaled, and all $\beta$ values are beta coefficients obtained from the logistic regression analysis on behavioral data.
 With this formula, the opposite ends of the value range of $C$ denote a tendency for the left and right stimulus option, respectively.
-I extracted the lowest and highest quartile of trials as test data, assigning estimated choices as target labels.
-The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-generalization-actual}, revealing no clusters in the first stimulus presentation or delay period.\\
-These temporal generalization results partially match findings in the literature.
-[...]
+From this value range, I extracted the lowest and highest quartile as test data trials, assigning estimated choices as target labels.
+Compared to the previous analyses which modeled hypothetical choice based on only one stimulus property, a decision signal generalizing to these estimated targets would indicate an integration of stimulus properties.
+The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-generalization-actual}, revealing no clusters in the first stimulus presentation or delay period.
 
 
 \begin{figure}
@@ -678,17 +697,29 @@ These temporal generalization results partially match findings in the literature
 		\caption{Low probability trials (10\% chance)}
 		\label{fig:generalization-prob-low-hypothetical}
 	\end{subfigure}
-	\caption[Temporal generalization: Hypothetical choice]{Temporal generalization results of decoding hypothetical targets. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the decoding target (right option) was hypothetical, derived from whether the stimulus property in question was high or low in the first stimulus option.}
+	\caption[Temporal generalization: Hypothetical choice]{Temporal generalization results of decoding hypothetical targets. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the decoding target (right option) was hypothetical, derived from whether the stimulus property in question was high or low in the first stimulus option, mirroring the behavioral strategies of sequentially evaluating stimulus properties.}
 	\label{fig:temporal-generalization-hypothetical}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=0.5\textwidth]{memento/generalization/sub-group_generalization_all-trials_averaged_estimated_pval-mask.png}
-	\caption[Temporal generalization: Estimated choice]{Temporal generalization results of decoding estimated targets. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the decoding target (right option) was estimated, derived from each participants' individual parameter influence.}
+	\caption[Temporal generalization: Estimated choice]{Temporal generalization results of decoding estimated targets, computed from integrating stimulus properties. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the presumed choice that served as the decoding target (right option) was derived from each participants' individual parameter influence on decision.}
 	\label{fig:temporal-generalization-estimated}
 \end{figure}
 
+
+In conjunction with the behavioral analyses, these temporal generalization results provide further evidence that participants employed the strategies based on sequential evaluation of magnitude and probability in decision making, and that a neural representation of this strategy persists in the delay period.
+A representation matching neural codes a few hundred milliseconds prior the motor response was found throughout the delay for presumed decisions for both magnitude and probability values separately, but not when integrated.
+Compared to the behavioral analysis that had access to all information in the trial that participants might have used to form a decision, the structure of this analysis followed the sequential nature in a trial in which participants learned of stimulus properties consecutively.
+After the first stimulus response in the delay period, this analysis can thus not differentiate whether participants went on to do a sequential evaluation of the second stimulus property (strategies \ref{fig:strategy-mag}, \ref{fig:strategy-prob}) or focused on a single property.
+The behavioral simulation results, however, provide sufficient confidence that only a sequential evaluation could have yielded the observed distribution of gains.
+The lack of a representation of choice from an integrated signal during the delay period, though, can be seen as evidence against an immediate integration of stimulus properties.
+It has to be noted, however, that these results could only be obtained by working around explicit design decisions in the experiment.
+The inclusion of trials that would allow confident decisions already after the first stimulus presentation could constitute an insightful addition to the experiment that would allow to test this hypothesis further.
+These results partially match other findings reported in the literature.
+Taking into account the previous findings by \citet{kaiserposter}, similar to findings by \citet{hunt2013trial}, a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values.
+This falls in line with other works that propose a neural space of actions [CONTINUE]...
 
 \pagebreak
 
