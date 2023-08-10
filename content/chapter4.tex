@@ -579,162 +579,22 @@ They further provide evidence that a majority of participants acted according to
 	\caption[Behavioral results]{\ref{fig:gains}\ref{fig:avgreactions} Average reaction times over trials for all subjects. \ref{fig:reactiontimes} Reaction times across trials and subjects for standard trials (orange) and trials with unambigous. \ref{fig:logregbehavior} Relative influence of stimulus properties on choice (left option)}
 	\label{fig:behav}
 \end{figure}
-
-\subsection{Temporal generalization}
-\label{temporal-generalization-analysis}
-
-Extending the behavioral logistic regression classification, I performed several within-subject temporal generalization analyses to study the nature and progression of decision representation.
-\citet{king2014characterizing} formalized this method as follows:
-[DESCRIBE ANALYSIS METHOD HERE].
-Off-diagonal spreading of decoding accuracies indicates increasingly stable coding, whereas sole decodability in the diagonal of the matrix is a sign for evolving neural codes that do not generalize well to other time points.\\
-A temporal generalization analysis was already performed by \citet{kaiserposter}.
-In their work, a classifier was trained to decode the magnitude, probability, or expected value of the first stimulus option at certain time points throughout the entire trial, and tested on all other time points.
-With this, they assessed the signal stability of the neural codes for these stimulus properties.
-Their results showed stable above-chance decoding accuracy of stimulus properties mostly during the stimulus presentation.
-In the delay period, stable coding decreased sharply, and even time-point-to-time-point decodability, the diagonal of the matrix, vanished, most severely for magnitude and expected value.
-It was thus mostly during the visual presentation of the stimulus and shortly afterwards that value properties -- or their associated visual features -- had stable or dynamic neural codes that classifiers could pick up.\\
-Extending these analyses, I investigated whether the neural representation during the delay period could correspond to a decision signal rather than to concrete property values.
-This falls in line with work by \citet{hunt2013trial} who investigated whether the necessary comparison of options in decision making tasks occurs in the ``space of abstract goods'' or the ``space of alternative actions''.
-Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment in the MEMENTO study.
-To investigate this, I utilized the temporal generalization method's flexibility in the choice of training and testing time points.
-In the training phase, I let classifiers learn a decision signal from time points in the trial centered around the actual motor response.
-In the testing phase, I then used these classifiers to find a decision signal earlier in the trial.
-If those signals could be found during the delay period, they would provide evidence that a preparatory decision state plays a part in working memory maintenance. \\
-For this, I split the \gls{meg} data into separate epochs:
-One set of epochs centered around the motor response with a length of 1000ms.
-And one set of epochs locked to the first stimulus presentation, extending 3.4 seconds into the trial, until the end of the second stimulus presentation.
-The first set of epochs was used to train multiple logistic regression estimators on \gls{meg} data in sensor space ($X=306 \times n\_samples$ features per trial) to classify the target $y$, left or right choice in each trial.
-The second set of epochs was used as test data, to see when and how well a neural decision signal emerges over the trial course.
-While the estimators where always trained on the entire training data, I manipulated the set of features in the test set to investigate the emergence of a decision representation based on specific trial characteristics, given that distinct stimulus properties and values likely contribute differentially to a stronger representation.
-For each analysis, I ran a permutation test with $N=10.000$ repetitions with shuffled targets to identify clusters of significant decoding accuracy.
-To evaluate findings on the group level, I averaged all subjects' temporal generalization results, and bootstrapped a sample of each participants' permutation maps to estimate cluster reaching statistical significance following the approach proposed by \citet{stelzer2013statistical}.\\
-Overall, I investigated the following manipulations:
-First, I decoded the decision representation for trials with high versus medium versus low values in magnitude or probability in the first stimulus (Figure \ref{fig:temporal-generalization-actual}).
-The underlying hypothesis for this analysis was if participants focus primarily on one of these properties as the behavioral analysis indicated, a high (or low) value in the first option might evoke a neural representation of a left (or right) choice already earlier in the trial, and allow an investigation if this neural code remains stable across the delay.
-While these analyses revealed better decodability of eventual choice for high and low values compared to less informative medium values (only visible in raw accuracies, masked in Figure \ref{fig:temporal-generalization-actual}), statistically significant clusters only emerged at the end of the trial where training time points and testing time points began to overlap.
-A statistically significant representation of the eventual choice was thus not found in the delay.
-However, this could have been a consequence of the requirements for stimulus combinations:
-Stimulus properties for the first option were explicitly constrained to never contain the best or worst combination of properties to prevent a decision forming already in the delay period \citep{curtis2010beyond}.
-A promising amount of probability or magnitude in the first option would regularly be beaten by a better combination in the second option and vice versa, influencing the eventual decision that became the target variable, and compromising a previously formed preparatory decision signal.\\
-To circumvent this restriction, I adjusted the target definition in the test data.
-Instead of decoding the actual choice at the end of the trial, I decoded a hypothetical target corresponding to strategies from Figures \ref{fig:strategy-mag}, \ref{fig:strategy-prob}, \ref{fig:strategy-mag-first}, and \ref{fig:strategy-prob-first}:
-If the first stimulus' magnitude (or probability, respectively) was high, I assumed the prepared choice would be left, and vice versa.
-While this analysis would not decode the actual ``choice'', it would decode a preparation signal expected given the presumed decision strategy and available information already at the start of the trial.
-The results of this analysis reveal a stronger decodable cluster, in which neural codes prior to the motor response generalize to trial parts during the first stimulus presentation and into the delay phase for both magnitude and probability (Figure \ref{fig:temporal-generalization-hypothetical}). \\
-Finally, I repeated this analysis taking into account the relative influence of both stimulus properties for each individual participant.
-For this, I used the beta coefficients of the behavioral analysis to estimate the subjective choice $C$ after the first stimulus presentation according to the formula
-
-\begin{equation}
-	\begin{aligned}
-	C = LMag * \beta_{LMag} + LProb * \beta_{LProb} + LEV * \beta_{LEV}
-	\end{aligned}
-\end{equation}
-
-where $LMag$, and $LProb$ are the min-max scaled magnitude and probability values of the left stimulus option per trial, $LEV$ is the expected value calculated from demeaned magnitude and probability, similarly min-max scaled, and all $\beta$ values are beta coefficients obtained from the logistic regression analysis on behavioral data.
-With this formula, the opposite ends of the value range of $C$ denote a tendency for the left and right stimulus option, respectively.
-From this value range, I extracted the lowest and highest quartile as test data trials, assigning estimated choices as target labels.
-Compared to the previous analyses which modeled hypothetical choice based on only one stimulus property, a decision signal generalizing to these estimated targets would indicate an integration of stimulus properties.
-The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-generalization-actual}, revealing no clusters in the first stimulus presentation or delay period.
-
-
-\begin{figure}
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-high_averaged_actual_pval-mask.png}
-		\caption{High magnitude trials (4 points)}
-		\label{fig:generalization-mag-high-actual}
-	\end{subfigure}
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-high_averaged_actual_pval-mask.png}
-		\caption{High probability trials (80\% chance)}
-		\label{fig:generalization-prob-high-actual}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-medium_averaged_actual_pval-mask.png}
-		\caption{Medium magnitude trials}
-		\label{fig:generalization-mag-medium-actual}
-	\end{subfigure}
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-medium_averaged_actual_pval-mask.png}
-		\caption{Medium probability trials}
-		\label{fig:generalization-prob-medium-actual}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-low_averaged_actual_pval-mask.png}
-		\caption{Low magnitude trials (0.5 points)}
-		\label{fig:generalization-mag-low-actual}
-	\end{subfigure}
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-low_averaged_actual_pval-mask.png}
-		\caption{Low probability trials (10\% chance)}
-		\label{fig:generalization-prob-low-actual}
-	\end{subfigure}
-	\caption[Temporal generalization: Eventual choice]{Temporal generalization results of decoding eventual choice (right option), overlaid with a permutation mask. The y-axes depict training time points, with 0 (horizontal line) being the motor response, negative values denoting trial samples prior to the motor response, and positive values denoting trial samples after the motor response. The x-axis depicts test data, covering the onset of the first stimulus until the offset of the second stimulus. Vertical lines illustrate trial structure. Only those parts of the plot that are not masked yielded accuracies that were higher than 95\% of accuracies obtained in $N=10.000$ permutations with shuffled training labels.}
-	\label{fig:temporal-generalization-actual}
-\end{figure}
-
-
-\begin{figure}
-%	\begin{subfigure}[c]{0.5\textwidth}
-%		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-high_averaged_hypothetical_pval-mask.png}
-%		\caption{High magnitude trials (4 points)}
-%		\label{fig:generalization-mag-high-hypothetical}
-%	\end{subfigure}
-%	\begin{subfigure}[c]{0.5\textwidth}
-%		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-high_averaged_hypothetical_pval-mask.png}
-%		\caption{High probability trials (80\% chance)}
-%		\label{fig:generalization-prob-high-hypothetical}
-%	\end{subfigure}
-%	\hfill
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-low_averaged_hypothetical_pval-mask.png}
-		\caption{Low magnitude trials (0.5 points)}
-		\label{fig:generalization-mag-low-hypothetical}
-	\end{subfigure}
-	\begin{subfigure}[c]{0.5\textwidth}
-		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-low_averaged_hypothetical_pval-mask.png}
-		\caption{Low probability trials (10\% chance)}
-		\label{fig:generalization-prob-low-hypothetical}
-	\end{subfigure}
-	\caption[Temporal generalization: Hypothetical choice]{Temporal generalization results of decoding hypothetical targets. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the decoding target (right option) was hypothetical, derived from whether the stimulus property in question was high or low in the first stimulus option, mirroring the behavioral strategies of sequentially evaluating stimulus properties.}
-	\label{fig:temporal-generalization-hypothetical}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=0.5\textwidth]{memento/generalization/sub-group_generalization_all-trials_averaged_estimated_pval-mask.png}
-	\caption[Temporal generalization: Estimated choice]{Temporal generalization results of decoding estimated targets, computed from integrating stimulus properties. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the presumed choice that served as the decoding target (right option) was derived from each participants' individual parameter influence on decision.}
-	\label{fig:temporal-generalization-estimated}
-\end{figure}
-
-
-In conjunction with the behavioral analyses, these temporal generalization results provide further evidence that participants employed the strategies based on sequential evaluation of magnitude and probability in decision making, and that a neural representation of this strategy persists in the delay period.
-A representation matching neural codes a few hundred milliseconds prior the motor response was found throughout the delay for presumed decisions for both magnitude and probability values separately, but not when integrated.
-Compared to the behavioral analysis that had access to all information in the trial that participants might have used to form a decision, the structure of this analysis followed the sequential nature in a trial in which participants learned of stimulus properties consecutively.
-After the first stimulus response in the delay period, this analysis can thus not differentiate whether participants went on to do a sequential evaluation of the second stimulus property (strategies \ref{fig:strategy-mag}, \ref{fig:strategy-prob}) or focused on a single property.
-The behavioral simulation results, however, provide sufficient confidence that only a sequential evaluation could have yielded the observed distribution of gains.
-The lack of a representation of choice from an integrated signal during the delay period, though, can be seen as evidence against an immediate integration of stimulus properties.
-It has to be noted, however, that these results could only be obtained by working around explicit design decisions in the experiment.
-The inclusion of trials that would allow confident decisions already after the first stimulus presentation could constitute an insightful addition to the experiment that would allow to test this hypothesis further.
-These results partially match other findings reported in the literature.
-Taking into account the previous findings by \citet{kaiserposter}, similar to findings by \citet{hunt2013trial}, a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values.
-This falls in line with other works that propose a neural space of actions [CONTINUE]...
-
-\pagebreak
-
 \subsection{Shared response modeling}
-%improve
-The previous temporal generalization analysis employed a continuous decoding approach to find neural patterns and their evolution over time in the signal.
-On the group level, however, ... \\
-In typical \gls{meg} analyses, group analyses are conducted by ... .
-However, it is difficult to disentangle whether distinct neural activation patterns across individuals are due to idiosyncratic cognitive processing, or if different participants have differently encoded but shared functional states.
-In \gls{fMRI}, functional alignment methods have become popular to discover shared representations in a high-dimensional functional space \citep{haxby2020hyperalignment}.
-But as outlined in \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
-The signal of interest in \gls{meg} data can thus clearly be expressed in fewer than 306 dimensions.
-\gls{SRM} \citep{NIPS2015_b3967a0e} is a method that combines functional alignment and dimensionality reduction.
-In the following analyses, I therefore sought to find out whether I can find meaningful low-dimensional structure in the high-dimensional dataset by means of functional alignment via \gls{SRM}.\\
-\gls{SRM} models each subject $i$'s response to temporally synchronized stimuli $X_i \in \mathbb{R}^{s \times t}$ as an orthogonal subject-specific base $W_i \in \mathbb{R}^{s\times k}$ and a $k$-dimensional shared response $S \in \mathbb{R}^{k \times t}$ such that
+
+%The previous temporal generalization analysis employed a continuous decoding approach to find neural patterns and their evolution over time in the signal.
+%On the group level, however, ... \\
+%In typical \gls{meg} analyses, group analyses are conducted by ... .
+%However, it is difficult to disentangle whether distinct neural activation patterns across individuals are due to idiosyncratic cognitive processing, or if different participants have differently encoded but shared functional states.
+%In \gls{fMRI}, functional alignment methods have become popular to discover shared representations in a high-dimensional functional space \citep{haxby2020hyperalignment}.
+
+
+As outlined in \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
+The signal of interest in \gls{meg} data can thus be expressed in fewer dimensions than the $D = 306$ channels of the \gls{meg} machine.
+A growing body of literature finds lower-dimensional structure in high-dimensional datasets.
+In the following analyses, I therefore sought to find out whether I can find meaningful low-dimensional structure in the high-dimensional dataset by means of the \gls{SRM}.\\
+\gls{SRM} \citep{NIPS2015_b3967a0e} is a method that combines functional alignment, a method prominently established in \gls{fMRI} research to align functional topographies instead of inter-individually distinct anatomical topographies \citep{haxby2011common}, and dimensionality reduction.
+\gls{SRM} was proposed as a method to functionally align the neural responses of several participants as measured with \gls{fMRI}.
+For this, it models each subject $i$'s response to temporally synchronized stimuli $X_i \in \mathbb{R}^{s \times t}$ as an orthogonal subject-specific base $W_i \in \mathbb{R}^{s\times k}$ and a $k$-dimensional shared response $S \in \mathbb{R}^{k \times t}$ such that
 
 
 \begin{equation}
@@ -749,24 +609,190 @@ where $t$ is the number of time points, $s$ is the number of sensors, $k$ is a h
 The orthonormal constraint $W^T_iW_i = I_k$ yields the computational advantages of robustness and preserving temporal geometry \citep{NIPS2015_b3967a0e}.
 Unlike, for example, \gls{pca}, the reduced dimensionality does not only emerge from the data of a single brain, but taking the activation patterns of several participants into account.
 It is a latent factor model, and rather than searching for direct correspondences across subjects, an initial dimensionality reduction is used to identify latent factors that are shared across subjects and support the observed measurements.
-One latent feature $k$ is a functional topography, and the \gls{SRM} models the neural signal as a linear combination of subject-specific functional topographies (see Figure \ref{fig:srm-basics-multi}).\\
-A central underlying assumption of functional alignment methods can be summarized as follows: When subjects experience the same events, their brain activity patterns may differ anatomically, but they should correspond to similar cognitive processes.
-However, an explicit requirement is therefore temporal synchronicity of stimulation across participants.
-For this reason, most applications of functional alignment use feature-rich, naturalistic stimulation such as movies \citep{haxby2020hyperalignment,bazeille2021empirical}.
-Nevertheless, the cleaned epochs from the experiment can be brought into a standardized order to meet this assumption \citep{chentutorial}.
-Given participants experience the same sequence of stimulus events, \gls{SRM} identifies common activity patterns across subjects, and provides a method to transform the original activity into a lower dimensional shared latent component space.
-Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix, and the subject specific weights that map between the shared space and each subject's idiosyncratic sensor space is an orthogonal matrix of dimensionality $306$ sensors $\times$ $k$ features.
-After the \gls{SRM} is fit, several procedures become possible, such as mapping one participant's data to a different participant's functional topography, denoising neural data by transforming the shared response via the subject-specific basis back to the individual participant's original topography, or inferring idiosyncratic signal components in individual participants' data by subtracting the shared response \citep{NIPS2015_b3967a0e}.
-The upcoming analyses showcase some of these and yet other use cases for the \gls{SRM}.\\
+One latent feature $k$ is a functional topography, and \gls{SRM} models the neural signal as a linear combination of subject-specific functional topographies (see Figure \ref{fig:srm-basics-multi}).\\
+\gls{SRM} thus identifies common activity patterns across neural responses, and provides a method to transform the original high-dimensional signal into a lower dimensional shared latent component space.
+For the \gls{meg} dataset at hand, the dimensionality is transformed as follows:
+Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix, and the subject specific weights that map between the shared space and each subject's idiosyncratic sensor space is an orthogonal matrix of dimensionality $306$ sensors $\times$ $k$ features.\\
+
 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\textwidth]{memento/srm/srm_basics_3.png}
-	\caption[SRM overview]{SRM overview: Sensor-by-time matrices are decomposed into a orthogonal subject specific basis matrix (sensor-by-features), a common shared feature matrix (features-by-time), and a subject-specific error}
+	\caption[SRM overview]{SRM overview: Sensor-by-time matrices are decomposed into a orthogonal subject specific basis matrix (sensor-by-features), a common shared feature matrix (features-by-time), and a subject-specific error.}
 	\label{fig:srm-basics-multi}
 \end{figure}
 
+
+
+After an \gls{SRM} is fit, several procedures become possible.
+Mapping one participant's data to a different participant's functional topography, denoising neural data by transforming the shared response via the subject-specific basis back to the individual participant's original topography, or inferring idiosyncratic signal components in individual participants' data by subtracting the shared response are applications that have been successfully demonstrated, albeit usually with \gls{fMRI} \citep{bazeille2021empirical, NIPS2015_b3967a0e, kalyani2023reduced}.
+Most commonly, the \gls{fMRI} acquisitions used for \gls{SRM} and other functional alignment methods stem from feature-rich, naturalistic stimulation such as movie watching tasks \citep{haxby2020hyperalignment}.
+This has the advantage that it generates a variety of cortical patterns with which these models can better generalize to unseen stimuli or novel tasks.
+While the experimental paradigm at hand likely generates fewer cognitive patterns than naturalistic protocols, the fact that it is measured with \gls{meg} opens up flexible opportunities for data analysis.
+One major advantage is the high temporal frequency of \gls{meg} data.
+Typical recommendations of minimal acquisition lengths are in the range of 5 to 15 minutes for \gls{fMRI} data (CITE) due to its long repetition time of 1-2s.
+At a sampling frequency of 1kHz, \gls{meg} acquires the same amount of samples in a fraction of time.
+The amount of samples measured in a single \gls{meg} experiment's trial can contain as many samples as an entire \gls{fMRI} experiment.
+This opens up opportunities for flexible analyses %definitions of what a ``subject''
+in the context of the \gls{SRM} without lacking sufficient training data. \\ %is.
+%For example, instead of investigating sharedness across different participants, an \gls{SRM} could also investigate sharedness across trials of one particular type within a single participant.
+One possible angle to analyze the experiment data with the aim of finding lower-dimensional structure is to create a shared response room with shared activity over specific parts of a trial.
+A comparison of the resulting trajectories of latent components in the lower-dimensional shared space could constitute a mean to differentiate neural representations between different trial types.
+Pursuing this line of thought, I conducted an analysis based on a probabilistic \gls{SRM} to investigate whether the latent functional topographies of different stimulus types differ.
+Given that the nine magnitude and probability combinations in the first option of each trial (letters A-H in Figure \ref{fig:memento_stim}) contained information to inform participants' decision process and thus should be maintained throughout the delay, I hypothesized that lower-dimensional representations might relate to these properties, for example as an abstract representation of the size of a potential reward magnitude.
+To investigate this, I created training data as follows:
+Within each subject, I shuffled epochs to forgo sequence effects and split them into a training and a test set, balanced with regard to the number of stimulus types.
+I then aggregated epochs in which the same stimulus was shown into average time series for the left and right stimulus presentation.
+Importantly, these time series were limited to the 700ms of visual presentation of the option.
+This confined the shared response model to find shared functional topographies in each options visual presentation, which in turn would allow to compare the shared space of each different stimulus.
+With nine common stimuli as the first and second option, respectively, this generated 18 different averaged time series per subject in training and test data.
+After fitting the shared response model, I retrieved the subject-specific base matrices to transform the unseen test data into the shared space.
+To uncover similar functional topographies across trial types, I then computed the correlation distance between each trial type's shared components.
+These components constitute a $k$ $\times$ 700 samples matrix, i.e., $k$ trajectories over a time span of 700ms, for each stimulus type.
+Correlation distance can take values in range $[0, 2]$, where $0$ indicates perfect positive correlation between vectors, $1$ indicates independence, and $2$ indicates perfect negative correlation.
+As I had no prior assumptions about the dimensionality of the shared space, I repeated the analysis for different values of $k$.
+Figure \ref{fig:srmsharedspaces} visualizes the resulting shared spaces for values of $k$ between 5 and 80.
+Figure \ref{fig:srmtransformedspaces} visualizes test data transformed into this shared space across subjects.
+The distance matrix is split into left and right options, which are in turn ordered by increasing probability.
+The first two rows and columns in the matrix thus correspond to options with 10\% probability, the next three to options with 20\% probability, and so forth.\\
+Instead of revealing a grouping of stimulus types by characteristics such as their magnitude, however, the most marked differences lay between the sides on which the stimulus was presented.
+
+
+
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/corr-dist_avg-traindata_full-stim_5-components_order-probability.png}
+		\caption{$k=5$}
+		\label{fig:shared5}
+	\end{subfigure}
+	\begin{subfigure}{0.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/corr-dist_avg-traindata_full-stim_10-components_order-probability.png}
+		\caption{$k=10$}
+		\label{fig:shared10}
+	\end{subfigure}
+	\begin{subfigure}{.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/corr-dist_avg-traindata_full-stim_20-components_order-probability.png}
+		\caption{$k=20$}
+		\label{fig:shared20}
+	\end{subfigure}
+	\begin{subfigure}{0.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/corr-dist_avg-traindata_full-stim_40-components_order-probability.png}
+		\caption{$k=40$}
+		\label{fig:shared40}
+	\end{subfigure}
+	\begin{subfigure}{0.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/corr-dist_avg-traindata_full-stim_80-components_order-probability.png}
+		\caption{$k=80$}
+		\label{fig:shared80}
+	\end{subfigure}
+	%\newline
+	\caption[Shared spaces of stimulus presentations]{Shared spaces of stimulus presentation, visualized as the correlation distance between the trajectories of functional topographies $k$ in the shared space between stimulus types. Darker brown values denote a stronger relationships, lighter values denote independence, and darker blue values would denote anticorrelation. Stimulus types are split into nine left and nine right options, ordered by increasing probability}
+	\label{fig:srmsharedspaces}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/group_avg-transformed_transformed-n-5-avg-test_trialdist-18_order-probability.png}
+		\caption{$k=5$}
+		\label{fig:shared5}
+	\end{subfigure}
+	\begin{subfigure}{0.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/group_avg-transformed_transformed-n-10-avg-test_trialdist-18_order-probability.png}
+		\caption{$k=10$}
+		\label{fig:shared10}
+	\end{subfigure}
+	\begin{subfigure}{.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/group_avg-transformed_transformed-n-20-avg-test_trialdist-18_order-probability.png}
+		\caption{$k=20$}
+		\label{fig:shared20}
+	\end{subfigure}
+	\begin{subfigure}{0.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/group_avg-transformed_transformed-n-40-avg-test_trialdist-18_order-probability.png}
+		\caption{$k=40$}
+		\label{fig:shared40}
+	\end{subfigure}
+	\begin{subfigure}{0.18\textwidth}
+		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/group_avg-transformed_transformed-n-80-avg-test_trialdist-18_order-probability.png}
+		\caption{$k=80$}
+		\label{fig:shared80}
+	\end{subfigure}
+	%\newline
+	\caption[Transformed test data in shared space]{Test data transformed into the shared space using subject-specific basis of the \gls{SRM}, averaged across subjects. As correlation distances do not follow a normal distribution, individual distance matrices were Fisher-Z-transformed prior to averaging and transformed back to correlation distance afterwards.}
+	\label{fig:srmtransformedspaces}
+\end{figure}
+
+%\begin{figure}
+%	\centering
+%	\begin{subfigure}{.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-001_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-001}
+%		\label{fig:transformed001}
+%	\end{subfigure}
+%	\begin{subfigure}{0.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-002_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-002}
+%		\label{fig:transformed002}
+%	\end{subfigure}
+%	\begin{subfigure}{.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-003_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-003}
+%		\label{fig:transformed003}
+%	\end{subfigure}
+%	\begin{subfigure}{0.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-004_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-004}
+%		\label{fig:transformed004}
+%	\end{subfigure}
+%	\begin{subfigure}{0.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-005_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-005}
+%		\label{fig:transformed005}
+%	\end{subfigure}
+%	%\newline
+%		\begin{subfigure}{.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-006_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-006}
+%		\label{fig:transformed006}
+%	\end{subfigure}
+%	\begin{subfigure}{0.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-007_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-007}
+%		\label{fig:transformed007}
+%	\end{subfigure}
+%	\begin{subfigure}{.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-008_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-008}
+%		\label{fig:transformed008}
+%	\end{subfigure}
+%	\begin{subfigure}{0.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-009_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-009}
+%		\label{fig:transformed009}
+%	\end{subfigure}
+%	\begin{subfigure}{0.18\textwidth}
+%		\includegraphics[trim={0.7cm 0.3cm 1cm 11cm},clip,width=\textwidth]{memento/srm/sub-010_corr-dist_transformed-avg-testdata_full-stim_order-probability.png}
+%		\caption{sub-010}
+%		\label{fig:transformed010}
+%	\end{subfigure}
+%	\caption[Test data transformed into the shared space]{Test data from the first ten participants, transformed into the shared space}
+%	\label{fig:transformedspaces}
+%\end{figure}
+
+
+Using only the time span of the first stimulus presentation in the trial, I extracted
+
+
+A central underlying assumption of functional alignment methods can be summarized as follows: When subjects experience the same events, their brain activity patterns may differ anatomically, but they should correspond to similar cognitive processes.
+However, an explicit requirement is therefore temporal synchronicity of stimulation across participants.
+For this reason, most applications of functional alignment use feature-rich, naturalistic stimulation such as movies \citep{haxby2020hyperalignment,bazeille2021empirical}.
+Nevertheless, the cleaned epochs from the experiment can be brought into a standardized order to meet this assumption \citep{chentutorial}.
+Given participants experience the same sequence of stimulus events,
+The upcoming analyses showcase some of these and yet other use cases for the \gls{SRM}.\\
 
 %In a recent comparison of functional alignment methods, \gls{SRM} yielded the highest decoding accuracy gains on naturalistic \gls{fMRI} data \citep{bazeille2021empirical}.
 %\citep{janati2020multi} employed functional alignment to perform source reconstruction.
@@ -787,7 +813,6 @@ Initially: SRM on a per subject level, with each epoch treated as its own subjec
 I visualized the individual features, and calculated the correlation distance between timepoints in the shared space.
 
 
-\subsubsection{Sanity checks}
 
 As \gls{SRM} has rarely been employed in \gls{meg} data in the published literature, I first investigated whether basic stimulus properties are retained in the lower-dimensional shared response space of the model.
 This can serve as a sanity check if information of interest is retained.
@@ -1174,6 +1199,150 @@ There was no prominent confusion pattern over the trial course, but the confusio
 
 \pagebreak
 
+
+
+\subsection{Temporal generalization}
+\label{temporal-generalization-analysis}
+
+Extending the behavioral logistic regression classification, I performed several within-subject temporal generalization analyses to study the nature and progression of decision representation.
+\citet{king2014characterizing} formalized this method as follows:
+[DESCRIBE ANALYSIS METHOD HERE].
+Off-diagonal spreading of decoding accuracies indicates increasingly stable coding, whereas sole decodability in the diagonal of the matrix is a sign for evolving neural codes that do not generalize well to other time points.\\
+A temporal generalization analysis was already performed by \citet{kaiserposter}.
+In their work, a classifier was trained to decode the magnitude, probability, or expected value of the first stimulus option at certain time points throughout the entire trial, and tested on all other time points.
+With this, they assessed the signal stability of the neural codes for these stimulus properties.
+Their results showed stable above-chance decoding accuracy of stimulus properties mostly during the stimulus presentation.
+In the delay period, stable coding decreased sharply, and even time-point-to-time-point decodability, the diagonal of the matrix, vanished, most severely for magnitude and expected value.
+It was thus mostly during the visual presentation of the stimulus and shortly afterwards that value properties -- or their associated visual features -- had stable or dynamic neural codes that classifiers could pick up.\\
+Extending these analyses, I investigated whether the neural representation during the delay period could correspond to a decision signal rather than to concrete property values.
+This falls in line with work by \citet{hunt2013trial} who investigated whether the necessary comparison of options in decision making tasks occurs in the ``space of abstract goods'' or the ``space of alternative actions''.
+Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment in the MEMENTO study.
+To investigate this, I utilized the temporal generalization method's flexibility in the choice of training and testing time points.
+In the training phase, I let classifiers learn a decision signal from time points in the trial centered around the actual motor response.
+In the testing phase, I then used these classifiers to find a decision signal earlier in the trial.
+If those signals could be found during the delay period, they would provide evidence that a preparatory decision state plays a part in working memory maintenance. \\
+For this, I split the \gls{meg} data into separate epochs:
+One set of epochs centered around the motor response with a length of 1000ms.
+And one set of epochs locked to the first stimulus presentation, extending 3.4 seconds into the trial, until the end of the second stimulus presentation.
+The first set of epochs was used to train multiple logistic regression estimators on \gls{meg} data in sensor space ($X=306 \times n\_samples$ features per trial) to classify the target $y$, left or right choice in each trial.
+The second set of epochs was used as test data, to see when and how well a neural decision signal emerges over the trial course.
+While the estimators where always trained on the entire training data, I manipulated the set of features in the test set to investigate the emergence of a decision representation based on specific trial characteristics, given that distinct stimulus properties and values likely contribute differentially to a stronger representation.
+For each analysis, I ran a permutation test with $N=10.000$ repetitions with shuffled targets to identify clusters of significant decoding accuracy.
+To evaluate findings on the group level, I averaged all subjects' temporal generalization results, and bootstrapped a sample of each participants' permutation maps to estimate cluster reaching statistical significance following the approach proposed by \citet{stelzer2013statistical}.\\
+Overall, I investigated the following manipulations:
+First, I decoded the decision representation for trials with high versus medium versus low values in magnitude or probability in the first stimulus (Figure \ref{fig:temporal-generalization-actual}).
+The underlying hypothesis for this analysis was if participants focus primarily on one of these properties as the behavioral analysis indicated, a high (or low) value in the first option might evoke a neural representation of a left (or right) choice already earlier in the trial, and allow an investigation if this neural code remains stable across the delay.
+While these analyses revealed better decodability of eventual choice for high and low values compared to less informative medium values (only visible in raw accuracies, masked in Figure \ref{fig:temporal-generalization-actual}), statistically significant clusters only emerged at the end of the trial where training time points and testing time points began to overlap.
+A statistically significant representation of the eventual choice was thus not found in the delay.
+However, this could have been a consequence of the requirements for stimulus combinations:
+Stimulus properties for the first option were explicitly constrained to never contain the best or worst combination of properties to prevent a decision forming already in the delay period \citep{curtis2010beyond}.
+A promising amount of probability or magnitude in the first option would regularly be beaten by a better combination in the second option and vice versa, influencing the eventual decision that became the target variable, and compromising a previously formed preparatory decision signal.\\
+To circumvent this restriction, I adjusted the target definition in the test data.
+Instead of decoding the actual choice at the end of the trial, I decoded a hypothetical target corresponding to strategies from Figures \ref{fig:strategy-mag}, \ref{fig:strategy-prob}, \ref{fig:strategy-mag-first}, and \ref{fig:strategy-prob-first}:
+If the first stimulus' magnitude (or probability, respectively) was high, I assumed the prepared choice would be left, and vice versa.
+While this analysis would not decode the actual ``choice'', it would decode a preparation signal expected given the presumed decision strategy and available information already at the start of the trial.
+The results of this analysis reveal a stronger decodable cluster, in which neural codes prior to the motor response generalize to trial parts during the first stimulus presentation and into the delay phase for both magnitude and probability (Figure \ref{fig:temporal-generalization-hypothetical}). \\
+Finally, I repeated this analysis taking into account the relative influence of both stimulus properties for each individual participant.
+For this, I used the beta coefficients of the behavioral analysis to estimate the subjective choice $C$ after the first stimulus presentation according to the formula
+
+\begin{equation}
+	\begin{aligned}
+		C = LMag * \beta_{LMag} + LProb * \beta_{LProb} + LEV * \beta_{LEV}
+	\end{aligned}
+\end{equation}
+
+where $LMag$, and $LProb$ are the min-max scaled magnitude and probability values of the left stimulus option per trial, $LEV$ is the expected value calculated from demeaned magnitude and probability, similarly min-max scaled, and all $\beta$ values are beta coefficients obtained from the logistic regression analysis on behavioral data.
+With this formula, the opposite ends of the value range of $C$ denote a tendency for the left and right stimulus option, respectively.
+From this value range, I extracted the lowest and highest quartile as test data trials, assigning estimated choices as target labels.
+Compared to the previous analyses which modeled hypothetical choice based on only one stimulus property, a decision signal generalizing to these estimated targets would indicate an integration of stimulus properties.
+The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-generalization-actual}, revealing no clusters in the first stimulus presentation or delay period.
+
+
+\begin{figure}
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-high_averaged_actual_pval-mask.png}
+		\caption{High magnitude trials (4 points)}
+		\label{fig:generalization-mag-high-actual}
+	\end{subfigure}
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-high_averaged_actual_pval-mask.png}
+		\caption{High probability trials (80\% chance)}
+		\label{fig:generalization-prob-high-actual}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-medium_averaged_actual_pval-mask.png}
+		\caption{Medium magnitude trials}
+		\label{fig:generalization-mag-medium-actual}
+	\end{subfigure}
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-medium_averaged_actual_pval-mask.png}
+		\caption{Medium probability trials}
+		\label{fig:generalization-prob-medium-actual}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-low_averaged_actual_pval-mask.png}
+		\caption{Low magnitude trials (0.5 points)}
+		\label{fig:generalization-mag-low-actual}
+	\end{subfigure}
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-low_averaged_actual_pval-mask.png}
+		\caption{Low probability trials (10\% chance)}
+		\label{fig:generalization-prob-low-actual}
+	\end{subfigure}
+	\caption[Temporal generalization: Eventual choice]{Temporal generalization results of decoding eventual choice (right option), overlaid with a permutation mask. The y-axes depict training time points, with 0 (horizontal line) being the motor response, negative values denoting trial samples prior to the motor response, and positive values denoting trial samples after the motor response. The x-axis depicts test data, covering the onset of the first stimulus until the offset of the second stimulus. Vertical lines illustrate trial structure. Only those parts of the plot that are not masked yielded accuracies that were higher than 95\% of accuracies obtained in $N=10.000$ permutations with shuffled training labels.}
+	\label{fig:temporal-generalization-actual}
+\end{figure}
+
+
+\begin{figure}
+	%	\begin{subfigure}[c]{0.5\textwidth}
+		%		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-high_averaged_hypothetical_pval-mask.png}
+		%		\caption{High magnitude trials (4 points)}
+		%		\label{fig:generalization-mag-high-hypothetical}
+		%	\end{subfigure}
+	%	\begin{subfigure}[c]{0.5\textwidth}
+		%		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-high_averaged_hypothetical_pval-mask.png}
+		%		\caption{High probability trials (80\% chance)}
+		%		\label{fig:generalization-prob-high-hypothetical}
+		%	\end{subfigure}
+	%	\hfill
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_magnitude-low_averaged_hypothetical_pval-mask.png}
+		\caption{Low magnitude trials (0.5 points)}
+		\label{fig:generalization-mag-low-hypothetical}
+	\end{subfigure}
+	\begin{subfigure}[c]{0.5\textwidth}
+		\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=\textwidth]{memento/generalization/sub-group_generalization_probability-low_averaged_hypothetical_pval-mask.png}
+		\caption{Low probability trials (10\% chance)}
+		\label{fig:generalization-prob-low-hypothetical}
+	\end{subfigure}
+	\caption[Temporal generalization: Hypothetical choice]{Temporal generalization results of decoding hypothetical targets. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the decoding target (right option) was hypothetical, derived from whether the stimulus property in question was high or low in the first stimulus option, mirroring the behavioral strategies of sequentially evaluating stimulus properties.}
+	\label{fig:temporal-generalization-hypothetical}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[trim={0 0.5cm 0 1.15cm},clip,width=0.5\textwidth]{memento/generalization/sub-group_generalization_all-trials_averaged_estimated_pval-mask.png}
+	\caption[Temporal generalization: Estimated choice]{Temporal generalization results of decoding estimated targets, computed from integrating stimulus properties. Figure and analysis are similar to \ref{fig:temporal-generalization-actual}, but the presumed choice that served as the decoding target (right option) was derived from each participants' individual parameter influence on decision.}
+	\label{fig:temporal-generalization-estimated}
+\end{figure}
+
+
+In conjunction with the behavioral analyses, these temporal generalization results provide further evidence that participants employed the strategies based on sequential evaluation of magnitude and probability in decision making, and that a neural representation of this strategy persists in the delay period.
+A representation matching neural codes a few hundred milliseconds prior the motor response was found throughout the delay for presumed decisions for both magnitude and probability values separately, but not when integrated.
+Compared to the behavioral analysis that had access to all information in the trial that participants might have used to form a decision, the structure of this analysis followed the sequential nature in a trial in which participants learned of stimulus properties consecutively.
+After the first stimulus response in the delay period, this analysis can thus not differentiate whether participants went on to do a sequential evaluation of the second stimulus property (strategies \ref{fig:strategy-mag}, \ref{fig:strategy-prob}) or focused on a single property.
+The behavioral simulation results, however, provide sufficient confidence that only a sequential evaluation could have yielded the observed distribution of gains.
+The lack of a representation of choice from an integrated signal during the delay period, though, can be seen as evidence against an immediate integration of stimulus properties.
+It has to be noted, however, that these results could only be obtained by working around explicit design decisions in the experiment.
+The inclusion of trials that would allow confident decisions already after the first stimulus presentation could constitute an insightful addition to the experiment that would allow to test this hypothesis further.
+These results partially match other findings reported in the literature.
+Taking into account the previous findings by \citet{kaiserposter}, similar to findings by \citet{hunt2013trial}, a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values.
+This falls in line with other works that propose a neural space of actions [CONTINUE]...
+
+\pagebreak
 
 
 \section{Discussion}
