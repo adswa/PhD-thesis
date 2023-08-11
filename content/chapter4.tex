@@ -454,10 +454,10 @@ To avoid this common pitfall, all machine-learning analyses were set up as a so-
 Additionally, pipelines ensure consistent preprocessing by applying transformers to training and test data.
 A transformer common to pipelines in all analyses was a \texttt{StandardScaler()}, transforming data to have zero mean and unit variance.
 The final estimator common to all pipelines was a logistic regression classifier with L2 regularization and a \texttt{liblinear} solver.
-The L2 regularizer of this estimator assumes that all features are centered around zero or have variance in the same order \citep{scikit-learn-scaler}.
-Even in \gls{meg} data in which different sensor types typically have different scales, this prerequisite holds due to the combination of \gls{SSS} and scaling.
-Internally, the \texttt{liblinear} solver uses a coordinate descent (CD) algorithm, which extends binary classifications problems to a multinomial case by decomposing the optimization problem into several one-vs-rest problems \citep{scikit-learn-liblinear}.\\
-Where the analysis is a decoding analysis, a model predicts a target, such as stimulus identity, based on considering the relationships between multiple \gls{meg} channels.
+%The L2 regularizer of this estimator assumes that all features are centered around zero or have variance in the same order \citep{scikit-learn-scaler}.
+%Even in \gls{meg} data in which different sensor types typically have different scales, this prerequisite holds due to the combination of \gls{SSS} and scaling.
+Internally, the \texttt{liblinear} solver uses a coordinate descent (CD) algorithm, which extends binary classifications problems to a multinomial case by decomposing the optimization problem into several one-vs-rest problems such that multi-target classifications become possible \citep{scikit-learn-liblinear}.\\
+Where the analysis is a decoding analysis, a model predicts a target, such as stimulus identity, based on considering the relationships between multiple \gls{meg} channels. (CONTINUE)
 
 
 
