@@ -613,7 +613,8 @@ It is a latent factor model, and rather than searching for direct correspondence
 One latent feature $k$ is a functional topography, and \gls{SRM} models the neural signal as a linear combination of subject-specific functional topographies (see Figure \ref{fig:srm-basics-multi}).\\
 \gls{SRM} thus identifies common activity patterns across neural responses, and provides a method to transform the original high-dimensional signal into a lower dimensional shared latent component space.
 For the \gls{meg} dataset at hand, the dimensionality is transformed as follows:
-Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix, and the subject specific weights that map between the shared space and each subject's idiosyncratic sensor space is an orthogonal matrix of dimensionality $306$ sensors $\times$ $k$ features.\\
+Where the original data in sensor space is a $306$ sensors $\times$ number of samples matrix, the shared response space is a $k$ features $\times$ number of samples matrix, and the subject specific weights that map between the shared space and each subject's idiosyncratic sensor space is an orthogonal matrix of dimensionality $306$ sensors $\times$ $k$ features.
+All upcoming analyses used the probabilistic \gls{SRM} implementation of the \texttt{brainiak} library \citep{brainiak}. \\
 
 
 
@@ -633,34 +634,10 @@ This has the advantage that it generates a variety of cortical patterns with whi
 While the experimental paradigm at hand likely generates fewer cognitive patterns than naturalistic protocols, the fact that it is measured with \gls{meg} opens up flexible opportunities for data analysis.
 One major advantage is the high temporal frequency of \gls{meg} data.
 Typical recommendations of minimal acquisition lengths are in the range of 5 to 15 minutes for \gls{fMRI} data (CITE) due to its long repetition time of 1-2s.
-At a sampling frequency of 1kHz, \gls{meg} acquires the same amount of samples in a fraction of time.
+At a sampling frequency of 1kHz, \gls{meg} acquires the same amount of samples in a fraction of recording time.
 The amount of samples measured in a single \gls{meg} experiment's trial can contain as many samples as an entire \gls{fMRI} experiment.
-This opens up opportunities for flexible analyses %definitions of what a ``subject''
-in the context of the \gls{SRM} without lacking sufficient training data. \\ %is.
+This opens up opportunities to train an \gls{SRM} based on trial time courses of a few seconds.\\ %is.
 %For example, instead of investigating sharedness across different participants, an \gls{SRM} could also investigate sharedness across trials of one particular type within a single participant.
-One possible angle to analyze the experiment data with the aim of finding lower-dimensional structure is to create a shared response room with shared activity over specific parts of a trial.
-A comparison of the resulting trajectories of latent components in the lower-dimensional shared space could constitute a mean to differentiate neural representations between different trial types.
-Pursuing this line of thought, I conducted an analysis based on a probabilistic \gls{SRM} to investigate whether the latent functional topographies of different stimulus types differ.
-Given that the nine magnitude and probability combinations in the first option of each trial (letters A-H in Figure \ref{fig:memento_stim}) contained information to inform participants' decision process and thus should be maintained throughout the delay, I hypothesized that lower-dimensional representations might relate to these properties, for example as an abstract representation of the size of a potential reward magnitude.
-To investigate this, I created training data as follows:
-Within each subject, I shuffled epochs to forgo sequence effects and split them into a training and a test set, balanced with regard to the number of stimulus types.
-I then aggregated epochs in which the same stimulus was shown into average time series for the left and right stimulus presentation.
-Importantly, these time series were limited to the 700ms of visual presentation of the option.
-This confined the shared response model to find shared functional topographies in each options visual presentation, which in turn would allow to compare the shared space of each different stimulus.
-With nine common stimuli as the first and second option, respectively, this generated 18 different averaged time series per subject in training and test data.
-After fitting the shared response model, I retrieved the subject-specific base matrices to transform the unseen test data into the shared space.
-To uncover similar functional topographies across trial types, I then computed the correlation distance between each trial type's shared components.
-These components constitute a $k$ $\times$ 700 samples matrix, i.e., $k$ trajectories over a time span of 700ms, for each stimulus type.
-Correlation distance can take values in range $[0, 2]$, where $0$ indicates perfect positive correlation between vectors, $1$ indicates independence, and $2$ indicates perfect negative correlation.
-As I had no prior assumptions about the dimensionality of the shared space, I repeated the analysis for different values of $k$.
-Figure \ref{fig:srmsharedspaces} visualizes the resulting shared spaces for values of $k$ between 5 and 80.
-Figure \ref{fig:srmtransformedspaces} visualizes test data transformed into this shared space across subjects.
-The distance matrix is split into left and right options, which are in turn ordered by increasing probability.
-The first two rows and columns in the matrix thus correspond to options with 10\% probability, the next three to options with 20\% probability, and so forth.\\
-Instead of revealing a grouping of stimulus types by characteristics such as their magnitude, however, the most marked differences lay between the sides on which the stimulus was presented.
-
-
-
 
 \begin{figure}
 	\centering
@@ -695,6 +672,29 @@ Instead of revealing a grouping of stimulus types by characteristics such as the
 \end{figure}
 
 
+One possible angle to analyze the experiment data with the aim of finding lower-dimensional structure is to create a shared response room with shared activity over specific parts of a trial.
+A comparison of the resulting trajectories of latent components in the lower-dimensional shared space could constitute a mean to differentiate neural representations between different trial types.
+Pursuing this line of thought, I conducted an analysis to investigate whether the latent functional topographies of different stimulus types differ.
+Given that the nine main magnitude and probability combinations (letters A-H in Figure \ref{fig:memento_stim}) contained information to inform participants' decision process and thus should be maintained throughout the delay, I hypothesized that lower-dimensional representations might relate to these properties, for example as an abstract representation of the size of a potential reward magnitude.
+To investigate this, I created training data as follows:
+Within each subject, I shuffled epochs to forgo sequence effects and split them into a training and a test set, balanced with regard to the number of stimulus types, and z-scored the data within sensors for each epoch.
+I then aggregated epochs in which the same stimulus was shown into average time series, separately for the left and right stimulus presentation.
+Importantly, these time series were limited to the 700ms of visual presentation of the option.
+This confined the shared response model to find shared functional topographies in each options visual presentation, which in turn would allow to compare the shared space of each different stimulus.
+With nine common stimuli as the first and second option, respectively, this generated 18 different averaged time series per subject in training and test data.
+After fitting the shared response model, I retrieved the subject-specific base matrices to transform the unseen test data into the shared space.
+These spaces constitute a $k$ $\times$ 700 samples matrix, i.e., $k$ trajectories over a time span of 700ms, for each stimulus type.
+To uncover differentially similar functional topographies across trial types, I then computed the correlation distance between each trial type's shared components, i.e., the similarity between the shared response during one type of trial to all other trial types, for both the left and the right stimulus option.
+Correlation distance can take values in range $[0, 2]$, where $0$ indicates perfect positive correlation between vectors, $1$ indicates independence, and $2$ indicates perfect negative correlation.\\
+As I had no prior assumptions about the dimensionality of the shared space, I repeated the analysis for different values of $k$.
+Figure \ref{fig:srmsharedspaces} visualizes the resulting shared spaces for values of $k$ between 5 and 80.
+Figure \ref{fig:srmtransformedspaces} visualizes test data transformed into this shared space across subjects.
+The distance matrix is split into left and right options, which are in turn ordered by increasing probability.
+The first two rows and columns in the matrix thus correspond to options with 10\% probability, the next three to options with 20\% probability, and so forth.
+Instead of revealing a grouping of stimulus types by characteristics such as their magnitude, however, the most marked differences lay between the sides on which the stimulus was presented.
+The functional topographies in participant's neural activity was more similar for different stimuli presented on the left than the same stimulus presented on the left and right side, and the more fine-grained distances between stimulus types did not follow a pattern determined by the values of the reward magnitude or probability.
+
+
 \begin{figure}
 	\centering
 	\begin{subfigure}{.18\textwidth}
@@ -723,7 +723,7 @@ Instead of revealing a grouping of stimulus types by characteristics such as the
 		\label{fig:shared80}
 	\end{subfigure}
 	%\newline
-	\caption[Transformed test data in shared space]{Test data transformed into the shared space using subject-specific basis of the \gls{SRM}, averaged across subjects. As correlation distances do not follow a normal distribution, individual distance matrices were Fisher-Z-transformed prior to averaging and transformed back to correlation distance afterwards.}
+	\caption[Transformed test data in shared space]{Similarity of time courses from different stimulus options in shared space, ... Test data transformed into the shared space using subject-specific basis of the \gls{SRM}, averaged across subjects. As correlation distances do not follow a normal distribution, individual distance matrices were Fisher-Z-transformed prior to averaging and transformed back to correlation distance afterwards.}
 	\label{fig:srmtransformedspaces}
 \end{figure}
 
@@ -784,16 +784,34 @@ Instead of revealing a grouping of stimulus types by characteristics such as the
 %	\label{fig:transformedspaces}
 %\end{figure}
 
+One potential reason for this is that the potentially subtle differences between stimulus types were not prominent enough to be reflected strongly in the shared spaces, and signals corresponding to more general cognition, such as generic visual processing, dominated instead.
+To investigate whether features corresponding to the trial structure in general are preserved during \gls{SRM}, I used the shared response space generated over the entire trial course to visualize the time point by time point similarity of the trial in shared space.
+This analyses mirrored the previous approach, but epochs were not split by stimulus type and pooled instead, and the correlation distance was not calculated between time series, but between $k$ features per time time point.
+The result is visualized for three different values of $k$ in Figure \ref{fig:srmsharedspacetrial}.
+The trial structure, in particular marked differences between the first stimulus, the delay phase, and the second stimulus, are visible for shared spaces of all dimensionalities.
+With growing dimensionality $k$, similarities and dissimilarities decrease, which can be expected given that larger dimensionality values extend the vectors between which correlation distance is calculated, and can also be observed with increasing dimensionality in the previous shared spaces.
 
-Using only the time span of the first stimulus presentation in the trial, I extracted
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[trim={7cm 0cm 0cm 0cm},clip,width=\textwidth]{memento/srm/task-memento_srm-5_fulltrial_distances.png}
+		\caption{$k$=5}
+	\end{subfigure}
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[trim={0.5cm 0cm 0.5cm 0.5cm},clip,width=\textwidth]{memento/srm/task-memento_srm-10_fulltrial_distances.png}
+		\caption{$k$=10}
+	\end{subfigure}
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[trim={0.5cm 0cm 0.5cm 0.5cm},clip,width=\textwidth]{memento/srm/task-memento_srm-20_fulltrial_distances.png}
+		\caption{$k$=20}
+	\end{subfigure}
+	\caption[Time point by time point correlation distances in shared spaces]{Time point by time point correlation distances in shared spaces build from the entire trial, across epochs with different stimulus types, for different values of $k$.}
+	\label{fig:srmsharedspacetrial}
+\end{figure}
 
 
-A central underlying assumption of functional alignment methods can be summarized as follows: When subjects experience the same events, their brain activity patterns may differ anatomically, but they should correspond to similar cognitive processes.
-However, an explicit requirement is therefore temporal synchronicity of stimulation across participants.
-For this reason, most applications of functional alignment use feature-rich, naturalistic stimulation such as movies \citep{haxby2020hyperalignment,bazeille2021empirical}.
-Nevertheless, the cleaned epochs from the experiment can be brought into a standardized order to meet this assumption \citep{chentutorial}.
-Given participants experience the same sequence of stimulus events,
-The upcoming analyses showcase some of these and yet other use cases for the \gls{SRM}.\\
+%For this reason, most applications of functional alignment use feature-rich, naturalistic stimulation such as movies \citep{haxby2020hyperalignment,bazeille2021empirical}.
+%Nevertheless, the cleaned epochs from the experiment can be brought into a standardized order to meet this assumption \citep{chentutorial}.
 
 %In a recent comparison of functional alignment methods, \gls{SRM} yielded the highest decoding accuracy gains on naturalistic \gls{fMRI} data \citep{bazeille2021empirical}.
 %\citep{janati2020multi} employed functional alignment to perform source reconstruction.
@@ -810,37 +828,14 @@ The upcoming analyses showcase some of these and yet other use cases for the \gl
 %	\label{fig:srm-basics}
 %\end{figure}
 
-Initially: SRM on a per subject level, with each epoch treated as its own subject (loosen the definition of a subject). The result, individual trial weights, were used to transform trial data from sensor space to shared space, and thus cleaned from idiosyncratic elements.
-I visualized the individual features, and calculated the correlation distance between timepoints in the shared space.
-
-
-
-As \gls{SRM} has rarely been employed in \gls{meg} data in the published literature, I first investigated whether basic stimulus properties are retained in the lower-dimensional shared response space of the model.
-This can serve as a sanity check if information of interest is retained.
-For this, I used the nine different probability and magnitude combinations that were used for the left stimulus option (letters A-I in Figure \ref{fig:memento_stim}) as stimulus identities of interest to inform trial ordering and detect condition differences.
-I used two different approaches to visualize the shared space for this:
-One based on correlation distances of features in the shared space, to detect dissimilarities across features.
-And one based on using the shared space to either visualize its features over a stereotypical trial course or transform unseen test data into shared space.
-The
-Prior to training the shared response model, I preprocessed the neural data as follows:
-(Train-test split, Reordering, averaging, SRM fitting)
-I trained probabilistic shared response model on a training set of neural data, ordered by
-We normalized epoch data by z-scoring each epoch within sensors.
-For this, a shared response model was trained on a subset of data.
-Next, we calculated the correlation distance between the shared response during one type of trial to al other trial types, for both the left and the right stimulus option.
-The largest correlation distances, however, did not emerge between different stimulus identities, but between stimuli presented on the left versus the right side of the screen (Figure TODO).
-An underlying assumption for this is that neural signals differ across stimulus types.
-
-
 \subsection{Shared response modeling in spectral space}
 
-As previously introduced, shared response modeling relies on the assumption that different participants display similar cognitive processes in response to the same tasks or stimuli \citep{NIPS2015_b3967a0e}.
-In previous analysis, I generated artificial correspondence of first options by reordering the trial sequence.
-But this reordering only concerned the visual stimulation.
-The distribution of reaction times in the task (\ref{behavioral-analysis}), however, revealed different processing speeds, evident in intra- and inter-individual variation in response time.
-Given previous findings ... Similar variation in cognitive processing could exist during working memory maintenance during the delay.
-Thus, the activation of interest could be invisible for the shared response model if it occurs at too different time points.
-To use the shared response model despite idiosyncratic processing, I transformed the input data into a space without timing information.
+In further analyses, I investigated delay and decision periods of the trial.
+In comparison to the trial phases with visual stimulation, neural activity in these periods should be driven less by external visual stimuli, but rather by internal cognitive processes related to working memory maintenance, motor preparation, or decision making.
+The distribution of reaction times in the task (see Figure \ref{behavioral-analysis}), however, revealed different processing speeds, evident in intra- and inter-individual variation in response time.
+Therefore, even if participants showed similar cognitive processes during the trial that \gls{SRM} could detect, their temporal characteristics likely vary considerably across trials and subjects.
+Thus, given the explicit requirement of temporal synchronicity for functional alignment and the high temporal resolution of \gls{meg}, this could pose a challenge.
+To use the shared response model nevertheless, I utilized the flexibility with which the \gls{SRM} method allows transformations between idiosyncratic and shared neural spaces, and trained the model with input data in a space without timing information.
 For this, I drew inspiration from spectral analysis.\\
 Spectral analysis consists of deconstructing a time domain signal of a given length into its constituent oscillatory components using Fourier analysis.
 MEG signal consists of oscillations with an amplitude, a frequency, and a phase.
@@ -849,13 +844,12 @@ Phase involves the relationship between two or more signals that share the same 
 If the peaks of two signals with the same frequency are in exact alignment at the same time, they are said to be in phase and out of phase otherwise.
 If the exact timing or duration of shared activity in question is subject to intra- and inter-individual variation, it is not necessarily phase-locked.
 However, a spectral decomposition of this signal results in power spectrum, with the frequency domain of the oscillations on the x axis, and the amplitude on the y axis.
-Thus, the signal is expressed as a function of frequency rather than time.
-Such a transformation from a time-resolved representation of data to a representation in the frequency domain can be used to find shared signals with different temporal signatures [CITE probably every introductory MEG book].
+Typically, these transformations are used in time-frequency analyses to investigate the progression of \gls{meg} power in different frequency bands of interest over time \citep{hari2017primer}.
+However, in the upcoming analyses I them to expressed signal as a function of frequency rather than time and use the transformation from a time-resolved representation of data to a representation in the frequency domain to find shared signals with different temporal signatures.
 Importantly, the model bases of an \gls{SRM} assign weights to sensors regardless of whether they contribute to a shared signal in time-resolved or spectral space.
-Therefore, we can fit a shared response model on spectral data to find shared frequency components, but then use the model basis to transform time-resolved data (see Figure \ref{fig:spectral-srm}).
+Therefore, I can fit a shared response model on spectral data to find shared frequency components, but then use the model bases to transform time-resolved data (see Figure \ref{fig:spectral-srm}).
 This not only allows the visualization of shared components as a time series, but also easier interpretation of components in the context of the experimental paradigm.
-
-Advantage of spectral transformation: No need to decide for a frequency band(?) given the unclear evidence across studies.
+To evaluate the feasibility of this novel method, I first conducted a simulation study.
 
 \begin{figure}
 	\centering
@@ -886,9 +880,8 @@ Advantage of spectral transformation: No need to decide for a frequency band(?) 
 	\label{fig:sim_artificial_signal}
 \end{figure}
 
-I investigated the feasibility of this method with a simulation study:
-For this, I generated a ``ground truth'' signal with a given frequency and wave form, and embedded it partially into 306 artificial sensors with Gaussian noise in order to simulate \gls{meg} data (Figure \ref{fig:sim_artificial_signal}).
-To mirror how brain signals are only present in certain sensors and with varying strengths, only a fixed amount of sensors receives the signal.
+To simulate \gls{meg} data, generated a ``ground truth'' signal with a given frequency and wave form, and embedded it partially into 306 artificial sensors with Gaussian noise (Figure \ref{fig:sim_artificial_signal}).
+To mirror how brain signals are only present in certain sensors and with varying strengths, only a fixed amount of sensors received the signal.
 For each sensor with a signal, a random weight between is drawn that determines the strength with which the signal is scaled.
 This is repeated for N artificial subjects, but with a different random phase offset in the signal for each to simulate data from several subjects with a common frequency component that occurs at different points in time.
 If the \gls{SRM} is successful, the shared response should reflect the ground truth signal despite phase offsets, and the subject-specific model bases should reflect the magnitudes of the weights for each sensor.\\
@@ -899,7 +892,7 @@ The sensor weights that the model estimates for each component also do not show 
 In other words, with phase shifts between individual simulations' signals, different components of the shared space capture several participants' signals, but no \textit{general} ground truth signal.
 However, transforming the signal into its frequency components, the spectral space, removes timing information, and with it, the phase offsets.
 While the components in spectral space are not easy to interpret or differentiate (see Figure \ref{fig:sim-spectral-shared}), the scatterplot reveals that certain components' weights show a clear association to the weights used for model generation \ref{fig:sim-spectral-weights}.\\
-This becomes apparent when shared components are visualized as time series by using the subject-specific weight matrices of the \gls{SRM} and individual subject's time-resolved data.
+This becomes apparent when shared components are visualized as time series by using the subject-specific weight matrices of the \gls{SRM} and individual subject's time-resolved data (Figure \ref{fig:sim-shared-transformed}).
 One or few components are consistently representing the original signal well across subjects, laying the basis for both identifying shared signal in phase-shifted data and interpreting the shared components resulting from it.
 
 
@@ -948,23 +941,78 @@ One or few components are consistently representing the original signal well acr
 \subsection{Visualizing shared components}
 
 After the simulation study demonstrated principal feasibility of the method, I subsequently applied it to the neural recordings from the memento study.
-The underlying aim was to investigate how decision-relevant properties are represented in working memory throughout the delay phase.
-This was done with several exploratory analysis that followed the same general principle:
-In a first step, data was split into a training and a test set.
-For this, epochs were shuffled and randomly drawn to not introduce experiment fatigue as a confound.
-A probabilistic shared response model was then fit on the spectrally transformed training data, yielding a shared spectral space (features by frequencies) and subject-specific basis (sensors by features) (\ref{fig:spectral-srm1}).
-Importantly, the model had never seen the test data.
-Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components the shared response model found.
+The underlying aim was to find shared components that represented decision-related or -relevant properties.
+Unlike the previous \gls{SRM} analyses, models were trained with data from all participants.
+Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components that the shared response model found.
+The resulting components are thus time series.
+I fit different models for different time slices of a trial, namely the first stimulus presentation, the delay phase, and the decision and feedback phase.
+A subset of these visualizations are shown to illustrate the results for shared response models fit with $k = k$ in Figure \ref{fig:spectral-comps-plain}.
+
+
+\begin{figure}
+	\begin{subfigure}{0.33\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/avg-signal_shared-shape_spectral-srm_5-feat_per-comp_visual.png}
+		\caption{First stimulus presentation}
+		\label{fig:spectral-comp-visual}
+	\end{subfigure}
+	\begin{subfigure}{0.33\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/avg-signal_shared-shape_spectral-srm_5-feat_per-comp_delay.png}
+		\caption{Delay period}
+		\label{fig:spectral-comp-delay}
+	\end{subfigure}
+	\begin{subfigure}{0.33\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/avg-signal_shared-shape_spectral-srm_5-feat_per-comp_response-locked.png}
+		\caption{Decision and feedback}
+		\label{fig:spectral-comp-decision}
+	\end{subfigure}
+	\caption[Shared components for different trial phases]{Time courses of shared components for different trial phases, as obtained by fitting a \gls{SRM} with $k=5$ features on spectrally transformed data. Each panel in each figure results from transforming left-out time-resolved epochs with the subject-specific base matrix for one component in the shared space and averaging the resulting transformations. Thus, each panel visualizes the time course of a functional topography identified with spectral \gls{SRM}. Depicted are three different trial phases, the first stimulus presentation, the delay phase, and the decision phase. In c), the dashed line indicated the motor response.}
+	\label{fig:spectral-comps-plain}
+\end{figure}
+
+
+One possibility is that the modulation of these functionality topographies encodes different decision-related properties.
+To investigate whether shared components differentially related to trial-specific attributes, unseen test data was transformed into the shared space, but visualized separately for trials with specific attributes.
+For example, trials in which the first stimulus option had a different probabilities values were contrasted with each other.
+I hypothesized that this could uncover shared components encoding stimulus properties, modulated via their amplitude.
+To investigate this, I reused the models for visualizations of test data in various attribute splits.
+A subset of these visualizations is shown in Figure \ref{fig:spectral-comps-attributes}.
+They revealed that marked modulation differences only existed for splits between decisions, and those were only seen in shared spaces of the decision phase (Figure \ref{fig:spectral-comp-decision-splitchoice}).
+
+\begin{figure}
+	\begin{subfigure}{0.49\textwidth}
+	\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/trialtype-magnitude_avg-signal_shared-shape_spectral-srm_5-feat_per-comp_delay.png}
+	\caption{Delay (split by stimulus probability)}
+	\label{fig:spectral-comp-delay-splitprob}
+\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/trialtype-probability_avg-signal_shared-shape_spectral-srm_5-feat_per-comp_delay.png}
+		\caption{Delay (split by stimulus magnitude)}
+		\label{fig:spectral-comp-delay-splitmag}
+	\end{subfigure}
+\hfill
+	\begin{subfigure}{0.49\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/event-choice_avg-signal_shared-shape_spectral-srm_5-feat_per-comp_delay.png}
+		\caption{First stimulus presentation (split by choice)}
+		\label{fig:spectral-comp-delay-splitchoice}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\includegraphics[trim={0 0 0 2cm},clip,width=\textwidth]{memento/spectral_srm/avg-signal_shared-shape_spectral-srm_5-feat_per-comp_response-locked_leftvsright.png}
+		\caption{Decision (split by choice)}
+		\label{fig:spectral-comp-decision-splitchoice}
+	\end{subfigure}
+	\caption[Shared components for different trial phases]{Time courses of shared components for different trial phases, as obtained by fitting an \gls{SRM} with $k=5$ features on spectrally transformed data, and transforming time-resolved test data into the shared space. Depicted are three different trial phases, the first stimulus presentation, the delay phase, and the decision phase. In c), the dashed line indicated the motor response.}
+	\label{fig:spectral-comps-attributes}
+\end{figure}
 
 \pagebreak
 \section{Decoding}
 \label{decoding-analysis}
 
-Finally, I performed a last attempt to find stimulus features in the signal during the delay with a temporal decoding analysis.
-This method involves fitting a multivariate predictive model on each time instant within a trial, and evaluating the model performance at the same instant on new epochs \citep{king2018encoding}.
+As previous analyses were unable to directly identify neural subspaces representing stimulus features, I turned to a multivariate method in the form of a temporal decoding analysis.
+This method involves fitting a predictive model on each time instant within a trial, and evaluating the model performance at the same instant on new epochs \citep{king2018encoding}.
 A temporal decoding analysis for the stimulus properties probability, magnitude, and expected value of the first stimulus option has already been performed by \citet{kaiserposter} in source space.
-In line with their temporal generalization results, stimulus properties had above-chance decoding accuracies during the stimulus presentation and a few hundred milliseconds into the delay period.
-In addition, above chance decoding succeeded in the time span of the second stimulus presentation, indicating an interesting reinstatement effect just prior to the motor response.
+However, stimulus properties had above-chance decoding accuracies only during the stimulus presentation and a few hundred milliseconds into the delay period.
+%In addition, above chance decoding succeeded in the time span of the second stimulus presentation, indicating an interesting reinstatement effect just prior to the motor response.
 To investigate if dimensionality reduction methods including \gls{SRM} improved the decodability of stimulus properties in the delay period, I implemented a flexible temporal decoding pipeline that was able to employ different forms of dimensionality reduction internally.
 This analysis would, if successful, provide evidence for a lower dimensional subspace that represented stimulus properties.
 With this approach, I followed the works of \citet{murray2017stable}, who was able to decode stable stimulus representations in a lower-dimensional subspace, in their case by dimensionality reduction via \gls{pca}.\\
@@ -990,7 +1038,6 @@ The \gls{pca} transformer was based on an existing \gls{pca} transformer in \tex
 To make it comparable to the \gls{SRM} transformers, I the \gls{pca} transformers was further adjusted to be trained on user-defined time frames in the trial as well. \\
 Utilizing the fact that only the delay phase was relevant for this analysis, I used data from later parts of the trial to optimize parameters of the pipeline with a grid search.
 Based on strategies published in the literature, a number of configurable parameters were included (see the overview in table \ref{tab:gridsearch}).
-
 
 \begin{center}
 	\begin{table}
@@ -1026,7 +1073,7 @@ An overview of them is given in Table \ref{tab:gridsearch}.
 The regularization parameter $C$ for the logistic regression classifier was left at its default value as it does not have a strong influence in L2-regularized models \citep{VAROQUAUX2017166}.
 A grid search was then ran for each dimensionality reduction method separately.
 The underlying data for this was neural activity from the motor response of the trial.
-I based the evaluation on two accuracy measures (peak accuracy and average accuracy), visualized in Figure \ref{fig:opti-eval}
+I based the evaluation on two accuracy measures (peak accuracy and average accuracy), visualized in Figure \ref{fig:opti-eval}.
 The parameter optimizations yielded similar results for the parameters common to decoding pipelines with and without dimensionality reduction.
 
 \begin{figure}
