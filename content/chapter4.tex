@@ -247,9 +247,9 @@ Behavioral responses were registered using an MEG compatible keyboard.
 The neural data was recorded at a sampling rate of 1000Hz and active internal shielding (IAS).
 
 
-\section{Data preparation and analysis}
+\section{Data preparation}
 
-The code used for preprocessing and analysis was bundled into a publicly available Python package \texttt{pymento\_meg} and is available from GitHub\footnote{\url{https://github.com/adswa/pymento_meg}} and \url{PyPi.org}.
+The code used for data preparation, preprocessing and analysis was bundled into a publicly available Python package \texttt{pymento\_meg} and is available from GitHub\footnote{\url{https://github.com/adswa/pymento_meg}} and \url{PyPi.org}.
 Underlying software packages are listed in Table \ref{tab:software} and were bundled into a publicly available Singularity image (TODO).
 \begin{center}
 \begin{table}
@@ -273,8 +273,6 @@ Underlying software packages are listed in Table \ref{tab:software} and were bun
 \end{table}
 \end{center}
 
-\subsection{Data preparation}
-
 Prior to preprocessing, raw data were restructured to \gls{BIDS} format (v1.4.0) following the \gls{meg} extension of \gls{BIDS} \citep{niso2018meg}.
 Several properties of the project made this challenging.
 As the acquisition was done in a different institution several years back by \citet{kaiser} and the data had moved locations, crucial metadata was missing from the project files, either because it was lost or not recorded in the first place.
@@ -287,7 +285,7 @@ With the help of the original authors and a contact at the acquisition facility 
 Finally, as the experiment was Matlab-based, behavioral log files were written to proprietary .mat files.
 During the transformation to \gls{BIDS}, these log files were transformed into the open TSV format (see Figure \ref{fig:BIDS}).
 
-\subsection{Preprocessing}
+\section{Preprocessing}
 \label{preprocessing}
 
 An overview of preprocessing steps is shown in Figure \ref{fig:preproc}.
@@ -430,7 +428,7 @@ Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a si
 
 
 
-\subsection{Analysis prerequisites}
+\section{Analysis prerequisites}
 \label{decoding}
 
 Many of the upcoming analyses are rooted in machine-learning methodology.
@@ -478,7 +476,7 @@ Where the analysis is a decoding analysis, a model predicts a target, such as st
 
 
 
-\subsection{Behavioral analysis}
+\section{Behavioral analysis}
 \label{behavioral-analysis}
 
 As a first step, I conducted several analyses on behavioral data to check if participants' behavior matched the task demands and to inform further processing.
@@ -580,7 +578,8 @@ They further provide evidence that a majority of participants acted according to
 	\caption[Behavioral results]{\ref{fig:gains}\ref{fig:avgreactions} Average reaction times over trials for all subjects. \ref{fig:reactiontimes} Reaction times across trials and subjects for standard trials (orange) and trials with unambigous. \ref{fig:logregbehavior} Relative influence of stimulus properties on choice (left option)}
 	\label{fig:behav}
 \end{figure}
-\subsection{Shared response modeling}
+
+\section{Shared response modeling}
 
 %The previous temporal generalization analysis employed a continuous decoding approach to find neural patterns and their evolution over time in the signal.
 %On the group level, however, ... \\
@@ -945,7 +944,7 @@ One or few components are consistently representing the original signal well acr
 
 
 
-\subsection{Shared response modeling in spectral space on real data}
+\subsection{Visualizing shared components}
 
 After the simulation study demonstrated principal feasibility of the method, I subsequently applied it to the neural recordings from the memento study.
 The underlying aim was to investigate how decision-relevant properties are represented in working memory throughout the delay phase.
@@ -957,7 +956,7 @@ Importantly, the model had never seen the test data.
 Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components the shared response model found.
 
 \pagebreak
-\subsection{Decoding}
+\section{Decoding}
 \label{decoding-analysis}
 
 Finally, I performed a last attempt to find stimulus features in the signal during the delay with a temporal decoding analysis.
