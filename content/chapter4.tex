@@ -135,18 +135,18 @@ Central to the analyses is the attempt to use a method for functional alignment 
 
 \section{Magnetoencephalograpy (MEG)}
 
-The plurality of analyses in the upcoming sections warrants a more detailed overview of the basic properties, strengths, and weaknesses of the underlying data, stemming from magnetoencephalography acquisitions.
+The plurality of analyses in the upcoming sections warrants a more detailed overview of the basic properties, strengths, and weaknesses of data stemming from magnetoencephalography acquisitions.
 \gls{meg} is a neuroimaging method to record neural activity from magnetic flux, the total magnetic field passing though a given area.
-It is measured on the surface of the head with sensitive detectors, so-called Superconducting Quantum Interference Devices (SQUIDs).
+It is measured on the surface of the head with sensitive detectors, so-called Superconducting Quantum Interference Devices (SQUID) sensors.
 The electric currents that give rise to these magnetic fields stem from synchronous inhibitory or excitatory postsynaptic potentials in parallel pyramidal cells in the cortex, mostly those cells in the walls of the cortical sulci.
 As the potential differences between soma and axons of neurons form magnetic dipoles, and these cells are perpendicular to the cortical sheet of the gray matter and thus similarly oriented, measurable magnetic fields emerge at the sculp when aggregated across a neuronal population.
 The resulting cortical magnetic fields are on the order of $100$-$500$ femtotesla (fT) \citep{hari2017primer}.
 Compared to the environmental noise, this is a very weak magnetic field.
-Therefore, in addition to active and passive shielding from magnetic or electronic inferences, liquid helium in the MEG device cools the SQUIDs to -269°C and allows them to be superconductive.
+Therefore, in addition to active and passive shielding from magnetic or electronic inferences, liquid helium in the MEG device cools the SQUID sensors to -269°C and allows them to be superconductive.
 In this state, a superconducting coil in the SQUID can amplify the magnetic flux, which is picked up by a nearby pickup coil, also called flux transformer.
 Three main types of flux transformers exist: magnetometer, axial gradiometer, and planar gradiometer, each with a different sensitivity profile.
-An MEG device can contain different types of flux transformers and the total number of flux transformers is the amount of channels of the MEG system.
-The MEG analysis consists of interpreting the resulting topographies given the employed flux transformer.
+An MEG device can contain different types of flux transformers and the total number of flux transformers is the amount of channels of the MEG system \citep{puce2017review}.
+The analysis of the recorded data then consists of interpreting the resulting topographies given the employed flux transformer.
 Typically, MEG devices contain around 150-300 sensors arranged in a helmet-shaped array that cover the whole human scalp at a frequency of 1000-5000Hz.
 The resulting temporal resolution is high compared to neuroimaging methods such as \gls{fMRI} or \gls{pet}.
 This makes it a highly suitable modality to study cognitive processes that occur in the range of milliseconds.
