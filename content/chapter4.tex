@@ -363,7 +363,7 @@ The spatiotemporal extension \gls{tSSS} can further detect inferences from close
 These are estimated based on the fact that their strength typically exceeds that of sensor noise and they thus, unlike brain signal, leak into both the internal and external part of the \gls{SSS} reconstruction.
 After detecting components with a high temporal correlation between the external and internal subspaces, \gls{tSSS} removes close-by artifacts by projecting the components common to the internal and external subspace out of the internal subspace.
 In the absence of nearby artifacts, \gls{tSSS} reduces to \gls{SSS} \citep{taulu2009removal}.
-\gls{tSSS} was implemented using mne-python's open source implementation \texttt{maxwell\_filter()} with a chunk duration of 10 seconds and a correlation threshold of at least $0.98$.
+\gls{tSSS} was implemented using \texttt{mne-python}'s open source implementation \texttt{maxwell\_filter()} with a chunk duration of 10 seconds and a correlation threshold of at least $0.98$.
 Prior to \gls{tSSS}, bad channels were detected and annotated automatically in order to prevent bad channel noise from spreading.
 To compensate for head movements, measurements from the head position indicator coils were used to estimate subject motion, and motion correction was then performed as part of the \gls{tSSS} procedure: As the signal representation in the \gls{SSS} basis is device independent, internal data can simply be transformed to a sensor array corresponding to the average head position.
 Similarly, formerly bad channels have also been effectively repaired by the procedure.
@@ -394,7 +394,7 @@ Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots
 \end{figure}
 
 \textbf{Filtering} Next, data were first low-pass filtered with a 100Hz lowpass FIR filter to constrain it into a frequency range of interest.
-The filter properties are reported in \ref{fig:preproc} and a visualization is in \ref{fig:filter}.
+The filter properties are reported in Figure \ref{fig:preproc} and a visualization is in Figure \ref{fig:filter}.
 
 \begin{figure}
 	\centering
@@ -404,19 +404,19 @@ The filter properties are reported in \ref{fig:preproc} and a visualization is i
 \end{figure}
 
 
-\textbf{Independent component analysis} As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove these artifacts.
+\textbf{Independent component analysis} As eye movements, eye blinks, heart beats, and facial muscle contractions survive \gls{tSSS}, \gls{ica} was used to detect and remove further artifacts.
 % The slow drifts are problematic because they reduce the independence of the assumed-to-be-independent sources (e.g., during a slow upward drift, the neural, heartbeat, blink, and other muscular sources will all tend to have higher values), making it harder for the algorithm to find an accurate solution. A high-pass filter with 1 Hz cutoff frequency is recommended. However, because filtering is a linear operation, the ICA solution found from the filtered signal can be applied to the unfiltered signal https://ieeexplore.ieee.org/document/7319296/
 As \gls{ica} is sensitive to low-frequency drifts \citep{winkler2015ICA}, the data were first processed with a temporary 1Hz highpass filter. %one-pass, zero-phase, non-causal highpass filter (firwin method, Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation, a lower passband edge of 1.00, lower transition bandwidth of 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz), and a filter length of 3301 samples (3.301 s)).
 ICA can further be sensitive to bad segments in the recording.
 Therefore, data were temporarily epoched into 5 second splits from the onset of the fixation cross.
-\texttt{autoreject} \citet{jas2017autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
+\texttt{autoreject} \citep{jas2017autoreject}, an algorithm to reject and repair bad trials as well as to estimate bad sensors on a per-trial basis, was then used on the first 200 of these epochs to estimate the noise level and compute rejection thresholds.
 Afterwards, FastICA \citep{hyvarinen1999fast} was used to decompose the signal of all epochs below these rejection thresholds into 45 independent components.
 For most subjects, components corresponding to ECG activity were identified using cross-trial phase statistics \citep{dammers2008integration} with an automatically computed threshold of 0.16 for the Kuiper statistic, and \gls{eog} related components were found using Pearson correlation.
 For one subject, however, the ECG channel was flat, and components were manually selected.
 Afterwards, the \gls{ica} solution was applied to the continuous recording and detected ECG and \gls{eog} components were zeroed out.
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{memento/average_epoch_cleaned.png}
+	\includegraphics[width=1.\textwidth]{memento/average_epoch_cleaned.png}
 	\caption[Average neural signal over the trial course]{Neural recordings from a single exemplary subject.
 		Shown is the average of cleaned epochs with a length of 5 seconds from left stimulus onset, corresponding to a trial from first visual stimulation until
 		1600ms after the offset of the second stimulus.}
@@ -424,7 +424,7 @@ Afterwards, the \gls{ica} solution was applied to the continuous recording and d
 \end{figure}
 
 \textbf{Bad segment rejection and repair} As a final step, the continous recording was chunked into epochs of varying length depending on analysis, and \texttt{autoreject} was used to detect and repair or drop bad epochs.
-Figure \ref{fig:cleanepoch} shows an average of cleaned 5 second epochs for a single subject.
+Figure \ref{fig:cleanepoch} shows the average of cleaned, 5 second epochs starting at the presentation of the first stimulus option for a single subject.
 
 
 
@@ -435,7 +435,7 @@ Many of the upcoming analyses are rooted in machine-learning methodology.
 This section introduces relevant concepts, and summarizes common elements across analysis.
 I set up the machine-learning based analyses either purely in the standard library \textit{scikit-learn} (\ref{behavioral-analysis}, behavioral analysis), using functionality from \textit{mne-python} that builds up on scikit-learn for MEEG applications (\ref{temporal-generalization-analysis}, temporal generalization analysis), or by implementing scikit-learn compatible custom estimators and scorers myself (\ref{decoding-analysis}, decoding analyses).\\
 Even if upcoming analyses extend scikit-learn's capabilities, the framework's terminology remains central to describe the analysis setup in depth:
-All analyses I conducted are classification problems, belonging to the family of supervised learning.
+The behavioral and decoding analyses I conducted are classification problems, belonging to the family of supervised learning.
 In these analyses, the goal is to predict a discrete target variable $y$ from an input data matrix $X$ with $n$ observations, for example, if a participant performs a left or right response (target) based on the stimulus properties (features) in each trial.
 In scikit-learn's terms, an \textit{estimator} is what performs this prediction.
 A \textit{scorer} is a method that evaluates an estimator's predictions on a given dataset, such as computing the accuracy from predicted and actual target labels.
@@ -443,7 +443,7 @@ A \textit{transformer} is an object that alters the input data, for example by c
 In supervised learning, data an estimator is trained on are labeled with the actual value of target variable $y$, but this data can not be reused to test the trained estimators' performance.
 Fundamental to evaluating machine-learning applications are thus train-test data splits.
 These partition the available data into a set used to train the estimator, and a set yet unknown to the estimator, used to test how well its predictions generalize to unseen data.
-The accuracy of such a model is expected mismatch between predictions and actual labels in the test set, and is evaluated with a scorer.
+The accuracy of such a model is calculated from the mismatch between predictions and actual labels in the test set, which is evaluated with a scorer.
 I set this up within a k-fold cross-validation framework, which repeats model fitting and predictions with test and train splits over $k$ different partitions of data such that each partition $k$ is used as a test set once.
 $k$ was usually set to a value between 5 and 10 depending on the analysis.
 Compared to other common forms of cross-validation in neuroimaging such as leave-one-out cross-validation, this balances the trade-off between the need for sufficient training data to reach a good fit, and the need for sufficient testing data to decrease the variance of estimated accuracy for stable estimates \citep{VAROQUAUX2017166}.
