@@ -11,7 +11,7 @@ custom_params = {"axes.spines.right": False, "axes.spines.top": False}
 sns.set_theme(style="white", rc=custom_params)
 
 start_date = '2016-03-03'
-end_date = '2023-05-25'
+end_date = '2023-08-01'
 query_url_datalad = \
     f'https://qa.debian.org/cgi-bin/popcon-data?packages=datalad+python3-datalad;from_date={start_date};to_date={end_date}'
 query_url_total_submissions = \
