@@ -1,7 +1,7 @@
 main-*.pdf
 graphics/*.pdf_tex
 democode.tex
-
+graphics/.hidden/*
 # plantuml
 *-plantuml.latex
 *-plantuml.txt
