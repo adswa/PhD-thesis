@@ -20,20 +20,20 @@ In such situations, relevant properties of alternative options such as their sub
 To understand the neural processes underlying behavior in these situations, the neural activity in the delay period and how it might represent or maintain relevant properties were a focus of research in the last decades.
 Although several popular theories emerged over time and were either refuted or refined, and the field has progressed from studying spiking activity in single cells to computationally elaborate models of spatially and temporally distributed activity, a comprehensive understanding is yet lacking \citep{sreenivasan2019and}.
 The main goal in the conception of this research project has been to make a contribution to the study of brain state dynamics in working memory, a recently emerging theory that reconceptualizes neural activity as a trajectory through a high-dimensional neural space.
-To this end, I was given access to a pre-existing \gls{meg} dataset from human participants that played an experiment with a delayed decision making task, acquired by \citet{kaiser}, the MEMENTO study.
+To this end, I was given access to a pre-existing \gls{meg} dataset from human participants that played an experiment with a delayed decision making task, acquired by \citet{kaiser}, the \textit{memento} study.\\
 This research endeavor posed several challenges.
 One lay in acquiring the relevant information to work productively and confidently with this dataset.
 Data was captured at the Clinic for Neurology at the Otto-von-Guericke University Magdeburg, an institution to which I did not have access or first-hand knowledge about.
-The original lead investigators of the project had switched their focus to other projects by the time I started working with it, and both had long left their research positions by the time I finished.
+The original lead investigators of the project had switched their focus to other projects by the time I started working with it, and both had left their research positions by the time I finished.
 Obtaining their first-hand knowledge was thus impeded not merely by fading memory over time, but also as their progression to other projects and out of academia naturally limited contact.
 While the dataset had been processed extensively already, the data was in an idiosyncratic organization, many existing analyses were in an interim state, and the project, excluding raw and processed data, was a collection totaling 20.761 files.
-Thus, a prerequisite of my analyses was to prepare the dataset such that it became usable for me, and ideally also to future other researchers that were not involved in its acquisition or processing.
+Thus, a prerequisite of my analyses was to prepare the dataset such that it became usable for me, and ideally also to future other researchers that were not involved in its acquisition or processing.\\
 A different challenge lay in the processing setup.
 The data was acquired and partially analyzed on infrastructure of the University of Magdeburg.
 After a change of affiliations, storage and further analyses were moved to the computational cluster of the \gls{HHU}.
 My own analyses, finally, were done on computational infrastructure at the Institute of Neuroscience and Medicine at the \gls{FZJ}.
 Typically, changes of computational infrastructure are detrimental to the utility of the processing and analysis scripts.
-Thus, an explicit aim of all processing was portability, such that research outcomes yielded on \gls{FZJ} infrastructure were readily usable on servers at the \gls{HHU} or elsewhere.
+Thus, an explicit aim of all processing was portability, such that research outcomes yielded on \gls{FZJ} infrastructure were readily usable on servers at the \gls{HHU} or elsewhere.\\
 Finally, the to-be-conducted analyses were highly exploratory.
 Although the dataset had not been published before, a large amount of analyses had already been conducted.
 But with the exception of a poster presentation on preliminary decoding results \citep{kaiserposter}, all analyses yielded null results and remained unpublished.
@@ -41,14 +41,14 @@ Thus, in an attempt to search for remaining insights in the data with novel meth
 Maintaining routines for reproducibility and reusability, however, is not trivial when the analyses are not mapped out entirely and the necessary software for the analyses is in flux.
 Keeping all analyses transparent, self-descriptive to others, and reproducible became a guiding principle.\\
 Although the challenges I outlined above shaped the course of the project and gave way to productive projects to solve them, they are by no means uncommon in scientific endeavors.
-Science is incremental and its outcomes go beyond journal articles - code, data, results, or tools of previous finished or unfinished projects are reused or extended in later activities \citep{mons2018data}, and the people who start and finish a project are not necessarily the same \citep{puce2017review}.
-Science is also increasingly collaborative and spatially distributed (CITE).
+Science is incremental and its outcomes go beyond journal articles -- code, data, results, or tools of previous finished or unfinished projects are reused or extended in later activities \citep{mons2018data}, and the people who start and finish a project are not necessarily the same \citep{puce2017review}.
+Science is also increasingly collaborative and spatially distributed \citep{csomos2020exploring}.
 Benefiting from differential expertise of several collaborators requires mutual understanding of a project and its components.
-But the relevant research data management skills are not commonly part of research training curricula \citep{grisham2016proposed}, and publication practices that favor static PDFs of articles instead of the building blocks of the underlying science fail to incentivize the curation of well documented project directories (CITE).
-Nevertheless, over several decades already, data shared across institutions or even openly has been a corner stone of neuroscientific progress \citep[e.g.,][]{niso2016omega}, and this trend is increasing \citep{gorgolewski2016practical}.
+But the relevant research data management skills are not commonly part of research training curricula \citep{grisham2016proposed}. %, and publication practices that favor static PDFs of articles instead of the building blocks of the underlying science fail to incentivize the curation of well documented project directories (CITE).
+Nevertheless, over several decades already, data shared across institutions or even openly has been a corner stone of neuroscientific progress \citep[e.g.,][]{ferguson2014big, niso2016omega}, and this trend is increasing \citep{gorgolewski2016practical}.
 A common challenge is thus to keep projects in such a state that they can be understood without the expertise of their original authors \citep{puce2017review}.
 This makes technical and organizational elements of scientific practice, such as \gls{rdm} and research software engineering, a fundamental prerequisite.
-Going sequentially through the different challenges and solutions to conducting reproducible brain state analyses, this thesis summarizes my conjunct work on research data management solutions, research software engineering practices, and their application in scientific projects.\\
+Going sequentially through the different challenges and solutions to conducting reproducible brain state analyses, this thesis summarizes my conjunct work on research data management solutions, research software engineering practices, and their application in a scientific project that spanned several institutions and generations of researchers.\\
 To lay the foundations for this, the remainder of the introduction establishes a number of prerequisites.
 The first section \ref{chap:k1-brain} outlines a brief overview of the literature in the field of working memory maintenance, and deduces the choice of analyses methods for dimensionality reduction for the study of brain states in Chapter \ref{chap:k3}.
 Afterwards, section \ref{chap:k1-rdm} introduces the topic of research data management, and highlights central concepts and tools that will be a focus in the upcoming chapters \ref{chap:k2} and \ref{chap:k3}.
@@ -58,7 +58,8 @@ As I will lay out in this section and in upcoming chapters, \gls{rdm} is a found
 \label{chap:k1-brain}
 %This is an introduction into brain states and functional alignment
 
-[ADD AN INTRO]
+The concept of \textit{brain states}, global neural activity patterns that are associated with distinct cognitive processes or behavioral states, has emerged in the study of various brain functions, from sleep \citep{lee2012neuromodulation}, to motor processes \citep{pfurtscheller2008short}, or functional connectivity \citep{finn2017can}.
+Over the course of the last decades, it also emerged in the study of working memory. \\
 Early neuroimaging and electrophysiology studies suggested persistent neural activity (``spiking'') in specific brain areas during delay periods as a mechanism of working memory maintenance \citep{goldman1995cellular}.
 Sustained, above-baseline activity that starts during a sample presentation, lasts through the memory delay, and returns to base line activity after a response were found in prefrontal regions in human \citep[e.g.,][]{courtney1997transient} and non-human primates \citep[e.g.,][]{fuster1971neuron, funahashi1989mnemonic, miller1996neural}.
 And single-cell recordings from the prefrontal cortex in monkeys unveiled that individual neurons display activity that is selective to specific task-relevant aspects, such as task rules, spatial location, or stimulus features \citep{white1999rule, wallis2001single}, suggesting the existence of neurons that uphold working memory content with a fixed selectivity for certain properties.
@@ -78,39 +79,62 @@ The idea that distributed representations that selectively favor information rel
 The rise of multivariate methods such as decoding analyses gave way to thorough investigations of distributed neural patterns.
 \citet{king2014characterizing} formalized this with the temporal generalization method.
 In this method, several classifiers are trained on different time slices of training data each, and tested on all available times in the test data, thus revealing whether the neural code is stable or dynamically evolving.
-Interestingly, studies decoding working memory content found that decodable patterns can be non-stationary (Figure \ref{fig:dynamiccoding}).
+Interestingly, studies decoding working memory content found that decodable patterns can be non-stationary.
 \citet{meyers2008dynamic} decoded object categories from electrophysiological data, and yielded worse decoding the more temporally distant training and testing times slices were apart.
 \citet{stokes2013dynamic} used temporal cross-correlation analyses to show that population responses in the prefrontal cortex evolve during a memory delay.
-These representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons were termed dynamic population coding \citep{sreenivasan2014revisiting}.\\
-A prominent theory in line with non-stable representations is that cognitive processes evolve through different so-called \textit{brain states} as dynamic neural trajectories \citep{buonomano2009state}.
+These representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons were termed dynamic population coding \citep{sreenivasan2014revisiting} (see Figure \ref{fig:dynamiccoding}).\\
+The theory that cognitive processes evolve through different brain states as dynamic neural trajectories is line with non-stable representations \citep{buonomano2009state}.
 These trajectories emerge by conceptualizing neural responses as vectors in an N-dimensional space that evolves over time:
 The axis of the high-dimensional space correspond to measurements, such as raw or transformed data from M/EEG sensors or \gls{fMRI} voxels.
-The neural trajectories emerge by tracing the activity on these axes over multiple time points (see Figure \ref{fig:trajectories}).
+Each time point in the acquisition becomes a point in the high-dimensional space spanned by all sensors, determined by the measurement in each sensor, such as activation strength.
+In geometric terms, this point is an N-dimensional vector.
+Neural trajectories emerge by tracing the activity on these axes over multiple time points.
+Common or distinct brain states could then become evident as converging or diverging trajectories (see Figure \ref{fig:trajectories}).
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{memento/dynamic_coding.png}
-	\caption[The dynamic coding framework]{A schematic illustration of dynamic coding in neural populations. The left side depicts a population of three neurons (squares), and their activity (color) over six time points time in response to two visual stimuli. The neural code in this population is not stationary, but dynamic: Each stimulus evokes a distinct response, but within this response, each time point has a different pattern of neural activity, too. By conceptualizing activity patterns over time as vectors, these patterns can be visualized in a high-dimensional space (right). This space has as many dimensions as there are measurement sites (e.g., neurons, sensors, voxels, or electrodes). Dynamic population codes create trajectories through this space. Adapted from \citet[][Fig. 2]{meyers2018dynamic}.}
-	\label{fig:dynamiccoding}
+\begin{figure}[H]
+	\begin{subfigure}{\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{memento/dynamic_coding.png}
+		\caption {The dynamic coding framework}
+		\label{fig:dynamiccoding}
+	\end{subfigure}
+	\hfill¸
+	\begin{subfigure}{\textwidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{memento/neural_trajectories_redone.png}
+		\caption{Idealized neural trajectories through state-spaces}
+		\label{fig:trajectories}
+	\end{subfigure}
+	\caption[Dynamic coding and neural trajectories in the study of brain states]{A schematic illustration of dynamic coding in neural populations as trajectories through high dimensional spaces. The left side of a) depicts a population of three neurons (squares), and their activity (color) over six time points time in response to two visual stimuli. The neural code in this population is not stationary, but dynamic: Each stimulus evokes a distinct response, but within this response, each time point has a different pattern of neural activity, too. By conceptualizing activity patterns over time as vectors, these patterns can be visualized in a multi-dimensional space (right). This space has as many dimensions as there are measurement sites (e.g., neurons, sensors, voxels, or electrodes). Dynamic population codes create trajectories through this space. Adapted from \citet[][Fig. 2]{meyers2018dynamic}. b) shows an idealized illustration of neural trajectories in different states for two decision alternatives (blue) and two response alternatives (red), for two tasks in a delayed-response-mapping paradigm. Assigning meaning to the axes of the state-space may yield insights about brain states in different experiment conditions. Adapted from Jocham, Krauel, Hanke (unpublished).}
+	\label{fig:brainstates}
 \end{figure}
 
-To bridge the gap to theories of activity silent states, these neural responses are not solely determined by external stimuli, but also internal state changes of the network, such as the strength of synaptic connections, or excitatory or inhibitory influences from other networks \citep{buonomano2009state}.
+
+To bridge the gap to theories of activity silent states, the neural responses that form dynamic trajectories are not solely determined by external stimuli, but also internal state changes of the network, such as the strength of synaptic connections, or excitatory or inhibitory influences from other networks \citep{buonomano2009state}.
 Distinct neural states were often hypothesized to reflect steps in mental processing \citep[e.g.,][]{seidemann1996simultaneously}.
 \citet{muhle2021hierarchy}, for example, proposed a hierarchy of functional states in working memory, with items relevant for a pending decision in the most active state, and items relevant only for later use in latent states.
 But studies were also able to extract external stimulus information from the trajectories of transient states, for example odors \citep{mazor2005transient}.
-The study of these neural states and their transition has emerged as its own field, employing multivariate methods such as decoding across neural populations, hidden Markov models (HMMs) to model ensemble activity as a sequence of constantly shifting neural states \citep{rainer2000neural}, or functional alignment \citep{haxby2011common} to find common representations across idiosyncratic neural responses.
-In parallel, dimensionality-reduction gained popularity in analyzing neural population data \citep{cunningham2014dimensionality}.
-The underlying assumption to this approach is that the measured neural activity is too complex compared with the few relevant task or stimulus aspects that require encoding, and that the neural signal of interest must be embedded in a subspace of the high-dimensional neural space.
-\citet{santhanam2009factor} employed a decoding approach based on factor-analysis to reduce noise in high-dimensional neural recordings to improve the performance of neural prostheses, which otherwise suffered from the neural variability introduced by changes in attentional state or wakefulness.
-The term ``effective dimensionality'' of population activity emerged in the literature to identify shared components of collective dynamics that reflect task variables \citep{jazayeri2021interpreting}.
-\citet{murray2017stable} used \gls{pca} on electrophysiology recordings acquired from primate prefrontal cortex during a working memory task, and found a lower-dimensional subspace in the high-dimensional state space in which stimulus representations were stable across the cue and delay epochs.
-\citet{machens2010functional} likewise used \gls{pca} in a working memory task where non-human primates compared the frequency of two vibrations to identify a 6-dimensional subspace in which this tactile stimulus information is represented.
-\citet{gallego2017neural} proposed the neural manifold hypothesis.
-In this hypothesis, behavior is controlled by neural modes, patterns of neural population covariance.
-The high-dimensional neural space is confined into a lower dimensional ``manifold'' spanned by these neural modes.
-Dimensionality reduction methods would allow to identify the foundational neural modes that confine population activity, and allow the study of neural population dynamics.
-They further showed that the low dimensional spaces remained stable over multiple years by aligning the manifolds from separate measurements \citep{gallego2020long}.
-[POLISH UP AND ADD AN OUTRO]
+The study of these neural states and their transition has emerged as its own field, employing multivariate methods such as decoding across neural populations, hidden Markov models (HMMs) \citep{rainer2000neural} to model ensemble activity as a sequence of constantly shifting neural states \citep{vidaurre2016spectrally}, or functional alignment \citep{haxby2011common} to find common representations across idiosyncratic neural responses.\\
+In parallel, dimensionality-reduction gained popularity in the analysis of neural population data \citep{cunningham2014dimensionality}.
+Though partially rooted in attempts to make analyses computationally feasible, a central underlying justification of dimensionality reduction approaches is that the measured neural activity is too complex compared with the few relevant task or stimulus aspects that require encoding, and that the neural signal of interest must be embedded in a subspace of the high-dimensional neural space.
+\citet{santhanam2009factor} for example employed a decoding approach based on factor-analysis to reduce noise in high-dimensional neural recordings to improve the performance of neural prostheses, which otherwise suffered from the neural variability introduced by changes in attentional state or wakefulness.
+The motor signal of interest thus lay embedded in a high-dimensional space containing variability from unrelated cognitive sources, and identifying this subspace improved the study of the signal of interest.
+Fittingly, the term ``effective dimensionality'' of population activity emerged in the literature to identify shared components of collective dynamics that reflect task variables \citep{jazayeri2021interpreting}.
+Investigations of dynamic or stable population codes for working memory have been done in conjunction with dimensionality reduction methods, too, and yielded interesting observations.
+\citet{murray2017stable} used \gls{pca} on electrophysiology recordings acquired from primate prefrontal cortex during a working memory task.
+They found a lower-dimensional subspace in the high-dimensional state space in which stimulus representations were stable across the cue and delay epochs.
+\citet{machens2010functional} likewise used \gls{pca} in a working memory task where non-human primates compared the frequency of two vibrations to identify a 6-dimensional subspace in which this tactile stimulus information is represented.\\
+%Of relevance for these findings could also be the neural manifold hypothesis \citet{gallego2017neural}.
+%In this hypothesis, behavior is controlled by neural \textit{modes}, patterns of neural population covariance.
+%The high-dimensional neural space is confined into a lower dimensional ``manifold'' spanned by these neural modes, and dimensionality reduction methods could allow the study of neural population dynamics within them.
+%Importantly, they further showed that the low dimensional spaces remained stable over multiple years when aligning these manifolds \citep{gallego2020long}.\\
+Studying working memory maintenance using dimensionality reduction methods and the concept of neural trajectories through a state-space is thus a promising approach for new insights.
+It re-conceptualizes neural function from averaged spiking activity that aims to draw conclusions about the brain area of a cognitive process, to dynamics in multi-dimensional spaces that might bear the potential to draw conclusions about the lower-dimensional components our cognition is build up on.
+The path from data acquisition or raw data to such a data analysis is, however, more complex than the method section of the final paper makes it appear.
+Before this thesis continues with the analyses of neural trajectories in working memory, the upcoming two chapters and the remainder of the introduction are dedicated to concepts and projects around \gls{rdm} that were ultimately relevant pillars of the project.
+%\citep{vidaurre2016spectrally} investigated brain state time courses identified by a HMM-based approach by their spectral properties.
+
+%In voluntary movement performing, the M1 neural population undergoes a state of desynchronisation followed by a synchronisation period. These are usually referred to as event-related desynchronisation (ERD) and event-related synchronisation (ERS). from https://www.sciencedirect.com/science/article/pii/S1053811915010691
 
 %Drawing insights from this partial overview of the literature, methods to study working memory have shifted from traditional evoked potentials to computationally intensive processing.
 %The field has progressed from studying spiking activity in single cells to an implicit consensus that the neural representation of working memory during maintenance is high-dimensional or embedded in a high-dimensional space, time-varying, and spatiotemporal distributed.
@@ -131,12 +155,12 @@ They further showed that the low dimensional spaces remained stable over multipl
 
 
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{memento/neural_trajectories_redone.png}
-	\caption[Neural trajectories through state-spaces]{An schematic illustration of neural trajectories through a state-space for two decision alternatives (blue) and two response alternatives (red), for two tasks in a delayed-response-mapping paradigm. Assigning meaning to the axes of the state-space may yield insights about brain states in different experiment conditions. Adapted from Jocham, Krauel, Hanke (unpublished)}
-	\label{fig:trajectories}
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.5\textwidth]{memento/neural_trajectories_redone.png}
+%	\caption[Neural trajectories through state-spaces]{An schematic illustration of neural trajectories through a state-space for two decision alternatives (blue) and two response alternatives (red), for two tasks in a delayed-response-mapping paradigm. Assigning meaning to the axes of the state-space may yield insights about brain states in different experiment conditions. Adapted from Jocham, Krauel, Hanke (unpublished)}
+%	\label{fig:trajectories}
+%\end{figure}
 
 
 
@@ -148,7 +172,7 @@ They further showed that the low dimensional spaces remained stable over multipl
 \label{chap:k1-rdm}
 %This is an introduction on the importance of research data management for reproducible science
 
-A pillar of scientific insight lies in research data management.
+A foundation of scientific insight lies in research data management.
 Research data encompasses everything that is produced in the life span of a research project.
 From raw data acquisitions, preprocessed or otherwise standardized datasets, to software, analysis scripts, results, figures, compiled reports, and other final or intermediate research outcomes.
 To disambiguate the term ``research data'' from the smaller-scoped meaning of ``data'' in colloquial language (the outcome of a data acquisition in an experiment), it is also referred to as ``research objects``, and, in case it exists in purely electronic form, as ``digital research objects'' \citep{bechhofer2010research}. \\
@@ -158,7 +182,7 @@ Science is an incremental process that produces and builds up on more than just 
 Ultimately, it ensures that research objects are preserved to act as an evidence base for findings, and as a discoverable resource for further reuse.
 
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.5\textwidth]{rdm-lifecycle-jisc.png}
 	\caption[The life cycle of digital research objects]{The life cycle of digital research objects. License: JISC Research data management toolkit (\href{https://www.jisc.ac.uk/guides/rdm-toolkit}{www.jisc.ac.uk/guides/rdm-toolkit}), CC-BY-ND}
@@ -175,7 +199,7 @@ The \gls{FAIR}ness of data can be improved on each of the four related but separ
 \begin{itemize}
 	\item \textbf{F}indable: To be Findable, (meta)data  are assigned a globally unique and persistent identifier (F1); data are described with rich metadata (F2); metadata clearly and explicitly include the identifier of the data it describes (F3);  (meta)data are registered or indexed in a searchable resource (F4)
 	\item \textbf{A}ccessible: To be Accessible, (meta)data are retrievable by their identifier using a standardized communications protocol (A1); the protocol is open, free, and universally implementable (A1.1); the protocol allows for an authentication and authorization procedure, where necessary (A1.2);  metadata are accessible, even when the data are no longer available (A2)
-	\item \textbf{I}nteroperable:  To be Interoperable, (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation (I1); (meta)data use vocabularies that follow FAIR principles (I2); (meta)data include qualified references to other (meta)data (I3); and
+	\item \textbf{I}nteroperable:  To be Interoperable, (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation (I1); (meta)data use vocabularies that follow FAIR principles (I2); (meta)data include qualified references to other (meta)data (I3);
 	\item \textbf{R}eusable: To be Reusable, meta(data) are richly described with a plurality of accurate and relevant attributes (R1); (meta)data are released with a clear and accessible data usage license (R1.1); (meta)data are associated with detailed provenance (R1.2); (meta)data meet domain-relevant community standards (R1.3)
 \end{itemize}
 
@@ -190,10 +214,10 @@ This reusability refers to the further use or utilization inside or outside its 
 It is arguably the most important feature of a research object for various stakeholders: It can make research more efficient, foster collaborations, and speed up progress, and as it can reduce duplicate efforts it constitutes an economical benefit for funders as well as the public and industry \citep{nfdi2022data}.
 Considering additional time spent, cost of redundant storage, licensing costs, research retraction, double funding, and missed potential for economic growth, the European Commission estimates that the cost of not having FAIR data lies between 10 and 26 billion euro per year \citep{eu2019FAIR}.
 The largest position in their cost-benefit analysis is the time wasted by researchers when non-FAIR data takes more time to find, retrieve, clean, integrate, and peer review.
-Together with the aspect of research retraction, the last point hints at an important side effect of good data management: Reproducibility.
-Throughout this thesis, the connection between research data management and reproducibility will be exemplified.
-The following sections will outline \gls{rdm} requirements and solutions in the field of neuroimaging that work towards this goal.
-
+The remainder of this chapter will outline \gls{rdm} requirements and solutions in the field of neuroimaging that aim to increase reusability.
+They will come into practice in the preparation of the dataset in Chapter \ref{chap:k4} as reusing previous findings has played a central part in this thesis as well.
+But one aspect of reusability is reproducibility it to establish trust, which is a more important side effect of good data management than a cursory reading of the \gls{FAIR} principles implies.
+The topic of reproducibility will thus also be continued later, and it is central to Chapter \ref{chap:k3}.
 
 % Internationally accepted standard
 %The largest funding institution for the sciences and humanities and research in Germany, the \gls{grf}, states that access to data and software according the the FAIR principles are of comparable importance to science as access to publications \citep{dfg}
@@ -224,33 +248,10 @@ They typically encompass different modalities (such as imaging, electro-physiolo
 The \gls{BIDS} \citep{gorgolewski2016brain} is a community-endorsed standard for organizing and describing neuroimaging data, and is widely considered as a successful solution for data standardization in such datasets.
 It defines common and modality specific schemes for file names and file organization, file formats, and metadata to accompany raw  or derived data, i.e., both original acquisitions as well as the outputs of common processing pipelines.
 \gls{BIDS} has widespread and growing support for different neuroimaging modalities, and is made a common prerequisite by neuroscientific data portals such as OpenNeuro \citep{markiewicz2021openneuro} or processing tools such as BIDSApps \citep{gorgolewski2017bids} or fMRIprep \citep{esteban2019fmriprep}.
-An example of the MEMENTO \gls{meg} dataset, structured to \gls{BIDS} or organized idiosyncratically, is shown in \cref{fig:BIDS}. \\
-The storage demands of neuroimaging data are not trivial, either.
-\gls{BIDS} regulates which file formats must be used for which data type, and focuses on open file formats for accessibility and compression to reduce disk space requirements.
-But neuroimaging data are nevertheless sizable \citep{van2014human}.
-And a growing awareness that robust findings require sufficiently long recordings \citep{li2021moving} as well as large and representative samples \citep{button2013power, turner2018small} leads to large-scale datasets such as the \gls{HCP} \citep{van2013wu}, the \gls{ABCD} Study \citep{casey2018adolescent}, or the \gls{UKB} project \citep{matthews2015uk} that pose infrastructural challenges for storage, analysis, transfer and archival.
-Moreover, in human neuroimaging, data underlie strict data protection regulations such as the \gls{HIPAA} in the United States, or the \gls{GDPR} in Europe.
-This requires compliance to variable terms of data usage agreements, and often involves idiosyncratic processes to retrieve data \citep{waitedata}.\\
-Processing of neuroimaging data is complex, too.
-It usually involves multi-stepped workflows from acquisition through analysis to archival, where each step frequently requires several different software tools \citep{poline2011, NISO2022119623}.
-The number of ``researchers' degrees of freedom'' -- the amount of possible combinations of methods, parameters, and tools -- in neuroimaging analyses is thus large \citep{bowring2019exploring}.
-But variations in analytic choices affect numeric results and conclusions \citep{silberzahn2018}.
-When \citet{botvinik2020variability} instructed 70 independent research teams to analyze the same task-based \gls{fMRI} dataset with tools and methods of their choice to test the same hypotheses, conclusions were highly variable.
-A similar project, EEGManyPipelines (\href{https://eegmanypipelines.org/}{eegmanypipelines.org}), is currently ongoing in the field of \gls{eeg}, and expects to find even more variability.
-One central aspect \gls{rdm} thus needs to provide in neuroimaging is precise information about how tools, data, and actors were involved in the generation of a file.
-This is necessary because, despite reporting guidelines for \gls{MRI} \citep{nichols2017best}, \gls{meg} \citep{pernet2020issues}, and \gls{eeg} \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis  \citep[see, e.g.,][]{vsovskic2022better}.
-Such \textit{digital provenance} (illustrated in \cref{fig:prov1}) is not meant to decrease the analytical variability.
-Instead, it captures thorough, machine-actionable processing descriptions that are necessary to investigate differences between analysis outcomes, reproduce, or reuse them as \gls{FAIR} principle R2 advocates.
-Chapter \ref{chap:k3} will further elaborate on this problem.\\
-Overall, careful \gls{rdm} is necessary to translate complex data with difficult storage requirements and sophisticated processing workflows efficiently into scientific insights in the field of neuroimaging.
-Given these specific complexities, solutions to these challenges often arise from the community of researchers.
-The following section will highlight one of several software tools that aids with the complex task of research data management: DataLad.
-%A subsequent chapter, \cref{chap:k2}, will later focus on how research data management is a prerequisite of reproducible research, specifically with regards to software environments and large sample sizes.
-%In addition, \cref{chap:k2} will highlight pragmatic approaches to \gls{rdm} that can be embedded in standard research practice and contribute to the FAIRification of data, even in absence of established metadata formats.
-
+An example of the \textit{memento} \gls{meg} dataset, structured to \gls{BIDS} or organized idiosyncratically, is shown in \cref{fig:BIDS}. \\
 %BIDS
-\begin{figure}
-	{\scriptsize
+\begin{figure}[H]
+	{\tiny
 		\begin{minipage}{.49\textwidth}
 			\begin{forest}
 				pic dir tree,
@@ -332,18 +333,44 @@ The following section will highlight one of several software tools that aids wit
 			\end{forest}
 		\end{minipage}
 	}
-	\caption[An example of a BIDS-structured dataset]{A real-world example of a single subject's MEG acquisition. The left side shows the file tree of the data from a project directory with an idiosyncratic organization. It includes a mix of raw data, preprocessed data, and intermediate results, and the naming scheme is inconsistent. The right side shows the same subject's data, but structured according to \gls{BIDS}. The naming scheme is consistent, and apart from raw MEG data the directory includes metadata files from the experiment and acquisition machine that are required to understand the data without the original authors.}
+	\caption[An example of a BIDS-structured dataset]{File organization in a single subject's MEG acquisition. The left side shows the file tree of the data from a project directory with an idiosyncratic organization. It includes a mix of raw data, preprocessed data, and intermediate results, and the naming scheme is inconsistent. The right side shows the data structured according to \gls{BIDS}. The naming scheme is consistent, and apart from raw MEG data the directory includes metadata files from the experiment and acquisition machine that are required to understand the data without the original authors.}
 	\label{fig:BIDS}
 \end{figure}
 
-
+The storage demands of neuroimaging data are not trivial, either.
+\gls{BIDS} regulates which file formats must be used for which data type, and focuses on open file formats for accessibility and compression to reduce disk space requirements.
+But neuroimaging data are nevertheless sizable \citep{van2014human}.
+And a growing awareness that robust findings require sufficiently long recordings \citep{li2021moving} as well as large and representative samples \citep{button2013power, turner2018small} leads to large-scale datasets such as the \gls{HCP} \citep{van2013wu}, the \gls{ABCD} Study \citep{casey2018adolescent}, or the \gls{UKB} project \citep{matthews2015uk} that pose infrastructural challenges for storage, analysis, transfer and archival.
+Moreover, in human neuroimaging, data underlie strict data protection regulations such as the \gls{HIPAA} in the United States, or the \gls{GDPR} in Europe.
+This requires compliance to variable terms of data usage agreements, and often involves idiosyncratic processes to retrieve data \citep{waitedata}.\\
+Processing of neuroimaging data is complex, too.
+It usually involves multi-stepped workflows from acquisition through analysis to archival, where each step frequently requires several different software tools \citep{poline2011, NISO2022119623}.
+The number of ``researchers' degrees of freedom'' -- the amount of possible combinations of methods, parameters, and tools -- in neuroimaging analyses is thus large \citep{bowring2019exploring}.
+But variations in analytic choices affect numeric results and conclusions \citep{silberzahn2018}.
+When \citet{botvinik2020variability} instructed 70 independent research teams to analyze the same task-based \gls{fMRI} dataset with tools and methods of their choice to test the same hypotheses, conclusions were highly variable.
+A similar project, EEGManyPipelines (\href{https://eegmanypipelines.org/}{eegmanypipelines.org}), is currently ongoing in the field of \gls{eeg}, and expects to find even more variability.
+One central aspect \gls{rdm} thus needs to provide in neuroimaging is precise information about how tools, data, and actors were involved in the generation of a file.
+This is necessary because, despite reporting guidelines for \gls{MRI} \citep{nichols2017best}, \gls{meg} \citep{pernet2020issues}, and \gls{eeg} \citep{styles2021towards} studies, traditional publications still regularly fail to report all relevant details about recording, processing, and analysis  \citep[see, e.g.,][]{vsovskic2022better}.
+Such \textit{digital provenance} (illustrated in \cref{fig:prov1}) is not meant to decrease the analytical variability.
+Instead, it captures thorough, machine-actionable processing descriptions that are necessary to investigate differences between analysis outcomes, reproduce, or reuse them as \gls{FAIR} principle R2 advocates.
+%Chapter \ref{chap:k3} will further elaborate on this problem.
 % provenance
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.5\textwidth]{provenance.pdf}
-	\caption[Provenance throughout the research process]{In multi-stepped analyses, a variety of choices affect the final outcome. Digital provenance, information about how tools, data, and actors were involved in the generation of file, is required to retrace, understand, and trust the decisions that led to a research outcome. Such provenance can be an outcome of good research data management. License: Scriberia and the Turing Way Project, CC-BY}
+	\includegraphics[width=.45\textwidth]{provenance.pdf}
+	\caption[Provenance throughout the research process]{A variety of choices affect a research outcome. Digital provenance, information about how tools, data, and actors were involved in its generation, is required to retrace, understand, and trust the decisions that led to it. Good research data management yields good provenance. License: Scriberia and the Turing Way Project, CC-BY.}
 	\label{fig:prov1}
 \end{figure}
+
+
+
+Overall, careful \gls{rdm} is necessary to translate complex data with difficult storage requirements and sophisticated processing workflows efficiently into scientific insights in the field of neuroimaging.
+Given these specific complexities, solutions to these challenges often arise from the community of researchers.
+The following section will highlight one of several software tools that aids with the complex task of research data management: DataLad.
+%A subsequent chapter, \cref{chap:k2}, will later focus on how research data management is a prerequisite of reproducible research, specifically with regards to software environments and large sample sizes.
+%In addition, \cref{chap:k2} will highlight pragmatic approaches to \gls{rdm} that can be embedded in standard research practice and contribute to the FAIRification of data, even in absence of established metadata formats.
+
+
 
 
 
@@ -404,27 +431,26 @@ Instead, it places file content into a managed repository \textit{annex} and onl
 This reference allows a decoupling of file content (handled by git-annex) and file name (tracked with Git), but retains the ability to transparently notice and track changes: If file content changes, the identity reference known to Git changes, too, and the version control system becomes aware of the modification.
 The same mechanism guarantees file integrity at all times and solves data privacy concerns without impacting discoverability, as potentially sensitive content can be kept private but its metadata can be distributed easily.
 While Git keeps a reference of the content \textit{identity}, git-annex tracks content \textit{availability}, and manages data transport with an extensible set of protocols and set of hosting solutions to and from a local repository annex at a granularity of individual files. \\
-DataLad, finally, extends Git and git-annex with easy to use modularization, re-executable annotation of changes, and targeted interfaces and interoperability adapters.\\
-Modularization facilitates reusability in research workflows.
-Scientific projects can encompass a large amount of files, or have a heterogeneous nature, comprising different data sources or evolving data across different processing stages.
+DataLad, finally, extends Git and git-annex with easy to use modularization, re-executable annotation of changes, and targeted interfaces and interoperability adapters:
+Modularization facilitates reusability in research workflows with large amount of files or with a heterogeneous nature, comprising different data sources or processing stages.
 Organizing them into a modular structure of homogeneous or smaller components enables more efficient reuse.
 DataLad allows to nest individual datasets via versioned linkage as lightweight dependencies, and provides seamless recursive operations across dataset boundaries by extending Git’s submodule mechanism.
 With this, DataLad provides a ``monorepo''-like user experience in datasets with arbitrarily deep nesting, and makes it trivial to operate on individual files deep in the hierarchy or entire trees of datasets, while individual datasets can easily be reused in new contexts (see \cref{fig:subdslinkage}).\\
 Re-executable annotations of changes constitute process provenance.
 In DataLad datasets, DataLad can wrap any command execution and automatically capture the command, the generated outputs or modification, and optionally all required input elements with a so-called \texttt{datalad run} or a \texttt{datalad containers-run} command.
 The former command captures the execution of any shell command, and the latter command can use software containers, tracked in DataLad datasets, for executing commands inside a specific software environment or containerized pipeline.
-Both commands retrieve inputs, initiate command execution, and, if it succeeds, save results together with a re-executable provenance in a structured annotation to a Git commit message (see)\cref{fig:fairly_metadata}).
+Both commands retrieve inputs, initiate command execution, and, if it succeeds, save results together with a re-executable provenance in a structured annotation to a Git commit message (see \cref{fig:fairly_metadata}).
 In addition to providing reliable information about past command-line invocations, these machine-readable records make it possible to easily re-execute commands, for example to verify if a result is computationally reproducible or to apply an analog change to a different dataset state.\\
 Interoperability adapters, finally, streamline data publication and consumption routines.
 Being able to efficiently retrieve and update research objects across a variety of available storage options is an important part of \gls{rdm} \citep{borghi2018data}.
 Git can already interact with other local or remote repositories via standard or custom network transport protocols, and git-annex readily provides access to a wide range of external data storage resources via a large set of protocols.
-On top of this, DataLad implements support for additional services that require custom protocols, such as the \gls{osf} \citep{hanke2021dlosf} or XNAT \citep[\url{www.xnat.org},][]{halchenko2021xnat}, and can add more fine-grained access (e.g. direct access to individual components contained in an archive hosted on cloud storage).
+On top of this, DataLad implements support for additional services that require custom protocols, such as the \gls{osf} \citep{hanke2021dlosf}, and can add more fine-grained access (e.g. direct access to individual components contained in an archive hosted on cloud storage).
 With this approach, DataLad can help to overcome technological limitations of storage solutions, or integrate seamlessly with technology that is already in use.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.6\textwidth]{linkage_subds.png}
-	\caption[DataLad dataset linkage]{Exemplary dataset hierarchy in a research project. DataLad datasets can be linked as actionable superdataset-subdataset relationsships. This allows, for example, to add a DataLad dataset with preprocessed data in a dependency-like link to an analysis. As DataLad datasets decouple sizable file content from file availability metadata, such links are only a fraction of the size of the data they track. At the same time, linkage is seamless, and DataLad operations can work across dataset boundaries. This feature enables modular projects from stand-alone units that facilitate reuse.}
+	\caption[DataLad dataset linkage]{Exemplary dataset hierarchy in a research project. DataLad datasets can be linked as actionable superdataset-subdataset relationships. A DataLad dataset with raw data is linked as a dependency to preprocessed data, to an analysis, and the final paper. As DataLad datasets decouple sizable file content from file availability metadata, such links are only a fraction of the size of the data they track. This feature enables modular projects from stand-alone units that facilitate reuse.}
 	\label{fig:subdslinkage}
 \end{figure}
 
@@ -465,34 +491,30 @@ With DataLad's streamlined data transport routines, users can utilize web source
 At the same time, the separation of file content and file name makes a lean, meta-data based representation independent from actual data retrieval.
 Thus, datasets of arbitrary scale can be cloned, exposing file names and revision history of all contained files, and provide actionable access to its content at a fraction of their total size.
 And in order to expose datasets for easier access, users can publish DataLad datasets to common repository hosting infrastructure as access points to install data, without actually publishing data contents to these services.
-These features aid with \gls{rdm} tasks in scientific projects.
-A thorough overview of them can be found in the software's documentation, which is elaborated on in chapter \ref{chap:k2}, and a comprehensive use case is detailed in chapter \ref{chap:k3}.
+These features aid with \gls{rdm} tasks in scientific projects, were used extensively in upcoming data analyses.
+A thorough overview of features can be found in the software's documentation, which is elaborated on in Chapter \ref{chap:k2},  a comprehensive use case for reprodcubility is detailed in Chapter \ref{chap:k3}, and Chapter \ref{chap:k4} describes its use in brain-state analyses.
 
 % provenance
 \begin{figure}
 	\centering
-	\includegraphics[width=.9\textwidth]{datalad_gooey.png}
-	\caption[DataLad: Graphical User Interface]{The \gls{gui} of DataLad on a Windows system, provided by an extension package \texttt{datalad-gooey}. A file tree (left) provides an overview of the file system, and annotates elements into DataLad datasets, contents tracked with Git or git-annex, untracked, modified, or clean states. A command window (right) as well as right-click drop down menus (not shown) lets users parametrize and execute DataLad commands. A log window (bottom) can display result outcomes, error, or help text.}
+	\includegraphics[width=.5\textwidth]{datalad_gooey.png}
+	\caption[DataLad: Graphical User Interface]{The \gls{gui} of DataLad provides an overview of working with DataLad. The file tree (left) is a DataLad dataset, and its contents are annotated if they tracked with Git, git-annex, or untracked, and whether they are modified, or if all changes are saved (``clean''). The command window (right) illustrates a DataLad command and some parameters.}
 	\label{fig:gooey}
 \end{figure}
-
-
 
 \subsection{Software adoption and relevance}
 
 As DataLad does not employ tracking code, the exact number of its users is not known.
 However, download statistics from the major Python package managers \texttt{pip} and \texttt{conda}, and popularity statistics from users of the Debian operating system can provide rough references.
-According to \url{pypistats.org}, the main DataLad Python package was downloaded from the Python Package Index 300 times per day on average in May 2023.
-The Python distribution Anaconda (\url{anaconda.org}) counts a total of 333932 downloads of the software throughout versions 0.9.3 (April 2018) and 0.18.3 (May 2023), averaging 180 downloads per day.
+According to \url{pypistats.org}, the main DataLad Python package was downloaded from the Python Package Index 474 times per day on average in August 2023.
+The Python distribution Anaconda (\url{anaconda.org}) counts a total of 380.011 downloads of the software throughout versions 0.9.3 (April 2018) and 0.19.3 (August 2023), averaging 240 downloads per day.
 The \texttt{popularity-contest} software is a Debian package that, if installed on a users system, reports anonymous statistics about most-used Debian packages.
 This data is aggregated into a popularity contest.
-According to it, in May 2023 between 0.08 and 0.1 percent of systems reporting statistics have a DataLad installation (see \cref{fig:popcon}).
+According to it, in August 2023 between 0.08 and 0.12 percent of systems reporting statistics have a DataLad installation (see \cref{fig:popcon}).
 All of these sources contain biases that limit conclusion to the number of users, though.
 Installations via Python package managers are commonly performed by individual end users, whereas installations of Debian packages can correspond to system-wide installations on multi-user systems such as high performance computing infrastructure.
 Likewise, upgrades of existing installations to more recent versions are included in these data, as well as temporary installations of the software in automated continuous integration test suites.
 Nevertheless, download statistics attest that it is an actively used tool with a user base that exceeds the circle of its developers by far.
-The citation count of the academic paper, totaling 66 in August 2023, two years after its publication by \citet{Halchenko2021}, and active contributor community around the source repository on GitHub, currently amounting to 48 individuals with committed code contributions, confirms that.
+The citation count of our academic paper \citet{Halchenko2021}, totaling 66 in August 2023, and active contributor community around the source repository on GitHub, currently amounting to 48 individuals with committed code contributions, confirms that.
 DataLad's current popularity, however, has not been established from the beginning of its development.
-The next chapter will highlight how scientific software like DataLad can be improved and gain popularity, and, vice versa improve scientific practice.
-\todo{relate this to memento project}
-
+The next chapter will highlight how scientific software like DataLad can be improved and gain popularity, and, vice versa, improve scientific practice.
