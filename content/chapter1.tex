@@ -5,6 +5,7 @@
 
 %This smart spell only works if no changes have been made to the chapter
 %using the options proposed in preambel/chapterheads.tex.
+\renewcommand*\dictumwidth{0.5\linewidth}
 \setchapterpreamble[u]{%
 	\dictum[Carole Goble]{Better Software, Better Research}
 }
@@ -33,7 +34,7 @@ It is recognized as academic output in the San Francisco Declaration on Research
 Academic journals, such as the Journal of Open Source Software (\href{https://joss.theoj.org/}{joss.theoj.org}), and article types, such as Nature's ``Toolbox'' (\href{https://www.nature.com/nature/articles?type=toolbox}{www.nature.com/nature/articles?type=toolbox}), have been created to support the scholarly publication and reuse of research software.\\
 With the acknowledgment of the importance of scientific software in research, there also is an awareness that its quality, reusability, and longevity needs to be ensured and improved.
 As a digital research object, the \gls{FAIR} principles apply to it just as to other research outputs.
-The \gls{grf}, states that access to data and software according to the FAIR principles are of comparable importance to science as access to publications \citep{dfg}.
+The \gls{grf} states that access to data and software according to the FAIR principles are of comparable importance to science as access to publications \citep{dfg}.
 And calls for proposals to improve the quality, usability or longevity of research software have been put forward by major national funders, including Germany \citep[e.g.,][]{dfgrs}, the United Kingdom \citep[e.g.,][]{ukri}, and the United States \citep[e.g.,][]{nih}.\\
 One set of problems from which software quality can suffer are documentation deficiencies \citep{mehlenbacher2003documentation}.
 The mere existence of software is insufficient to ensure its uptake and use according to best practices.
@@ -68,7 +69,7 @@ A lack of documentation hinders knowledge transfer both among users and develope
 
 Since the first release (0.0.1, March 2015), DataLad had technical documentation with a design overview and a reference documentation.
 Although any amount of documentation is better than no documentation at all, existing documentation can still be insufficient if it does not meet the needs of the target audience.
-Solely technical or reference documentation, for example, can be suboptimal for novices: It may be incomplete, narrowly focused on individual commands, or assume existing knowledge readers lack (Segal, 2007; Pawlik et al., 2015), and can thereby discourage potential users or inhibit the adoption of a tool.\\
+Solely technical or reference documentation, for example, can be suboptimal for novices: It may be incomplete, narrowly focused on individual commands, or assume existing knowledge readers lack (Segal, 2007; Pawlik et al., 2015), and can thereby discourage potential users or inhibit the adoption of a tool.
 Even though technical documentation is useful for developers, a central target audience for documentation of the DataLad ecosystem are scientists.
 While experts in their respective domains and methodologies, scientists may not have domain-agnostic technical skills.
 Task sets such as those required in \gls{rdm} require a broad set of technical skills  and research curricula seldom teach computing ecosystem literacy \citep{grisham2016proposed}.
@@ -82,7 +83,7 @@ In breaking down user questions by purpose, \citet{swarts2019open} further found
 And in separating documentation types into ``feature-based'' (closer related to the concept of reference documentation) or ``task-based'',  \citet{swarts2019open} reports twice as many questions seeking explanations in software with feature-based compared to task-based documentation.
 %This hints at a disconnect between knowing \textit{how} something should be done and \textit{why} it should be done this way.
 Overall, this highlights that users of scientific software show a clear need beyond the documentation of individual commands, but seek to understand general usage principles and master complex combinations of features to achieve specified goals.
-This type of empowerment is what the DataLad handbook project aimed to achieve, and complement DataLad's existing technical documentation with.
+This type of empowerment is what the DataLad handbook project aimed to achieve, and complement DataLad's existing technical documentation with in order to make the tool easier to use.
 
 % Only rarely does a consumer tool involve a terminal instead of a \gls{gui}, and typical applications perform a complete suite of tasks such that users do not need to combine several tools to accomplish one goal (CITATION NEEDED).
 % However, powerful scientific tools are often command-line-based (e.g., EXAMPLES), and complex task sets such as those required in \gls{rdm} require a broad set of technical skills \citep{grisham2016proposed}.
@@ -94,15 +95,15 @@ This type of empowerment is what the DataLad handbook project aimed to achieve, 
 
 The initial idea to the DataLad Handbook (\href{http://handbook.datalad.org}{handbook.datalad.org}) arose at the 2019 Meeting of the \gls{ohbm}, during the Symposium ``From Open Science to Science: Shifting the status quo in data sharing, software, and publishing''.
 Gregory Kiar's presentation ``Technology and Platforms Enabling Reproducible and Open Publishing'' included a recommendation and warning about DataLad: While it would be a powerful tool capable of solving many challenges, users will face difficulties learning which features existed and how they could use them \citep{kiar}.
-Motivated by this expressed need of the scientific community for additional guidance, the DataLad Handbook project was initiated.
+Motivated by this expressed need of the scientific community for additional guidance, I initiated the DataLad Handbook project.
 
 \subsubsection{Design considerations}
-We identified three types of stakeholders with different needs: \textit{Researchers} need accessible educational content to understand and use the tool, \textit{planners}, such as PIs or funders, need high-level, non-technical information in order to make informed yet efficient decisions on whether the tool fulfills their needs, and \textit{trainers} need reliable, open teaching material.
-Drawing from personal user experiences with the software, usability research (CITATION NEEDED), and educational concepts (CITATION NEEDED), the Handbook project was set out with the following goals about its contents:
+I identified three types of stakeholders with different needs: \textit{Researchers} need accessible educational content to understand and use the tool, \textit{planners}, such as PIs or funders, need high-level, non-technical information in order to make informed yet efficient decisions on whether the tool fulfills their needs, and \textit{trainers} need reliable, open teaching material.
+Drawing from personal user experiences with the software, I set out the Handbook project with the following goals about its contents:
 
 \begin{itemize}
 	\item \textbf{Applicability for a broad audience}: The Handbook should showcase domain-agnostic real-world \gls{rdm} applications.
-	\item \textbf{Practical experience}: The Handbook should enable a code-along style usage, with examples presented in code that users can copy, paste, and run on their own computer. To allow a read-only style usage, too, the handbook should also reveal what a given code execution's output would look like. For an optimal code-along or read-only experience, the code output should match the current software behavior.
+	\item \textbf{Practical experience}: The Handbook should enable a code-along style usage, with examples presented in code that users can copy, paste, and run on their own computer. To allow a read-only style usage, too, the Handbook should also reveal what a given code execution's output would look like. For an optimal code-along or read-only experience, the code output should match the current software behavior.
 	\item \textbf{Suitable for technical novices}: The Handbook's language should be accessible. Gradually, by explaining technical jargon and relevant tools or concepts in passing, it should provide readers with a broad set of relevant \gls{rdm} skills rather than requiring prior knowledge.
 	\item \textbf{Low barrier of entry} The Handbook's contents should be organized in short, topical units to provide the possibility to re-read or mix and match.
 	\item \textbf{Integrative workflows}: The Handbook's contents should build up upon each other and link back to past course content to teach how different software features interact.
@@ -110,7 +111,7 @@ Drawing from personal user experiences with the software, usability research (CI
 
 \end{itemize}
 
-Arising from this specification analysis, the following structure was designed to support the above requirements and fulfill the needs of the three stakeholders \citep{wagner_adina_s_2020_7906718}:
+Arising from this specification analysis, the I designed the following structure \citep{wagner_adina_s_2020_7906718}:
 
 \begin{itemize}
 	\item ``Introduction'': The first part of the book, covering high-level descriptions of the software and its features and detailed installation instructions for all operating systems.
@@ -119,11 +120,11 @@ Arising from this specification analysis, the following structure was designed t
 	\item ``Usecases'': The last part of the book, containing short, standalone start-to-end descriptions of real-world usecases, with concise step-by-step instructions, and references to further reading in the Basics.
 \end{itemize}
 
-To further support the design and content requirements, the following technical goals were set:
+To further support the design and content requirements, I set the following technical goals:
 
 \begin{itemize}
-	\item To keep visible text short while preserving the ability to explore advanced contents, topical custom content boxes and toggle-able sections ("click to expand") should make information relevant to specific user types or optional details skip-able and easily discoverable (see \cref{fig:handbook-admonitions}).
-	\item To ensure functioning from a user's point of view, the workflows included in the Handbook as consecutive code blocks need to be tested as an automated integration test suite
+	\item To keep visible text short while preserving the ability to explore advanced contents, topical custom content boxes and toggle-able sections ("click to expand") should make information relevant to specific user types or optional details skip-able and easily discoverable.
+	\item To ensure functioning from a user's point of view, the workflows included in the Handbook as code need to be tested as an automated integration test suite
 	\item The Handbook should be available in multiple formats, at least as a web-based rendering and as a portable download to be stored offline or printed
 	\item The Handbook should be developed alongside the software, and semantic versioning should ensure that users of a past software version can find the corresponding version of the Handbook
 \end{itemize}
@@ -138,12 +139,12 @@ It builds up entirely from flexible and extendable open source infrastructure:
 On the highest level, it uses Sphinx as a documentation generator (\href{https://www.sphinx-doc.org/en/master/}{www.sphinx-doc.org}).
 Sphinx transforms documents written in reStructuredText, a lightweight markup language, to a variety of output formats, among them HTML, PDF, \LaTeX, or EPUB.
 Initially a by-product of the Python documentation, it has been adopted by the Open Source community at large;
-GitHub's dependency graph reports that it is used by almost 300.000 projects in May 2023\footnote{https://github.com/sphinx-doc/sphinx/network/dependents}. \\
+GitHub's dependency graph reports that it is used by more than 300.000 projects in August 2023\footnote{\href{https://github.com/sphinx-doc/sphinx/network/dependents}{github.com/sphinx-doc/sphinx/network/dependents}}. \\
 Sphinx supports an extension mechanism with which additional functionality can be integrated.
 Leveraging this mechanism, the Handbook project extended standard Sphinx features with custom admonitions and designs, for example toggle-able boxes for optional details.
 This is implemented as a Python package alongside the Handbook source code, making the Handbook project a reusable and installable Sphinx extension.
 \cref{fig:handbook-admonitions} provides an overview of the custom-developed design features.
-A major functional enhancement is provided with a separate Python package, \texttt{autorunrecord}, an additional custom-made Sphinx extension that allows sequential execution of code in a specified environment, and embedding a record of the code and its output as code snippets into the documentation (CITATION NEEDED).
+A major functional enhancement is provided with a separate Python package, \texttt{autorunrecord}, an additional custom-made Sphinx extension that allows sequential execution of code in a specified environment, and embedding a record of the code and its output as code snippets into the documentation\footnote{\href{https://github.com/mih/autorunrecord}{github.com/mih/autorunrecord}}.
 Instructors can further use it to automatically create scripts from selected code blocks which can then be demonstrated in a remote-controlled terminal in live-coding tutorials.\\
 Hosting for the project is provided by Read the Docs (\href{https://readthedocs.org/}{readthedocs.org}), a free software documentation hosting platform that integrates with Sphinx.
 Illustrations in the Handbook are based on the undraw project by Katerina Limpitsouni (\href{https://undraw.co/}{undraw.co}). \\
@@ -181,13 +182,13 @@ Under its terms, all elements can be reused in original or derived form for all 
 	\label{fig:handbook-codeblock}
     \end{subfigure}
 	\caption[Customization in the DataLad Handbook]{Custom admonitions and code blocks used in the DataLad Handbook. In each panel, the top image corresponds to the web version of the admonition, and the bottom image corresponds to its PDF rendering.
-	\ref{fig:handbook-windowswit}: Windows-wits, toggle-able in the HTML version, contain information that is only relevant for the Windows operating system. \ref{fig:handbook-findoutmore}: Find-out-more admonitions, also toggle-able in the HTML version, contain miscellaneous extra information for curious readers. \ref{fig:handbook-gitusernote}: Git user notes are colored boxes with references to the underlying tools of DataLad, intended for advanced Git users as a comparison or technical explanation.  \ref{fig:handbook-codeblock}: Code blocks show one or more commands and the resulting output, provided using the \texttt{autorunrecord} Sphinx extension. In the web version, a copy-button (top right corner) allows to copy relevant commands automatically to the clipboard. Internal annotations allow generating custom scripts from any sequence on code-blocks for live coding demonstrations}
+	a) Windows-wits, toggle-able in the HTML version, contain information that is only relevant for the Windows operating system. b) Find-out-more admonitions, also toggle-able in the HTML version, contain miscellaneous extra information for curious readers. c) Git user notes are colored boxes with references to the underlying tools of DataLad, intended for advanced Git users as a comparison or technical explanation. d) Code blocks show one or more commands and the resulting output, provided using the \texttt{autorunrecord} Sphinx extension. In the web version, a copy-button (top right corner) allows to copy relevant commands automatically to the clipboard. Internal annotations allow generating custom scripts from any sequence on code-blocks for live coding demonstrations}
 	\label{fig:handbook-admonitions}
 \end{figure}
 
 \subsubsection{Content}
 
-In May 2023, the web and PDF versions of the Handbook are organized into 4 parts, with a total of 21 chapters across the parts Introduction, Basics, and Advanced, and 12 use cases.
+In August 2023, the web and PDF versions of the Handbook are organized into 4 parts, with a total of 21 chapters across the parts Introduction, Basics, and Advanced, and 12 use cases.
 The ``Introduction'' has two different target audiences:
 For one, it provides \textit{researchers} with detailed installation instructions, a basic general command line tutorial, and an overview of the handbook.
 Beyond this, it gives a high-level overview of the software and its capabilities to \textit{planners}. \\
@@ -211,26 +212,26 @@ To achieve this, it is set up to encourage and welcome improvements by external 
 The project is openly hosted on GitHub.
 Mirroring processes in larger crowd-sourced documentation projects such as the ``The Turing Way handbook for reproducible, ethical and collaborative research'' \citep{the_turing_way_community_2022_7625728}, credit is given for both code-based and non-code-based contributions.
 Contributors are recognized in the source repository, on the DataLad Website, and as co-authors in both the printed version of the Handbook and its Zenodo releases.
-As of TODO-May 2023, a total of TODO-54 contributors provided input in the form of content, bug fixes, or infrastructure improvements.
+As of August 2023, a total of 57 contributors provided input in the form of content, bug fixes, or infrastructure improvements.
 
 
 \subsubsection{Impact and scope}
 
-Work on the DataLad Handbook began in June 2019, and the first release followed in January 2020.
+My work on the DataLad Handbook began in June 2019, and the first release followed in January 2020.
 It has been under continuous development for more than four years, averaging two releases per year, and complements  the DataLad ecosystem with a comprehensive user guide.
 Its PDF version spans more than 600 pages.
 Releases of the DataLad core package are coordinated with matching releases of the Handbook project, and past release versions remain accessible online.\\
 Confirming observations from the literature \citep{loggemDDD}, the conjunct development of user-documentation has positive effects on software quality.
-As the writing process involves manual software testing, we observed a higher discovery rate of software errors.
-The user-focused approach uncovers deficiencies of the technical documentation and \gls{api} elements with suboptimal user experience.
+As the writing process involves manual software testing, I observed a higher discovery rate of software errors.
+My user-focused approach uncovered deficiencies of the technical documentation and \gls{api} elements with suboptimal user experience.
 The workflow-based nature of demonstrations highlights API inconsistencies.
 And the integration test that the handbook constitutes catches incompatibilities between the software and common usage practice.
 % maybe lower barrier of access for non-technical people to raise issues or feature requests
 These documentation features facilitate software development, and had a major impact on the conjoint 0.12.0 release of DataLad (Jan 2020), the first with a matching handbook release.
 The popularity data in \cref{fig:popcon} confirms a marked increase in downloads from this date onward.
 In addition, differences in web traffic confirm that user documentation is in higher demand than the technical documentation.
-An analysis of visits to the web version of the Handbook from December 2022 to TODO-July 2023 revealed that handbook.datalad.org averaged TODO-2xxxx total page views per 30 days.
-In the same time span, the technical documentation of DataLad at docs.datalad.org averaged 7xxxx total page views per 30 days, roughly a third of the traffic of the user documentation (\cref{fig:rtd})
+An analysis of visits to the web version of the Handbook from December 2022 to July 2023 revealed that handbook.datalad.org averaged 22.000 total page views per 30 days.
+In the same time span, the technical documentation of DataLad at docs.datalad.org averaged 6600 total page views per 30 days, less than a third of the traffic of the user documentation (\cref{fig:rtd}).
 In summary, the development of the DataLad Handbook had a measurable positive impact on the number of users, the popularity of the package, and the software quality.
 The project documents workflows that improve scientific practice, such as local and distributed version control, collaboration, data publication, and reproducible analysis.
 The next chapter will focus particularly on why these abilities are useful in science, and how they enable trustworthy science at the largest scale.
