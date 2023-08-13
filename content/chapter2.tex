@@ -28,7 +28,7 @@ Over the past decade, interest in reproducibility has been fueled by salient fai
 However, proposals to increase reproducibility, transparency, and robustness of science were made independently in various disciplines long before the current trend, in some cases dating back several centuries \citep[such as Boyle (1666), as cited in][]{RobertBoylesDesigneaboutNaturalHistory}.
 Even the field of \textit{computational reproducibility} originated already more than 30 years ago in the field of seismology \citep{claerbout1992electronic, buckheit1995wavelab}, despite increased usage of the term in scientific literature only from 2015 onward (see \cref{fig:ngram}).
 Consequently, the terminology around reproducibility has varied considerably over the years and across domains, and there is no universally agreed upon standardization of terminology in place yet \citep{barba2018terminologies}.
-To disambiguate between several conflicting definitions of terms around reproducibility that are in active use, we shall define the terms used in this thesis as follows:
+To disambiguate between several conflicting definitions of terms around reproducibility that are in active use, I will use the following definitions of these terms in this thesis:
 
 \subsubsection{Reproducibility}
 
@@ -40,7 +40,7 @@ Following the definition of \citet{peng2006}, \textit{reproducibility} refers to
 
 \subsubsection{Computational Reproducibility}
 
-\textit{Computational reproducibility}, finally, matches the definition put forward in the 2019 report on ``Reproducibility and Replicability in Science'' by the \citet{engineering2019reproducibility}: ``We define reproducibility to mean computational reproducibility – obtaining consistent computational results using the same input data, computational steps, methods, code, and conditions of analysis''.
+\textit{Computational reproducibility}, finally, matches the definition put forward in the 2019 report on ``Reproducibility and Replicability in Science'' by the \citet{engineering2019reproducibility}: ``We define reproducibility to mean computational reproducibility -- obtaining consistent computational results using the same input data, computational steps, methods, code, and conditions of analysis''.
 
 
 \begin{figure}
@@ -57,7 +57,7 @@ Following the definition of \citet{peng2006}, \textit{reproducibility} refers to
 
 As this definition of computational reproducibility implies, the building blocks of research output extend to more than the files that constitute the actual research output, but also to all elements involved in its generation \citep{claerbout1992electronic}.
 Consider different types of research output:
-Raw data originates from acquisitions based on - potentially ongoing - experiments, raw data transformations, or data cleaning.
+Raw data originates from acquisitions based on -- potentially ongoing -- experiments, raw data transformations, or data cleaning.
 Processed data or results stem from computations with analysis code or software in specific versions on particular data.
 And software, expressed in raw (code) or derived (transformed into executable) form, is created or used in specific computational environments, with compilers, underlying libraries, and systems in distinct versions.
 Consequently, these building blocks play an integral part in the genesis of research outputs, and changes in these building blocks or their composition can translate to changes in the resulting research output.\\
@@ -147,7 +147,7 @@ However, packages usually depend on other software packages, which are listed as
 During installation, package managers check if all of the linked dependencies exist on the system, and if not, install them in the required versions automatically.
 For scientific projects, we can conceptualize its modular units (data, software, code) as the dependencies of a given research output.
 When those units are tracked as datasets, dependency relationships in the form of subdatasets form actionable links with precise versions.
-Thus, a third feature for reusability is modularity as provided with DataLad's subdataset mechanism.
+Thus, a third feature for reusability is modularity as provided with DataLad's subdataset mechanism (see Figure \ref{fig:subdslinkage}).
 In a superdataset, a registered subdataset is known with a location and version identifier.
 On demand, it can be installed precisely as needed, from whichever location or service it is available from, similar to the process that \citet{bechhofer2010research} envisioned.
 
@@ -169,18 +169,13 @@ Exhaustive versioning and modularization pave the way to include all necessary c
 If a user ensures that a project can be moved across computers and remains functional without adjustment, for example by ensuring that no references to file system, operating system, or user specific idiosyncrasies are included, portability is improved further.
 And with actionable process provenance that can be re-executed, even verification and re-use even without domain knowledge becomes possible.
 
-
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.9\textwidth]{vamp.png}
 	\caption[DataLad datasets as reusable research objects]{Reusing research outputs implies trust, and trust should be earned through verification. DataLad datasets possess features that assist with this aim. Verification is enabled by provenance information. Provenance capture of research outcomes requires \textbf{exhaustive versioning} of all inputs, as well as process records that describe how inputs were combined and transformed to generate outputs (middle). When lightweight metadata are \textbf{actionable}, they can be used to reproduce research outputs in a different environment from precisely identified inputs by (re-)applying the recorded process (left). A data structure that affords this type of \textbf{portable} recomputation is a self-contained unit that can be reused as a \textbf{modular} input component for incremental research (right).
 	}
 	\label{fig:vamp}
 \end{figure}
-
-
-
-
 % curation needs to be pragmatic
 
 Although FAIR research objects are universally desirable, in practice, the necessary standards and procedures for creating FAIR (meta)data are not always already in place when research is conducted.
@@ -188,11 +183,10 @@ This can turn FAIRification into a bureaucratic data governance effort, diminish
 However, the four properties outlined above are a big step into the right direction, and essentially a byproduct from pragmatic research data management in DataLad datasets.
 \cref{fig:vamp} illustrates how it yields trusted and reusable research objects, and the next section details a technical implementation and proof-of-concept analysis to create such reusable research objects as a byproduct of \gls{rdm} in analyses of any scale.
 
-\pagebreak
 
 \section{FAIRly big: A framework for computationally reproducible processing of large-scale data}
 
-The following section is a short overview of our original publication \citet{wagner2022fairly}. The reader is invited to visit the published paper for further details.
+The following section is a short overview of our original publication \citep{wagner2022fairly}. The reader is invited to visit the published paper for further details.
 
 Large-scale datasets pose additional challenges for \gls{FAIR} research objects.
 Their storage and computational demands increasingly exceed common \gls{HPC} infrastructure, and computing procedures that are common in fields accustomed to smaller datasets such as storing multiple copies of the data become infeasible \citep{horien2021hitchhiker}.
@@ -210,7 +204,7 @@ For this, it puts the aforementioned properties in practice, using DataLad datas
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ukbworkflow_simplified.pdf}
-	\caption[FAIRly big: Framework overview]{Framework overview. a) A DataLad dataset links input data and pipeline, and contains computed results with actionable process provenance and location information post-computation, allowing on-demand file retrieval or recomputation. b) Process-flowchart: First, a DataLad dataset exhaustively tracks required processing components as modules (e.g., input data, processing pipeline). Next, compute jobs are executed, if possible in parallel, capturing and validating provenance required for computation. Finally, results and provenance from parallel executions are merged. c) An ephemeral (short-lived) compute workspace for validating process provenance. The temporary, lean clone retrieves relevant subsets of data based on its parametrization and information recorded in the dataset. Upon success, process provenance and results are pushed into permanent storage (see d), and the ephemeral workspace is purged. d) The internal dataset representation in a RIA store: The store receives results and can contain input data, optionally using compressed archives or encryption during storage and transport. It is the only place where results take up permanent disk space. License: CC-BY-SA, \citet{wagner2022fairly}}
+	\caption[FAIRly big: Framework overview]{Framework overview. a) A DataLad dataset links input data and pipeline, and contains computed results with actionable process provenance and location information post-computation, allowing on-demand file retrieval or recomputation. b) Process-flowchart: First, a DataLad dataset exhaustively tracks required processing components as modules (e.g., input data, processing pipeline). Next, compute jobs are executed, if possible in parallel, capturing and validating provenance required for computation. Finally, results and provenance from parallel executions are merged. c) An ephemeral (short-lived) compute workspace for validating process provenance. The temporary, lean clone retrieves relevant subsets of data based on its parametrization and information recorded in the dataset. Upon success, process provenance and results are pushed into permanent storage (see d), and the ephemeral workspace is purged. d) The internal dataset representation in a RIA store: The store receives results and can contain input data, optionally using compressed archives or encryption during storage and transport. It is the only place where results take up permanent disk space. License: CC-BY-SA, \citet{wagner2022fairly}.}
 	\label{fig:fairly_workflow}
 \end{figure}
 
@@ -237,7 +231,7 @@ This constitutes evidence that existing information is valid and sufficient to m
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{coarsemetadata.pdf}
-	\caption[FAIRly big: Process provenance of an individual job]{Process provenance of an individual job, its generation, and re-execution. a) A \texttt{datalad containers-run} command with a container name specification (cat), a container parametrization or command, a commit message, and an input and output data specification generates actionable process provenance as a structured record linked to a Git commit. b) To re-execute it, \texttt{datalad rerun} needs to be parameterized with a revision identifier, such as a Git tag, a ``commit shasum'' (\texttt{e035f896s45c9f}), or a revision range containing one or more commits with associated provenance records. c) As the core execution command (see Listing 1, line 24-30) at the center of each individual job, it performs data retrieval, container execution, and result capture, and generates the actionable provenance. d) The provenance record stored alongside computed results in the revision history. A legend (right) highlights the most important pieces of recorded provenance. It is re-executable with DataLad only, but sufficient information to repeat a computation using other means can also be inferred from the structured JSON records by other software or even humans. License: CC-BY-SA, \citet{wagner2022fairly}}
+	\caption[FAIRly big: Process provenance of an individual job]{Process provenance of an individual job, its generation, and re-execution. a) A \texttt{datalad containers-run} command with a container name specification (cat), a container parametrization or command, a commit message, and an input and output data specification generates actionable process provenance as a structured record linked to a Git commit. b) To re-execute it, \texttt{datalad rerun} needs to be parameterized with a revision identifier, such as a Git tag, a ``commit shasum'' (\texttt{e035f896s45c9f}), or a revision range containing one or more commits with associated provenance records. c) As the core execution command (see Listing 1, line 24-30) at the center of each individual job, it performs data retrieval, container execution, and result capture, and generates the actionable provenance. d) The provenance record stored alongside computed results in the revision history. A legend (right) highlights the most important pieces of recorded provenance. It is re-executable with DataLad only, but sufficient information to repeat a computation using other means can also be inferred from the structured JSON records by other software or even humans. License: CC-BY-SA, \citet{wagner2022fairly}.}
 	\label{fig:fairly_metadata}
 \end{figure}
 
@@ -261,9 +255,9 @@ Changes are build on top of the mainline code, but in branches such that concurr
 The clone and push orchestration is implemented as a job script that wraps the desired processing.
 \cref{lst:job} contains an example bash script:
 To set up the ephemeral workspace and push target, it receives the source dataset for cloning and result dataset for pushing as parameters (lines 5-6), clones the source into a temporary location (line 9), registers the push target (line 12), and creates a unique branch (line 14).
-Afterwards, analysis-specific code can run with provenance tracking, and as a last step, its results and provenance are pushed into the destination dataset (lines 34, 38, \cref{fig:fairly_workflow}1b, blue arrow).\\
+Afterwards, analysis-specific code can run with provenance tracking, and as a last step, its results and provenance are pushed into the destination dataset (lines 34, 38, \cref{fig:fairly_workflow}1b, blue arrow).
 
-\begin{Listing}
+\begin{Listing} [H]
 	\centering
 	\lstset{
 		language=bash,
@@ -358,7 +352,7 @@ A common example is one processing pipeline per participant, i.e., the paralleli
 \cref{lst:job} exemplifies this: A specific participant identifier, provided as a parameter (line 7), determines the subset of input data a processing pipeline runs on (\cref{fig:fairly_workflow}c).
 Precisely how to split a specific computation is dependent on its nature, but as parallelization often corresponds to the granularity at which a recomputation will be possible in our framework, relevant considerations are, for example: ``What is the smallest unit for which a recomputation is desirable?'', or ``For which unit size is a recomputation still feasible on commodity hardware?'' \citep{wagner2022fairly}.
 Once a fitting granularity is determined, a job scheduling system can assist in deploying thousands of computations in parallel.
-To automate this process, the framework supports to major job schedulers, HTCondor \citep{thain2005distributed} and SLURM \citep{yoo2003slurm}, natively.
+To automate this process, the framework supports two major job schedulers, HTCondor \citep{thain2005distributed} and SLURM \citep{yoo2003slurm}, natively.
 Their configuration is highly infrastructure-specific, and must determine an optimum balance of resource demands, such as run time, memory and storage requirements, in order to achieve optimal throughput.
 Importantly, the final process provenance neither contains the orchestration of ephemeral workspaces, nor the scheduling layer.
 For a original computation, these layers can thus contain necessary platform-specific tuning without impacting the portability of the final research object.
@@ -371,8 +365,8 @@ In this case, all branches can be merged at once using a so-called octopus-merge
 The outcome of this consolidation process is a self-contained DataLad dataset, with valid, machine-actionable provenance information for every single result file of the performed data processing.
 As such, it is a modular unit of data, suitable as input for further processing and analysis.
 And it is a practical example how the four properties -- exhaustively versioned, actionable, modular, and portable -- translate to trustworthy, reusable research outputs.
-Overall, our framework is a general-purpose solution that is compatible with any data that can be represented as files of any size, and any computation that can be performed via a command line call. It is built on a collection of portable, free and open-source tools that can be deployed without special privileges or administrative coordination on standard HTC/HPC infrastructure, or personal computing equipment.
-An open tutorial and result showcase is publicly available at \url{www.github.com/psychoinformatics-de/fairly-big-processing-workflow-tutorial}.
+Overall, our framework is a general-purpose solution that is compatible with any data that can be represented as files of any size, and any computation that can be performed via a command line call. It is built on a collection of portable, free and open-source tools that can be deployed without special privileges or administrative coordination on standard \gls{HTC}/\gls{HPC} infrastructure, or personal computing equipment.
+An open tutorial and result showcase is publicly available at \url{github.com/psychoinformatics-de/fairly-big-processing-workflow-tutorial}.
 To test its capabilities further, we conducted a proof-of-concept analysis on one of the largest neuroscientific datasets to date.
 
 %\lstset{
@@ -399,7 +393,7 @@ An overview of the analysis is shown in \cref{fig:fairly_datasets}, and the setu
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ukb_datasets.pdf}
-	\caption[FAIRly big: Overview of the proof-of-concept analysis]{ Overview of DataLad dataset linkage through processing and reuseAny DataLad dataset may comprise other DataLad datasets as subdatasets via lightweight but actionable and versioned links. This connects a dataset to the content and provenance of a different modular unit of data, such as the outcomes of a the preceding processing step. The genesis of an analysis output (Analysis A/B) based on intermediate processing outcomes (Tailored results A/B) can thus be traced back all the way to the original raw data. Access control and storage choices are independent across individual components in this network of linked data modules. Aggregated data and analysis results can be shared with larger audiences or publicly on a variety of platforms, while raw and derived data may underlie particular access restrictions, or require particular hosting solutions due to their size. License: CC-BY-SA, \citet{wagner2022fairly}}
+	\caption[FAIRly big: Overview of the proof-of-concept analysis]{Overview of DataLad dataset linkage through processing and reuse. Any DataLad dataset may comprise other DataLad datasets as subdatasets via lightweight but actionable and versioned links. This connects a dataset to the content and provenance of a different modular unit of data, such as the outcomes of a the preceding processing step. The genesis of an analysis output (Analysis A/B) based on intermediate processing outcomes (Tailored results A/B) can thus be traced back all the way to the original raw data. Access control and storage choices are independent across individual components in this network of linked data modules. Aggregated data and analysis results can be shared with larger audiences or publicly on a variety of platforms, while raw and derived data may underlie particular access restrictions, or require particular hosting solutions due to their size. License: CC-BY-SA, \citet{wagner2022fairly}.}
 	\label{fig:fairly_datasets}
 \end{figure}
 
@@ -420,19 +414,19 @@ These measures were taken to obtain a meaningful estimate of intra-pipeline vari
 %A single participant dataset with several hundreds of files is represented in 25 inodes and about 4 GB of disk space in a RIA store, and in total, the employed RIA store hosts 42,715 datasets comprising the full UKB data with less than 940k inodes.\\
 To test the frameworks portability and estimate result variability across computations, we set the analysis up to run on two systems, a \gls{HPC} cluster and a \gls{HTC} cluster.
 The two systems used SLURM or HTCondor for job scheduling, respectively, and each system imposed different resource constraints.
-The \gls{HPC} system, a modular supercomputer with abundant disk space and compute power \citep{krause2018jureca}, imposed an inode quota, a limit on the total number of files, of 4.4 million – less than the total number of files of the raw dataset.
+The \gls{HPC} system, a modular supercomputer with abundant disk space and compute power \citep{krause2018jureca}, imposed an inode quota, a limit on the total number of files, of 4.4 million -- less than the total number of files of the raw dataset.
 The \gls{HTC} cluster, in contrast, was constrained on storage capacity, preventing the existence of more than one copy of the raw dataset, and limiting the size of derivatives that could be stored.
 The framework was thus setup identically across the employed systems apart from the implementation of job submission, which accounted for platform specific idiosyncrasies such as these restrictions.
 Irrespective of system, one compute job per participant was generated.
 This compute job serially processed all available anatomical images (0, 1, or 2) for a given participant.
-For each image, a dedicated provenance record was captured, yielding a total of 41,180 records.
+For each image, a dedicated provenance record was captured, yielding a total of 41~180 records.
 The platform-specific job submission scripts adjusted the job load to the available disk space or inode resources when disk space or inode availability were insufficient for the full dataset by scheduling only as many jobs in parallel as there were resources to handle extracted inputs.
 
 \subsubsection{Workflow execution and consolidation}
 
 On the \gls{HPC} system we completed data processing for the one-hour-per-image pipeline within 10.5 hours, using 25 dedicated compute nodes, each executing 125 jobs in parallel on RAM disks with GNU Parallel \citep{tange2011gnu}.
 On the \gls{HTC} system in turn, computations were scheduled dynamically across several weeks using HTCondor.
-On both systems, recorded outputs and provenance records amounted to a total of 995.6 GB of computed derivatives in 163,212 files.
+On both systems, recorded outputs and provenance records amounted to a total of 995.6 GB of computed derivatives in 163~212 files.
 After completion, results were consolidated by merging result branches, yielding a collection of different VBM-related measures for all images in the sample, represented in archives, and annotated with re-executable provenance records in a DataLad dataset.\\
 This DataLad dataset was then subsampled into smaller ``special purpose'' datasets tuned for specific research questions, containing extracted and optionally aggregated subsets of the results for easier consumption and faster access.
 For this, the main result DataLad dataset became an input to a new tailored DataLad dataset via nesting (``Tailored results A/B'' in \cref{fig:fairly_datasets}), which extracted and transformed required files with provenance tracking using \texttt{datalad run}.
@@ -459,7 +453,7 @@ Finally, we derived quality control metrics for anatomical images from the compu
 They exhibit $\rho > 0.99999$ for computation and recomputation.
 
 
-\begin{table}
+\begin{table}[H]
 	\centering
 	\begin{tabular}{lcc}
 		\toprule
@@ -482,33 +476,33 @@ The potential for full computational reproducibility not only permits structured
 To confirm computational reproducibility for a consumer, we performed an automatic recomputation of individual results on a personal laptop with much lower storage and compute capacity than a cluster, and without job scheduling software.
 This type of spot-checking results resembles the scenario of an interested reader or reviewer of a scientific publication with access to (parts of) the data, but no access to adequate large-scale computing resources.
 The recomputation solely relied on the local availability of the Singularity container technology, but was otherwise fully automatic.
-Its success confirmed that platform idiosyncrasies were confined to the outer job scheduling layer only, and that the resulting research object was portable and across infrastructures.
+Its success confirmed that platform idiosyncrasies were confined to the outer job scheduling layer only, and that the resulting research object was portable across infrastructures.
 
-
-\section{Interim discussion}
-
-Our framework brings together a range of work that the previous chapters outlined already.
-The introduction and the first part of chapter \ref{chap:k3} laid out the elementary importance of \gls{rdm} for scientific conduct.
-They focused on two central aspects, specifically reusability and reproducibility, and showed how they connected to each other:
-Reproducibility is a basis for reusability, and both are the outcome of research data management that becomes increasingly more FAIR.
-At the center of our framework lies thoughtful research data and reproducibility management, not as an afterthought, but -- given the technical challenges computational reproducibility poses -- as a sturdy and necessary basis.
-In the spirit of reusable and FAIR digital research objects, it creates outcomes that lend themselves to reuse naturally.
-Especially in large-scale computations, current results will be the inputs of future projects, and their built-in reusability provides the necessary trust for this.\\
-The introduction also established DataLad as a software tool to deliver this research data management.
-Its development principles and features in the spirit of decentralized software development translate into utility for our framework.
-For one, it is able to connect a range of established services or and open source tools to ease adoption and maximize flexibility.
-And although the workflows and concepts our framework draws from are not based in the domain of reproducible data processing, they lend themselves well for this application, and what made distributed software development productive, fast, and reliable, now helps to do the same for data analysis.\\
-Fundamental to the success and usability of DataLad and its use in this framework is its documentation, as argued in chapter \ref{chap:k2}.
-On a high level, the framework constitutes yet another use case, only possible because the tools' features are combined into something greater than the sum of its parts.
-Many years of refining user-centered workflows and software usability formed the basis for this.
-The available documentation allows interested readers to learn beyond the publication, up to a point where they can extend it to their own use cases.
-A testament to this, and to the utility of the framework is its adoption into dedicated new tools already in an early stage of its development.
-\citet{heunis2023catalog} makes use of it for reproducible metadata aggregation, it plays a role in the CuBIDS packages for the reproducible curation of \gls{BIDS} datasets \citep{covitz2022curation}, and a dedicated software tool, BABS, has been created to improve the usability of the workflow even more (CITE BABS).\\
-While our work recognizes the FAIR principles, it makes a pragmatic compromise between the aspirational ideal state, and the continuously developing research and meta data landscape in computational sciences.
-In passing, as a byproduct of \gls{rdm}, its outcomes go a long way towards FAIR, and by applying the four properties of exhaustively versioned, actionable, modular and portable to research projects, become re-usable by default.
-The work outlined in this thesis so far thus culminated in the creation of a flexible and scalable framework to create reusable research objects.
-The next chapters of this thesis will focus on applying the work so far for projects rooted in the field of neuroimaging. \\
-\[TBC\]
+%
+%\section{Interim discussion}
+%
+%Our framework brings together a range of work that the previous chapters outlined already.
+%The introduction and the first part of chapter \ref{chap:k3} laid out the elementary importance of \gls{rdm} for scientific conduct.
+%They focused on two central aspects, specifically reusability and reproducibility, and showed how they connected to each other:
+%Reproducibility is a basis for reusability, and both are the outcome of research data management that becomes increasingly more FAIR.
+%At the center of our framework lies thoughtful research data and reproducibility management, not as an afterthought, but -- given the technical challenges computational reproducibility poses -- as a sturdy and necessary basis.
+%In the spirit of reusable and FAIR digital research objects, it creates outcomes that lend themselves to reuse naturally.
+%Especially in large-scale computations, current results will be the inputs of future projects, and their built-in reusability provides the necessary trust for this.\\
+%The introduction also established DataLad as a software tool to deliver this research data management.
+%Its development principles and features in the spirit of decentralized software development translate into utility for our framework.
+%For one, it is able to connect a range of established services or and open source tools to ease adoption and maximize flexibility.
+%And although the workflows and concepts our framework draws from are not based in the domain of reproducible data processing, they lend themselves well for this application, and what made distributed software development productive, fast, and reliable, now helps to do the same for data analysis.\\
+%Fundamental to the success and usability of DataLad and its use in this framework is its documentation, as argued in chapter \ref{chap:k2}.
+%On a high level, the framework constitutes yet another use case, only possible because the tools' features are combined into something greater than the sum of its parts.
+%Many years of refining user-centered workflows and software usability formed the basis for this.
+%The available documentation allows interested readers to learn beyond the publication, up to a point where they can extend it to their own use cases.
+%A testament to this, and to the utility of the framework is its adoption into dedicated new tools already in an early stage of its development.
+%\citet{heunis2023catalog} makes use of it for reproducible metadata aggregation, it plays a role in the CuBIDS packages for the reproducible curation of \gls{BIDS} datasets \citep{covitz2022curation}, and a dedicated software tool, BABS, has been created to improve the usability of the workflow even more (CITE BABS).\\
+%While our work recognizes the FAIR principles, it makes a pragmatic compromise between the aspirational ideal state, and the continuously developing research and meta data landscape in computational sciences.
+%In passing, as a byproduct of \gls{rdm}, its outcomes go a long way towards FAIR, and by applying the four properties of exhaustively versioned, actionable, modular and portable to research projects, become re-usable by default.
+%The work outlined in this thesis so far thus culminated in the creation of a flexible and scalable framework to create reusable research objects.
+%The next chapters of this thesis will focus on applying the work so far for projects rooted in the field of neuroimaging. \\
+%\[TBC\]
 
 
 
