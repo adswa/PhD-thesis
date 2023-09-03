@@ -50,7 +50,7 @@ A common challenge is thus to keep projects in such a state that they can be und
 This makes technical and organizational elements of scientific practice, such as \gls{rdm} and research software engineering, a fundamental prerequisite.
 Going sequentially through the different challenges and solutions to conducting reproducible brain state analyses, this thesis summarizes my conjunct work on research data management solutions, research software engineering practices, and their application in a scientific project that spanned several institutions and generations of researchers.\\
 To lay the foundations for this, the remainder of the introduction establishes a number of prerequisites.
-The first section \ref{chap:k1-brain} outlines a brief overview of the literature in the field of working memory maintenance, and deduces the choice of analyses methods for dimensionality reduction for the study of brain states in Chapter \ref{chap:k3}.
+The first section \ref{chap:k1-brain} outlines a brief overview of the literature in the field of working memory maintenance, and deduces the choice of analyses methods for dimensionality reduction for the study of brain states in Chapter \ref{chap:k4}.
 Afterwards, section \ref{chap:k1-rdm} introduces the topic of research data management, and highlights central concepts and tools that will be a focus in the upcoming chapters \ref{chap:k2} and \ref{chap:k3}.
 As I will lay out in this section and in upcoming chapters, \gls{rdm} is a foundational element within good scientific practice, and an important prerequisite for computational neuroscience.
 
@@ -85,7 +85,7 @@ Interestingly, studies decoding working memory content found that decodable patt
 These representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons were termed dynamic population coding \citep{sreenivasan2014revisiting} (see Figure \ref{fig:dynamiccoding}).\\
 The theory that cognitive processes evolve through different brain states as dynamic neural trajectories is line with non-stable representations \citep{buonomano2009state}.
 These trajectories emerge by conceptualizing neural responses as vectors in an N-dimensional space that evolves over time:
-The axis of the high-dimensional space correspond to measurements, such as raw or transformed data from M/EEG sensors or \gls{fMRI} voxels.
+The axes of the high-dimensional space correspond to measurements, such as raw or transformed data from M/EEG sensors or \gls{fMRI} voxels.
 Each time point in the acquisition becomes a point in the high-dimensional space spanned by all sensors, determined by the measurement in each sensor, such as activation strength.
 In geometric terms, this point is an N-dimensional vector.
 Neural trajectories emerge by tracing the activity on these axes over multiple time points.
@@ -405,7 +405,7 @@ In the scientific community it is widely recommended to employ version control f
 But other components of scientific projects, such as data or computing environments, are not as transparently managed or accessible as code and software.
 Digital research objects are usually stored in multiple different locations \citep{parsons2013research}, and their consumption is complicated by disconnected and non-interoperable hosting solutions:
 Different storage services use different protocols, means of authentication, or other idiosyncrasies that require custom workflows.
-Moreover, as will be elaborated in chapter \ref{chap:k3}, scientific computation is not reproducible enough, because data provenance is often incomplete and rarely automatically captured.
+Moreover, as will be elaborated in Chapter \ref{chap:k3}, scientific computation is not reproducible enough, because data provenance is often incomplete and rarely automatically captured.
 And over the course of a research project, often as part of the standard, multi-stepped processing workflow, data evolve and change just like code does:
 Continued acquisitions enlarge the raw dataset; Transformations to -- likewise evolving -- community standards change file formats, dataset organization, or enrich available metadata; And continuous quality control processes can fix errors in datasets.
 In the case that data or other research objects were subject to change over the course of a project, there is a need to identify which exact version has been used -- otherwise, the reproducibility of a result is threatened \citep{hardwicke2018data}.
@@ -461,7 +461,7 @@ DataLad's development is guided by four principles \citep{Halchenko2021}:
 	\item The only two recognized entities are Datasets and the files they comprise,
 	\item A dataset is a Git repository with an optional annex,
 	\item The should be as few custom procedures and data structures as possible,
-	\item Complete decentralization, with no required central server or service, but maximum interoperability with existing 3rd-party resources and infrastructure.
+	\item Complete decentralization, with no required central server or service, but maximum interoperability with existing third-party resources and infrastructure.
 \end{itemize}
 
 These principles ensure DataLad's open and domain agnostic nature, maximize the long-term utility of DataLad datasets, minimize users' technical debt and reduce the risk of adoption.
@@ -498,7 +498,7 @@ A thorough overview of features can be found in the software's documentation, wh
 \begin{figure}
 	\centering
 	\includegraphics[width=.5\textwidth]{datalad_gooey.png}
-	\caption[DataLad: Graphical User Interface]{The \gls{gui} of DataLad provides an overview of working with DataLad. The file tree (left) is a DataLad dataset, and its contents are annotated if they tracked with Git, git-annex, or untracked, and whether they are modified, or if all changes are saved (``clean''). The command window (right) illustrates a DataLad command and some parameters.}
+	\caption[DataLad: Graphical User Interface]{The \gls{gui} of DataLad provides an overview of working with DataLad. The file tree (left) is a DataLad dataset, and its contents are annotated whether they are tracked with Git, git-annex, or untracked, and whether they are modified, or if all changes are saved (``clean''). The command window (right) illustrates a DataLad command and some parameters.}
 	\label{fig:gooey}
 \end{figure}
 

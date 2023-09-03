@@ -124,9 +124,9 @@ To further support the design and content requirements, I set the following tech
 
 \begin{itemize}
 	\item To keep visible text short while preserving the ability to explore advanced contents, topical custom content boxes and toggle-able sections ("click to expand") should make information relevant to specific user types or optional details skip-able and easily discoverable.
-	\item To ensure functioning from a user's point of view, the workflows included in the Handbook as code need to be tested as an automated integration test suite
-	\item The Handbook should be available in multiple formats, at least as a web-based rendering and as a portable download to be stored offline or printed
-	\item The Handbook should be developed alongside the software, and semantic versioning should ensure that users of a past software version can find the corresponding version of the Handbook
+	\item To ensure functioning from a user's point of view, the workflows included in the Handbook as code need to be tested as an automated integration test suite.
+	\item The Handbook should be available in multiple formats, at least as a web-based rendering and as a portable download to be stored offline or printed.
+	\item The Handbook should be developed alongside the software, and semantic versioning should ensure that users of a past software version can find the corresponding version of the Handbook.
 \end{itemize}
 
 The resulting implementation of the Handbook fulfilled these requirements as follows:
@@ -182,17 +182,17 @@ Under its terms, all elements can be reused in original or derived form for all 
 	\label{fig:handbook-codeblock}
     \end{subfigure}
 	\caption[Customization in the DataLad Handbook]{Custom admonitions and code blocks used in the DataLad Handbook. In each panel, the top image corresponds to the web version of the admonition, and the bottom image corresponds to its PDF rendering.
-	a) Windows-wits, toggle-able in the HTML version, contain information that is only relevant for the Windows operating system. b) Find-out-more admonitions, also toggle-able in the HTML version, contain miscellaneous extra information for curious readers. c) Git user notes are colored boxes with references to the underlying tools of DataLad, intended for advanced Git users as a comparison or technical explanation. d) Code blocks show one or more commands and the resulting output, provided using the \texttt{autorunrecord} Sphinx extension. In the web version, a copy-button (top right corner) allows to copy relevant commands automatically to the clipboard. Internal annotations allow generating custom scripts from any sequence on code-blocks for live coding demonstrations}
+	a) Windows-wits, toggle-able in the HTML version, contain information that is only relevant for the Windows operating system. b) Find-out-more admonitions, also toggle-able in the HTML version, contain miscellaneous extra information for curious readers. c) Git user notes are colored boxes with references to the underlying tools of DataLad, intended for advanced Git users as a comparison or technical explanation. d) Code blocks show one or more commands and the resulting output, provided using the \texttt{autorunrecord} Sphinx extension. In the web version, a copy-button (top right corner) allows to copy relevant commands automatically to the clipboard. Internal annotations allow generating custom scripts from any sequence on code-blocks for live coding demonstrations.}
 	\label{fig:handbook-admonitions}
 \end{figure}
 
 \subsubsection{Content}
 
-In August 2023, the web and PDF versions of the Handbook are organized into 4 parts, with a total of 21 chapters across the parts Introduction, Basics, and Advanced, and 12 use cases.
+In August 2023, the web and PDF versions of the Handbook are organized into four parts, with a total of 21 chapters across the parts Introduction, Basics, and Advanced, and 12 use cases.
 The ``Introduction'' has two different target audiences:
 For one, it provides \textit{researchers} with detailed installation instructions, a basic general command line tutorial, and an overview of the handbook.
 Beyond this, it gives a high-level overview of the software and its capabilities to \textit{planners}. \\
-The ``Basics'' is organized into 9 chapters.
+The ``Basics'' is organized into nine chapters.
 Following a narrative about a fictional college course on \gls{rdm}, it teaches different aspects of DataLad functionality and general research data management to \textit{researchers} in each topical chapter.
 Broadly, those topics can be summarized as follows: \\
 1) Local version control, 2) Capturing and re-executing process provenance, 3) Data integrity, 4) Collaboration and distributed version control, 5) Configuration, 6) Reproducible data analysis, 7) Computationally reproducible data analysis, 8) Data publication, and 9) Error management.
@@ -252,8 +252,8 @@ The next chapter will focus particularly on why these abilities are useful in sc
 		\caption{Debian package popularity counts for DataLad}
 		\label{fig:popcon}
 	\end{subfigure}
-	\caption[Software and documentation popularity]{Software and documentation popularity measures. \ref{fig:rtd}: Documentation page views for the technical documentation (\url{docs.datalad.org}) and the user documentation (\url{handbook.datalad.org}), displayed as average views per 30 days, between December 2022 and May 2023. The DataLad Handbook consistently sees higher traffic.
-		\ref{fig:popcon}: Popularity of the Debian packages DataLad and python3-datalad over time, expressed in percent of Debian users that installed the package from the total amount of users submitting download statistics. Dashed lines indicate the fist commit and the first release of the Handbook, the latter marks a notable increase in software downloads. Source: Debian Popularity Contest, May 2024. }
+	\caption[Software and documentation popularity]{Software and documentation popularity measures. \ref{fig:rtd}: Documentation page views for the technical documentation (\url{docs.datalad.org}) and the user documentation (\url{handbook.datalad.org}), displayed as average views per 30 days, between December 2022 and August 2023. The DataLad Handbook consistently sees higher traffic.
+		\ref{fig:popcon}: Popularity of the Debian packages \texttt{datalad} and \texttt{python3-datalad} over time, expressed in percent of Debian users that installed the package from the total amount of users submitting download statistics. Dashed lines indicate the fist commit and the first release of the Handbook, the latter marks a notable increase in software downloads. Source: Debian Popularity Contest, August 2024.}
 	\label{fig:popularity}
 \end{figure}
 

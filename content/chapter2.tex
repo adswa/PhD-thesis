@@ -46,7 +46,7 @@ Following the definition of \citet{peng2006}, \textit{reproducibility} refers to
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{google_ngram_reproducibility_2023-05-08.pdf}
-	\caption[Computational reproducibility in the literature]{Popularity of computational reproducibility: A chart of the frequencies of the n-gram ``computational reproducibility" (using yearly count, normalized be the numbers of publications in each year) in literature included in the English(2019) corpus of Google books. This graph has been created using the Google Ngram Viewer (\href{https://books.google.com/ngrams/info}{books.google.com/ngrams}) \citep{michel2011quantitative}}
+	\caption[Computational reproducibility in the literature]{Popularity of computational reproducibility: A chart of the frequencies of the n-gram ``computational reproducibility" (using yearly count, normalized be the numbers of publications in each year) in literature included in the English(2019) corpus of Google books. This graph has been created using the Google Ngram Viewer \citep[\href{https://books.google.com/ngrams/info}{books.google.com/ngrams},][]{michel2011quantitative}.}
 	\label{fig:ngram}
 \end{figure}
 
@@ -180,7 +180,7 @@ And with actionable process provenance that can be re-executed, even verificatio
 
 Although FAIR research objects are universally desirable, in practice, the necessary standards and procedures for creating FAIR (meta)data are not always already in place when research is conducted.
 This can turn FAIRification into a bureaucratic data governance effort, diminishing the immediately obvious benefits for the curator \citep{zehl2016handling}.
-However, the four properties outlined above are a big step into the right direction, and essentially a byproduct from pragmatic research data management in DataLad datasets.
+However, the four properties outlined above are a big step into the right direction, and essentially a byproduct of pragmatic research data management in DataLad datasets.
 \cref{fig:vamp} illustrates how it yields trusted and reusable research objects, and the next section details a technical implementation and proof-of-concept analysis to create such reusable research objects as a byproduct of \gls{rdm} in analyses of any scale.
 
 
@@ -399,7 +399,7 @@ An overview of the analysis is shown in \cref{fig:fairly_datasets}, and the setu
 
 \subsubsection{Workflow setup}
 
-First, using the DataLad extension \texttt{datalad-ukbiobank} \citep{hanke_michael_2022_7296550}, we retrieved \gls{MRI} data into one DataLad dataset per participant and restructured it to BIDS \citep{gorgolewski2016brain}, yielding 42,715 datasets in total.
+First, using the DataLad extension \texttt{datalad-ukbiobank} \citep{hanke_michael_2022_7296550}, we retrieved \gls{MRI} data into one DataLad dataset per participant and restructured it to BIDS \citep{gorgolewski2016brain}, yielding 42~715 datasets in total.
 A single superdataset (``Data'' in \cref{fig:fairly_datasets}) tracks them using about 40 MB of space.
 It is installable within seconds to retrieve any registered file content in the DataLad dataset hierarchy on demand.\\
 To set up a processing pipeline, we built a Singularity container for the Computational Anatomy Toolbox \citep[CAT; version: CAT12.7-RC2, r1720]{gaser}, which is an extension to the Statistical Parametric Mapping software (SPM; version: SPM12, r7771; \url{www.fil.ion.ucl.ac.uk/spm/software})\footnote{A detailed description and full recipe of the container together with instructions on how to build and use it is publicly available at \url{github.com/m-wierzba/cat-container}.}.
@@ -478,10 +478,14 @@ This type of spot-checking results resembles the scenario of an interested reade
 The recomputation solely relied on the local availability of the Singularity container technology, but was otherwise fully automatic.
 Its success confirmed that platform idiosyncrasies were confined to the outer job scheduling layer only, and that the resulting research object was portable across infrastructures.
 
-%
-%\section{Interim discussion}
-%
-%Our framework brings together a range of work that the previous chapters outlined already.
+\subsection{Summary}
+
+Our framework constitutes a technical solution that brings together a range of previous work in the area of research data management, reproducibility, and software development.
+We have tested its validity and usefulness with concrete applications in the field of neuroimaging, and yielded a reusable research outcome that feeds into numerous data analysis applications.
+The work outlined in this thesis so far thus culminated in the creation of a flexible and scalable framework to create reusable research objects.
+But the luxury of applying standardized analysis or preprocessing pipelines to data is not a given in all research projects.
+Thus, the next and final chapter of this thesis will focus on applying the work so far for exploratory projects rooted in the topic and methodology of investigating brain states in working memory.
+
 %The introduction and the first part of chapter \ref{chap:k3} laid out the elementary importance of \gls{rdm} for scientific conduct.
 %They focused on two central aspects, specifically reusability and reproducibility, and showed how they connected to each other:
 %Reproducibility is a basis for reusability, and both are the outcome of research data management that becomes increasingly more FAIR.
@@ -500,8 +504,7 @@ Its success confirmed that platform idiosyncrasies were confined to the outer jo
 %\citet{heunis2023catalog} makes use of it for reproducible metadata aggregation, it plays a role in the CuBIDS packages for the reproducible curation of \gls{BIDS} datasets \citep{covitz2022curation}, and a dedicated software tool, BABS, has been created to improve the usability of the workflow even more (CITE BABS).\\
 %While our work recognizes the FAIR principles, it makes a pragmatic compromise between the aspirational ideal state, and the continuously developing research and meta data landscape in computational sciences.
 %In passing, as a byproduct of \gls{rdm}, its outcomes go a long way towards FAIR, and by applying the four properties of exhaustively versioned, actionable, modular and portable to research projects, become re-usable by default.
-%The work outlined in this thesis so far thus culminated in the creation of a flexible and scalable framework to create reusable research objects.
-%The next chapters of this thesis will focus on applying the work so far for projects rooted in the field of neuroimaging. \\
+%. \\
 %\[TBC\]
 
 

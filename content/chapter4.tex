@@ -15,7 +15,7 @@
 The previous chapter focused on the technical challenges of reproducibility management, especially when applications need to scale to large samples, but it also highlighted readily available, pragmatic strategies to ensure portability and reusability.
 A different challenge arises when the to be undertaken analyses are not entirely mapped out from the start, and a research project is exploratory in nature.
 This upcoming chapter describes the central data analysis project in this thesis, studying working memory in sequential decision making.
-The setup of the exploratory analyses I conducted in this project used best practices and tools from \ref{chap:k1-rdm-2}, and followed the strategies and the framework outlined in chapter \ref{chap:k3}.
+The setup of the exploratory analyses I conducted in this project used best practices and tools from Chapter \ref{chap:k1-rdm-2}, and followed the strategies and the framework outlined in Chapter \ref{chap:k3}.
 Corresponding project directories leave a transparent digital provenance trace for future reuse, and analyses are portable across infrastructures.
 
 \section{Project outline}
@@ -187,11 +187,11 @@ The more stripes, the higher the reward, and the larger the angle, the higher th
 Participants learned these associations in a tutorial prior to the experiment (\cref{fig:memento_tutorial}), and \cref{fig:memento_stim} provides an overview of stimuli.
 Stimulus combinations and sequences were selected to fulfill the following requirements:
 \begin{enumerate}
-	\item To prevent subjects from forming a decision already in the delay period \citep{curtis2010beyond}, the left stimulus never contained the best or worst combination of properties (see Figure \ref{fig:memento_stim})
-	\item In the first option, all magnitude and probability options are shown equally often
-	\item No more than three repetitions of the same probability and magnitude combination occur in the left stimulus
-	\item First and second stimulus are never identical
-	\item The expected values of the left and right stimulus were balanced over the course of the experiment such that left and right options yielded the same reward on average
+	\item To prevent subjects from forming a decision already in the delay period \citep{curtis2010beyond}, the left stimulus never contained the best or worst combination of properties (see Figure \ref{fig:memento_stim}).
+	\item In the first option, all magnitude and probability options are shown equally often.
+	\item No more than three repetitions of the same probability and magnitude combination occur in the left stimulus.
+	\item First and second stimulus are never identical.
+	\item The expected values of the left and right stimulus were balanced over the course of the experiment such that left and right options yielded the same reward on average.
 \end{enumerate}
 Based on these requirements, a fixed reward schedule was generated, and all subjects underwent the same sequence of stimulus combinations.
 In approximately half of the trials one of the two stimulus options was clearly favorable, and both its properties (magnitude and probability) were either equal to or greater than that of the other option.
@@ -401,7 +401,7 @@ The filter properties are reported in Figure \ref{fig:preproc} and a visualizati
 \begin{figure}
 	\centering
 	\includegraphics[width=0.4\textwidth]{memento/filter_properties_100hz.png}
-	\caption[Lowpass filter properties]{Lowpass filter properties}
+	\caption[Lowpass filter properties]{Properties of the 100Hz Low-pass filter applied to the data.}
 	\label{fig:filter}
 \end{figure}
 
@@ -515,7 +515,7 @@ An inspection of average reaction times per subject revealed a small subset of s
 		\label{fig:logregbehavior}
 	\end{subfigure}
 
-	\caption[Behavioral results]{a) and b) show average reaction times over trials for all subjects. c) depicts individual reaction times across trials and subjects for standard trials (orange) and trials an no-brainer trials. d) shows the relative influence of stimulus properties on choice (left option) as computed across a 10-fold cross-validated logistic regression.}
+	\caption[Behavioral results]{Results from the behavioral analysis. a) and b) show average reaction times over trials for all subjects. c) depicts individual reaction times across trials and subjects for standard trials (orange) and trials an no-brainer trials. d) shows the relative influence of stimulus properties on choice (left option) as computed across a 10-fold cross-validated logistic regression.}
 	\label{fig:behav}
 \end{figure}
 To inform further processing, I investigated which stimulus properties influenced participants' behavior.
@@ -540,6 +540,7 @@ The counter-intuitive finding that participants' reaction time was not reduced i
 
 
 \begin{figure}[H]
+	\centering
 	\begin{subfigure}{0.45\textwidth}
 		\includegraphics[width=\textwidth]{memento/behavior/average_gains.png}
 		\caption{Random choice}
@@ -589,7 +590,7 @@ The counter-intuitive finding that participants' reaction time was not reduced i
 %In \gls{fMRI}, functional alignment methods have become popular to discover shared representations in a high-dimensional functional space \citep{haxby2020hyperalignment}.
 
 
-As outlined in \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
+As outlined in section \ref{preprocessing}, \gls{tSSS} decomposes the neural signal from the 306 dimensional sensor space into an 80-dimensional subspace, the \gls{SSS} basis.
 The signal of interest in \gls{meg} data can thus be expressed in fewer dimensions than the $D = 306$ channels of the \gls{meg} machine.
 A growing body of literature finds lower-dimensional structure in high-dimensional datasets.
 In the following analyses, I therefore sought to find out whether I can find meaningful low-dimensional structure in the high-dimensional dataset by means of the \gls{SRM}.
@@ -690,8 +691,8 @@ Figure \ref{fig:srmsharedspaces} visualizes the resulting shared spaces for valu
 Figure \ref{fig:srmtransformedspaces} visualizes test data transformed into this shared space across subjects.
 The distance matrix is split into left and right options, which are in turn ordered by increasing probability.
 The first two rows and columns in the matrix thus correspond to options with 10\% probability, the next three to options with 20\% probability, and so forth.
-Instead of revealing a grouping of stimulus types by characteristics such as their magnitude, however, the most marked differences lay between the sides on which the stimulus was presented.
-The functional topographies in participant's neural activity was more similar for different stimuli presented on the left than the same stimulus presented on the left and right side, and the more fine-grained distances between stimulus types did not follow a pattern determined by the values of the reward magnitude or probability.
+Instead of revealing a grouping of stimulus types by characteristics such as their probability or magnitude, however, the most marked differences lay between the sides on which the stimulus was presented.
+The functional topographies in participant's neural activity were more similar for different stimuli presented on the left than the same stimulus presented on the left and right side, and the more fine-grained distances between stimulus types did not follow a pattern determined by the values of the reward magnitude or probability.
 
 
 \begin{figure}
@@ -789,7 +790,7 @@ This analyses mirrored the previous approach, but epochs were not split by stimu
 The result is visualized for three different values of $k$ in Figure \ref{fig:srmsharedspacetrial}.
 The trial structure, in particular marked differences between the first stimulus, the delay phase, and the second stimulus, are visible for shared spaces of all dimensionalities.
 With growing dimensionality $k$, similarities and dissimilarities decrease, which can be expected given that larger dimensionality values extend the vectors between which correlation distance is calculated, and can also be observed with increasing dimensionality in the previous shared spaces.
-While individual stimulus-type differences did not emerge in the shared space, the \gls{SRM} was able to capture trial-course induced differences.
+While individual stimulus-type differences did not emerge in the shared space, the \gls{SRM} was nevertheless able to capture trial-course induced differences.
 
 \begin{figure}
 	\centering
@@ -953,13 +954,13 @@ A few components consistently represent the original signal well across subjects
 \pagebreak
 \subsection{Visualizing shared components}
 
-After the simulation study demonstrated principal feasibility of the method, I subsequently applied it to the neural recordings from the memento study.
+After the simulation study demonstrated feasibility of the method, I subsequently applied it to the neural recordings from the memento study.
 The underlying aim was to find shared components that represented decision-related or -relevant properties.
 Unlike the previous \gls{SRM} analyses, models were trained with data from all participants.
 Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components that the shared response model found.
 The resulting components are thus time series.
 I fit different models for different time slices of a trial, namely the first stimulus presentation, the delay phase, and the decision and feedback phase.
-A subset of these visualizations are shown to illustrate the results for shared response models fit with $k = k$ in Figure \ref{fig:spectral-comps-plain}.
+A subset of these visualizations are shown to illustrate the results for shared response models fit with $k = 5$ in Figure \ref{fig:spectral-comps-plain}.
 
 
 \begin{figure}[H]
@@ -1047,7 +1048,7 @@ A virtual subject was generated by concatenating data from each target, and a co
 As before, the model allowed to limit the training of the model to a particular time frame of interest, such as only the first visual stimulus presentation.
 The resulting basis matrices in the model were averaged and transformed into neurophysiologically interpretable weights following \citet{haufe2014interpretation}.
 The \gls{pca} transformer was based on an existing \gls{pca} transformer in \texttt{scikit-learn}, but adjusted to work with three-dimensional multi-trial \gls{meg} data.
-To make it comparable to the \gls{SRM} transformers, I further adjusted the \gls{pca} transformer to be train-able on user-defined time frames from, too. \\
+To make it comparable to the \gls{SRM} transformers, I further adjusted the \gls{pca} transformer to be train-able on user-defined time frames from the trial, too. \\
 Utilizing the fact that only the delay phase was relevant for this analysis, I used data from later parts of the trial to optimize parameters of the pipeline with a grid search.
 A number of configurable parameters were included, and are summarized in Table \ref{tab:gridsearch}.
 
@@ -1062,7 +1063,7 @@ A number of configurable parameters were included, and are summarized in Table \
 			$k$ (SRM, PCA)		& This parameter determines the dimensionality of the subspace. & 2, 5, 10, 25, 80 & 25	 \\
 			N training series (SRM) & This parameter determines the amount of training data with which a shared response model will be build. 	& 10, 20, 50 & 50
 		\end{tabular}
-		\caption[Overview of pipeline parameters]{Overview of configurable pipeline parameters and their values in a grid search}
+		\caption[Overview of pipeline parameters]{Overview of configurable pipeline parameters and their values explored in a grid search.}
 		\label{tab:gridsearch}
 	\end{table}
 \end{center}
@@ -1120,7 +1121,7 @@ Figure \ref{fig:decoding-opti-results} shows an exemplary visualization of the g
 	\label{fig:decoding-opti-results}
 \end{subfigure}
 	\caption[Schematic of different sliding window types and optimization results]{Schematic of different sliding window types. \ref{fig:temporal-slider} depicts a temporal sliding window, integrating the signal across samples via averaging. \ref{fig:spatiotemporal-slider} depicts a spatial sliding window. All samples in the sliding window are concatenated such that the one resulting sample per sliding window includes the spatiotemporal configuration of all sensors in the window.
-	\ref{fig:decoding-opti-results} visualizes the results of tuning various pipeline parameters on decoding for decoding with a spectral \gls{SRM} transformer}
+	\ref{fig:decoding-opti-results} visualizes the results of tuning various pipeline parameters on decoding for decoding with a spectral \gls{SRM} transformer.}
 	\label{fig:sliding-windows}
 \end{figure}
 
@@ -1128,7 +1129,7 @@ The temporal decoding analysis of interest was set up in a 5-fold cross validati
 To keep computational time manageable and reduce noise levels, data were downsampled to 200Hz prior to decoding.
 The parametrization of configurable pipeline steps can be found in Table \ref{tab:gridsearch}.
 All dimensionality reduction models were trained only on signal during the presentation of the first option in an attempt to constrain the extracted components to neural signatures present during stimulus encoding.
-Although the highest dimensionality value $k = 80$ was most successful in the grid search, this is dimensionality of the \gls{SSS} basis which is already known to contain all measurable signal.
+Although the highest dimensionality value $k = 80$ was most successful in the grid search, this is the dimensionality of the \gls{SSS} basis which is already known to contain all measurable signal.
 To investigate whether subspaces of interest can be found in fewer dimensions, I used the next lower value of $k$, resulting in $k = 25$.\\
 The results revealed a similar temporal decoding pattern as the one found by \citet{kaiserposter}, and this pattern was similar across dimensionality reduction methods:
 Initial above chance accuracies during the encoding period at stimulus presentation that reduced to chance level within 1000ms into the delay period and were reinstated during the second stimulus presentation.
@@ -1273,7 +1274,7 @@ In the delay period, stable coding decreased sharply, and even time-point-to-tim
 It was thus mostly during the visual presentation of the stimulus and shortly afterwards that value properties -- or their associated visual features -- had stable or dynamic neural codes that classifiers could pick up.\\
 Extending these analyses based on my previous explorations, I investigated whether the neural representation during the delay period could correspond to a decision signal rather than to concrete property values.
 This falls in line with work by \citet{hunt2013trial} who investigated whether the necessary comparison of options in decision making tasks occurs in the ``space of abstract goods'' or the ``space of alternative actions''.
-Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment in the MEMENTO study.
+Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment in the \textit{memento} study.
 To investigate this, I utilized the temporal generalization method's flexibility in the choice of training and testing time points.
 In the training phase, I let classifiers learn a decision signal from time points in the trial centered around the actual motor response.
 In the testing phase, I then used these classifiers to find a decision signal earlier in the trial.
@@ -1325,7 +1326,7 @@ While these analyses revealed better decodability of eventual choice for high an
 		\caption{Low probability trials (10\% chance)}
 		\label{fig:generalization-prob-low-actual}
 	\end{subfigure}
-	\caption[Temporal generalization: Eventual choice]{Temporal generalization results of decoding eventual choice (right option), overlaid with a permutation mask. The y-axes depict training time points, with 0 (horizontal line) being the motor response, negative values denoting trial samples prior to the motor response, and positive values denoting trial samples after the motor response. The x-axis depicts test data, covering the onset of the first stimulus until the offset of the second stimulus. Vertical lines illustrate trial structure. Only those parts of the plot that are not masked yielded accuracies that were higher than 95\% of accuracies obtained in $N=$10~000¸ permutations with shuffled training labels.}
+	\caption[Temporal generalization: Eventual choice]{Temporal generalization results of decoding eventual choice (right option), overlaid with a permutation mask. The y-axes depict training time points, with 0 (horizontal line) being the motor response, negative values denoting trial samples prior to the motor response, and positive values denoting trial samples after the motor response. The x-axis depicts test data, covering the onset of the first stimulus until the offset of the second stimulus. Vertical lines illustrate trial structure. Only those parts of the plot that are not masked yielded accuracies that were higher than 95\% of accuracies obtained in $N=$10~000 permutations with shuffled training labels.}
 	\label{fig:temporal-generalization-actual}
 \end{figure}
 
@@ -1391,19 +1392,24 @@ The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-general
 
 \section{Discussion}
 
-In conjunction with the behavioral analyses, these temporal generalization results provide further evidence that participants employed the strategies based on sequential evaluation of magnitude and probability in decision making, and that a neural representation of this strategy persists in the delay period.
+The analysis set of the \textit{memento} study consisted of a variety of methods.
+While some analysis were conducted to test the applicability of approaches or justify them, such as the initial \gls{SRM} applications or the simulation study conducted for spectral \gls{SRM}, the underlying focus of all analyses was to uncover the neural representations of trial-related features in working memory, using the delay period in a decision making task.\\
+Evidence for a major hypothesis of persistent neural representations of stimulus features (magnitude, probability, or expected value) in working memory could not be found.
+With this, my temporal decoding analyses confirmed the temporal dynamics uncovered by \citet{kaiserposter} with adjusted or novel methodology.
+Dimensionality-reduction methods were unsuccessful in finding a lower-dimensional space in which such features were represented in a stable and persistent manner, even with a \gls{pca}-based approach modeled after the works of \citet{murray2017stable}.\\
+However, the behavioral analyses shed light on possible decision making strategies participants employed.
+In conjunction with the behavioral analyses, the temporal generalization results provide further evidence that participants employed strategies based on sequential evaluation of magnitude and probability in decision making, and that a neural representation of this strategy persists in the delay period:
 A representation matching neural codes a few hundred milliseconds prior the motor response was found throughout the delay for presumed decisions for both magnitude and probability values separately, but not when integrated.
-Compared to the behavioral analysis that had access to all information in the trial that participants might have used to form a decision, the structure of this analysis followed the sequential nature in a trial in which participants learned of stimulus properties.
+Compared to the behavioral analysis that had access to all information in the trial that participants might have used to form a decision, the structure of the temporal generalization analysis followed the sequential nature in a trial in which participants learned of stimulus properties.
 After the first stimulus response in the delay period, this analysis can thus not differentiate whether participants went on to do a sequential evaluation of the second stimulus property (strategies \ref{fig:strategy-mag}, \ref{fig:strategy-prob}) or focused on a single property.
-The behavioral simulation results, however, provide sufficient confidence that only a sequential evaluation could have yielded the observed distribution of gains.
-The lack of a representation of choice from an integrated signal during the delay period, though, can be seen as further evidence against an immediate integration of stimulus properties.
-It has to be noted, however, that these results could only be obtained by working around explicit design decisions in the experiment.
+The behavioral simulation results, however, complement the analysis by providing sufficient confidence that only a sequential evaluation could have yielded the observed distribution of gains.
+The lack of a representation of choice from an integrated signal during the delay period can furthermore be seen as further evidence against an immediate integration of stimulus properties.
+Above this, a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values, falling in line with findings by \citet{hunt2013trial} on a working memory representation in a neural space of actions.\\
+The latter finding, however, was complicated by the fact that the experiment design was explicitly focused on uncovering stimulus feature representations, and arguably inept to test this hypothesis thoroughly.
+It thus has to be noted that these results could only be obtained by working around explicit design decisions in the experiment.
 The inclusion of trials that would allow confident decisions already after the first stimulus presentation could constitute an insightful addition to the experiment that would allow to test this hypothesis further.
-My analyses confirmed the temporal dynamics uncovered by \citet{kaiserposter}.
-Above this, a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values, falling in line with findings by \citet{hunt2013trial} on a working memory representation in a neural space of actions.
-The latter finding, however, was complicated by the fact that the experiment design was explicitly focused on uncovering stimulus feature representations, and arguably inept to test this hypothesis thoroughly. \\
-It has to be noted, though, that the analyses in this Chapter were purely exploratory.
-Their validity needs to be tested on independent data.
+It has to be noted further that the analyses in this chapter were purely exploratory.
+Their validity needs to be tested on independent data.\\
 Nevertheless, the project has contributed valuable reusable research outcomes in several aspects.
 For one, the work I put into the preparation of the dataset has made further analyses much more feasible, regardless of whether they are performed by researchers acquainted to the dataset or not, and regardless of whether the various actors involved in the acquisition, processing, and preparation of the data are available for questions.
 Open code and provenance tracked analysis executions contribute to the reusability of these intermediate research outcomes further.
