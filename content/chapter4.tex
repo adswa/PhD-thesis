@@ -114,10 +114,12 @@ a recent systematic review by \citet{pavlov2022oscillatory} highlighted a promin
 %Decoding approaches can find multiple different working memory items simultaneously in the same neural population \citep{rigotti2013importance}, and in various brain regions \citep{curtis2010beyond}.
 In light of variable and even conflicting findings, \citet{nobre2022opening} called for sustained open-mindedness and creativity in researching working memory in a recent reflective piece.
 In this exploratory spirit, I conducted the simulations and analyses that will be described in this chapter.
-They build up on previous analysis that were conducted on this dataset by \citet{kaiserposter}, and connect to the works of \citet{murray2017stable}, \citet{machens2010functional}, \citet{rigotti2013importance} and others who employed dimensionality reduction methods to perform statistical decomposition in a high dimensional ``native neural space'' to
-project the axes of a task space into subspaces of the native neural space (see Figure \ref{fig:trajectories}).
-They do not confine the neural signal to a specific brain area, but attempt to find neural signatures of decision-relevant working memory items across the cortex.
-Central to the analyses is the attempt to use a method for functional alignment and dimensionality reduction on \gls{meg} data.
+They build up on previous analysis that were conducted on this dataset by \citet{kaiserposter}, and connect to the works of \citet{murray2017stable} and \citet{machens2010functional}:
+\citet{murray2017stable} found neural subspaces within dynamic population-level activity that showed stable coding for working memory items. They used \gls{pca} to construct low-dimensional subspaces ($k = 1$ or $k = 2$, respectively) in electro-physiological recordings from non-human primates, and projected neural recordings into the subspaces such that the principal components became the axes of a new, lower-dimensional state space. In these subspaces, stable population codes and above-chance decoding accuracies for working memory items in two different working memory tasks arose.
+\citet{machens2010functional} similarly used \gls{pca} on high-dimensional electro-physiological data to create a new, lower-dimensional subspace ($k = 6$) based on identified components and interpreted the resulting axes in relation to the experimental decision making task.
+In the following, they identified components representing time (``when'') and components representing working memory content (``what'').
+Taken together, these studies thus employed dimensionality reduction methods to perform statistical decomposition in a high dimensional ``native neural space'' to project the axes of a task space into subspaces of the native neural space and assigned meaning to them (see Figure \ref{fig:trajectories}).
+Contrary to \citet{murray2017stable, machens2010functional}, they do not confine the neural signal to a specific brain area such as the PFC, but attempt to find neural signatures of decision-relevant working memory items across the cortex, and central to the analyses is the attempt to use a method for functional alignment for \gls{fMRI}  dimensionality reduction.
 
 
 
