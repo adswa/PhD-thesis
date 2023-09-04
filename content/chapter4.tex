@@ -101,7 +101,7 @@ My extensions of their analyses connect to the works of \citet{murray2017stable}
 \citet{machens2010functional} similarly used \gls{pca} on high-dimensional electro-physiological data to create a new, lower-dimensional subspace ($k = 6$) based on identified components and interpreted the resulting axes in relation to the experimental decision making task.
 In the following, they identified components representing time (``when'') and components representing working memory content (``what'').
 Taken together, these studies thus employed dimensionality reduction methods to perform statistical decomposition in a high dimensional ``native neural space'' to project the axes of a task space into subspaces of the native neural space and assigned meaning to them (see Figure \ref{fig:trajectories}).
-Contrary to \citet{murray2017stable, machens2010functional}, the upcoming analyses do not confine the neural signal to a specific brain area such as the PFC, but attempt to find neural signatures of decision-relevant working memory items across the cortex.
+Yet contrary to \citet{murray2017stable, machens2010functional}, the upcoming analyses do not confine the neural signal to a specific brain area such as the PFC, but attempt to find neural signatures of decision-relevant working memory items across the cortex.
 Central to the analyses is also the attempt to use a functional alignment method more commonly used in \gls{fMRI} for  dimensionality reduction.\\
 Such an exploratory neuroscientific project faces several challenges.
 As outlined in Chapter \ref{chap:k1}, analyses are often multi-stepped.
@@ -115,11 +115,12 @@ To overcome these challenges, research data management principles from the previ
 All analyses were setup as portable DataLad datasets.
 The project evolution was captured in a linked hierarchy of datasets, starting with a BIDS-standardized raw dataset, continuing with a preprocessed derivative dataset, and spreading into multiple analyses applications based on a common starting point (Figure \ref{fig:outline_memento}).
 Analyses were codified into infrastructure-agnostic scripts, and their execution was provenance-tracked to allow for re-computations over the course of the project.
+Each individual component in the Figure \ref{fig:outline_memento} below constitutes a self-described entry point to further analyses at a later point in time.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\textwidth]{memento/analysis_setup.png}
-	\caption[Memento analysis outline]{Project outline as linked DataLad datasets for provenance capture, disk usage reduction, and computational efficiency. A \gls{BIDS}-structured raw dataset is the anchor of all analysis. A common preprocessing pipeline is the basis of three major \gls{meg} analyses. If the underlying raw or preprocessed data changes, for example if errors are uncovered and fixed, or if preprocessing is repeated with different steps or parameters, analysis results can be recomputed automatically.}
+	\includegraphics[width=.5\textwidth]{memento/analysis_setup.png}
+	\caption[Memento analysis outline]{Project outline as linked DataLad datasets for provenance capture, disk usage reduction, and computational efficiency. A \gls{BIDS}-structured raw dataset is the anchor of all analysis. A common preprocessing pipeline is the basis of three major \gls{meg} analyses. If raw or preprocessed data changes, analysis results can be recomputed automatically.}
 	\label{fig:outline_memento}
 \end{figure}
 %
