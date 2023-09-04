@@ -1398,7 +1398,7 @@ The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-general
 \section{Discussion}
 
 The analysis set of the \textit{memento} study consisted of a variety of methods.
-While some analysis were conducted to test the applicability of approaches or justify them, such as the initial \gls{SRM} applications or the simulation study conducted for spectral \gls{SRM}, the underlying focus of all analyses was to uncover the neural representations of trial-related features in working memory, using the delay period in a decision making task.\\
+While some analyses were conducted to test the applicability of approaches or justify them, such as the initial \gls{SRM} applications or the simulation study conducted for spectral \gls{SRM}, the underlying focus of all analyses was to uncover the neural representations of trial-related features in working memory, using the delay period in a decision making task.\\
 Evidence for a major hypothesis of persistent neural representations of stimulus features (magnitude, probability, or expected value) in working memory could not be found.
 Dimensionality-reduction, in particular methods based on the shared response model, a spectral variation of the shared response model, and \gls{pca}, were unsuccessful in finding a lower-dimensional space in which such features were represented in a stable and persistent manner.
 With this, my temporal decoding analyses confirmed the temporal dynamics uncovered by \citet{kaiserposter} with adjusted or novel methodology:
@@ -1406,12 +1406,13 @@ Individual stimulus features had above-chance decoding accuracy only a few hundr
 This means, however, that unlike \citet{murray2017stable}, the analyses were not able to find lower-dimensional neural state spaces in which stimulus characteristics are persistently decodable, even with a similar \gls{pca}-based approach.
 And unlike \citet{machens2010functional}, the resulting components, although they clearly captured trial-related information, were not easily interpretable.
 There are multiple possible reasons for this.
-One may be that the shared response model, taking multi-subject or multi-trial data into account, identifies subspaces that are not relevant to the targets' decoding.
+One may be that the shared response model, taking multi-subject or multi-trial data into account, identifies subspaces that are not relevant to the chosen targets' decoding.
 In other words, the lower-dimensional space they identified may not have been the ``right'' one.
 For example, different neural processes may have been more prominent and thus over-represented, especially since whole-brain data was the input of all analyses, and thus a variety of other cognitive processes were likely reflected in the neural signal.
-Alternatively, working memory maintenance in decision making may have strong idiosyncratic components, and shared signals derived from several individuals do not capture their participant-specific neural codes well.
+Both \citet{machens2010functional} and \citet{murray2017stable} had confined their analyses to prefrontal areas, and used electro-physiological recordings which are spatially much more precise than the overlaid neural signals in sensor-space \gls{meg} data.
+Alternatively, working memory maintenance in decision making may have strong idiosyncratic components or inter-trial variability, and shared signals derived from several individuals or trials do not capture their participant- or trial-specific neural codes well.
 Likewise, the interpretations of the identified components may not be as straight-forward as initially envisioned.
-The visualization approaches in my analyses for example focused on finding simple amplitude-based differences between stimulus types in the shared space.
+The visualization approaches in my temporal decoding analyses for example focused on finding simple amplitude-based differences between stimulus types in the shared space.
 This approach would have failed to find more complex representations, for example based on interactions between several components, would they exist.
 An alternative reason may lie in different analysis approaches. In \citet{murray2017stable}, mnemonic subspaces were constructed from averaged delay activity over stimulus conditions and time.
 Thus, their stable subspaces did not contain precise timing information, which may have removed potentially relevant dynamics from the underlying data.
