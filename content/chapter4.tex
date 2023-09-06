@@ -1405,39 +1405,66 @@ Dimensionality-reduction, in particular methods based on the shared response mod
 With this, my temporal decoding analyses confirmed the temporal dynamics uncovered by \citet{kaiserposter} with adjusted or novel methodology:
 Individual stimulus features had above-chance decoding accuracy only a few hundred milliseconds into the delay phase.
 This means, however, that unlike \citet{murray2017stable}, the analyses were not able to find lower-dimensional neural state spaces in which stimulus characteristics are persistently decodable, even with a similar \gls{pca}-based approach.
-And unlike \citet{machens2010functional}, the resulting components, although they clearly captured trial-related information, were not easily interpretable.
+And unlike \citet{machens2010functional}, the resulting components that spanned the lower-dimensional space, although they clearly captured trial-related information, were not easily interpretable regarding stimulus features.
 There are multiple possible reasons for this.
-One may be that the shared response model, taking multi-subject or multi-trial data into account, identifies subspaces that are not relevant to the chosen targets' decoding.
+One may be that the shared response model and \gls{pca} transformer identified subspaces that are not relevant to the chosen targets' decoding.
 In other words, the lower-dimensional space they identified may not have been the ``right'' one.
-For example, different neural processes may have been more prominent and thus over-represented, especially since whole-brain data was the input of all analyses, and thus a variety of other cognitive processes were likely reflected in the neural signal.
-Both \citet{machens2010functional} and \citet{murray2017stable} had confined their analyses to prefrontal areas, and used electro-physiological recordings which are spatially much more precise than the overlaid neural signals in sensor-space \gls{meg} data.
-Alternatively, working memory maintenance in decision making may have strong idiosyncratic components or inter-trial variability, and shared signals derived from several individuals or trials do not capture their participant- or trial-specific neural codes well.
-Likewise, the interpretations of the identified components may not be as straight-forward as initially envisioned.
-The visualization approaches in my temporal decoding analyses for example focused on finding simple amplitude-based differences between stimulus types in the shared space.
-This approach would have failed to find more complex representations, for example based on interactions between several components, would they exist.
-An alternative reason may lie in different analysis approaches. In \citet{murray2017stable}, mnemonic subspaces were constructed from averaged delay activity over stimulus conditions and time.
+The initial \gls{SRM} analyses on data during stimulus presentation resulted in lower-dimensional spaces that clearly represented a difference between the first and second stimulus, but they did not represent differences between stimulus types well.
+These spaces thus may have better captured a left versus right difference in visual presentation than stimulus identity.
+Likewise, the shared components in the spectral \gls{SRM} analysis only showed a marked distinction for left versus right decisions, but not for the fine-grained stimulus feature value differences, such as different levels of magnitude.
+Thus, data from the decision phase seemingly provided a good basis to identify a subspace in which motor responses were well represented, but such clear distinctions did not emerge in data from the delay phase for stimulus characteristics.
+In those cases, other neural processes than those corresponding to stimulus feature maintenance have potentially been more prominent and thus over-represented.
+Left versus right visual stimulation or left versus right motor responses should yield lateralized neural signals in visual and motor cortices, which are presumably more distinct than neural signals emerging during the evaluation of different stimulus value levels.
+Especially since whole-brain data was the input of all analyses, a variety of other cognitive processes were likely reflected in the neural signal and thus the resulting shared spaces.
+Both \citet{machens2010functional} and \citet{murray2017stable} had confined their analyses to prefrontal areas, and used electro-physiological recordings which are spatially much more precise than the overlaid neural signals in sensor-space \gls{meg} data, and may have confined their data better to neural signals of interest.
+Other differences in analysis or data preparation approaches could play a role, too.
+In \citet{murray2017stable}, lower-dimensional mnemonic subspaces were constructed from averaged delay activity over stimulus conditions and time.
 Thus, their stable subspaces did not contain precise timing information, which may have removed potentially relevant dynamics from the underlying data.
 In contrast, the subspaces built in this work were optimized to retain precise timing information.
-Another reason may be that coding of decision-relevant information in working memory is indeed dynamic and activity silent.
-However, the observed decoding accuracy during the first half of the delay is clearly not activity silent.
-And the results of \citet{kaiserposter} showed that above-chance decoding of stimulus characteristics vanishes even in temporal generalization analyses, yet a decision without such information would surely be challenging.
-Therefore, a plausible reason why stimulus features could not be decoded through the entire delay may be that it is not stimulus characteristics that are encoded but an alternative representation, such as decision preparation.\\
-The behavioral analyses shed light on possible decision making strategies participants employed.
-In conjunction with the behavioral analyses, the temporal generalization results provide evidence that participants employed strategies based on sequential evaluation of magnitude and probability in decision making, and, importantly, that a neural representation of this strategy persists in the delay period that is not based on stimulus features:
-A representation matching neural codes a few hundred milliseconds prior the motor response was found throughout the delay for presumed decisions for both magnitude and probability values separately, but not when integrated.
-Compared to the behavioral analysis that had access to all information in the trial that participants might have used to form a decision, the structure of the temporal generalization analysis followed the sequential nature in a trial in which participants learned of stimulus properties.
-After the first stimulus response in the delay period, this analysis can thus not differentiate whether participants went on to do a sequential evaluation of the second stimulus property (strategies \ref{fig:strategy-mag}, \ref{fig:strategy-prob}) or focused on a single property.
-The behavioral simulation results, however, complement the analysis by providing sufficient confidence that only a sequential evaluation could have yielded the observed distribution of gains.
-The lack of a representation of choice from an integrated signal during the delay period can furthermore be seen as further evidence against an immediate integration of stimulus properties.
-Above this, a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values, falling in line with findings by \citet{hunt2013trial} on a working memory representation in a neural space of actions.
-This result would support a decision-preparation in working memory rather than stimulus features.
-This latter interpretation, however, is complicated by the fact that the experiment design was explicitly focused on uncovering stimulus feature representations, and arguably inept to test this hypothesis thoroughly.
-It thus has to be noted that these results could only be obtained by working around explicit design decisions in the experiment.
-The inclusion of trials that would allow confident decisions already after the first stimulus presentation could constitute an insightful addition to the experiment that would allow to test this hypothesis further.
+On the other hand, the particularly high sampling rate of the data presented here may have also introduced higher levels of noise, which could have further overshadowed task-relevant stimulus representations.
+Likewise, given the potential that shared components captured other or many neural processes at once, the interpretations of the identified components may not be as straight-forward as initially envisioned.
+The visualization approaches in the initial \gls{SRM} analysis and spectral \gls{SRM} variation for example focused on finding simple amplitude-based differences between stimulus types in the shared space, either via correlation distance between pairs of shared spaces for individual stimulus types, or by transforming data into shared spaces based on stimulus feature values.
+This approach would have failed to find more complex representations, for example based on interactions between several components.
+Yet another alternative worthwhile of consideration is that methods identifying subspaces based on ``sharedness'' are suboptimal for the neural process in question.
+Working memory is known to have idiosyncratic components.
+\citet{lee2017idiosyncratic} for example found idiosyncratic representations of a search cue both across participants but also within participants.
+Approaches focused on common representational structures do not capture such participant- or trial-specific neural codes well.
+%TODO: re-read Hunt 2015
+Another reason may be that coding of decision-relevant information in working memory is indeed dynamic and activity silent, and thus impossible to decode stably or without a reactivation as performed by \citet{wolff2017dynamic}.
+However, this interpretation is challenging in light of the fact that there is above-chance decoding accuracy during the first half of the delay.
+The results of \citet{kaiserposter} further showed that above-chance decoding of stimulus characteristics vanishes even in temporal generalization analyses, yet if this information is required in order to form a decision a decision without such information is difficult to explain.
+Therefore, a plausible reason why stimulus features could not be decoded through the entire delay may be that it is not stimulus characteristics that are encoded throughout the trial but an alternative representation, such as decision preparation.
+This matches the works of \citet{hunt2013trial}, who hypothesized that in sequential decision making trials, participants may form an evaluation in an action-related space. \\
+Some support for this comes from the joint results of the behavioral simulations and the temporal generalization analyses.
+Prior temporal generalization analyses from \citet{kaiserposter} already found that the neural representation of the stimulus features probability, magnitude, and expected value decay during the delay similarly as in the temporal decoding analyses.
+In my extension of their analyses, I thus focused on an alternative representation of decision-relevant information -- not in terms of value, but in terms of an upcoming decision or motor response.
+These temporal generalization analyses indicated that a neural representation of such a decision-related signal persists throughout the delay period.
+A representation matching neural codes a few hundred milliseconds prior the motor response was found throughout the delay for ``presumed decisions'', i.e., decisions that a participant would be likely to prepare given the information they had after seeing the first stimulus.
+Above-chance decoding in the delay phase only emerged from presumed decisions calculated separately for magnitude and probability values, but not when integrated into an idiosyncratic stimulus value with the subject-specific weights from the logistic regression analysis.
+This is interesting in two aspects: It represents a neural signal that matches a behavioral strategy based on sequential evaluation of stimulus features, and it is a signal more similar to the neural codes that emerge in the preparation of a decision than to the neural codes that emerge during visual stimulation.
+With regard to conclusions about the exact behavioral strategy, the temporal generalization results alone are inconclusive.
+Unlike the logistic regression classification in behavioral analysis, the temporal generalization analysis followed the sequential nature of a trial in which participants learned of stimulus properties consecutively.
+This bears the interesting opportunity to observe how the neural representation evolves.
+However, it can not differentiate whether participants went on to do a sequential evaluation of the second stimulus property (strategies \ref{fig:strategy-mag}, \ref{fig:strategy-prob}) or focused on a single property.
+%This analysis is complemented with the behavioral analyses that shed light on possible decision making strategies participants employed.
+The behavioral simulation results, however, can fill this gap by providing sufficient confidence for a sequential evaluation strategy:
+When comparing simulation results with actual gains, strategies based on a sequential evaluation of stimulus features magnitude and probability rather than an integration into expected values or a focus on a singular stimulus features were closest to participants' actual performance.
+The lack of a representation of presumed choice from an integrated signal in the temporal generalization analysis can be seen as further evidence against an immediate integration of stimulus properties.
+%However, ss the subject-specific weights result from the behavioral analysis, this finding is unintuitive.
+Thus, given that a decision-related neural code was better represented during the maintenance phase than absolute stimulus property values, this result would support a decision-representation in working memory rather than stimulus features.
+But while it would explain the lack of stimulus feature representations in other analyses, this interpretation is complicated by the fact that the experiment design was explicitly focused on uncovering stimulus feature representations only.
+The reward schedule was created to explicitly prevent a decision signal from forming early by disallowing particularly informative, i.e., particularly attractive or unattractive, stimuli from the first stimulus option.
+Thus, the experimental design is arguably inept to test the hypothesis whether a decision signal emerges thoroughly.
+Consequently, these results could only be obtained by working around explicit design decisions in the experiment.
+The inclusion of trials that would allow confident decisions already after the first stimulus presentation could constitute an insightful addition to the experiment that would allow to test this hypothesis further.\\
 %TODO: The magma dataset could be useful?
-It has to be noted further that the analyses in this chapter were purely exploratory.
-Their validity needs to be tested on independent data.\\
-Nevertheless, the project has contributed valuable reusable research outcomes in several aspects.
+Finally, it has to be noted explicitly that the analyses in this chapter were purely exploratory.
+Their validity needs to be tested on independent data, especially since the plurality of analyses that have been conducted on this dataset by now -- both by me and others -- defies attempts for meaningful corrections for multiple comparisons.
+It is well known that data analyses in neuroscience can be overfit to a particular dataset \citep{hosseini2020tried}.
+If relevant results from this dataset however would generalize in an independent dataset, their evidence would be strengthened.
+In particular, this relates to the null-result that stimulus feature representations can not be found in the delay, and that  decision-related signals are instead being maintained.
+The provenance-tracked and transparent nature in which my analyses were conducted and openly shared code provide a useful starting point for such work.\\
+Despite the only preliminary insights on working maintenance in this exploratory project, my work has nevertheless contributed valuable reusable research outcomes in several aspects.
 For one, the work I put into the preparation of the dataset has made further analyses much more feasible, regardless of whether they are performed by researchers acquainted to the dataset or not, and regardless of whether the various actors involved in the acquisition, processing, and preparation of the data are available for questions.
 Open code and provenance tracked analysis executions contribute to the reusability of these intermediate research outcomes further.
 As \gls{SRM} has so far rarely been employed in \gls{meg} data in the published literature, this project also provided ample initial evidence that the method could be useful for this modality.
@@ -1448,15 +1475,15 @@ Thus, a potential and promising application for \gls{SRM} in \gls{meg} might be 
 Similar observations were made by \citet{xie2021minimal} when they used \gls{SRM} with intracranial stereotactic \gls{eeg} recordings from epilepsy patients.
 And finally, this project has been an acid test for the research data management strategies outlined in previous chapters, in a project with significant evolution in the foundational data representations, ambitious demands on portability of its building blocks, and without the luxury of predefined analysis pipelines.
 Their successful application validates their utility for scientific conduct in exploratory data analyses.\\
-At the same time, the analyses conducted here give way to further research ideas.
-One characteristic through all analyses was the use of all available channels, and thus whole-brain data.
-This was partially motivated by the fact that a variety of brain regions were found to be involved in aspects of working memory maintenance \citet{sreenivasan2019and}.
+At the same time, the analyses conducted here give way to further research ideas beyond generalizing results to new datasets.
+One commonality of all analyses was the use of all available channels, and thus whole-brain data.
+This was partially motivated by the fact that a variety of brain regions were found to be involved in aspects of working memory maintenance \citet{sreenivasan2019and}, and a restriction to specific sensor-arrays or brain regions could have missed contributions from left out areas.
 However, it is common practice in \gls{meg} research to confine the number of sensors, either to specific regions, or to specific flux transformers \citep{garces2017choice} to limit the amount of task-irrelevant noise, and it has been shown that reducing the number of channels in brain-computer-interface applications can improve decodability \citep{roy2020assessing}.
-Future work can investigate whether the \gls{SRM} also yields more promising results when its input data stems from predefined cortical areas or sensor arrays.\\
-A different approach to improve the ratio of interesting signal to overall signal could employ the \gls{SRM} method in a different way.
+Future work can investigate whether the \gls{SRM} also yields more promising results when its input data stems from predefined cortical areas or sensor arrays, such as only prefrontal locations.\\
+Under the assumption that neural processes of working memory maintenance are more idiosyncratic, a different approach to improve the ratio of interesting signal to overall signal could employ the \gls{SRM} method to identify uninteresting shared signals.
 It has been demonstrated that the data after \gls{SSS} represents the most dominating magnetic field patterns in \gls{meg} recordings \citep{garces2017choice}.
 Likewise, \gls{SRM} components capture dominant signals shared across participants.
-Given the possibility that other neural processes may create more prominent signals, or that important idiosyncratic processes could be discarded as noise, future studies could attempt to identify these dominant signals, and subtract them from individual participants' neural signal do remove dominating sources of uninteresting shared signal or investigate idiosyncratic signals in particular.
+Given the possibility that other neural processes may create more prominent signals, or that important idiosyncratic processes could be discarded as noise, future studies could attempt to identify these dominant signals via \gls{SRM}, and subtract them from individual participants' neural signal do remove dominating sources of uninteresting shared signal or investigate idiosyncratic signals in particular.\\
 
 
 
