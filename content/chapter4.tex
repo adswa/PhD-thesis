@@ -17,6 +17,7 @@ A different challenge arises when the to be undertaken analyses are not entirely
 This upcoming chapter describes the central data analysis project in this thesis, studying working memory in sequential decision making.
 The setup of the exploratory analyses I conducted in this project used best practices and tools from Chapter \ref{chap:k1-rdm-2}, and followed the strategies and the framework outlined in Chapter \ref{chap:k3}.
 Corresponding project directories leave a transparent digital provenance trace for future reuse, and analyses are portable across infrastructures.
+At the time of writing, the work presented in this chapter is being prepared as a research article.
 
 \section{Project outline}
 
@@ -166,12 +167,12 @@ All analyses conducted on \gls{meg} data in this chapter were carried out in sen
 
 
 
-\section{The MEMENTO study}
+\section{Study overview}
 
 
 The data basis of the upcoming analyses stems from the \textit{memento} study.
 It investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
-The data was acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg by \citet{kaiser}, and has not been previously published.
+The data were acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg by \citet{kaiser}, and has not been previously published.
 %The following study overview adheres to the COBIDAS MEEG reporting guidelines for reproducible MEEG research \citep{pernet2020issues}.
 
 
@@ -462,6 +463,7 @@ To avoid this common pitfall, all machine-learning analyses were set up as a so-
 Additionally, pipelines ensure consistent preprocessing by applying transformers to training and test data.
 A transformer common to pipelines in all analyses was a \texttt{StandardScaler()}, transforming data to have zero mean and unit variance.
 The final estimator common to all pipelines was a logistic regression classifier with L2 regularization and a \texttt{liblinear} solver.
+This was chosen to match the choice of classifier by \citet{kaiserposter}.
 %The L2 regularizer of this estimator assumes that all features are centered around zero or have variance in the same order \citep{scikit-learn-scaler}.
 %Even in \gls{meg} data in which different sensor types typically have different scales, this prerequisite holds due to the combination of \gls{SSS} and scaling.
 Internally, the \texttt{liblinear} solver uses a coordinate descent (CD) algorithm, which extends binary classifications problems to a multinomial case by decomposing the optimization problem into several one-vs-rest problems such that multi-target classifications become possible \citep{scikit-learn-liblinear}.\\
@@ -1083,7 +1085,7 @@ A number of configurable parameters were included, and are summarized in Table \
 Some of these parameters bear further explanation, in particular the bootstrapping extension to trial averaging, and the different forms of sliding windows.
 I implemented two separate sliding windows: One was a temporal sliding window, integrating signal in the time dimension by averaging the signal within a sensor over multiple time points.
 An alternative sliding window was spatiotemporal.
-It integrates information over both space and time in a pattern inspired by MVPA, by extending the signal vector at one time point with the signals of the following time points.
+It integrates information over both space and time in a pattern inspired by multivariate pattern analysis, by extending the signal vector at one time point with the signals of the following time points.
 Thus, the data entering the decoders for this sliding window were pooled over multiple time points, so as to exploit not only information that is encoded in spatial activation patterns, but also information that is encoded in their temporal structure, similar to \citet{muhle2021hierarchy}.
 Both types sliding windows were used with a window size of 10 samples, and are illustrated in Figures \ref{fig:temporal-slider} and \ref{fig:spatiotemporal-slider}.\\
 The bootstrapping extension to trial averaging was created to offset the reduction in available trials in the model when several trials are averaged.
@@ -1341,7 +1343,7 @@ However, this could have been a consequence of experiment design decisions:
 Stimulus properties for the first option were explicitly constrained to never contain the best or worst combination of properties to prevent a decision forming already in the delay period \citep{curtis2010beyond}.
 A promising amount of probability or magnitude in the first option would regularly be beaten by a better combination in the second option and vice versa, influencing the eventual decision that became the target variable, and compromising a previously formed preparatory decision signal.
 To circumvent this restriction, I adjusted the target definition in the test data.
-Instead of decoding the actual choice at the end of the trial, I decoded a hypothetical target corresponding to the behavioral strategies from Figures \ref{fig:strategy-mag}, \ref{fig:strategy-prob}, \ref{fig:strategy-mag-first}, and \ref{fig:strategy-prob-first}:
+Instead of decoding the actual choice at the end of the trial, I decoded a hypothetical target corresponding to the behavioral strategies from Figures \ref{fig:strategy-prob},  \ref{fig:strategy-mag}, \ref{fig:strategy-mag-first}, and \ref{fig:strategy-prob-first}:
 If the first stimulus' magnitude (or probability, respectively) was high, I assumed the prepared choice would be left, and vice versa.
 While this analysis would not decode the actual ``choice'', it would decode a preparation signal expected given the presumed decision strategy and available information already at the start of the trial.
 The results of this analysis reveal a stronger decodable cluster, in which neural codes prior to the motor response generalize to trial parts during the first stimulus presentation and into the delay phase for both magnitude and probability (Figure \ref{fig:temporal-generalization-hypothetical}). \\
@@ -1462,7 +1464,7 @@ Finally, it has to be noted explicitly that the analyses in this chapter were pu
 Their validity needs to be tested on independent data, especially since the plurality of analyses that have been conducted on this dataset by now -- both by me and others -- defies attempts for meaningful corrections for multiple comparisons.
 It is well known that data analyses in neuroscience can be overfit to a particular dataset \citep{hosseini2020tried}.
 If relevant results from this dataset however would generalize in an independent dataset, their evidence would be strengthened.
-In particular, this relates to the null-result that stimulus feature representations can not be found in the delay, and that  decision-related signals are instead being maintained.
+In particular, this relates to the finding that stimulus feature representations can not be found in the delay, and that  decision-related signals are instead being maintained.
 The provenance-tracked and transparent nature in which my analyses were conducted and openly shared code provide a useful starting point for such work.\\
 Despite the only preliminary insights on working maintenance in this exploratory project, my work has nevertheless contributed valuable reusable research outcomes in several aspects.
 For one, the work I put into the preparation of the dataset has made further analyses much more feasible, regardless of whether they are performed by researchers acquainted to the dataset or not, and regardless of whether the various actors involved in the acquisition, processing, and preparation of the data are available for questions.
@@ -1472,9 +1474,7 @@ While the \gls{SRM} analyses did not confirm prior hypothesis, all studies showe
 In the temporal decoding analysis, pipelines with an \gls{SRM} also did not fare worse than pipelines without it.
 And the simulation study demonstrated that the method, regardless of whether it is applied with the novel spectral transformation we tested or not, can markedly reduce random noise in the data.
 Thus, a potential and promising application for \gls{SRM} in \gls{meg} might be signal cleaning.
-Similar observations were made by \citet{xie2021minimal} when they used \gls{SRM} with intracranial stereotactic \gls{eeg} recordings from epilepsy patients.
-And finally, this project has been an acid test for the research data management strategies outlined in previous chapters, in a project with significant evolution in the foundational data representations, ambitious demands on portability of its building blocks, and without the luxury of predefined analysis pipelines.
-Their successful application validates their utility for scientific conduct in exploratory data analyses.\\
+Similar observations were made by \citet{xie2021minimal} when they used \gls{SRM} with intracranial stereotactic \gls{eeg} recordings from epilepsy patients.\\
 At the same time, the analyses conducted here give way to further research ideas beyond generalizing results to new datasets.
 One commonality of all analyses was the use of all available channels, and thus whole-brain data.
 This was partially motivated by the fact that a variety of brain regions were found to be involved in aspects of working memory maintenance \citet{sreenivasan2019and}, and a restriction to specific sensor-arrays or brain regions could have missed contributions from left out areas.
@@ -1483,7 +1483,18 @@ Future work can investigate whether the \gls{SRM} also yields more promising res
 Under the assumption that neural processes of working memory maintenance are more idiosyncratic, a different approach to improve the ratio of interesting signal to overall signal could employ the \gls{SRM} method to identify uninteresting shared signals.
 It has been demonstrated that the data after \gls{SSS} represents the most dominating magnetic field patterns in \gls{meg} recordings \citep{garces2017choice}.
 Likewise, \gls{SRM} components capture dominant signals shared across participants.
-Given the possibility that other neural processes may create more prominent signals, or that important idiosyncratic processes could be discarded as noise, future studies could attempt to identify these dominant signals via \gls{SRM}, and subtract them from individual participants' neural signal do remove dominating sources of uninteresting shared signal or investigate idiosyncratic signals in particular.\\
+Given the possibility that other neural processes may create more prominent signals, or that important idiosyncratic processes could be discarded as noise, future studies could attempt to identify these dominant signals via \gls{SRM}, and subtract them from individual participants' neural signal to remove dominating sources of uninteresting shared signals, or investigate idiosyncratic signals in particular.\\
+And finally, this project has been an acid test for the research data management strategies outlined in previous chapters, in a project with significant evolution in the foundational data representations, ambitious demands on portability of its building blocks, and without the luxury of predefined analysis pipelines.
+Following the project outline in Figure \ref{fig:outline_memento}, Figure \ref{fig:git-log} is an example of the digital provenance that is attached to each reported analysis in this work, and stems from a portable DataLad dataset of one analysis.
+This makes the files in these projects self-descriptive, and in many cases, directly re-computable.
+This successful application of the research data management strategies and tools validates their utility for scientific conduct in exploratory data analyses.\\
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{memento/gitlog_tempgen.png}
+	\caption[Provenance-tracked project results]{An example revision history of one of the DataLad datasets in this project as visualized with the software tool \texttt{tig}. Shown is an overview of saved updates on the left, with a human-readable description, an author, and a date, as well as a detailed overview of one such updates on the right. The detailed overview reveals additional information such as a longer description, a list of resulting or modified files (only partially shown), and also a re-executable DataLad run-record (see \ref{fig:fairly_metadata}). By means of the commit identifier, the temporal generalization analysis of one subject described in this provenance record can thus be recomputed by the original authors or unrelated others with access to the project.}
+	\label{fig:git-log}
+\end{figure}
 
 
 

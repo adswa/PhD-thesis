@@ -29,7 +29,7 @@ Obtaining their first-hand knowledge was thus impeded not merely by fading memor
 While the dataset had been processed extensively already, the data was in an idiosyncratic organization, many existing analyses were in an interim state, and the project, excluding raw and processed data, was a collection totaling 20.761 files.
 Thus, a prerequisite of my analyses was to prepare the dataset such that it became usable for me, and ideally also to future other researchers that were not involved in its acquisition or processing.\\
 A different challenge lay in the processing setup.
-The data was acquired and partially analyzed on infrastructure of the University of Magdeburg.
+The data were acquired and partially analyzed on infrastructure of the University of Magdeburg.
 After a change of affiliations, storage and further analyses were moved to the computational cluster of the \gls{HHU}.
 My own analyses, finally, were done on computational infrastructure at the Institute of Neuroscience and Medicine at the \gls{FZJ}.
 Typically, changes of computational infrastructure are detrimental to the utility of the processing and analysis scripts.
@@ -216,7 +216,7 @@ Considering additional time spent, cost of redundant storage, licensing costs, r
 The largest position in their cost-benefit analysis is the time wasted by researchers when non-FAIR data takes more time to find, retrieve, clean, integrate, and peer review.
 The remainder of this chapter will outline \gls{rdm} requirements and solutions in the field of neuroimaging that aim to increase reusability.
 They will come into practice in the preparation of the dataset in Chapter \ref{chap:k4} as reusing previous findings has played a central part in this thesis as well.
-But one aspect of reusability is reproducibility it to establish trust, which is a more important side effect of good data management than a cursory reading of the \gls{FAIR} principles implies.
+But one aspect of reusability is reproducibility to establish trust, which is a more important side effect of good data management than a cursory reading of the \gls{FAIR} principles implies.
 The topic of reproducibility will thus also be continued later, and it is central to Chapter \ref{chap:k3}.
 
 % Internationally accepted standard
@@ -422,13 +422,13 @@ Its main features are 1) Version control for data of any size or type; 2) Stream
 
 Fundamental to DataLad's functionality is the concept of the ``DataLad dataset'', DataLad's central data structure.
 On a technical level, it is a joint Git and git-annex repository with additional metadata and features for scientific use cases added on top by DataLad.\\
-Git excels at managing and collaborating on text files, and provides a powerful back bone to DataLad's features.
+Git excels at managing and collaborating on text files, and provides a powerful backbone to DataLad's features.
 Git repositories can be easily distributed as linked \textit{clones} to suitable infrastructure to share files and their revision history.
 Locally, changes to files can be saved (\textit{committed}) with detailed provenance and transferred (\textit{pushed}) to all clones of a repository, and remote revisions can be retrieved and integrated (\textit{pulled}).\\
 However, Git is not designed to handle large or binary files as common in science.
 Git-annex overcomes this limitation and adds support to track and transfer files of arbitrary size or type without placing their content into Git.
 Instead, it places file content into a managed repository \textit{annex} and only commits a lightweight reference that encodes the file's name and content identity via content hash into Git.
-This reference allows a decoupling of file content (handled by git-annex) and file name (tracked with Git), but retains the ability to transparently notice and track changes: If file content changes, the identity reference known to Git changes, too, and the version control system becomes aware of the modification.
+This reference allows a decoupling of file content (handled by git-annex) and filename (tracked with Git), but retains the ability to transparently notice and track changes: If file content changes, the identity reference known to Git changes, too, and the version control system becomes aware of the modification.
 The same mechanism guarantees file integrity at all times and solves data privacy concerns without impacting discoverability, as potentially sensitive content can be kept private but its metadata can be distributed easily.
 While Git keeps a reference of the content \textit{identity}, git-annex tracks content \textit{availability}, and manages data transport with an extensible set of protocols and set of hosting solutions to and from a local repository annex at a granularity of individual files. \\
 DataLad, finally, extends Git and git-annex with easy to use modularization, re-executable annotation of changes, and targeted interfaces and interoperability adapters:
@@ -498,7 +498,7 @@ A thorough overview of features can be found in the software's documentation, wh
 \begin{figure}
 	\centering
 	\includegraphics[width=.5\textwidth]{datalad_gooey.png}
-	\caption[DataLad: Graphical User Interface]{The \gls{gui} of DataLad provides an overview of working with DataLad. The file tree (left) is a DataLad dataset, and its contents are annotated whether they are tracked with Git, git-annex, or untracked, and whether they are modified, or if all changes are saved (``clean''). The command window (right) illustrates a DataLad command and some parameters.}
+	\caption[DataLad: Graphical User Interface]{The \gls{gui} provides an overview of working with DataLad. The file tree (left) is a DataLad dataset, and its contents are annotated whether they are tracked with Git, git-annex, or untracked, and whether they are modified, or if all changes are saved (``clean''). The command window (right) shows a DataLad command parametrization.}
 	\label{fig:gooey}
 \end{figure}
 
@@ -510,11 +510,11 @@ According to \url{pypistats.org}, the main DataLad Python package was downloaded
 The Python distribution Anaconda (\url{anaconda.org}) counts a total of 380.011 downloads of the software throughout versions 0.9.3 (April 2018) and 0.19.3 (August 2023), averaging 240 downloads per day.
 The \texttt{popularity-contest} software is a Debian package that, if installed on a users system, reports anonymous statistics about most-used Debian packages.
 This data is aggregated into a popularity contest.
-According to it, in August 2023 between 0.08 and 0.12 percent of systems reporting statistics have a DataLad installation (see \cref{fig:popcon}).
+According to it, in August 2023 between 0.08 and 0.12 percent of systems reporting statistics have a DataLad installation (see \cref{fig:popcon}), which is considerable when projected to the total amount of Debian-based computers world-wide.
 All of these sources contain biases that limit conclusion to the number of users, though.
 Installations via Python package managers are commonly performed by individual end users, whereas installations of Debian packages can correspond to system-wide installations on multi-user systems such as high performance computing infrastructure.
 Likewise, upgrades of existing installations to more recent versions are included in these data, as well as temporary installations of the software in automated continuous integration test suites.
 Nevertheless, download statistics attest that it is an actively used tool with a user base that exceeds the circle of its developers by far.
 The citation count of our academic paper \citet{Halchenko2021}, totaling 66 in August 2023, and active contributor community around the source repository on GitHub, currently amounting to 48 individuals with committed code contributions, confirms that.
 DataLad's current popularity, however, has not been established from the beginning of its development.
-The next chapter will highlight how scientific software like DataLad can be improved and gain popularity, and, vice versa, improve scientific practice.
+The next chapter will highlight how scientific software like DataLad can be improved and gain relevance, and, vice versa, improve scientific practice.

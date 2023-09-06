@@ -12,15 +12,17 @@
 \chapter{Conclusion}
 \label{discussion}
 
-The original aim of this work was to find novel insights about brain state transitions in a delayed decision making task from previously unpublished data.
+The original aim of this work was to find novel insights about brain state transitions in a delayed decision making task from previously unpublished data by connecting and building up on prior work by other researchers.
 However, the context in which this project was conducted made research data management and research software engineering more central than originally planned.
 Viewed in conjunction, this thesis has been a testament to the foundational importance that organizational and technical aspects of scientific conduct play in research endeavors.\\
-Chapter \ref{chap:k1} introduced preexisting tools and solutions for managing research data and projects.
+Chapter \ref{chap:k1} laid out an overview of the study of working memory maintenance, in particular novel methods that viewed neural signals as trajectories through high-dimensional state spaces.
+It further introduced preexisting tools and solutions for managing research data and projects.
 The \gls{FAIR} principles and the \gls{BIDS} standard are established elements of good \gls{rdm}, and DataLad a promising software tool for data versioning, transport, and digital provenance capture.
 In conjunction, they enable researchers to create scientific outputs that are portable and reusable as stand-alone, well-described units, without reliance on the original authors -- and thus, a fitting tool set to conduct the brain-state analysis in Chapter \ref{chap:k4}.\\
 However, Chapter \ref{chap:k1} also shed light on DataLad's shortcomings and deficiencies.
 Thus, my work on the DataLad Handbook, outlined in Chapter \ref{chap:k2} and rooted in the area of research software engineering, improved some of these with documentation and workflows.
-The Handbook's popularity and its association with increased popularity of the software tool yielded evidence for the importance of user-focused documentation.
+This constituted not only a beneficial foundation for my own DataLad-supported analysis in Chapter \ref{chap:k4}, but also led to lasting resources for the general public and improved software usabibility.
+The Handbook's popularity and its association with increased relevance of the software tool yielded evidence for the importance of user-focused documentation.
 Although this work is not a traditional academic paper, it can, similar to research software, published findings, or open code impact scientific conduct positively.\\
 Continuing in a similar spirit, Chapter \ref{chap:k3} focused on two central aspects in research data management, specifically reusability and reproducibility, and showed how they connected to each other:
 Reproducibility is a basis for reusability, and both are the outcome of research data management that becomes increasingly more FAIR.
@@ -28,7 +30,7 @@ But Chapter \ref{chap:k3} also outlined the practical difficulties of creating r
 To address them, I conceived a set of four pragmatic research data management strategies that can make research objects more reusable, even when they are not yet fully \gls{FAIR}.
 While our work recognizes the FAIR principles, it makes a pragmatic compromise between the aspirational ideal state, and the continuously developing research and meta data landscape in computational sciences.
 In passing, as a byproduct of \gls{rdm}, its outcomes go a long way towards FAIR, and by applying the four properties of exhaustively versioned, actionable, modular and portable to research projects, become re-usable by default.
-The Chapter then concluded with a computational framework that put these strategies into practice, and highlighted our proof of principle work to test its applicability and scalability on a neuroscientific dataset of the largest scale.\\
+Chapter \ref{chap:k3} then concluded with a computational framework that put these strategies into practice, and highlighted our proof of principle work to test its applicability and scalability on a neuroscientific dataset of the largest scale.\\
 Our framework brought together a range of work that the previous chapters outlined already.
 At the center of our framework lies thoughtful research data and reproducibility management, not as an afterthought, but -- given the technical challenges computational reproducibility poses -- as a sturdy and necessary basis.
 In the spirit of reusable and FAIR digital research objects, it creates outcomes that lend themselves to reuse naturally.
@@ -36,7 +38,7 @@ Especially in large-scale computations, current results will be the inputs of fu
 The introduction also established DataLad as a software tool to deliver this research data management.
 Its development principles and features in the spirit of decentralized software development translate into utility for our framework.
 For one, it is able to connect a range of established services or and open source tools to ease adoption and maximize flexibility.
-And although the workflows and concepts our framework draws from are not based in the domain of reproducible data processing, they lend themselves well for this application, and what made distributed software development productive, fast, and reliable, now helps to do the same for data analysis.\\
+And although the workflows and concepts our framework draws from are not based in the domain of reproducible data processing, they lend themselves well for this application, and what made distributed software development productive, fast, and reliable, now helps to do the same for data analysis.
 Fundamental to the success and usability of DataLad and its use in this framework is its documentation, as argued in Chapter \ref{chap:k2}.
 On a high level, the framework constitutes yet another use case, only possible because the tools' features are combined into something greater than the sum of its parts.
 Many years of refining user-centered workflows and software usability formed the basis for this.
@@ -46,7 +48,7 @@ A testament to this, and to the utility of the framework is its adoption into de
 Chapter \ref{chap:k4} then put the technical and organizational work of previous chapters into action.
 The idiosyncratic structure of the \textit{memento} dataset has posed a significant challenge to identify relevant files, distinguish processing states, understand the dataset as a whole, and base processing on it.
 The conversion to the \gls{BIDS} standard for \gls{meg} was an indispensable prerequisite to working with this data.
-The spatio-temporally distributed nature of the project, spread over three institutions and two generations of researchers working with the dataset, placed reusability and portability demands on my work that the previous Chapters laid the foundations to.
+The spatio-temporally distributed nature of the project, spread over three institutions and two generations of researchers working with the dataset, placed reusability and portability demands on my work that the previous chapters laid the foundations to.
 I was unable to find the delay representation of stimulus properties which the experiment had originally set out to find.
 However, I was able to extend previous analyses with novel ideas, methods that are yet unconventional in \gls{meg}, and interesting exploratory findings that can spark further research.
 With the \gls{rdm} principles I theorized in Chapter \ref{chap:k3}, documented in Chapter \ref{chap:k2}, helped to software engineer in Chapter \ref{chap:k1}, and applied in Chapter \ref{chap:k4}, future re-users can obtain or recompute my results, or investigate differences between re-computations after adjusting pipelines or parametrization with novel research ideas.
