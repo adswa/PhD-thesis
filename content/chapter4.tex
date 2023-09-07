@@ -1111,23 +1111,21 @@ Figure \ref{fig:decoding-opti-results} shows an exemplary visualization of the g
 
 
 \begin{figure}
-	\centering
-	\begin{subfigure}{.65\textwidth}
-		\includegraphics[width=\textwidth]{memento/decoding/sliding_window.png}
-		\caption{Temporal sliding window}
-		\label{fig:temporal-slider}
-	\end{subfigure}
-	\newline
 	\begin{subfigure}{0.39\textwidth}
 		\includegraphics[width=\textwidth]{memento/decoding/spatiotemporal_sliding_window.png}
 		\caption{Spatiotemporal sliding window}
 		\label{fig:spatiotemporal-slider}
 	\end{subfigure}
 	\begin{subfigure}{0.59\textwidth}
-	\includegraphics[width=\textwidth]{memento/decoding/parameter_optimization_spectralsrm_sub-all.png}
-	\caption{Exemplary optimization results from spectral SRM pipeline}
-	\label{fig:decoding-opti-results}
-\end{subfigure}
+		\includegraphics[width=\textwidth]{memento/decoding/parameter_optimization_spectralsrm_sub-all.png}
+		\caption{Exemplary optimization results from spectral SRM pipeline}
+		\label{fig:decoding-opti-results}
+	\end{subfigure}
+	\begin{subfigure}{.65\textwidth}
+		\includegraphics[width=\textwidth]{memento/decoding/sliding_window.png}
+		\caption{Temporal sliding window}
+		\label{fig:temporal-slider}
+	\end{subfigure}
 	\caption[Schematic of different sliding window types and optimization results]{Schematic of different sliding window types. \ref{fig:temporal-slider} depicts a temporal sliding window, integrating the signal across samples via averaging. \ref{fig:spatiotemporal-slider} depicts a spatial sliding window. All samples in the sliding window are concatenated such that the one resulting sample per sliding window includes the spatiotemporal configuration of all sensors in the window.
 	\ref{fig:decoding-opti-results} visualizes the results of tuning various pipeline parameters on decoding for decoding with a spectral \gls{SRM} transformer.}
 	\label{fig:sliding-windows}
