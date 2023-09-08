@@ -420,6 +420,7 @@ Its main features are 1) Version control for data of any size or type; 2) Stream
 
 \subsection{Technical features}
 
+\paragraph{DataLad Datasets for version control and modular dependency management}
 Fundamental to DataLad's functionality is the concept of the ``DataLad dataset'', DataLad's central data structure.
 On a technical level, it is a joint Git and git-annex repository with additional metadata and features for scientific use cases added on top by DataLad.\\
 Git excels at managing and collaborating on text files, and provides a powerful backbone to DataLad's features.
@@ -436,11 +437,15 @@ Modularization facilitates reusability in research workflows with large amount o
 Organizing them into a modular structure of homogeneous or smaller components enables more efficient reuse.
 DataLad allows to nest individual datasets via versioned linkage as lightweight dependencies, and provides seamless recursive operations across dataset boundaries by extending Git’s submodule mechanism.
 With this, DataLad provides a ``monorepo''-like user experience in datasets with arbitrarily deep nesting, and makes it trivial to operate on individual files deep in the hierarchy or entire trees of datasets, while individual datasets can easily be reused in new contexts (see \cref{fig:subdslinkage}).\\
+
+\paragraph{Re-executable process provenance}
 Re-executable annotations of changes constitute process provenance.
 In DataLad datasets, DataLad can wrap any command execution and automatically capture the command, the generated outputs or modification, and optionally all required input elements with a so-called \texttt{datalad run} or a \texttt{datalad containers-run} command.
 The former command captures the execution of any shell command, and the latter command can use software containers, tracked in DataLad datasets, for executing commands inside a specific software environment or containerized pipeline.
 Both commands retrieve inputs, initiate command execution, and, if it succeeds, save results together with a re-executable provenance in a structured annotation to a Git commit message (see \cref{fig:fairly_metadata}).
 In addition to providing reliable information about past command-line invocations, these machine-readable records make it possible to easily re-execute commands, for example to verify if a result is computationally reproducible or to apply an analog change to a different dataset state.\\
+
+\paragraph{Streamlined data transport}
 Interoperability adapters, finally, streamline data publication and consumption routines.
 Being able to efficiently retrieve and update research objects across a variety of available storage options is an important part of \gls{rdm} \citep{borghi2018data}.
 Git can already interact with other local or remote repositories via standard or custom network transport protocols, and git-annex readily provides access to a wide range of external data storage resources via a large set of protocols.
