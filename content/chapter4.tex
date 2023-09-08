@@ -938,21 +938,21 @@ A few components consistently represent the original signal well across subjects
 	\centering
 	\begin{subfigure}{1.\textwidth}
 		\centering
-		\includegraphics[trim={0 7.2cm 0 0cm},clip,width=.4\textwidth]{memento/simulation/spectral_srm_timeresolved_transformed_sub-001.png}
-		\includegraphics[trim={0 7.2cm 0 0cm},clip,width=.4\textwidth]{memento/simulation/spectral_srm_timeresolved_transformed_sub-002.png}
+		\includegraphics[trim={0 0.7cm 0 2.5cm},clip,width=.45\textwidth]{memento/simulation/spectral_srm_timeresolved_transformed_sub-001.png}
+		\includegraphics[trim={0 0.7cm 0 2.5cm},clip,width=.45\textwidth]{memento/simulation/spectral_srm_timeresolved_transformed_sub-002.png}
 		\caption{Shared components from \ref{fig:sim-timeresolved-shared} (visualized via transformation, for two ``subjects'')}
 		\label{fig:sim-resolved-transformed}
 	\end{subfigure}
 	\centering
 	\begin{subfigure}{1.\textwidth}
 		\centering
-		\includegraphics[trim={0 7.3cm 0 0cm},clip,width=.4\textwidth]{memento/simulation/sim_7.png}
-		\includegraphics[trim={0 7.3cm 0cm 0},clip,width=.4\textwidth]{memento/simulation/sim_8.png}
+		\includegraphics[trim={0 0.7cm 0 2.5cm},clip,width=.45\textwidth]{memento/simulation/spectral_srm_spectral_transformed_sub-001.png}
+		\includegraphics[trim={0 0.7cm 0 2.5cm},clip,width=.45\textwidth]{memento/simulation/spectral_srm_spectral_transformed_sub-002.png}
 		\caption{Shared components from \ref{fig:sim-spectral-shared} (visualized via transformation, for two ``subjects'')}
 		\label{fig:sim-shared-transformed}
 	\end{subfigure}
 
-	\caption[Properties of a shared time-resolved or spectral space]{Properties of a shared time-resolved or spectral space. a) visualizes the shared space resulting from a model fit on time resolved data. The Gaussian noise is evidently reduced while signal of interest is retained. However, it shows that the signals from several subjects as consecutive or overlapping activity. Using individual subject's weight matrices and raw data to visualize the individual model components reveals that the signal of interest is not represented in the same components across two subjects (c and d respectively). In b) the shared spectral space, and in e) and f) the components two artificial subjects are shown in comparison. The components in shared space are spectral and difficult to interpret. But in the transformations with time-resolved data, unlike in c) and d), the strength with which components capture the signal of interest is consistent.}
+	\caption[Properties of a shared time-resolved or spectral space]{Properties of a shared time-resolved or spectral space. a) visualizes the shared space resulting from a model fit on time resolved data. The Gaussian noise is evidently reduced while signal of interest is retained. However, it shows that the signals from several subjects as consecutive or overlapping activity. Using individual subject's weight matrices and raw data to visualize the individual model components reveals that the signal of interest is not represented in the same components across two subjects (c). In b) the shared spectral space, and in d) the components two artificial subjects are shown in comparison. The components in shared space are spectral and difficult to interpret. But in the transformations with time-resolved data, unlike in c) and d), the strength with which components capture the signal of interest is consistent.}
 	\label{fig:sim-spectral}
 \end{figure}
 
