@@ -170,8 +170,7 @@ All analyses conducted on \gls{meg} data in this chapter were carried out in sen
 \section{Study overview}
 
 
-The data basis of the upcoming analyses stems from the \textit{memento} study.
-It investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
+The data basis of the upcoming analyses stems from a study that investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
 The data were acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg by \citet{kaiser}, and has not been previously published.
 %The following study overview adheres to the COBIDAS MEEG reporting guidelines for reproducible MEEG research \citep{pernet2020issues}.
 
@@ -962,7 +961,7 @@ A few components consistently represent the original signal well across subjects
 \pagebreak
 \subsection{Visualizing shared components}
 
-After the simulation study demonstrated feasibility of the method, I subsequently applied it to the neural recordings from the memento study.
+After the simulation study demonstrated feasibility of the method, I subsequently applied it to the neural \gls{meg} recordings.
 The underlying aim was to find shared components that represented decision-related or -relevant properties.
 Unlike the previous \gls{SRM} analyses, models were trained with data from all participants.
 Using the subject-specific bases, the time-resolved test data was then transformed in the shared space while retaining the temporal resolution (\ref{fig:spectral-srm2}) to visualize the components that the shared response model found.
@@ -1280,7 +1279,7 @@ In the delay period, stable coding decreased sharply, and even time-point-to-tim
 It was thus mostly during the visual presentation of the stimulus and shortly afterwards that value properties -- or their associated visual features -- had stable or dynamic neural codes that classifiers could pick up.\\
 Extending these analyses based on my previous explorations, I investigated whether the neural representation during the delay period could correspond to a decision signal rather than to concrete property values.
 This falls in line with work by \citet{hunt2013trial} who investigated whether the necessary comparison of options in decision making tasks occurs in the ``space of abstract goods'' or the ``space of alternative actions''.
-Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment in the \textit{memento} study.
+Whereas they found stronger value-related representations in a decision making task in which stimulus options where shown side-by-side and at the same time, they found a stronger action-related representation when the same decision making task was presented sequentially, similar to the experiment used in this dataset.
 To investigate this, I utilized the temporal generalization method's flexibility in the choice of training and testing time points.
 In the training phase, I let classifiers learn a decision signal from time points in the trial centered around the actual motor response.
 In the testing phase, I then used these classifiers to find a decision signal earlier in the trial.
@@ -1398,7 +1397,7 @@ The resulting decoding pattern mirrored that in Figure \ref{fig:temporal-general
 
 \section{Discussion}
 
-The analysis set of the \textit{memento} study consisted of a variety of methods.
+The analysis set presented here consisted of a variety of methods.
 While some analyses were conducted to test the applicability of approaches or justify them, such as the initial \gls{SRM} applications or the simulation study conducted for spectral \gls{SRM}, the underlying focus of all analyses was to uncover the neural representations of trial-related features in working memory, using the delay period in a decision making task.\\
 Evidence for a major hypothesis of persistent neural representations of stimulus features (magnitude, probability, or expected value) in working memory could not be found.
 Dimensionality-reduction, in particular methods based on the shared response model, a spectral variation of the shared response model, and \gls{pca}, were unsuccessful in finding a lower-dimensional space in which such features were represented in a stable and persistent manner.
@@ -1468,7 +1467,7 @@ Despite the only preliminary insights on working maintenance in this exploratory
 For one, the work I put into the preparation of the dataset has made further analyses much more feasible, regardless of whether they are performed by researchers acquainted to the dataset or not, and regardless of whether the various actors involved in the acquisition, processing, and preparation of the data are available for questions.
 Open code and provenance tracked analysis executions contribute to the reusability of these intermediate research outcomes further.
 As \gls{SRM} has so far rarely been employed in \gls{meg} data in the published literature, this project also provided ample initial evidence that the method could be useful for this modality.
-While the \gls{SRM} analyses did not confirm prior hypothesis, all studies showed that the method retained major experiment-induced variation, such as the trial structure in the \textit{memento} dataset or the signal of interest in the simulation study.
+While the \gls{SRM} analyses did not confirm prior hypothesis, all studies showed that the method retained major experiment-induced variation, such as the trial structure in the \gls{meg} data, or the signal of interest in the simulation study.
 In the temporal decoding analysis, pipelines with an \gls{SRM} also did not fare worse than pipelines without it.
 And the simulation study demonstrated that the method, regardless of whether it is applied with the novel spectral transformation we tested or not, can markedly reduce random noise in the data.
 Thus, a potential and promising application for \gls{SRM} in \gls{meg} might be signal cleaning.
