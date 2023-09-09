@@ -530,7 +530,7 @@ The stimulus properties relevant for the eventual behavioral choice in each tria
 I assessed their relative influence on choice by two means: First, by simulating different strategies by which participants could use these properties, and comparing them against the actual gains.
 I created five different strategies: Pure probability- or magnitude-based strategies (choice fell on which ever stimulus had a higher value, and reduced to random choice where values were equal), primarily probability- or magnitude-based strategies (choice fell on which ever stimulus had a higher value, and in cases where values were equal, it fell on which ever stimulus had a higher value on the other property, akin to a sequential evaluation process), and an expected-value-based strategy (choice fell on the stimulus with the higher expected value, and reduced to random choice where expected values were equal).
 These simulations revealed that strategies based solely on either magnitude or probability yield outcomes that are predominantly worse than participants' actual gains, bearing a single outlier.
-The strategy following expected value was the best, yielding predominantly higher gains than participants' actual gains, bearing -- again -- one outlier whose performance exceeded even that of 95\% of simulated experiments with the expected value strategy.
+The strategy following expected value was the best, yielding predominantly higher gains than participants' actual gains, bearing one outlier whose performance exceeded even that of 95\% of simulated experiments with the expected value strategy.
 The two sequential strategies yielded a single, deterministic outcome that was close to the group average.\\
 The second mean to assess which stimulus properties influenced choice was a stratified 10-fold cross-validated logistic regression analysis of left and right stimulus characteristics on choice for each subject.
 The model included six predictors (magnitude and probability of the left and right option, and expected value calculated from demeaned magnitude and demeaned probability) and an intercept.
@@ -813,7 +813,7 @@ While individual stimulus-type differences did not emerge in the shared space, t
 		\includegraphics[width=\textwidth]{memento/srm/task-memento_srm-20_fulltrial_distances.png}
 		\caption{$k$=20}
 	\end{subfigure}
-	\caption[Time point by time point correlation distances in shared spaces]{Time point by time point correlation distances in shared spaces build from the entire trial, across epochs with different stimulus types, for different values of $k$. Notable events in the trial, such as the first visual presentation (0-700ms), the delay phase (700-2700ms) or the second visual presentation (2700-3400ms) seem to visible from the time-point to time-point correlation distances.}
+	\caption[Time point by time point correlation distances in shared spaces]{Time point by time point correlation distances in shared spaces build from the entire trial, across epochs with different stimulus types, for different values of $k$. Notable events in the trial, such as the stimulus presentation (0-700ms, 2700-3400ms) or the delay phase (700-2700ms) emerge as patterns.}
 	\label{fig:srmsharedspacetrial}
 \end{figure}
 
@@ -878,8 +878,8 @@ To evaluate the feasibility of this novel method, I first conducted a simulation
 \begin{figure}[H]
 	\begin{subfigure}{1\textwidth}
 		\centering
-		\includegraphics[width=.48\textwidth]{memento/simulation/sim_2.png}
-		\includegraphics[width=.435\textwidth]{memento/simulation/sim_10.png}
+		\includegraphics[trim={0 0 0 0.7cm},clip,width=.48\textwidth]{memento/simulation/sim_2.png}
+		\includegraphics[trim={0 0 0 0.7cm},clip,width=.435\textwidth]{memento/simulation/sim_10.png}
 	\end{subfigure}
 	\caption[Artificial signal for simulation]{Artificial signal (10~000 samples) with a 1000 sample spanning 10Hz main frequency component (left), and partially embedded into 306 sensors with Gaussian noise (right). 20 percent of sensors contain the main signal in varying amounts, mirroring how brain signals are only present in certain sensors and decrease in strength over distance.}
 	\label{fig:sim_artificial_signal}
@@ -930,7 +930,7 @@ A few components consistently represent the original signal well across subjects
 		\caption{Shared space from time-resolved data}
 		\label{fig:sim-timeresolved-shared}
 	\end{subfigure}
-	\begin{subfigure}{.4\textwidth}
+	\begin{subfigure}{.43\textwidth}
 		\includegraphics[width=\textwidth]{memento/simulation/sim_5.png}
 		\caption{Shared space from spectral data}
 		\label{fig:sim-spectral-shared}
@@ -952,7 +952,7 @@ A few components consistently represent the original signal well across subjects
 		\label{fig:sim-shared-transformed}
 	\end{subfigure}
 
-	\caption[Properties of a shared time-resolved or spectral space]{Properties of a shared time-resolved or spectral space. a) visualizes the shared space resulting from a model fit on time resolved data. The Gaussian noise is evidently reduced while signal of interest is retained. However, it shows that the signals from several subjects as consecutive or overlapping activity. Using individual subject's weight matrices and raw data to visualize the individual model components reveals that the signal of interest is not represented in the same components across two subjects (c). In b) the shared spectral space, and in d) the components two artificial subjects are shown in comparison. The components in shared space are spectral and difficult to interpret. But in the transformations with time-resolved data, unlike in c) and d), the strength with which components capture the signal of interest is consistent.}
+	\caption[Properties of a shared time-resolved or spectral space]{Properties of a shared time-resolved or spectral space. a) visualizes the shared space of a model fit on time-resolved data: Gaussian noise is reduced and signal of interest is retained, but signals from several subjects emerge as consecutive or overlapping activity. Using individual subject's weight matrices and raw data to visualize individual model components reveals that the signal of interest is not represented in the same components across two subjects (c). In comparison, b) shows the shared spectral space, and d) its transformed components. The components in shared space are spectral and difficult to interpret. But the strength with which components capture the signal of interest is consistent in the transformations with time-resolved data.}
 	\label{fig:sim-spectral}
 \end{figure}
 
@@ -1159,6 +1159,7 @@ There was no prominent confusion pattern over the trial course, but the confusio
 		\label{fig:decoding-probability-pca}
 	\end{subfigure}
 	\newline
+	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\includegraphics[width=\textwidth]{memento/decoding/averaged-decoding_balanced-accuracy_l2logreg_probability_dimreduction-srm.png}
 		\caption{\gls{SRM}}
