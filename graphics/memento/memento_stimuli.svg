@@ -7,9 +7,9 @@
    viewBox="0 0 412.18701 361.44003"
    version="1.1"
    id="svg31122"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="memento_stimuli.svg"
-   inkscape:export-filename="/home/adina/repos/PhD-thesis/graphics/memento/memento-stimuli.png"
+   inkscape:export-filename="memento-stimuli.png"
    inkscape:export-xdpi="298.45599"
    inkscape:export-ydpi="298.45599"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -32,21 +32,23 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="0.46338737"
-     inkscape:cx="-93.873943"
+     inkscape:cx="-91.715922"
      inkscape:cy="664.67068"
-     inkscape:window-width="1280"
+     inkscape:window-width="2560"
      inkscape:window-height="1371"
      inkscape:window-x="0"
      inkscape:window-y="32"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs31119" />
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-8.1040283,31.889872)">
+     transform="translate(-8.1040335,31.889872)">
     <image
        width="126.47083"
        height="89.958336"
@@ -229,15 +231,15 @@
        y="278.76083" />
     <text
        xml:space="preserve"
-       style="font-size:9.87777px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="28.813992"
-       y="-20.831285"
+       style="font-size:17.0261px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.456056"
+       x="43.207161"
+       y="-18.516176"
        id="text42602"><tspan
          sodipodi:role="line"
          id="tspan42600"
-         style="stroke-width:0.264583"
-         x="28.813993"
-         y="-20.831285">magnitude</tspan></text>
+         style="stroke-width:0.456056"
+         x="43.207161"
+         y="-18.516176">magnitude</tspan></text>
     <image
        width="126.47083"
        height="89.958336"
@@ -419,16 +421,16 @@
        y="-31.889872" />
     <text
        xml:space="preserve"
-       style="font-size:9.87777px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.264583"
-       x="288.57401"
-       y="-394.96387"
+       style="font-size:17.2216px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.461292"
+       x="271.92282"
+       y="-396.26373"
        id="text43508"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan43506"
-         style="stroke-width:0.264583"
-         x="288.57401"
-         y="-394.96387">probability</tspan></text>
+         style="stroke-width:0.461292"
+         x="271.92282"
+         y="-396.26373">probability</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12.7px;line-height:1.25;font-family:'Latin Modern Sans Demi Cond';-inkscape-font-specification:'Latin Modern Sans Demi Cond';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ff0000;stroke-width:0.264583"
