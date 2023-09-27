@@ -171,7 +171,7 @@ All analyses conducted on \gls{meg} data in this chapter were carried out in sen
 
 
 The data basis of the upcoming analyses stems from a study that investigated how decision-relevant information is retained in working memory using a decision making task with concurrent \gls{meg} acquisition.
-The data were acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg by \citet{kaiser}, and has not been previously published.
+The data were acquired as part of the SFB 779 project B16N (``offline value representations in sequential decision making'') at the Otto-von-Guericke University Magdeburg by \citet{kaiser}, and have not been previously published.
 Ethics approval was obtained from the institutional review board of the medical faculty of the University Magdeburg under application number 101/15.
 %The following study overview adheres to the COBIDAS MEEG reporting guidelines for reproducible MEEG research \citep{pernet2020issues}.
 
@@ -182,7 +182,6 @@ $N = 22$ right-handed, healthy participants with normal or corrected-to-normal v
 Their mean age was 26 years, and 10 participants were male.
 Handedness was assessed with the Edinburgh Handedness Inventory \citep{oldfield1971assessment}.
 Participants gave their informed consent to participate in the study, and received a base monetary compensation in the order of 8€ per hour with a performance-dependent bonus of up to 3€.
-Ethics approval was obtained from the University Clinic Magdeburg.
 
 \subsection{Experimental design}
 
@@ -205,7 +204,7 @@ In approximately half of the trials one of the two stimulus options was clearly 
 These trials consequently required no integration of stimulus properties to assess which option's value is higher.
 In a subset of those trials, called ``no-brainer'' in all following analyses (roughly 10\% of all trials), both magnitude and probability were strictly greater in one of the two options, posing the easiest decision form.
 In standard trials, however, stimulus properties were differentially advantageous for the two options.\\
-Each trial started with a fixation cross (1000-1900ms, jittered), followed by the first stimulus on the left side of the screen (700ms), a 2000ms delay period through which a central ``or'' was presented, the second stimulus option on the right side (700ms), and a feedback screen.
+Each trial (Figure \ref{fig:memento_trial}) started with a fixation cross (1000-1900ms, jittered), followed by the first stimulus on the left side of the screen (700ms), a 2000ms delay period through which a central ``or'' was presented, the second stimulus option on the right side (700ms), and a feedback screen.
 Once the second stimulus option was displayed, participants chose the left or right option via a button press with the right or left index finger, respectively.
 The feedback screen showed both options side by side with a frame around the chosen option, and revealed which option(s) had been rewarded via color coding (red: unrewarded, green: rewarded).
 If a decision was not made within 5 seconds, the trial was aborted and participants saw a message to respond faster.
@@ -303,7 +302,7 @@ The following paragraphs outline individual steps in detail.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.\textwidth]{memento/preprocessing_overview.png}
-	\caption[Preprocessing overview]{Preprocessing Overview}
+	\caption[Preprocessing overview]{Overview of preprocessing steps and their details.}
 	\label{fig:preproc}
 \end{figure}
 
@@ -1065,13 +1064,13 @@ A number of configurable parameters were included, and are summarized in Table \
 		\begin{tabular}{p{.15\textwidth} p{.4\textwidth} p{.25\textwidth} p{.2\textwidth}}
 			\hline
 			\textbf{Parameter}	& \textbf{Justification} & \textbf{Values} 	& \textbf{Choice} \\ \hline
-			Sliding window 		& Sliding windows integrate neural signals over time or space, and are commonly used to improve the signal to noise ratio as well (e.g. CITE). This parameter control which form of sliding window was used. & temporal sliding window, spatiotemporal sliding window & temporal sliding window \\
-			Trial averaging 	& To improve the signal to noise ratio, it is common to average trials of the same trial type (e.g. CITE). & None, 5, 10 & 10 (None in spectral SRM) \\
+			Sliding window 		& Sliding windows integrate neural signals over time or space, and are commonly used to improve the signal to noise ratio as well \citep{hari2017primer}. This parameter control which form of sliding window was used. & temporal sliding window, spatiotemporal sliding window & temporal sliding window \\
+			Trial averaging 	& To improve the signal to noise ratio, it is common to average trials of the same trial type \citep{hari2017primer}. & None, 5, 10 & 10 (None in spectral SRM) \\
 			Bootstrapping 		& If several trials are averaged to reduce the signal to noise ratio, this parameter offsets the loss of trials and controls how many averaged trials are drawn in total & minimum, maximum, 500 & maximum \\
 			$k$ (SRM, PCA)		& This parameter determines the dimensionality of the subspace. & 2, 5, 10, 25, 80 & 25	 \\
 			N training series (SRM) & This parameter determines the amount of training data with which a shared response model will be build. 	& 10, 20, 50 & 50
 		\end{tabular}
-		\caption[Overview of pipeline parameters]{Overview of configurable pipeline parameters and their values explored in a grid search.}
+		\caption[Overview of pipeline parameters]{Overview of configurable pipeline parameters and the values explored in a grid search.}
 		\label{tab:gridsearch}
 	\end{table}
 \end{center}
@@ -1087,7 +1086,7 @@ I implemented two separate sliding windows: One was a temporal sliding window, i
 An alternative sliding window was spatiotemporal.
 It integrates information over both space and time in a pattern inspired by multivariate pattern analysis, by extending the signal vector at one time point with the signals of the following time points.
 Thus, the data entering the decoders for this sliding window were pooled over multiple time points, so as to exploit not only information that is encoded in spatial activation patterns, but also information that is encoded in their temporal structure, similar to \citet{muhle2021hierarchy}.
-Both types sliding windows were used with a window size of 10 samples, and are illustrated in Figures \ref{fig:temporal-slider} and \ref{fig:spatiotemporal-slider}.\\
+Both types of sliding windows were used with a window size of 10 samples, and are illustrated in Figures \ref{fig:temporal-slider} and \ref{fig:spatiotemporal-slider}.\\
 The bootstrapping extension to trial averaging was created to offset the reduction in available trials in the model when several trials are averaged.
 This was implemented as follows:
 During trial averaging, all available trials were pooled according to their target label.
@@ -1143,7 +1142,7 @@ Probability yielded the highest decoding accuracies overall, and all results dep
 Compared to no dimensionality reduction and dimensionality reduction with \gls{SRM}, the pipelines employing \gls{pca} and spectral \gls{SRM} transformers yielded marginally reduced accuracies.
 Overall, none of the dimensionality reduction methods revealed stable neural codes throughout the delay, and contrary to expectations they also did not improve decoding accuracy.
 I also investigated a possible pattern of decoding errors by means of confusion matrices.
-For this, I computed confusion matrices in 100ms time slices to visualize dominantly decoded labels across the trial structure.
+For this, I computed confusion matrices in 100ms time slices to visualize dominantly decoded labels across the trial structure (Figure \ref{fig:decoding-probability-conf}).
 There was no prominent confusion pattern over the trial course, but the confusion matrices made it evident that the highest probability was the one category that retained above chance decoding accuracies in the delay phase.
 
 
@@ -1171,7 +1170,7 @@ There was no prominent confusion pattern over the trial course, but the confusio
 		\caption{spectral \gls{SRM}}
 		\label{fig:decoding-probability-spectralsrm}
 	\end{subfigure}
-	\caption[Decoding results for probability]{Decoding results for the probability (angle) of the first stimulus option. Grey shading visualizes the length of the temporal sliding window, and vertical lines visualize trial structure. The horizontal dashed line indicates chance level decoding. Shading depicts variability across folds in the k fold cross-validation.}
+	\caption[Decoding results for probability]{Decoding results for the probability (angle) of the first stimulus option. Grey shading visualizes the length of the temporal sliding window, and vertical lines visualize trial structure. The horizontal dashed line indicates chance level decoding. Blue shading depicts variability across folds in the cross-validation.}
 	\label{fig:decoding-probability}
 \end{figure}
 
@@ -1491,7 +1490,7 @@ This successful application of the research data management strategies and tools
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{memento/gitlog_tempgen.png}
-	\caption[Provenance-tracked project results]{An example revision history of one of the DataLad datasets in this project as visualized with the software tool \texttt{tig}. Shown is an overview of saved updates on the left, with a human-readable description, an author, and a date, as well as a detailed overview of one such updates on the right. The detailed overview reveals additional information such as a longer description, a list of resulting or modified files (only partially shown), and also a re-executable DataLad run-record (see \ref{fig:fairly_metadata}). By means of the commit identifier, the temporal generalization analysis of one subject described in this provenance record can thus be recomputed by the original authors or unrelated others with access to the project.}
+	\caption[Provenance-tracked project results]{An example revision history of one of the DataLad datasets in this project as visualized with the software tool \texttt{tig}. Shown is an overview of saved updates on the left, with a human-readable description, an author, and a date, as well as a detailed overview of one such updates on the right. The detailed overview reveals additional information such as a longer description, a list of resulting or modified files (only partially shown), and also a re-executable DataLad run-record (see Figure \ref{fig:fairly_metadata}). By means of the commit identifier, the temporal generalization analysis of one subject described in this provenance record can thus be recomputed by the original authors or unrelated others with access to the project.}
 	\label{fig:git-log}
 \end{figure}
 
