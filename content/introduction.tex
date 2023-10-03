@@ -37,7 +37,7 @@ Thus, an explicit aim of all processing was portability, such that research outc
 Finally, the to-be-conducted analyses were highly exploratory.
 Although the dataset had not been published before, a large amount of analyses had already been conducted.
 But with the exception of a poster presentation on preliminary decoding results \citep{kaiserposter}, all analyses yielded null results and remained unpublished.
-Thus, in an attempt to extend previous analyses and search for remaining insights in the data with novel methodology, I set out to conduct analysis rooted in functional alignment and dimensionality reduction that have yet rarely been used on \gls{meg} data.
+Thus, in an attempt to extend previous analyses and search for remaining insights in the data with novel methodology, I set out to conduct analyses rooted in functional alignment and dimensionality reduction that have yet rarely been used on \gls{meg} data.
 Maintaining routines for reproducibility and reusability, however, is not trivial when the analyses are not mapped out entirely and the necessary software for the analyses is in flux.
 Keeping all analyses transparent, self-descriptive to others, and reproducible became a guiding principle.\\
 Although the challenges I outlined above shaped the course of the project and gave way to productive projects to solve them, they are by no means uncommon in scientific endeavors.
@@ -70,7 +70,7 @@ Instead of a persistent, fixed selectivity, it postulates that neural responses 
 According to it, working memory maintenance is established via increased residual calcium levels at the presynaptic terminals of neurons, which causes a short-term synaptic facilitation, akin to synaptic weights that link neurons coding for a working memory item.
 With this facilitation, the memory can be transiently held for about 1s without enhanced spiking activity in a network of neurons.
 Building up on this theory,  \citet{stokes2015activity} proposed the dynamic coding framework, in which working memory is mediated by rapid transitions in such ``activity silent'' neural states.
-While these states mediate flexible, context-dependent processing they do not emerge as constant activity and rather as ``hidden states'', appearing as altered response sensitivities of neural networks, established via short-term and long-term synaptic plasticity and temporal functional connectivity changes that influence the response to stimuli.
+While these states mediate flexible, context-dependent processing, they do not emerge as constant activity and rather as ``hidden states'', appearing as altered response sensitivities of neural networks, established via short-term and long-term synaptic plasticity and temporal functional connectivity changes that influence the response to stimuli.
 An explanation why spiking activity is nevertheless found during delay periods comes from findings that a task-irrelevant read-out or ``ping'' signal is able to reactivate the neural assembly \citep{trubutschek2017theory}.
 This raises the possibility that previous findings of neuronal spiking might have been similar readouts from an activity silent population after task-irrelevant non-specific inputs \citep{wolff2017dynamic}.
 Alternatively, \citet{fiebig2017spiking} hypothesized that occasional spiking of memory-encoding neurons is needed to refresh the activity-silent states.\\
@@ -83,9 +83,9 @@ Interestingly, studies decoding working memory content found that decodable patt
 \citet{meyers2008dynamic} decoded object categories from electrophysiological data, and yielded worse decoding the more temporally distant training and testing times slices were apart.
 \citet{stokes2013dynamic} used temporal cross-correlation analyses to show that population responses in the prefrontal cortex evolve during a memory delay.
 These representations of task-relevant stimulus information in temporarily and spatially distributed activity across neurons were termed dynamic population coding \citep{sreenivasan2014revisiting} (see Figure \ref{fig:dynamiccoding}).\\
-The theory that cognitive processes evolve through different brain states as dynamic neural trajectories is line with non-stable representations \citep{buonomano2009state}.
+The theory that cognitive processes evolve through different brain states as dynamic neural trajectories is in line with non-stable representations \citep{buonomano2009state}.
 These trajectories emerge by conceptualizing neural responses as vectors in an N-dimensional space that evolves over time:
-The axes of the high-dimensional space correspond to measurements, such as raw or transformed data from M/EEG sensors or \gls{fMRI} voxels.
+The axes of the high-dimensional space correspond to measurements, such as raw or transformed data from \gls{meg}/\gls{eeg} sensors or \gls{fMRI} voxels.
 Each time point in the acquisition becomes a point in the high-dimensional space spanned by all sensors, determined by the measurement in each sensor, such as activation strength.
 In geometric terms, this point is an N-dimensional vector.
 Neural trajectories emerge by tracing the activity on these axes over multiple time points.
@@ -105,7 +105,7 @@ Common or distinct brain states could then become evident as converging or diver
 		\caption{Idealized neural trajectories through state-spaces}
 		\label{fig:trajectories}
 	\end{subfigure}
-	\caption[Dynamic coding and neural trajectories in the study of brain states]{A schematic illustration of dynamic coding in neural populations as trajectories through high dimensional spaces. The left side of a) depicts a population of three neurons (squares), and their activity (color) over six time points time in response to two visual stimuli. The neural code in this population is not stationary, but dynamic: Each stimulus evokes a distinct response, but within this response, each time point has a different pattern of neural activity, too. By conceptualizing activity patterns over time as vectors, these patterns can be visualized in a multi-dimensional space (right). This space has as many dimensions as there are measurement sites (e.g., neurons, sensors, voxels, or electrodes). Dynamic population codes create trajectories through this space. Adapted from \citet[][Fig. 2]{meyers2018dynamic}. b) shows an idealized illustration of neural trajectories in different states for two decision alternatives (blue) and two response alternatives (red), for two tasks in a delayed-response-mapping paradigm. Assigning meaning to the axes of the state-space may yield insights about brain states in different experiment conditions. Adapted from Jocham, Krauel, Hanke (unpublished).}
+	\caption[Dynamic coding and neural trajectories in the study of brain states]{A schematic illustration of dynamic coding in neural populations as trajectories through high dimensional spaces. The left side of a) depicts a population of three neurons (squares), and their activity (color) over six time points time in response to two visual stimuli. The neural code in this population is not stationary, but dynamic: Each stimulus evokes a distinct response, but within this response, each time point has a different pattern of neural activity, too. By conceptualizing activity patterns over time as vectors, these patterns can be visualized in a multi-dimensional space (right). This space has as many dimensions as there are measurement sites (e.g., neurons, sensors, voxels, or electrodes). Dynamic population codes create trajectories through this space \citep[adapted from][Fig. 2]{meyers2018dynamic}. b) shows an idealized illustration of neural trajectories in different states for two decision alternatives (blue) and two response alternatives (red), for two tasks in a delayed-response-mapping paradigm. Assigning meaning to the axes of the state-space may yield insights about brain states in different experiment conditions. Adapted from Jocham, Krauel, Hanke (unpublished).}
 	\label{fig:brainstates}
 \end{figure}
 
@@ -129,7 +129,7 @@ They found a lower-dimensional subspace in the high-dimensional state space in w
 %The high-dimensional neural space is confined into a lower dimensional ``manifold'' spanned by these neural modes, and dimensionality reduction methods could allow the study of neural population dynamics within them.
 %Importantly, they further showed that the low dimensional spaces remained stable over multiple years when aligning these manifolds \citep{gallego2020long}.\\
 Studying working memory maintenance using dimensionality reduction methods and the concept of neural trajectories through a state-space is thus a promising approach for new insights.
-It re-conceptualizes neural function from averaged spiking activity that aims to draw conclusions about the brain area of a cognitive process, to dynamics in multi-dimensional spaces that might bear the potential to draw conclusions about the lower-dimensional components our cognition is build up on.
+It re-conceptualizes neural function from averaged spiking activity that aims to draw conclusions about the brain area of a cognitive process, to dynamics in multi-dimensional spaces that might bear the potential to draw conclusions about the lower-dimensional components our cognition is built up on.
 The path from data acquisition or raw data to such a data analysis is, however, more complex than the method section of the final paper makes it appear.
 Before this thesis continues with the analyses of neural trajectories in working memory, the upcoming two chapters and the remainder of the introduction are dedicated to concepts and projects around \gls{rdm} that were ultimately relevant pillars of the project.
 %\citep{vidaurre2016spectrally} investigated brain state time courses identified by a HMM-based approach by their spectral properties.
@@ -407,7 +407,7 @@ Digital research objects are usually stored in multiple different locations \cit
 Different storage services use different protocols, means of authentication, or other idiosyncrasies that require custom workflows.
 Moreover, as will be elaborated in Chapter \ref{chap:k3}, scientific computation is not reproducible enough, because data provenance is often incomplete and rarely automatically captured.
 And over the course of a research project, often as part of the standard, multi-stepped processing workflow, data evolve and change just like code does:
-Continued acquisitions enlarge the raw dataset; Transformations to -- likewise evolving -- community standards change file formats, dataset organization, or enrich available metadata; And continuous quality control processes can fix errors in datasets.
+Continued acquisitions enlarge the raw dataset; transformations to -- likewise evolving -- community standards change file formats, dataset organization, or enrich available metadata; and continuous quality control processes can fix errors in datasets.
 In the case that data or other research objects were subject to change over the course of a project, there is a need to identify which exact version has been used -- otherwise, the reproducibility of a result is threatened \citep{hardwicke2018data}.
 Yet unlike code in software development, data tend not to be as precisely identifiable because data versioning is rarely or only coarsely practiced.
 Last but not least, in the absence of standardized data packages, there is no uniform way to declare actionable
@@ -416,7 +416,7 @@ Consequentially, data needs to be kept alongside to results to ensure reproducib
 Especially in the age of big data neuroscience \citep{bzdok2017inference}, downloads or storage of datasets can become infeasible \citep{horien2021hitchhiker, grisham2016proposed}.
 And although projects might only draw insights from only a subset of a dataset, such as only specific modalities, tasks, or participants, a project has heavier disk space demands if the original dataset is only available as a bulk download.\\
 DataLad aims to solve these issues by providing streamlined, transparent management of code, data, computing environments, and their relationship.
-Its main features are 1) Version control for data of any size or type; 2) Streamlined procedures to consume, publish, and update  all elements of scientific projects, with interoperability adapters to established scientific and commercial tools and services; 3) Data linkage as precisely versioned, lightweight dependencies; And 4) actionable process provenance capture for arbitrary command execution that affords automatic re-execution.
+Its main features are 1) Version control for data of any size or type; 2) Streamlined procedures to consume, publish, and update  all elements of scientific projects, with interoperability adapters to established scientific and commercial tools and services; 3) Data linkage as precisely versioned, lightweight dependencies; and 4) actionable process provenance capture for arbitrary command execution that affords automatic re-execution.
 
 \subsection{Technical features}
 
@@ -465,7 +465,7 @@ DataLad's development is guided by four principles \citep{Halchenko2021}:
 \begin{itemize}
 	\item The only two recognized entities are Datasets and the files they comprise,
 	\item A dataset is a Git repository with an optional annex,
-	\item The should be as few custom procedures and data structures as possible,
+	\item There should be as few custom procedures and data structures as possible,
 	\item Complete decentralization, with no required central server or service, but maximum interoperability with existing third-party resources and infrastructure.
 \end{itemize}
 
@@ -490,7 +490,7 @@ Likewise, publishing a repository to hosting sites usually requires interactions
 And publication dependencies or automatic configurations can publish Git revision history and annexed file contents conjunctly, using \texttt{datalad push}.
 Provenance capture can be achieved by wrapping command executions in either a \texttt{datalad run} or \texttt{datalad containers-run}\footnote{The \texttt{datalad containers-run} command is provided by the \texttt{datalad-container} extension package, available with standard Python package managers.} command, and they can be re-executed using \texttt{datalad rerun} (see \cref{fig:fairly_metadata}).
 When working in hierarchies of datasets, any command's \texttt{--recursive} parameter applies it to downstream datasets.
-Despite the fact that DataLad provides its own set of commands, compatibility with all Git and git-annex functionality is retained, and users are free to chose their workflows.
+Despite the fact that DataLad provides its own set of commands, compatibility with all Git and git-annex functionality is retained, and users are free to choose their workflows.
 Like Git and git-annex, DataLad is primarily developed as a command line tool, but a \gls{gui} exists as well (see \cref{fig:gooey}).\\
 With DataLad's streamlined data transport routines, users can utilize web sources, including major cloud storage providers, paths on local or remote computational infrastructure, or neuroscientific data registries such as OpenNeuro \citep{markiewicz2021openneuro} for file storage or collaboration.
 At the same time, the separation of file content and file name makes a lean, meta-data based representation independent from actual data retrieval.
