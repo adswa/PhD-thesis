@@ -97,7 +97,7 @@ As the FAIR principles advocate for richly curated metadata, many scientific fie
 But not in all domains are the necessary metadata standards incentivized or ready to use.
 A few years before the publication of the FAIR principles, \citet{bechhofer2010research} cued the term ``reusable research object'' in a conceptual position paper.
 They describe it as what can now be seen as a precursor of a FAIR research object, specifically as a ``container for a principled aggregation of resources, produced and consumed by common services and shareable \textit{within} and \textit{across} organisational boundaries [...that] includes not only the \textit{data} used, and \textit{methods} employed to produce and analyse that data, but also the \textit{people} involved in the investigation. An association with a dataset (or service, or result collection, or instrument) is now more than just a citation or reference to that dataset (or service or result collection). The association is rather a \textit{link} to that dataset (or service or result collection) that can be explicitly followed or dereferenced providing access to the actual resource and thus enactment of the service, query or retrieval of data, and so on.'' \citep{bechhofer2010research}.
-This description matches characteristics that DataLad datasets or its contents can posses.
+This description matches characteristics that DataLad datasets or its contents can possess.
 % Detail how datalad adheres to these requirements.
 In the following, I will highlight four properties of research objects that can arise from pragmatic research data management -- versioned, actionable, modular, and portable -- and how these properties make them reusable  even if full FAIRness can not yet be achieved \citep{wagnerohbm2021}.
 % and argue why the \gls{rdm} features that DataLad provides assist with FAIRification.
@@ -142,7 +142,7 @@ In the simplest case, modularization means placing conceptually distinct content
 Distinct units, such as the directories ``code/'' and ``inputs/'', increase transparency if each location is associated with distinguishable content, ease flexible recombination of such components into new projects, allow continuous evolution of an individual module without impact on other components of a project, and enable location-specific access control.
 Though a single modular unit can not entail all relevant elements of a scientific study or data analysis, exhaustive tracking of all elements without sacrificing modularity can be achieved by linking multiple modular units in dependency relationships.
 As \citet{bechhofer2010research} write above, associations to other research objects should be more than ``just a citation or reference'', but an actionable link that provides access to whichever resource it refers to.
-A useful metaphor that match this description are package management systems such as conda (\url{https://docs.conda.io}) or APT (\url{https://wiki.debian.org/Apt}): A software package is a modular unit, installed with a package manager.
+A useful metaphor that matches this description are package management systems such as conda (\url{https://docs.conda.io}) or APT (\url{https://wiki.debian.org/Apt}): A software package is a modular unit, installed with a package manager.
 However, packages usually depend on other software packages, which are listed as its ``dependencies''.
 During installation, package managers check if all of the linked dependencies exist on the system, and if not, install them in the required versions automatically.
 For scientific projects, we can conceptualize its modular units (data, software, code) as the dependencies of a given research output.
@@ -154,8 +154,8 @@ On demand, it can be installed precisely as needed, from whichever location or s
 
 \subsubsection{Portability}
 
-\citet{bechhofer2010research} further highlight the ability to share reusable research objects within and across organizational bounderies.
-The fourth and final property DataLad datasets entail for reusability and that fits to this description is portability.
+\citet{bechhofer2010research} further highlight the ability to share reusable research objects within and across organizational boundaries.
+Fittingly, the fourth and final property DataLad datasets entail for reusability is portability.
 The more portable a digital research object is, the easier it is to reuse it.
 A research object is fully portable if no adjustments are necessary for it to function the way it is intended to on different computational infrastructure -- ideally even when used by a naive re-user with a different area of expertise (i.e., without domain knowledge).
 The more adjustment or domain knowledge is necessary, the less portable a research output becomes.
@@ -167,7 +167,7 @@ Achieving the previous properties in a research output is work towards portabili
 A factor contributing to portability is self-containment such that research outputs can be used or reproduced on different computational infrastructure by other users without requiring additional elements outside of it.
 Exhaustive versioning and modularization pave the way to include all necessary code, data, and computational environments into a complete, self-contained structure that accompanies a research output.
 If a user ensures that a project can be moved across computers and remains functional without adjustment, for example by ensuring that no references to file system, operating system, or user specific idiosyncrasies are included, portability is improved further.
-And with actionable process provenance that can be re-executed, even verification and re-use even without domain knowledge becomes possible.
+And with actionable process provenance that can be re-executed, verification and re-use even without domain knowledge becomes possible.
 
 \begin{figure}[H]
 	\centering
@@ -223,7 +223,7 @@ While DataLad's \texttt{containers-run} functionality provides provenance captur
 To achieve it, the framework bootstraps an entire temporary analysis environment from scratch based on the information contained in the initial dataset (\cref{fig:fairly_workflow}c).
 In this ephemeral environment, processing can only be based on information already recorded in the dataset or provided in the execution command, which is invoked with a provenance capturing \texttt{datalad run} or \texttt{datalad containers-run}.
 It specifies required inputs and expected outputs by their relative path in the DataLad dataset hierarchy.
-If the computations succeeds, two validity guarantees can be derived regarding the provenance of the computational outcomes: 1) All dataset modifications can be causally attributed to the initiated computation; 2) only declared inputs were required to produce the outcomes.
+If the computations succeed, two validity guarantees can be derived regarding the provenance of the computational outcomes: 1) All dataset modifications can be causally attributed to the initiated computation; 2) only declared inputs were required to produce the outcomes.
 This constitutes evidence that existing information is valid and sufficient to make the dataset portable.
 \cref{fig:fairly_metadata} illustrates this provenance, how it is captured, and how it can be used for recomputation.\\
 
@@ -237,7 +237,7 @@ This constitutes evidence that existing information is valid and sufficient to m
 
 
 The basis for ephemeral workspaces is the ability to distribute DataLad datasets across local or remote infrastructure as lightweight, linked clones, and the process mirrors a software development routine, where changes are developed in a distributed network:
-An orchestration layer clones the DataLad dataset into a temporary location, uses its recorded history to infer relevant details about precessing components, and add results on top of it.
+An orchestration layer clones the DataLad dataset into a temporary location, uses its recorded history to infer relevant details about precessing components, and adds results on top of it.
 Afterwards, results and their provenance can be pushed back before the ephemeral workspace is purged.
 To ensure that this orchestration can scale, it needs to support parallel executions, i.e., several analyses running in ephemeral workspaces at the same time.
 This is complicated in Git repositories as concurrent processes can interfere with one another and simultaneous commits can cause conflicts.
@@ -364,7 +364,7 @@ In the simplest case, all compute jobs produced non-intersecting outputs, i.e., 
 In this case, all branches can be merged at once using a so-called octopus-merge.\\
 The outcome of this consolidation process is a self-contained DataLad dataset, with valid, machine-actionable provenance information for every single result file of the performed data processing.
 As such, it is a modular unit of data, suitable as input for further processing and analysis.
-And it is a practical example how the four properties -- exhaustively versioned, actionable, modular, and portable -- translate to trustworthy, reusable research outputs.
+And it is a practical example of how the four properties -- exhaustively versioned, actionable, modular, and portable -- translate to trustworthy, reusable research outputs.
 Overall, our framework is a general-purpose solution that is compatible with any data that can be represented as files of any size, and any computation that can be performed via a command line call. It is built on a collection of portable, free and open-source tools that can be deployed without special privileges or administrative coordination on standard \gls{HTC}/\gls{HPC} infrastructure, or personal computing equipment.
 An open tutorial and result showcase is publicly available at \url{github.com/psychoinformatics-de/fairly-big-processing-workflow-tutorial}.
 To test its capabilities further, we conducted a proof-of-concept analysis on one of the largest neuroscientific datasets to date.
@@ -437,7 +437,7 @@ As more tailored views for concrete use cases can be flexibly and reproducibly c
 
 \subsubsection{Intra-pipeline variability}
 
-Pipeline replication can play in important role for reproducible research as a means of exploring analytic variation and assessing the robustness of findings \citep{li2021moving}, and our framework is particularly convenient for this application.
+Pipeline replication can play an important role for reproducible research as a means of exploring analytic variation and assessing the robustness of findings \citep{li2021moving}, and our framework is particularly convenient for this application.
 In order to investigate intra-pipeline variability, the result consolidation described above was first performed separately on each computational infrastructure.
 Afterwards, the two complete sets of results were integrated in the same dataset, as two different branches, to estimate result variability.
 With the exception of execution time, the number of jobs, proportion of successful jobs, and size and structure of the results were identical between the two systems\footnote{The difference in computational performance can be seen in a visualization of provenance information at \url{youtube.com/watch?v=UsW6xN2f2jc}. This visualization was awarded second place in the category videos \& animations in the 2021 \gls{ohbm} Brain Art Competition.}.

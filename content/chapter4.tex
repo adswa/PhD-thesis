@@ -86,7 +86,7 @@ At the time of writing, the work presented in this chapter is being prepared as 
 
 Drawing insights from the partial overview of the literature in Chapter \ref{chap:k1}, methods to study working memory have shifted from traditional evoked potentials to computationally intensive processing.
 The field has progressed from studying spiking activity in single cells to an implicit consensus that the neural representation of working memory during maintenance is high-dimensional or embedded in a high-dimensional space, time-varying, and spatiotemporal distributed.
-But despite the wealth of theories and methodological approaches, the field has not yet converged on a full understanding of working memory.
+But despite the wealth of theories and methodological approaches, the field has not yet converged at a full understanding of working memory.
 Recent reviews have begun to point out where findings and standard views fall short to yet explain the mechanisms underpinning working memory \citep{nobre2022opening}, or highlight the inconsistencies in results across studies \citep{pavlov2022oscillatory}.
 While studies traditionally focused on the involvement of prefrontal areas due to its involvement in executive control \citep[e.g.,][]{fuster1971neuron, funahashi1989mnemonic, miller1996neural}, many other brain areas have been shown to represent working memory items, too.
 In a recent review, \citet{sreenivasan2019and} summarized how single-cell measurements, MEEG, and \gls{fMRI} acquisitions have found increased activity during working memory maintenance throughout the cortex and even some subcortical areas.
@@ -99,7 +99,7 @@ In this exploratory spirit, I conducted the simulations and analyses that will b
 They build up on previous analysis that were conducted on this dataset by \citet{kaiserposter}, who studied the temporal dynamics of working memory maintenance with this dataset, in particular how decision-relevant stimulus features are represented in the delay phase.
 My extensions of their analyses connect to the works of \citet{murray2017stable} and \citet{machens2010functional}:
 \citet{murray2017stable} found neural subspaces within dynamic population-level activity that showed stable coding for working memory items. They used \gls{pca} to construct low-dimensional subspaces ($k = 1$ or $k = 2$, respectively) in electro-physiological recordings from non-human primates, and projected neural recordings into the subspaces such that the principal components became the axes of a new, lower-dimensional state space. In these subspaces, stable population codes and above-chance decoding accuracies for working memory items in two different working memory tasks arose.
-\citet{machens2010functional} similarly used \gls{pca} on high-dimensional electro-physiological data to create a new, lower-dimensional subspace ($k = 6$) based on identified components and interpreted the resulting axes in relation to the experimental decision making task.
+\citet{machens2010functional} similarly used \gls{pca} on high-dimensional electro-physiological data to create a new, lower-dimensional subspace ($k = 6$) based on identified components, and interpreted the resulting axes in relation to the experimental decision making task.
 In the following, they identified components representing time (``when'') and components representing working memory content (``what'').
 Taken together, these studies thus employed dimensionality reduction methods to perform statistical decomposition in a high dimensional ``native neural space'' to project the axes of a task space into subspaces of the native neural space and assigned meaning to them (see Figure \ref{fig:trajectories}).
 Yet contrary to \citet{murray2017stable, machens2010functional}, the upcoming analyses do not confine the neural signal to a specific brain area such as the PFC, but attempt to find neural signatures of decision-relevant working memory items across the cortex.
@@ -113,7 +113,7 @@ But when different analyses are broken into distinct projects, the disk space de
 The distributed nature of the project across several institutions also demanded uncompromising portability.
 Common exploratory approaches such as interactive computing or notebooks typically do not fulfill this requirement due to their short-lived and environment-dependent nature.
 To overcome these challenges, research data management principles from the previous chapter were applied.
-All analyses were setup as portable DataLad datasets.
+All analyses were set up as portable DataLad datasets.
 The project evolution was captured in a linked hierarchy of datasets, starting with a BIDS-standardized raw dataset, continuing with a preprocessed derivative dataset, and spreading into multiple analyses applications based on a common starting point (Figure \ref{fig:outline_memento}).
 Analyses were codified into infrastructure-agnostic scripts, and their execution was provenance-tracked to allow for re-computations over the course of the project.
 Each individual component in the Figure \ref{fig:outline_memento} below constitutes a self-described entry point to further analyses at a later point in time.
@@ -121,7 +121,7 @@ Each individual component in the Figure \ref{fig:outline_memento} below constitu
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.5\textwidth]{memento/analysis_setup.png}
-	\caption[Memento analysis outline]{Project outline as linked DataLad datasets for provenance capture, disk usage reduction, and computational efficiency. A \gls{BIDS}-structured raw dataset is the anchor of all analysis. A common preprocessing pipeline is the basis of three major \gls{meg} analyses. If raw or preprocessed data changes, analysis results can be recomputed automatically.}
+	\caption[Memento analysis outline]{Project outline as linked DataLad datasets for provenance capture, disk usage reduction, and computational efficiency. A \gls{BIDS}-structured raw dataset is the anchor of all analyses. A common preprocessing pipeline is the basis of three major \gls{meg} analyses. If raw or preprocessed data changes, analysis results can be recomputed automatically.}
 	\label{fig:outline_memento}
 \end{figure}
 %
@@ -258,7 +258,7 @@ The neural data was recorded at a sampling rate of 1000Hz and active internal sh
 \section{Data preparation}
 
 The code I wrote for data preparation, preprocessing and analysis is available as the Python package \texttt{pymento\_meg} from GitHub\footnote{\url{https://github.com/adswa/pymento_meg}} and the Python package index \url{PyPi.org}.
-Underlying software packages are listed in Table \ref{tab:software}, and the software environment required for all analyses is also available as Singularity image that can be found alongside the source code.
+Underlying software packages are listed in Table \ref{tab:software}, and the software environment required for all analyses is also available as a Singularity image that can be found alongside the source code.
 \begin{center}
 \begin{table}[H]
 	\begin{tabular}{ l l l }
@@ -349,7 +349,7 @@ With $n \ll N$, $\phi$ can be uniquely decomposed into internal and external sub
 	\label{eq:sss}
 \end{equation}
 
-As the internal and external subspaces are provably linearly independent, brain signals are then reconstructed by retaining only sources inside the helmet, thus excluding external inferences.
+As the internal and external subspaces are provably linearly independent, brain signals are then reconstructed by retaining only sources inside the helmet, thus excluding external interferences.
 
 
 \begin{equation}
@@ -402,7 +402,7 @@ Figures \ref{fig:prezap} and \ref{fig:postzap} show power spectral density plots
 \end{figure}
 
 \textbf{Filtering} Next, data were first low-pass filtered with a 100Hz lowpass FIR filter to constrain it into a frequency range of interest.
-The filter properties are reported in Figure \ref{fig:preproc} and a visualization is in Figure \ref{fig:filter}.
+The filter properties are reported in Figure \ref{fig:preproc} and a visualization is depicted in Figure \ref{fig:filter}.
 
 \begin{figure}
 	\centering
