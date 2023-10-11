@@ -674,7 +674,7 @@ This opens up opportunities to train an \gls{SRM} based on trial time courses of
 		\label{fig:shared80}
 	\end{subfigure}
 	%\newline
-	\caption[Shared spaces of stimulus presentations]{Shared spaces of stimulus presentation, visualized as the correlation distance between the trajectories of functional topographies $k$ in the shared space between stimulus types. Darker brown values denote a stronger relationships, lighter values denote independence, and darker blue values would denote anticorrelation. Stimulus types are split into nine left and nine right options, ordered by increasing probability.}
+	\caption[Shared spaces of stimulus presentations]{Shared spaces of stimulus presentation, visualized as the correlation distance between the trajectories of functional topographies $k$ in the shared space between stimulus types. Darker brown values denote stronger relationships, lighter values denote independence, and darker blue values would denote anticorrelation. Stimulus types are split into nine left and nine right options, sorted by increasing probability.}
 	\label{fig:srmsharedspaces}
 \end{figure}
 
@@ -793,7 +793,7 @@ The functional topographies in participant's neural activity were more similar f
 
 One potential reason for this is that the potentially subtle differences between stimulus types were not prominent enough to be reflected strongly in the shared spaces, and signals corresponding to more general cognition, such as generic visual processing, dominated instead.
 To investigate whether features corresponding to the trial structure in general are preserved during \gls{SRM}, I used the shared response space generated over the entire trial course to visualize the time point by time point similarity of the trial in shared space.
-This analyses mirrored the previous approach, but epochs were not split by stimulus type and pooled instead, and the correlation distance was not calculated between time series, but between $k$ features per time point.
+This analysis mirrored the previous approach, but epochs were not split by stimulus type and pooled instead, and the correlation distance was not calculated between time series, but between $k$ features per time point.
 The result is visualized for three different values of $k$ in Figure \ref{fig:srmsharedspacetrial}.
 The trial structure, in particular marked differences between the first stimulus, the delay phase, and the second stimulus, are visible for shared spaces of all dimensionalities.
 With growing dimensionality $k$, similarities and dissimilarities decrease, which can be expected given that larger dimensionality values extend the vectors between which correlation distance is calculated, and can also be observed with increasing dimensionality in the previous shared spaces.
@@ -813,7 +813,7 @@ While individual stimulus-type differences did not emerge in the shared space, t
 		\includegraphics[width=\textwidth]{memento/srm/task-memento_srm-20_fulltrial_distances.png}
 		\caption{$k$=20}
 	\end{subfigure}
-	\caption[Time point by time point correlation distances in shared spaces]{Time point by time point correlation distances in shared spaces build from the entire trial, across epochs with different stimulus types, for different values of $k$. Notable events in the trial, such as the stimulus presentation (0-700ms, 2700-3400ms) or the delay phase (700-2700ms) emerge as patterns.}
+	\caption[Time point by time point correlation distances in shared spaces]{Time point by time point correlation distances in shared spaces built from the entire trial, across epochs with different stimulus types, for different values of $k$. Notable events in the trial, such as the stimulus presentation (0-700ms, 2700-3400ms) or the delay phase (700-2700ms) emerge as patterns.}
 	\label{fig:srmsharedspacetrial}
 \end{figure}
 
@@ -853,7 +853,7 @@ If the peaks of two signals with the same frequency are in exact alignment at th
 If the exact timing or duration of shared activity in question is subject to intra- and inter-individual variation, it is not necessarily phase-locked.
 However, a spectral decomposition of this signal results in power spectrum, with the frequency domain of the oscillations on the x axis, and the amplitude on the y axis.
 Typically, these transformations are used in time-frequency analyses to investigate the progression of \gls{meg} power in different frequency bands of interest over time \citep{hari2017primer}.
-However, in the upcoming analyses I used them to expressed signal as a function of frequency rather than time and use the transformation from a time-resolved representation of data to a representation in the frequency domain to find shared signals with different temporal signatures.
+In the upcoming analyses, however, I used them to express signal as a function of frequency rather than time, and used this transformation from a time-resolved representation of data to a representation in the frequency domain to find shared signals with different temporal signatures.
 Importantly, the model bases of an \gls{SRM} assign weights to sensors regardless of whether they contribute to a shared signal in time-resolved or spectral space.
 Therefore, I can fit a shared response model on spectral data to find shared frequency components, but then use the model bases to transform time-resolved data (see Figure \ref{fig:spectral-srm}).
 This not only allows the visualization of shared components as a time series, but also easier interpretation of components in the context of the experimental paradigm.
@@ -890,7 +890,7 @@ To evaluate the feasibility of this novel method, I first conducted a simulation
 
 To simulate \gls{meg} data, I generated a ``ground truth'' signal with a given frequency and wave form, and embedded it partially into 306 artificial sensors with Gaussian noise (Figure \ref{fig:sim_artificial_signal}).
 To mirror how brain signals are only present in certain sensors and with varying strengths, only a fixed amount of sensors received the signal.
-For each sensor with a signal, a random weight between is drawn that determines the strength with which the signal is scaled.
+For each sensor with a signal, a random weight is drawn that determines the strength with which the signal is scaled.
 This is repeated for $N = 30$ artificial subjects, but with a different random phase offset in the signal for each to simulate data from several subjects with a common frequency component that occurs at different points in time.
 If the \gls{SRM} is successful, the shared response should reflect the ground truth signal despite phase offsets, and the subject-specific model bases should reflect the magnitudes of the weights for each sensor.\\
 Using this artificial data as the basis for shared response modeling, I fitted a probabilistic \gls{SRM} with $k=10$ features to recover the signal as a shared component - either on time resolved data, or after transforming the data into its frequency spectrum.\\
@@ -912,7 +912,7 @@ While the components in spectral space are not easy to interpret or differentiat
 		\caption{SRM on spectral data}
 		\label{fig:sim-spectral-weights}
 	\end{subfigure}
-	\caption[Relationship of model weights and true weights]{Recovered versus true model weights from an \gls{SRM} fitted on time resolved (left) or spectrally transformed data with phase shifts (right): Without spectral transformation, the relationship between model weights and ground truth weights appears mostly random. When fit on spectrally transformed data, the relationship between model weights and ground truth weights clearly captures an association for some of the $k=10$ components, indicating successful recovery the original weights.}
+	\caption[Relationship of model weights and true weights]{Recovered versus true model weights from an \gls{SRM} fitted on time resolved (left) or spectrally transformed data with phase shifts (right): Without spectral transformation, the relationship between model weights and ground truth weights appears mostly random. When fit on spectrally transformed data, the relationship between model weights and ground truth weights clearly captures an association for some of the $k=10$ components, indicating successful recovery of the original weights.}
 	\label{fig:sim-weights}
 \end{figure}
 
@@ -993,7 +993,7 @@ A subset of these visualizations are shown to illustrate the results for shared 
 
 One possibility is that the modulation of these functionality topographies encodes different decision-related properties.
 To investigate whether shared components differentially related to trial-specific attributes, unseen test data was transformed into the shared space, but visualized separately for trials with specific attributes.
-For example, trials in which the first stimulus option had a different probabilities values were contrasted with each other.
+For example, trials in which the first stimulus option had different probability values were contrasted with each other.
 I hypothesized that this could uncover shared components encoding stimulus properties, modulated via their amplitude.
 To investigate this, I reused the models for visualizations of test data in various attribute splits.
 A subset of these visualizations is shown in Figure \ref{fig:spectral-comps-attributes}.
@@ -1290,7 +1290,7 @@ One set of epochs centered around the motor response with a length of 1000ms.
 And one set of epochs locked to the first stimulus presentation, extending 3.4 seconds into the trial, until the end of the second stimulus presentation.
 The first set of epochs was used to train multiple logistic regression estimators on \gls{meg} data in sensor space ($X=306 \times n\_samples$ features per trial) to classify the target $y$, left or right choice in each trial.
 The second set of epochs was used as test data, to see when and how well a neural decision signal emerges over the trial course.
-While the estimators where always trained on the entire training data, I manipulated the set of features in the test set to investigate the emergence of a decision representation based on specific trial characteristics, given that distinct stimulus properties and values likely contribute differentially to a stronger representation.
+While the estimators were always trained on the entire training data, I manipulated the set of features in the test set to investigate the emergence of a decision representation based on specific trial characteristics, given that distinct stimulus properties and values likely contribute differentially to a stronger representation.
 For each analysis, I ran a permutation test with $N=$~10~000 repetitions with shuffled targets to identify clusters of significant decoding accuracy.
 To evaluate findings on the group level, I averaged all subjects' temporal generalization results, and bootstrapped a sample of each participants' permutation maps to estimate cluster reaching statistical significance following the approach proposed by \citet{stelzer2013statistical}.\\
 Overall, I investigated the following manipulations:
