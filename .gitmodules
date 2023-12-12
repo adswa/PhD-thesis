@@ -1,0 +1,3 @@
+[submodule "defense"]
+	path = defense
+	url = git@github.com:adswa/defense.git
